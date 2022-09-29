@@ -222,7 +222,7 @@ export function createRoot(
       transitionCallbacks = options.unstable_transitionCallbacks;
     }
   }
-
+  // 初始化应用根节点(.current 指向初始化好的 fiber 根节点)
   const root = createContainer(
     container,
     ConcurrentRoot,
@@ -233,6 +233,7 @@ export function createRoot(
     onRecoverableError,
     transitionCallbacks,
   );
+  // 给容器 DOM 打标记
   markContainerAsRoot(root.current, container);
 
   const rootContainerElement: Document | Element | DocumentFragment =

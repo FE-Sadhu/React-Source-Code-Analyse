@@ -129,12 +129,12 @@ function FiberNode(
   this.key = key;
   this.elementType = null;
   this.type = null;
-  this.stateNode = null;
+  this.stateNode = null; // Fiber 对应的真实 DOM 节点
 
   // Fiber
-  this.return = null;
-  this.child = null;
-  this.sibling = null;
+  this.return = null; // 指向父级 Fiber 节点
+  this.child = null; // 指向儿子 Fiber
+  this.sibling = null; // 指向右边第一个兄弟 Fiber 节点
   this.index = 0;
 
   this.ref = null;

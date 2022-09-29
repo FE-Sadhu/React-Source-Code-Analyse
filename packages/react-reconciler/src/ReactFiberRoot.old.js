@@ -144,6 +144,7 @@ export function createFiberRoot(
   onRecoverableError: null | ((error: mixed) => void),
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): FiberRoot {
+  // 整个应用的根节点
   const root: FiberRoot = (new FiberRootNode(
     containerInfo,
     tag,
@@ -161,14 +162,17 @@ export function createFiberRoot(
 
   // Cyclic construction. This cheats the type system right now because
   // stateNode is any.
+  // Fiber 树根节点
   const uninitializedFiber = createHostRootFiber(
     tag,
     isStrictMode,
     concurrentUpdatesByDefaultOverride,
   );
+  // 应用根节点的 current 指向 Fiber 树根节点
   root.current = uninitializedFiber;
+  // Fiber 根节点对应的真实 DOM 指向应用根节点
   uninitializedFiber.stateNode = root;
-
+  // 处理 Fiber 根节点的 Cache
   if (enableCache) {
     const initialCache = createCache();
     retainCache(initialCache);
@@ -196,8 +200,8 @@ export function createFiberRoot(
     };
     uninitializedFiber.memoizedState = initialState;
   }
-
+  // 初始化 Fiber 根节点的更新队列
   initializeUpdateQueue(uninitializedFiber);
-
+  // 返回应用根节点
   return root;
 }
