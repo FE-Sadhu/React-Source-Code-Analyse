@@ -240,8 +240,9 @@ export function createRoot(
     container.nodeType === COMMENT_NODE
       ? (container.parentNode: any)
       : container;
+  // 给容器 DOM 注册各种事件的捕获、冒泡监听
   listenToAllSupportedEvents(rootContainerElement);
-
+  // 返回应用根节点
   return new ReactDOMRoot(root);
 }
 

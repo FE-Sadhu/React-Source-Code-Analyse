@@ -418,6 +418,7 @@ function addTrappedEventListener(
   isCapturePhaseListener: boolean,
   isDeferredListenerForLegacyFBSupport?: boolean,
 ) {
+  // 带有优先级的事件回调
   let listener = createEventListenerWrapperWithPriority(
     targetContainer,
     domEventName,
@@ -472,6 +473,7 @@ function addTrappedEventListener(
     };
   }
   // TODO: There are too many combinations here. Consolidate them.
+  // 让容器节点监听这些事件
   if (isCapturePhaseListener) {
     if (isPassiveListener !== undefined) {
       unsubscribeListener = addEventCaptureListenerWithPassiveFlag(
