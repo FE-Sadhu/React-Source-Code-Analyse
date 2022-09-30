@@ -359,6 +359,7 @@ export function jsxDEV(type, config, maybeKey, source, self) {
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
  */
+// type -> 组件 | 标签， config -> 属性，children -> React Element，children ...
 export function createElement(type, config, children) {
   let propName;
 
@@ -371,6 +372,7 @@ export function createElement(type, config, children) {
   let source = null;
 
   if (config != null) {
+    // 合法 ref
     if (hasValidRef(config)) {
       ref = config.ref;
 
@@ -378,6 +380,7 @@ export function createElement(type, config, children) {
         warnIfStringRefCannotBeAutoConverted(config);
       }
     }
+    // 合法 key 
     if (hasValidKey(config)) {
       if (__DEV__) {
         checkKeyStringCoercion(config.key);

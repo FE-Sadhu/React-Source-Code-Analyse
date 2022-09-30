@@ -151,10 +151,10 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
-    type: type,
+    type: type, // 组件或标签
     key: key,
     ref: ref,
-    props: props,
+    props: props, // {...属性，children}
 
     // Record the component responsible for creating this element.
     _owner: owner,
@@ -207,6 +207,12 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
  * @param {object} props
  * @param {string} key
  */
+// type -> 组件或标签,
+// config -> {
+//  ...属性，
+//  children: jsx() || Array<jsx()>
+// },
+// maybeKey?: string，-> key 值
 export function jsx(type, config, maybeKey) {
   let propName;
 
