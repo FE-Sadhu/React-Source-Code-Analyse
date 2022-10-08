@@ -157,7 +157,7 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
     props: props, // {...属性，children}
 
     // Record the component responsible for creating this element.
-    _owner: owner,
+    _owner: owner, // 初始化时是 null
   };
 
   if (__DEV__) {
@@ -207,7 +207,7 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
  * @param {object} props
  * @param {string} key
  */
-// type -> 组件或标签,
+// type -> 组件 或 标签字符串,
 // config -> {
 //  ...属性，
 //  children: jsx() || Array<jsx()>
@@ -272,7 +272,7 @@ export function jsx(type, config, maybeKey) {
     ref,
     undefined,
     undefined,
-    ReactCurrentOwner.current,
+    ReactCurrentOwner.current, // 初始化时是 null
     props,
   );
 }

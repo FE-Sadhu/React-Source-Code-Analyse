@@ -6,4 +6,5 @@
  *
  * @flow
  */
+// babel transpile 后，jsx 的引入
 export {Fragment, jsx, jsxs} from './src/jsx/ReactJSX';

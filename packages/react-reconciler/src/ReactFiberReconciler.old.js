@@ -319,22 +319,24 @@ export function createHydrationContainer(
 }
 
 export function updateContainer(
-  element: ReactNodeList,
-  container: OpaqueRoot,
-  parentComponent: ?React$Component<any, any>,
-  callback: ?Function,
+  element: ReactNodeList, // React Element
+  container: OpaqueRoot, // 应用根节点
+  parentComponent: ?React$Component<any, any>, // mount 时为 null
+  callback: ?Function, // mount 时为 null
 ): Lane {
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
+  // current Fiber 树
   const current = container.current;
   const eventTime = requestEventTime();
+  // 计算 current fiber 节点优先级
   const lane = requestUpdateLane(current);
 
   if (enableSchedulingProfiler) {
     markRenderScheduled(lane);
   }
-
+  // 处理 context 对象，mount 时为空对象
   const context = getContextForSubtree(parentComponent);
   if (container.context === null) {
     container.context = context;
@@ -359,6 +361,7 @@ export function updateContainer(
     }
   }
 
+  // 创建一个更新节点（链表节点）
   const update = createUpdate(eventTime, lane);
   // Caution: React DevTools currently depends on this property
   // being called "element".
@@ -378,8 +381,10 @@ export function updateContainer(
     update.callback = callback;
   }
 
+  // 入更新队列，返回根 fiber 节点容器 DOM
   const root = enqueueUpdate(current, update, lane);
   if (root !== null) {
+    // 协调更新
     scheduleUpdateOnFiber(root, current, lane, eventTime);
     entangleTransitions(root, current, lane);
   }

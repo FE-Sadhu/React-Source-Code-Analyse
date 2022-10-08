@@ -145,7 +145,7 @@ function FiberNode(
   this.memoizedState = null;
   this.dependencies = null;
 
-  this.mode = mode;
+  this.mode = mode; // ConcurrentMode || 其他
 
   // Effects
   this.flags = NoFlags;

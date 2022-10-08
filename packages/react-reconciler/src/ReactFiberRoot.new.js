@@ -51,8 +51,8 @@ function FiberRootNode(
   identifierPrefix,
   onRecoverableError,
 ) {
-  this.tag = tag;
-  this.containerInfo = containerInfo;
+  this.tag = tag; // ConcurrentRoot 1
+  this.containerInfo = containerInfo; // 容器节点
   this.pendingChildren = null;
   this.current = null;
   this.pingCache = null;

@@ -216,16 +216,27 @@ export function createUpdate(eventTime: number, lane: Lane): Update<*> {
     payload: null,
     callback: null,
 
-    next: null,
+    next: null, // 链表
   };
   return update;
 }
 
 export function enqueueUpdate<State>(
   fiber: Fiber,
-  update: Update<State>,
+  update: Update<State>, // 链表更新节点
   lane: Lane,
 ): FiberRoot | null {
+  // updateQueue 类型 -> {
+  //   baseState: xxx,
+  //   firstBaseUpdate: xx,
+  //   lastBaseUpdate: xx,
+  //   shared: {
+  //     pending: xx,
+  //     lanes: xx,
+  //     hiddenCallbacks: xx
+  //   },
+  //   callbacks: xx
+  // }
   const updateQueue = fiber.updateQueue;
   if (updateQueue === null) {
     // Only occurs if the fiber has been unmounted.
@@ -268,6 +279,7 @@ export function enqueueUpdate<State>(
     // currently renderings (a pattern that is accompanied by a warning).
     return unsafe_markUpdateLaneFromFiberToRoot(fiber, lane);
   } else {
+    // 入更新队列，返回根 fiber 节点容器 DOM
     return enqueueConcurrentClassUpdate(fiber, sharedQueue, update, lane);
   }
 }

@@ -591,7 +591,7 @@ export function getCurrentTime() {
 
 export function requestUpdateLane(fiber: Fiber): Lane {
   // Special cases
-  const mode = fiber.mode;
+  const mode = fiber.mode; // ConcurrentMode
   if ((mode & ConcurrentMode) === NoMode) {
     return (SyncLane: Lane);
   } else if (

@@ -91,9 +91,11 @@ function ReactDOMRoot(internalRoot: FiberRoot) {
   this._internalRoot = internalRoot;
 }
 
+// root.render invoke 的是此处在原型挂载的 render function
 ReactDOMHydrationRoot.prototype.render = ReactDOMRoot.prototype.render = function(
   children: ReactNodeList,
 ): void {
+  // 应用根节点
   const root = this._internalRoot;
   if (root === null) {
     throw new Error('Cannot update an unmounted root.');
@@ -133,6 +135,8 @@ ReactDOMHydrationRoot.prototype.render = ReactDOMRoot.prototype.render = functio
       }
     }
   }
+  // 首次挂载 mount
+  // children 是 jsx(type, config, maybeKey) 的结果 === React Element
   updateContainer(children, root, null, null);
 };
 

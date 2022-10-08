@@ -98,16 +98,18 @@ function enqueueUpdate(
 ) {
   // Don't update the `childLanes` on the return path yet. If we already in
   // the middle of rendering, wait until after it has completed.
+  // 入更新队列
   concurrentQueues[concurrentQueuesIndex++] = fiber;
   concurrentQueues[concurrentQueuesIndex++] = queue;
   concurrentQueues[concurrentQueuesIndex++] = update;
   concurrentQueues[concurrentQueuesIndex++] = lane;
-
+  // 改变全局更新优先级
   concurrentlyUpdatedLanes = mergeLanes(concurrentlyUpdatedLanes, lane);
 
   // The fiber's `lane` field is used in some places to check if any work is
   // scheduled, to perform an eager bailout, so we need to update it immediately.
   // TODO: We should probably move this to the "shared" queue instead.
+  // 改变 fiber 更新优先级
   fiber.lanes = mergeLanes(fiber.lanes, lane);
   const alternate = fiber.alternate;
   if (alternate !== null) {
@@ -147,8 +149,11 @@ export function enqueueConcurrentClassUpdate<State>(
   update: ClassUpdate<State>,
   lane: Lane,
 ): FiberRoot | null {
+  // fiber.updateQueue.shared
   const concurrentQueue: ConcurrentQueue = (queue: any);
+  // 链表更新节点
   const concurrentUpdate: ConcurrentUpdate = (update: any);
+  // 入更新队列
   enqueueUpdate(fiber, concurrentQueue, concurrentUpdate, lane);
   return getRootForUpdatedFiber(fiber);
 }
@@ -259,6 +264,7 @@ function getRootForUpdatedFiber(sourceFiber: Fiber): FiberRoot | null {
     node = parent;
     parent = node.return;
   }
+  // 当为 fiber 根节点时，返回容器 DOM
   return node.tag === HostRoot ? (node.stateNode: FiberRoot) : null;
 }
 
