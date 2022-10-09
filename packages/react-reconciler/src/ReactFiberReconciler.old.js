@@ -381,7 +381,7 @@ export function updateContainer(
     update.callback = callback;
   }
 
-  // 入更新队列，返回根 fiber 节点容器 DOM
+  // 入更新队列，返回应用根节点
   const root = enqueueUpdate(current, update, lane);
   if (root !== null) {
     // 协调更新
