@@ -2037,12 +2037,13 @@ function workLoopConcurrent() {
       resumeSuspendedUnitOfWork(workInProgress, thrownValue);
     }
   }
-
+  // shouldYield 会在浏览器当前帧无空闲时间时停止遍历，直到浏览器有空闲时间后继续遍历。
   while (workInProgress !== null && !shouldYield()) {
     performUnitOfWork(workInProgress);
   }
 }
 
+// 该方法会创建下一个 Fiber 节点并赋值给 workInProgress，并将 workInProgress 与已创建的 Fiber 节点连接起来构成 Fiber 树
 function performUnitOfWork(unitOfWork: Fiber): void {
   // The current, flushed, state of this fiber is the alternate. Ideally
   // nothing should rely on this, but relying on it here means that we don't
