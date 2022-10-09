@@ -693,6 +693,7 @@ export function scheduleUpdateOnFiber(
 
   if (
     (executionContext & RenderContext) !== NoLanes &&
+    
     root === workInProgressRoot
   ) {
     // This update was dispatched during the render phase. This is a mistake
@@ -748,7 +749,7 @@ export function scheduleUpdateOnFiber(
         addTransitionToLanesMap(root, transition, lane);
       }
     }
-
+    // mount 时，无 wip 树
     if (root === workInProgressRoot) {
       // Received an update to a tree that's in the middle of rendering. Mark
       // that there was an interleaved update work on this root. Unless the

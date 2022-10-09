@@ -129,7 +129,7 @@ function FiberNode(
   this.key = key;
   this.elementType = null;
   this.type = null;
-  this.stateNode = null; // Fiber 对应的真实 DOM 节点
+  this.stateNode = null; // Fiber 对应的真实 DOM 节点 (根 Fiber 节点指向应用节点)
 
   // Fiber
   this.return = null; // 指向父级 Fiber 节点

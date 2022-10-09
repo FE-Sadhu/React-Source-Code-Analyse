@@ -279,7 +279,7 @@ export function enqueueUpdate<State>(
     // currently renderings (a pattern that is accompanied by a warning).
     return unsafe_markUpdateLaneFromFiberToRoot(fiber, lane);
   } else {
-    // 入更新队列，返回根 fiber 节点容器 DOM
+    // 入更新队列，返回应用根节点
     return enqueueConcurrentClassUpdate(fiber, sharedQueue, update, lane);
   }
 }
