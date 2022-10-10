@@ -246,7 +246,7 @@ function findHostInstanceWithWarning(
 
 export function createContainer(
   containerInfo: Container,
-  tag: RootTag,
+  tag: RootTag, // ConcurrentRoot
   hydrationCallbacks: null | SuspenseHydrationCallbacks,
   isStrictMode: boolean,
   concurrentUpdatesByDefaultOverride: null | boolean,
@@ -257,8 +257,8 @@ export function createContainer(
   const hydrate = false;
   const initialChildren = null;
   return createFiberRoot(
-    containerInfo,
-    tag,
+    containerInfo, // DOM 容器
+    tag, // ConcurrentRoot
     hydrate,
     initialChildren,
     hydrationCallbacks,

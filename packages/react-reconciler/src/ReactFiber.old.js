@@ -432,7 +432,7 @@ export function resetWorkInProgress(
 }
 
 export function createHostRootFiber(
-  tag: RootTag,
+  tag: RootTag, // ConcurrentRoot
   isStrictMode: boolean,
   concurrentUpdatesByDefaultOverride: null | boolean,
 ): Fiber {

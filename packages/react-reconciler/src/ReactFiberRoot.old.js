@@ -51,7 +51,7 @@ function FiberRootNode(
   identifierPrefix,
   onRecoverableError,
 ) {
-  this.tag = tag; // ConcurrentMode 
+  this.tag = tag; // ConcurrentMode 1 
   this.containerInfo = containerInfo; // 容器节点
   this.pendingChildren = null;
   this.current = null;
@@ -129,8 +129,8 @@ function FiberRootNode(
 }
 
 export function createFiberRoot(
-  containerInfo: Container,
-  tag: RootTag,
+  containerInfo: Container, // DOM 容器
+  tag: RootTag, // ConcurrentRoot
   hydrate: boolean,
   initialChildren: ReactNodeList,
   hydrationCallbacks: null | SuspenseHydrationCallbacks,
@@ -146,8 +146,8 @@ export function createFiberRoot(
 ): FiberRoot {
   // 整个应用的根节点
   const root: FiberRoot = (new FiberRootNode(
-    containerInfo,
-    tag,
+    containerInfo, // DOM 容器
+    tag, // ConcurrentRoot
     hydrate,
     identifierPrefix,
     onRecoverableError,
@@ -164,7 +164,7 @@ export function createFiberRoot(
   // stateNode is any.
   // Fiber 树根节点
   const uninitializedFiber = createHostRootFiber(
-    tag,
+    tag, // ConcurrentRoot
     isStrictMode,
     concurrentUpdatesByDefaultOverride,
   );

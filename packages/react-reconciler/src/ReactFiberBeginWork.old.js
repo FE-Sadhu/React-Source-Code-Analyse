@@ -41,7 +41,6 @@ import {
   enableCPUSuspense,
   enableUseMutableSource,
 } from 'shared/ReactFeatureFlags';
-
 import checkPropTypes from 'shared/checkPropTypes';
 import {
   markComponentRenderStarted,
@@ -1486,7 +1485,7 @@ function updateHostRoot(current, workInProgress, renderLanes) {
           for (let i = 0; i < mutableSourceEagerHydrationData.length; i += 2) {
             const mutableSource = ((mutableSourceEagerHydrationData[
               i
-            ]: any): MutableSource<any>);
+            ]: any));
             const version = mutableSourceEagerHydrationData[i + 1];
             setWorkInProgressVersion(mutableSource, version);
           }
@@ -3836,10 +3835,10 @@ function attemptEarlyBailoutIfNoScheduledUpdate(
   }
   return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
 }
-
+// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树，每处理完一个 Fiber 节点，进入 completeWork 继续处理。
 function beginWork(
-  current: Fiber | null,
-  workInProgress: Fiber,
+  current: Fiber | null, // mount 阶段，无 current fiber 树
+  workInProgress: Fiber, // WIP 树
   renderLanes: Lanes,
 ): Fiber | null {
   if (__DEV__) {
@@ -3859,7 +3858,7 @@ function beginWork(
       );
     }
   }
-
+  // update 流程
   if (current !== null) {
     const oldProps = current.memoizedProps;
     const newProps = workInProgress.pendingProps;
@@ -3907,6 +3906,7 @@ function beginWork(
       }
     }
   } else {
+    // mount 流程
     didReceiveUpdate = false;
 
     if (getIsHydrating() && isForkedChild(workInProgress)) {
