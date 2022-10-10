@@ -1202,6 +1202,7 @@ function ChildReconciler(shouldTrackSideEffects) {
       created.return = returnFiber;
       return created;
     } else {
+      // 根据 React Element 创建对应 Fiber 节点
       const created = createFiberFromElement(element, returnFiber.mode, lanes);
       created.ref = coerceRef(returnFiber, currentFirstChild, element);
       created.return = returnFiber;
@@ -1249,9 +1250,9 @@ function ChildReconciler(shouldTrackSideEffects) {
   // itself. They will be added to the side-effect list as we pass through the
   // children and the parent.
   function reconcileChildFibers(
-    returnFiber: Fiber,
-    currentFirstChild: Fiber | null,
-    newChild: any,
+    returnFiber: Fiber, // 父 Fiber 节点
+    currentFirstChild: Fiber | null, // 当前第一个 Fiber 子节点，只有一个子节点时为 null
+    newChild: any, // 新子节点 -- React Element
     lanes: Lanes,
   ): Fiber | null {
     // This function is not recursive.
@@ -1276,6 +1277,7 @@ function ChildReconciler(shouldTrackSideEffects) {
       switch (newChild.$$typeof) {
         case REACT_ELEMENT_TYPE:
           return placeSingleChild(
+            // reconcileSingleElement 为新 element 创建对应 Fiber
             reconcileSingleElement(
               returnFiber,
               currentFirstChild,

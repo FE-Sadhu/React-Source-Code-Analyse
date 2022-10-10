@@ -125,9 +125,9 @@ function FiberNode(
   mode: TypeOfMode,
 ) {
   // Instance
-  this.tag = tag;
-  this.key = key;
-  this.elementType = null;
+  this.tag = tag; // HostRoot 3 等
+  this.key = key; // jsx 的 key
+  this.elementType = null; // React Element 的 type
   this.type = null;
   this.stateNode = null; // Fiber 对应的真实 DOM 节点 (根 Fiber 节点指向应用节点)
 

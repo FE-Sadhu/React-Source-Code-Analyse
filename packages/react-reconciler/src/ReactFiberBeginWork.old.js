@@ -1519,8 +1519,10 @@ function updateHostRoot(current, workInProgress, renderLanes) {
     if (nextChildren === prevChildren) {
       return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
     }
+    // 协调生成 nextChildren (React Element) 对应的 Fiber，并挂载到 WIP.child 下
     reconcileChildren(current, workInProgress, nextChildren, renderLanes);
   }
+  // 此时 WIP.child 是新生成的 Fiber
   return workInProgress.child;
 }
 
