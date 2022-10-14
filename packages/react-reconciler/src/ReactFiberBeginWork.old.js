@@ -297,6 +297,7 @@ if (__DEV__) {
   didWarnAboutDefaultPropsOnFunctionComponent = {};
 }
 
+// 协调 Fiber 子节点
 export function reconcileChildren(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -308,6 +309,7 @@ export function reconcileChildren(
     // won't update its child set by applying minimal side-effects. Instead,
     // we will add them all to the child before it gets rendered. That means
     // we can optimize this reconciliation pass by not tracking side-effects.
+    // 创建新 Fiber 节点挂载在 wip 树
     workInProgress.child = mountChildFibers(
       workInProgress,
       null,
@@ -321,6 +323,7 @@ export function reconcileChildren(
 
     // If we had any progressed work already, that is invalid at this point so
     // let's throw it out.
+    // diff 比较上次更新的节点，复用（生成）新节点
     workInProgress.child = reconcileChildFibers(
       workInProgress,
       current.child,
