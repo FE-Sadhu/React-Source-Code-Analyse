@@ -359,6 +359,7 @@ export function createTextInstance(
 }
 
 export function getCurrentEventPriority(): * {
+  // window.event 正在触发事件时才有值
   const currentEvent = window.event;
   if (currentEvent === undefined) {
     return DefaultEventPriority;
