@@ -127,6 +127,7 @@ function advanceTimers(currentTime) {
   }
 }
 
+// handleTimeout 被 invoke 时，会传入当前时间 now() 作为参数。
 function handleTimeout(currentTime) {
   isHostTimeoutScheduled = false;
   advanceTimers(currentTime);
@@ -136,6 +137,7 @@ function handleTimeout(currentTime) {
       isHostCallbackScheduled = true;
       requestHostCallback(flushWork);
     } else {
+      // 似乎没有什么 case 能走进该分支？
       const firstTimer = peek(timerQueue);
       if (firstTimer !== null) {
         requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
@@ -158,6 +160,7 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 
   isPerformingWork = true;
+  // 之前的优先级
   const previousPriorityLevel = currentPriorityLevel;
   try {
     if (enableProfiling) {
@@ -173,6 +176,7 @@ function flushWork(hasTimeRemaining, initialTime) {
       }
     } else {
       // No catch in prod code path.
+      // initialTime 时调度开始时间，performWorkUntilDeadline 里定义的
       return workLoop(hasTimeRemaining, initialTime);
     }
   } finally {
@@ -190,6 +194,7 @@ function workLoop(hasTimeRemaining, initialTime) {
   let currentTime = initialTime;
   advanceTimers(currentTime);
   currentTask = peek(taskQueue);
+  // 最近的过期任务
   while (
     currentTask !== null &&
     !(enableSchedulerDebugging && isSchedulerPaused)
@@ -239,6 +244,7 @@ function workLoop(hasTimeRemaining, initialTime) {
   if (currentTask !== null) {
     return true;
   } else {
+    // 协调最近的未过期任务
     const firstTimer = peek(timerQueue);
     if (firstTimer !== null) {
       requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
@@ -310,8 +316,10 @@ function unstable_wrapCallback(callback) {
 }
 
 function unstable_scheduleCallback(priorityLevel, callback, options) {
+  // 获取当前时刻
   var currentTime = getCurrentTime();
 
+  // 开始调度的时刻
   var startTime;
   if (typeof options === 'object' && options !== null) {
     var delay = options.delay;
@@ -324,6 +332,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     startTime = currentTime;
   }
 
+  // 调度过期的时间
   var timeout;
   switch (priorityLevel) {
     case ImmediatePriority:
@@ -344,6 +353,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       break;
   }
 
+  // 过期的时刻
   var expirationTime = startTime + timeout;
 
   var newTask = {
@@ -359,9 +369,12 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   }
 
   if (startTime > currentTime) {
+    // 未过期任务
     // This is a delayed task.
     newTask.sortIndex = startTime;
+    // push 到 未过期队列 中
     push(timerQueue, newTask);
+    // 若没有已过期任务，并且该任务是最早过期的那一个。 则开启一次调度
     if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
       // All tasks are delayed, and this is the task with the earliest delay.
       if (isHostTimeoutScheduled) {
@@ -374,7 +387,9 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       requestHostTimeout(handleTimeout, startTime - currentTime);
     }
   } else {
+    // 已过期任务
     newTask.sortIndex = expirationTime;
+    // push 到 过期队列 中
     push(taskQueue, newTask);
     if (enableProfiling) {
       markTaskStart(newTask, currentTime);
@@ -534,6 +549,7 @@ const performWorkUntilDeadline = () => {
     try {
       hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
     } finally {
+      // PS: scheduledHostCallback 崩了的话，hasMoreWork 也为 true
       if (hasMoreWork) {
         // If there's more work, schedule the next message event at the end
         // of the preceding one.

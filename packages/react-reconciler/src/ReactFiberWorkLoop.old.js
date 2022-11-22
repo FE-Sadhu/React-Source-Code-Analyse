@@ -975,7 +975,9 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
 
 // This is the entry point for every concurrent task, i.e. anything that
 // goes through Scheduler.
+// 该函数是每个时间分片任务的入口
 function performConcurrentWorkOnRoot(root, didTimeout) {
+  // didTimeout -- 布尔值，代表是否已到过期时间才执行的该回调
   if (enableProfilerTimer && enableProfilerNestedUpdatePhase) {
     resetNestedUpdateFlag();
   }
