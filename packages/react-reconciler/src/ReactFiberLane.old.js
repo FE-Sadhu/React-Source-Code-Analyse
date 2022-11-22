@@ -199,10 +199,13 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
 
   // Do not work on any idle work until all the non-idle work has finished,
   // even if the work is suspended.
+  // 要处理的赛道（lanes）
   const nonIdlePendingLanes = pendingLanes & NonIdleLanes;
   if (nonIdlePendingLanes !== NoLanes) {
+    // 除了 suspended 的要处理的赛道
     const nonIdleUnblockedLanes = nonIdlePendingLanes & ~suspendedLanes;
     if (nonIdleUnblockedLanes !== NoLanes) {
+      // 找出要处理赛道中最高优先级的赛道
       nextLanes = getHighestPriorityLanes(nonIdleUnblockedLanes);
     } else {
       const nonIdlePingedLanes = nonIdlePendingLanes & pingedLanes;
@@ -231,6 +234,7 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
   // If we're already in the middle of a render, switching lanes will interrupt
   // it and we'll lose our progress. We should only do this if the new lanes are
   // higher priority.
+  // 被更高优先级打断时执行这段
   if (
     wipLanes !== NoLanes &&
     wipLanes !== nextLanes &&
@@ -289,6 +293,7 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
   // For those exceptions where entanglement is semantically important, like
   // useMutableSource, we should ensure that there is no partial work at the
   // time we apply the entanglement.
+  // 纠缠在一起的赛道。  没理解
   const entangledLanes = root.entangledLanes;
   if (entangledLanes !== NoLanes) {
     const entanglements = root.entanglements;

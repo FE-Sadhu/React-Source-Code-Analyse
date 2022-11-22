@@ -641,6 +641,7 @@ export function requestUpdateLane(fiber: Fiber): Lane {
   // The opaque type returned by the host config is internally a lane, so we can
   // use that directly.
   // TODO: Move this type conversion to the event priority module.
+  // 当前优先级
   const updateLane: Lane = (getCurrentUpdatePriority(): any);
   if (updateLane !== NoLane) {
     return updateLane;
@@ -652,6 +653,7 @@ export function requestUpdateLane(fiber: Fiber): Lane {
   // The opaque type returned by the host config is internally a lane, so we can
   // use that directly.
   // TODO: Move this type conversion to the event priority module.
+  // 当前事件的优先级，没事件回调则默认优先级
   const eventLane: Lane = (getCurrentEventPriority(): any);
   return eventLane;
 }
@@ -689,12 +691,12 @@ export function scheduleUpdateOnFiber(
   }
 
   // Mark that the root has a pending update.
+  // 改变 FiberRootNode 的 pendingLane 和 eventTimes
   markRootUpdated(root, lane, eventTime);
 
   if (
     (executionContext & RenderContext) !== NoLanes &&
-    
-    root === workInProgressRoot
+    root === workInProgressRoot // mount 时还没有 wip
   ) {
     // This update was dispatched during the render phase. This is a mistake
     // if the update originates from user space (with the exception of local
@@ -832,6 +834,7 @@ export function isUnsafeClassRenderPhaseUpdate(fiber: Fiber): boolean {
 // of the existing task is the same as the priority of the next level that the
 // root has work on. This function is called on every update, and right before
 // exiting a task.
+// 调度 FiberRootNode
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   const existingCallbackNode = root.callbackNode;
 
@@ -840,6 +843,8 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   markStarvedLanesAsExpired(root, currentTime);
 
   // Determine the next lanes to work on, and their priority.
+  // 确定要处理的下一个赛道以及其优先级
+  // mount 时是 defaultLane
   const nextLanes = getNextLanes(
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
@@ -859,6 +864,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   const newCallbackPriority = getHighestPriorityLane(nextLanes);
 
   // Check if there's an existing task. We may be able to reuse it.
+  // 似乎有现有任务的话，callbackPriority 与 newCallbackPriority 相等
   const existingCallbackPriority = root.callbackPriority;
   if (
     existingCallbackPriority === newCallbackPriority &&
@@ -888,12 +894,14 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
     return;
   }
 
+  // 有现有任务则取消，schedule 一个新任务
   if (existingCallbackNode != null) {
     // Cancel the existing callback. We'll schedule a new one below.
     cancelCallback(existingCallbackNode);
   }
 
   // Schedule a new callback.
+  // 调度一个新的更新
   let newCallbackNode;
   if (newCallbackPriority === SyncLane) {
     // Special case: Sync React callbacks are scheduled on a special
@@ -944,6 +952,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
         schedulerPriorityLevel = UserBlockingSchedulerPriority;
         break;
       case DefaultEventPriority:
+        // Mount 时走这里，中等优先级
         schedulerPriorityLevel = NormalSchedulerPriority;
         break;
       case IdleEventPriority:
@@ -953,6 +962,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
         schedulerPriorityLevel = NormalSchedulerPriority;
         break;
     }
+    // 开始调度
     newCallbackNode = scheduleCallback(
       schedulerPriorityLevel,
       performConcurrentWorkOnRoot.bind(null, root),

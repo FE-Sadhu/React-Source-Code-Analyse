@@ -60,10 +60,10 @@ function FiberRootNode(
   this.timeoutHandle = noTimeout;
   this.context = null;
   this.pendingContext = null;
-  this.callbackNode = null;
-  this.callbackPriority = NoLane;
-  this.eventTimes = createLaneMap(NoLanes);
-  this.expirationTimes = createLaneMap(NoTimestamp);
+  this.callbackNode = null; // scheduleCallback 调度器的返回值
+  this.callbackPriority = NoLane; // 正在调度任务的优先级
+  this.eventTimes = createLaneMap(NoLanes); // 数组，31 个元素，why 31 ?
+  this.expirationTimes = createLaneMap(NoTimestamp); // 过期 Times
 
   this.pendingLanes = NoLanes;
   this.suspendedLanes = NoLanes;

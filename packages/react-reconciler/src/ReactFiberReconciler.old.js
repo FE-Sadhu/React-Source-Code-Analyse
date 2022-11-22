@@ -320,7 +320,7 @@ export function createHydrationContainer(
 
 export function updateContainer(
   element: ReactNodeList, // React Element
-  container: OpaqueRoot, // 应用根节点
+  container: OpaqueRoot, // 应用根节点 FiberRootNode
   parentComponent: ?React$Component<any, any>, // mount 时为 null
   callback: ?Function, // mount 时为 null
 ): Lane {
@@ -339,6 +339,7 @@ export function updateContainer(
   // 处理 context 对象，mount 时为空对象
   const context = getContextForSubtree(parentComponent);
   if (container.context === null) {
+    // mount 时挂载上空对象
     container.context = context;
   } else {
     container.pendingContext = context;

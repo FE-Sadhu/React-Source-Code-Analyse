@@ -26,6 +26,7 @@ export const ContinuousEventPriority: EventPriority = InputContinuousLane;
 export const DefaultEventPriority: EventPriority = DefaultLane;
 export const IdleEventPriority: EventPriority = IdleLane;
 
+// 当前 update 优先级
 let currentUpdatePriority: EventPriority = NoLane;
 
 export function getCurrentUpdatePriority(): EventPriority {
