@@ -459,6 +459,7 @@ let needsPaint = false;
 function shouldYieldToHost() {
   const timeElapsed = getCurrentTime() - startTime;
   if (timeElapsed < frameInterval) {
+    // 主线程被阻塞的时间少于 1 帧，还可以继续被阻塞。
     // The main thread has only been blocked for a really short amount of time;
     // smaller than a single frame. Don't yield yet.
     return false;
