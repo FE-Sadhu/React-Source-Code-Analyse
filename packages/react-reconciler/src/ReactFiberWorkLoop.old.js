@@ -836,6 +836,7 @@ export function isUnsafeClassRenderPhaseUpdate(fiber: Fiber): boolean {
 // exiting a task.
 // 调度 FiberRootNode
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
+  // callbackNode 存的是 上一次（正在？） scheduleCallback 调度器的返回值
   const existingCallbackNode = root.callbackNode;
 
   // Check if any lanes are being starved by other work. If so, mark them as
@@ -865,6 +866,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
 
   // Check if there's an existing task. We may be able to reuse it.
   // 似乎有现有任务的话，callbackPriority 与 newCallbackPriority 相等
+  // callbackPriority 存的是上一次（？正在）调度任务的优先级
   const existingCallbackPriority = root.callbackPriority;
   if (
     existingCallbackPriority === newCallbackPriority &&
