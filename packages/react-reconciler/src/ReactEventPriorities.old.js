@@ -21,9 +21,13 @@ import {
 
 export opaque type EventPriority = Lane;
 
+// 离散事件优先级，例如：点击事件，input输入等触发的更新任务，优先级最高
 export const DiscreteEventPriority: EventPriority = SyncLane;
+// 连续事件优先级，例如：滚动事件，拖动事件等，连续触发的事件
 export const ContinuousEventPriority: EventPriority = InputContinuousLane;
+// 默认事件优先级，例如：setTimeout触发的更新任务
 export const DefaultEventPriority: EventPriority = DefaultLane;
+// 闲置事件优先级，优先级最低
 export const IdleEventPriority: EventPriority = IdleLane;
 
 // 当前 update 优先级
@@ -68,6 +72,7 @@ export function isHigherEventPriority(
   return a !== 0 && a < b;
 }
 
+// React Lane 优先级转 Event 优先级
 export function lanesToEventPriority(lanes: Lanes): EventPriority {
   const lane = getHighestPriorityLane(lanes);
   if (!isHigherEventPriority(DiscreteEventPriority, lane)) {
