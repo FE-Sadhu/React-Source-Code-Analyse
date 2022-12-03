@@ -200,8 +200,8 @@ function workLoop(hasTimeRemaining, initialTime) {
     !(enableSchedulerDebugging && isSchedulerPaused)
   ) {
     if (
-      currentTask.expirationTime > currentTime &&
-      (!hasTimeRemaining || shouldYieldToHost())
+      currentTask.expirationTime > currentTime && // 过期任务还没到过期时间 且 
+      (!hasTimeRemaining || shouldYieldToHost()) // 没有剩余时间，立刻中断代码执行，交出执行权
     ) {
       // This currentTask hasn't expired, and we've reached the deadline.
       break;
@@ -458,6 +458,7 @@ let needsPaint = false;
 
 function shouldYieldToHost() {
   const timeElapsed = getCurrentTime() - startTime;
+  // 从调度工作开始截止，是否已经过了 5 ms，若还没到 5ms ，则可以继续阻塞浏览器主线程
   if (timeElapsed < frameInterval) {
     // 主线程被阻塞的时间少于 1 帧，还可以继续被阻塞。
     // The main thread has only been blocked for a really short amount of time;
@@ -473,6 +474,8 @@ function shouldYieldToHost() {
   // eventually yield regardless, since there could be a pending paint that
   // wasn't accompanied by a call to `requestPaint`, or other main thread tasks
   // like network events.
+  // 当有绘制任务，则不能阻塞浏览器，立即交出执行权
+  // 当有用户输入事件（isInputPending() 为 true）时，立即交出执行权
   if (enableIsInputPending) {
     if (needsPaint) {
       // There's a pending paint (signaled by `requestPaint`). Yield now.
@@ -491,6 +494,7 @@ function shouldYieldToHost() {
         return isInputPending(continuousOptions);
       }
     } else {
+      // 已经阻塞线程很长时间了，立即交出执行权
       // We've blocked the thread for a long time. Even if there's no pending
       // input, there may be some other scheduled work that we don't know about,
       // like a network event. Yield now.
@@ -499,6 +503,7 @@ function shouldYieldToHost() {
   }
 
   // `isInputPending` isn't available. Yield now.
+  // 没有用户输入事件，那么工作了 5ms 后，立即交出执行权
   return true;
 }
 
@@ -532,11 +537,13 @@ function forceFrameRate(fps) {
   }
 }
 
+// 宏任务 -- page painting 之后，把
 const performWorkUntilDeadline = () => {
   if (scheduledHostCallback !== null) {
     const currentTime = getCurrentTime();
     // Keep track of the start time so we can measure how long the main thread
     // has been blocked.
+    // 记录调度工作的开始时间，以便测量主线程被阻塞的时间
     startTime = currentTime;
     const hasTimeRemaining = true;
 
