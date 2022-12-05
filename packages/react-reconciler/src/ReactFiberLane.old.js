@@ -493,7 +493,7 @@ export function includesBlockingLane(root: FiberRoot, lanes: Lanes): boolean {
     InputContinuousHydrationLane |
     InputContinuousLane |
     DefaultHydrationLane |
-    DefaultLane;
+    DefaultLane; // mount 是默认优先级
   return (lanes & SyncDefaultLanes) !== NoLanes;
 }
 

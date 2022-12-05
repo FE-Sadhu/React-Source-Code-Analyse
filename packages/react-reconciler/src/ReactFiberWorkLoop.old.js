@@ -836,7 +836,7 @@ export function isUnsafeClassRenderPhaseUpdate(fiber: Fiber): boolean {
 // exiting a task.
 // 调度 FiberRootNode
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
-  // callbackNode 存的是 上一次（正在？） scheduleCallback 调度器的返回值
+  // callbackNode 存的是 上一次（正在？） scheduleCallback 调度器的返回值 （也就是 Schedule Task）
   const existingCallbackNode = root.callbackNode;
 
   // Check if any lanes are being starved by other work. If so, mark them as
@@ -996,7 +996,8 @@ function performConcurrentWorkOnRoot(root, didTimeout) {
 
   // Flush any pending passive effects before deciding which lanes to work on,
   // in case they schedule additional work.
-  const originalCallbackNode = root.callbackNode;
+  // 在决定处理那个赛道前，先处理 passive effects，以免他们安排额外的工作
+  const originalCallbackNode = root.callbackNode; // schedule Task
   const didFlushPassiveEffects = flushPassiveEffects();
   if (didFlushPassiveEffects) {
     // Something in the passive effect phase may have canceled the current task.
@@ -1028,6 +1029,7 @@ function performConcurrentWorkOnRoot(root, didTimeout) {
   // TODO: We only check `didTimeout` defensively, to account for a Scheduler
   // bug we're still investigating. Once the bug in Scheduler is fixed,
   // we can remove this, since we track expiration ourselves.
+  // 有些情况下我们禁用时间分片： 1. CPU 占用太长时间，导致 task 过期（饥饿） 2. 默认同步更新模式
   const shouldTimeSlice =
     !includesBlockingLane(root, lanes) &&
     !includesExpiredLane(root, lanes) &&
@@ -1660,6 +1662,7 @@ export function getRenderLanes(): Lanes {
   return renderLanes;
 }
 
+// 创建 WIP 树
 function prepareFreshStack(root: FiberRoot, lanes: Lanes): Fiber {
   root.finishedWork = null;
   root.finishedLanes = NoLanes;
