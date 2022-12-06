@@ -1693,6 +1693,7 @@ function prepareFreshStack(root: FiberRoot, lanes: Lanes): Fiber {
     resetThenableStateOnCompletion();
   }
   workInProgressRoot = root;
+  // 创建一个与 root.current 互相引用的 Fiber 节点 （rootWorkInProgress）
   const rootWorkInProgress = createWorkInProgress(root.current, null);
   workInProgress = rootWorkInProgress;
   workInProgressRootRenderLanes = renderLanes = lanes;
