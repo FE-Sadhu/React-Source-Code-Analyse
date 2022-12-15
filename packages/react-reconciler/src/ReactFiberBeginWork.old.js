@@ -1800,6 +1800,7 @@ function mountIndeterminateComponent(
     hasId = checkDidRenderIdHook();
     setIsRendering(false);
   } else {
+    // 执行 函数组件 得到 jsx element
     value = renderWithHooks(
       null,
       workInProgress,
@@ -3863,7 +3864,7 @@ function beginWork(
       );
     }
   }
-  // update 流程
+  // update 流程 （其实 Mount 第一次也会走这里，不过也会走到 didReceiveUpdate = false）
   if (current !== null) {
     const oldProps = current.memoizedProps;
     const newProps = workInProgress.pendingProps;
