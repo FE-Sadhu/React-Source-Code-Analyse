@@ -2080,6 +2080,8 @@ function performUnitOfWork(unitOfWork: Fiber): void {
   }
 
   resetCurrentDebugFiberInDEV();
+  // 每个 Fiber 工作完成后，把 pendingProps 保存在其 memoizedProps 里
+  // 若之后有 update 触发，对比最新 pendingProps 和 memoizedProps，若没变化则代表 Props 没变，可对应做优化
   unitOfWork.memoizedProps = unitOfWork.pendingProps;
   if (next === null) {
     // If this doesn't spawn new work, complete the current work.

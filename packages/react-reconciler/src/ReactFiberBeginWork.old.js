@@ -309,7 +309,7 @@ export function reconcileChildren(
     // won't update its child set by applying minimal side-effects. Instead,
     // we will add them all to the child before it gets rendered. That means
     // we can optimize this reconciliation pass by not tracking side-effects.
-    // 创建新 Fiber 节点挂载在 wip 树
+    // 对于mount的组件 创建新 Fiber 节点挂载在 wip 树
     workInProgress.child = mountChildFibers(
       workInProgress,
       null,
@@ -3893,6 +3893,7 @@ function beginWork(
       ) {
         // No pending updates or context. Bail out now.
         didReceiveUpdate = false;
+        // 复用 current
         return attemptEarlyBailoutIfNoScheduledUpdate(
           current,
           workInProgress,
@@ -3938,6 +3939,7 @@ function beginWork(
   // move this assignment out of the common path and into each branch.
   workInProgress.lanes = NoLanes;
 
+  // 根据 tag 不同，创建不同的子 Fiber 节点 
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
       return mountIndeterminateComponent(
