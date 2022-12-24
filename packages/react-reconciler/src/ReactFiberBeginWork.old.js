@@ -3841,7 +3841,9 @@ function attemptEarlyBailoutIfNoScheduledUpdate(
   }
   return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
 }
-// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树，每处理完一个 Fiber 节点，进入 completeWork 继续处理。
+// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树
+// 1. 创建(或复用) Fiber 节点
+// 2. 串联进 Fiber 树
 function beginWork(
   current: Fiber | null, // mount 阶段，无 current fiber 树
   workInProgress: Fiber, // WIP 树
