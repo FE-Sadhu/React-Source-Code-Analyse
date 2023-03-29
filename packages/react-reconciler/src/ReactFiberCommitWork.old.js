@@ -361,6 +361,8 @@ function commitBeforeMutationEffects_begin() {
       child.return = fiber;
       nextEffect = child;
     } else {
+      // 直到找到包含该子阶段对应 flags 的层级最低的 fiberNode
+      // 或叶子 fiberNode
       commitBeforeMutationEffects_complete();
     }
   }
@@ -371,6 +373,7 @@ function commitBeforeMutationEffects_complete() {
     const fiber = nextEffect;
     setCurrentDebugFiberInDEV(fiber);
     try {
+      // 执行 flags 对应操作
       commitBeforeMutationEffectsOnFiber(fiber);
     } catch (error) {
       captureCommitPhaseError(fiber, fiber.return, error);
@@ -378,12 +381,13 @@ function commitBeforeMutationEffects_complete() {
     resetCurrentDebugFiberInDEV();
 
     const sibling = fiber.sibling;
+    // 对兄弟节点再次执行 begin 方法
     if (sibling !== null) {
       sibling.return = fiber.return;
       nextEffect = sibling;
       return;
     }
-
+    // 没兄弟节点就执行父 FiberNode 的 complete
     nextEffect = fiber.return;
   }
 }

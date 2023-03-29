@@ -2331,7 +2331,7 @@ function commitRootImpl(
   if ((executionContext & (RenderContext | CommitContext)) !== NoContext) {
     throw new Error('Should not already be working.');
   }
-
+  // root.finishedWork 就是 WIP Tree 的 HostRootFiber
   const finishedWork = root.finishedWork;
   const lanes = root.finishedLanes;
 
