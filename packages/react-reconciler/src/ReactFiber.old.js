@@ -135,7 +135,7 @@ function FiberNode(
   this.return = null; // 指向父级 Fiber 节点
   this.child = null; // 指向儿子 Fiber
   this.sibling = null; // 指向右边第一个兄弟 Fiber 节点
-  this.index = 0;
+  this.index = 0; // 当给子节点是数组时， index 标志该 Fiber 在数组里的索引
 
   this.ref = null;
 

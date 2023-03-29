@@ -309,7 +309,7 @@ export function reconcileChildren(
     // won't update its child set by applying minimal side-effects. Instead,
     // we will add them all to the child before it gets rendered. That means
     // we can optimize this reconciliation pass by not tracking side-effects.
-    // 创建新 Fiber 节点挂载在 wip 树
+    // 对于mount的组件 创建新 Fiber 节点挂载在 wip 树
     workInProgress.child = mountChildFibers(
       workInProgress,
       null,
@@ -1803,6 +1803,7 @@ function mountIndeterminateComponent(
     hasId = checkDidRenderIdHook();
     setIsRendering(false);
   } else {
+    // 执行 函数组件 得到 jsx element
     value = renderWithHooks(
       null,
       workInProgress,
@@ -3843,7 +3844,9 @@ function attemptEarlyBailoutIfNoScheduledUpdate(
   }
   return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
 }
-// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树，每处理完一个 Fiber 节点，进入 completeWork 继续处理。
+// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树
+// 1. 创建(或复用) Fiber 节点
+// 2. 串联进 Fiber 树
 function beginWork(
   current: Fiber | null, // mount 阶段，无 current fiber 树
   workInProgress: Fiber, // WIP 树
@@ -3866,7 +3869,7 @@ function beginWork(
       );
     }
   }
-  // update 流程
+  // update 流程 （其实 Mount 第一次也会走这里，不过也会走到 didReceiveUpdate = false）
   if (current !== null) {
     const oldProps = current.memoizedProps;
     const newProps = workInProgress.pendingProps;
@@ -3895,6 +3898,7 @@ function beginWork(
       ) {
         // No pending updates or context. Bail out now.
         didReceiveUpdate = false;
+        // 复用 current
         return attemptEarlyBailoutIfNoScheduledUpdate(
           current,
           workInProgress,
@@ -3940,6 +3944,7 @@ function beginWork(
   // move this assignment out of the common path and into each branch.
   workInProgress.lanes = NoLanes;
 
+  // 根据 tag 不同，创建不同的子 Fiber 节点 
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
       return mountIndeterminateComponent(

@@ -268,6 +268,7 @@ export function createInstance(
   } else {
     parentNamespace = ((hostContext: any): HostContextProd);
   }
+  // 根据 type 创建 Dom 实例
   const domElement: Instance = createElement(
     type,
     props,
@@ -292,6 +293,7 @@ export function finalizeInitialChildren(
   props: Props,
   hostContext: HostContext,
 ): boolean {
+  // 设置 props 在 Dom 实例上
   setInitialProperties(domElement, type, props);
   switch (type) {
     case 'button':

@@ -838,7 +838,10 @@ function completeDehydratedSuspenseBoundary(
     return true;
   }
 }
-
+// 1. 创建 Fiber 的 DOM 实例，并挂载好 prop
+// 2. 给该 Fiber 的 DOM 实例挂载上 children Fiber 对应的 DOM
+// 3. Fiber.stateNode = DOM 实例
+// 4. bubbleProperties 没看明白什么意思
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -994,7 +997,9 @@ function completeWork(
             markUpdate(workInProgress);
           }
         } else {
+          // beginWork 处理 HostRoot 时存的 rootContainerInstance
           const rootContainerInstance = getRootHostContainer();
+          // 根据 type 创建 Dom 实例
           const instance = createInstance(
             type,
             newProps,
@@ -1002,15 +1007,16 @@ function completeWork(
             currentHostContext,
             workInProgress,
           );
-
+          // 把该 Fiber 的子节点的 DOM 全部挂载在该 Dom 节点下 （由于是 DFS 创建 DOM 的，所以当处理到 FiberRoot 时，已经有一个完整的 Dom 树了）
           appendAllChildren(instance, workInProgress, false, false);
-
+          // 把 Dom 实例挂载在 Fiber.stateNode 上
           workInProgress.stateNode = instance;
 
           // Certain renderers require commit-time effects for initial mount.
           // (eg DOM renderer supports auto-focus for certain elements).
           // Make sure such renderers get scheduled for later work.
           if (
+            // 设置 props 在 Dom 实例上
             finalizeInitialChildren(
               instance,
               type,
@@ -1018,6 +1024,7 @@ function completeWork(
               currentHostContext,
             )
           ) {
+            // 有些特定标签需要多次更新
             markUpdate(workInProgress);
           }
         }
@@ -1027,6 +1034,7 @@ function completeWork(
           markRef(workInProgress);
         }
       }
+      // 暂时没搞懂什么意思
       bubbleProperties(workInProgress);
       return null;
     }
