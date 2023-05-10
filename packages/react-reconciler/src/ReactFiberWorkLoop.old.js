@@ -836,7 +836,7 @@ export function isUnsafeClassRenderPhaseUpdate(fiber: Fiber): boolean {
 // exiting a task.
 // 调度 FiberRootNode
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
-  // callbackNode 存的是 上一次（正在？） scheduleCallback 调度器的返回值 （也就是 Schedule Task）
+  // callbackNode 存的是当前正在调度的 callback。 scheduleCallback 调度器的返回值 （也就是 Schedule Task）
   const existingCallbackNode = root.callbackNode;
 
   // Check if any lanes are being starved by other work. If so, mark them as
@@ -850,7 +850,8 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
   );
-
+  
+  // 此时 work list 里已经没有任务了
   if (nextLanes === NoLanes) {
     // Special case: There's nothing to work on.
     if (existingCallbackNode !== null) {
@@ -862,12 +863,13 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   }
 
   // We use the highest priority lane to represent the priority of the callback.
+  // 此时 tasklist 里的最高优先级
   const newCallbackPriority = getHighestPriorityLane(nextLanes);
 
   // Check if there's an existing task. We may be able to reuse it.
-  // 似乎有现有任务的话，callbackPriority 与 newCallbackPriority 相等
-  // callbackPriority 存的是上一次（？正在）调度任务的优先级
+  // callbackPriority 存的是正在调度任务的优先级
   const existingCallbackPriority = root.callbackPriority;
+  // 优先级相同则无需重新调度，不同那么 priority 只会更高
   if (
     existingCallbackPriority === newCallbackPriority &&
     // Special case related to `act`. If the currently scheduled task is a
@@ -896,7 +898,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
     return;
   }
 
-  // 有现有任务则取消，schedule 一个新任务
+  // 有更高优先级任务，现有任务则取消
   if (existingCallbackNode != null) {
     // Cancel the existing callback. We'll schedule a new one below.
     cancelCallback(existingCallbackNode);
@@ -905,6 +907,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   // Schedule a new callback.
   // 调度一个新的更新
   let newCallbackNode;
+  // 同步执行优先级
   if (newCallbackPriority === SyncLane) {
     // Special case: Sync React callbacks are scheduled on a special
     // internal queue
@@ -980,7 +983,6 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
 // goes through Scheduler.
 // 该函数是每个时间分片任务的入口
 function performConcurrentWorkOnRoot(root, didTimeout) {
-  // didTimeout -- 布尔值，代表是否已到过期时间才执行的该回调
   if (enableProfilerTimer && enableProfilerNestedUpdatePhase) {
     resetNestedUpdateFlag();
   }
@@ -1033,10 +1035,15 @@ function performConcurrentWorkOnRoot(root, didTimeout) {
   const shouldTimeSlice =
     !includesBlockingLane(root, lanes) &&
     !includesExpiredLane(root, lanes) &&
+    // didTimeout 是为了解决饥饿问题
+    // 比如一个低优先级的 work 不断被打断，到快到过期时间的时候，这个字段为 true
     (disableSchedulerTimeoutInWorkLoop || !didTimeout);
   let exitStatus = shouldTimeSlice
     ? renderRootConcurrent(root, lanes)
     : renderRootSync(root, lanes);
+  // root 更新的 render 阶段是否处理完了。 
+  // 如果未处理完 exitStatus === RootInProgress
+  // 如果处理完了或报异常了 exitStatus !== RootInProgress
   if (exitStatus !== RootInProgress) {
     if (exitStatus === RootErrored) {
       // If something threw an error, try rendering one more time. We'll
@@ -1126,11 +1133,12 @@ function performConcurrentWorkOnRoot(root, didTimeout) {
       finishConcurrentRender(root, exitStatus, lanes);
     }
   }
-
+  // 每执行完一个切片时间，继续开启调度，处理有没有被高优先级任务打断
   ensureRootIsScheduled(root, now());
   if (root.callbackNode === originalCallbackNode) {
     // The task node scheduled for this root is the same one that's
     // currently executed. Need to return a continuation.
+    // 只是切片的时间到了导致打断的，继续执行该 callback
     return performConcurrentWorkOnRoot.bind(null, root);
   }
   return null;
