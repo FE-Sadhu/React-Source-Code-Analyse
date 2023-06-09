@@ -46,11 +46,13 @@ const hasPerformanceNow =
   typeof performance === 'object' && typeof performance.now === 'function';
 
 if (hasPerformanceNow) {
+  // performance.now() 也是返回时间戳（当前时间 - 首个浏览器上下文创建时间），可以精确到微秒
   const localPerformance = performance;
   getCurrentTime = () => localPerformance.now();
 } else {
   const localDate = Date;
   const initialTime = localDate.now();
+  // Date.now() 精确到毫秒
   getCurrentTime = () => localDate.now() - initialTime;
 }
 
@@ -82,8 +84,9 @@ var currentTask = null;
 var currentPriorityLevel = NormalPriority;
 
 // This is set while performing work, to prevent re-entrance.
+// 正在执行 workLoop 时为 true
 var isPerformingWork = false;
-
+// 是否有正在执行的 requestHostCallback，它会在 requestHostCallback 调用前设为 true，workLoop 执行前改为 false
 var isHostCallbackScheduled = false;
 var isHostTimeoutScheduled = false;
 
@@ -107,6 +110,7 @@ function advanceTimers(currentTime) {
   // Check for tasks that are no longer delayed and add them to the queue.
   let timer = peek(timerQueue);
   while (timer !== null) {
+    // 取消执行 timer 会把 callback 赋 null
     if (timer.callback === null) {
       // Timer was cancelled.
       pop(timerQueue);
@@ -192,15 +196,16 @@ function flushWork(hasTimeRemaining, initialTime) {
 
 function workLoop(hasTimeRemaining, initialTime) {
   let currentTime = initialTime;
+  // 检查有无延时任务满足延时时间了，有的话从 timerQueue 移到 taskQueue
   advanceTimers(currentTime);
   currentTask = peek(taskQueue);
-  // 最近的过期任务
+  // 最近的任务
   while (
     currentTask !== null &&
     !(enableSchedulerDebugging && isSchedulerPaused)
   ) {
     if (
-      currentTask.expirationTime > currentTime && // 过期任务还没到过期时间 且 
+      currentTask.expirationTime > currentTime && // task 未过期
       (!hasTimeRemaining || shouldYieldToHost()) // 没有剩余时间，立刻中断代码执行，交出执行权
     ) {
       // This currentTask hasn't expired, and we've reached the deadline.
@@ -368,13 +373,13 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     newTask.isQueued = false;
   }
 
+  // 如果 startTime > currentTime，说明是延时任务，将其放到 timerQueue
   if (startTime > currentTime) {
-    // 未过期任务
     // This is a delayed task.
     newTask.sortIndex = startTime;
-    // push 到 未过期队列 中
     push(timerQueue, newTask);
-    // 若没有已过期任务，并且该任务是最早过期的那一个。 则开启一次调度
+    // 这个逻辑是在 taskQueue 为空的情况下才会调用，这是因为 taskQueue 不为空的情况下，它会在每个任务执行的时候都会遍历一下 timerQueue，将到期的任务移到 taskQueue
+    // newTask === peek(timerQueue) 表示新创建的任务就是最早的要安排调度的延时任务
     if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
       // All tasks are delayed, and this is the task with the earliest delay.
       if (isHostTimeoutScheduled) {
@@ -387,9 +392,8 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       requestHostTimeout(handleTimeout, startTime - currentTime);
     }
   } else {
-    // 已过期任务
+    // 如果是正常任务，将其放到 taskQueue
     newTask.sortIndex = expirationTime;
-    // push 到 过期队列 中
     push(taskQueue, newTask);
     if (enableProfiling) {
       markTaskStart(newTask, currentTime);
@@ -441,6 +445,7 @@ function unstable_getCurrentPriorityLevel() {
   return currentPriorityLevel;
 }
 
+// performWorkUntilDeadline 正在执行时为 true
 let isMessageLoopRunning = false;
 let scheduledHostCallback = null;
 let taskTimeoutID = -1;
@@ -537,7 +542,7 @@ function forceFrameRate(fps) {
   }
 }
 
-// 宏任务 -- page painting 之后，把
+// 开始调度工作（批量执行任务）
 const performWorkUntilDeadline = () => {
   if (scheduledHostCallback !== null) {
     const currentTime = getCurrentTime();

@@ -835,6 +835,7 @@ export function isUnsafeClassRenderPhaseUpdate(fiber: Fiber): boolean {
 // root has work on. This function is called on every update, and right before
 // exiting a task.
 // 调度 FiberRootNode
+// 这个 function 在每次有更新时会被调用
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   // callbackNode 存的是当前正在调度的 callback。 scheduleCallback 调度器的返回值 （也就是 Schedule Task）
   const existingCallbackNode = root.callbackNode;
