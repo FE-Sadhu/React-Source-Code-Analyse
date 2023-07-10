@@ -3844,7 +3844,7 @@ function attemptEarlyBailoutIfNoScheduledUpdate(
   }
   return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
 }
-// 无论 mount || update ，只要触发更新，都会走 beginWork 处理 Fiber 树
+// 无论 mount || update ，只要触发更新，都会走 beginWork 深度优先遍历 DFS 处理 Fiber 树
 // 1. 创建(或复用) Fiber 节点
 // 2. 串联进 Fiber 树
 function beginWork(
