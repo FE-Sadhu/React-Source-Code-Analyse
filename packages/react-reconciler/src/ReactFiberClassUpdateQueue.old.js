@@ -175,15 +175,18 @@ if (__DEV__) {
 
 export function initializeUpdateQueue<State>(fiber: Fiber): void {
   const queue: UpdateQueue<State> = {
+    // 上次更新完成的状态
     baseState: fiber.memoizedState,
+    // 上次更新由于优先级导致跳过的 Update 节点链表的头结点
     firstBaseUpdate: null,
+    // 上次更新由于优先级导致跳过的 Update 节点链表的尾结点
     lastBaseUpdate: null,
     shared: {
-      pending: null,
+      pending: null, // 本次更新产生的 Update 链表 （环状）
       lanes: NoLanes,
       hiddenCallbacks: null,
     },
-    callbacks: null,
+    callbacks: null, 
   };
   fiber.updateQueue = queue;
 }
@@ -209,11 +212,11 @@ export function cloneUpdateQueue<State>(
 
 export function createUpdate(eventTime: number, lane: Lane): Update<*> {
   const update: Update<*> = {
-    eventTime,
-    lane,
+    eventTime, // 更新触发的时间
+    lane, // 优先级
 
-    tag: UpdateState,
-    payload: null,
+    tag: UpdateState, // 更新的类型
+    payload: null, // 更新的内容
     callback: null,
 
     next: null, // 链表
@@ -491,11 +494,13 @@ export function processUpdateQueue<State>(
     // $FlowFixMe[escaped-generic] discovered when updating Flow
     currentlyProcessingQueue = queue.shared;
   }
-
+  // 上次更新由于优先级导致跳过的 Update 节点链表的头结点
   let firstBaseUpdate = queue.firstBaseUpdate;
+  // 上次更新由于优先级导致跳过的 Update 节点链表的尾结点
   let lastBaseUpdate = queue.lastBaseUpdate;
 
   // Check if there are pending updates. If so, transfer them to the base queue.
+  // 本次更新产生的 Update 链表
   let pendingQueue = queue.shared.pending;
   if (pendingQueue !== null) {
     queue.shared.pending = null;

@@ -198,6 +198,7 @@ export function createFiberRoot(
       isDehydrated: hydrate,
       cache: (null: any), // not enabled yet
     };
+    // memoizedState 保存的是上次更新完成后的状态
     uninitializedFiber.memoizedState = initialState;
   }
   // 初始化 Fiber 根节点的更新队列
