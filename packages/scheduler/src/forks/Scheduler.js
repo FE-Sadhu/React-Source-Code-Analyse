@@ -611,7 +611,7 @@ if (typeof localSetImmediate === 'function') {
     localSetTimeout(performWorkUntilDeadline, 0);
   };
 }
-// 会从 updateContain 调用到此处，callback 是 flushWork
+// callback 是 flushWork
 function requestHostCallback(callback) {
   scheduledHostCallback = callback;
   if (!isMessageLoopRunning) {

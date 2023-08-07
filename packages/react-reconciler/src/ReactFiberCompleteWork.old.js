@@ -274,6 +274,7 @@ if (supportsMutation) {
     // TODO: Experiencing an error where oldProps is null. Suggests a host
     // component is hitting the resume path. Figure out why. Possibly
     // related to `hidden`.
+    // diff 的结果
     const updatePayload = prepareUpdate(
       instance,
       type,
@@ -285,7 +286,9 @@ if (supportsMutation) {
     workInProgress.updateQueue = (updatePayload: any);
     // If the update payload indicates that there is a change or if there
     // is a new ref we mark this as an update. All the work is done in commitWork.
+    // diff 有变化
     if (updatePayload) {
+      // 标记 Fiber Update
       markUpdate(workInProgress);
     }
   };
@@ -838,10 +841,16 @@ function completeDehydratedSuspenseBoundary(
     return true;
   }
 }
+// 如果没有 DOM 实例：
 // 1. 创建 Fiber 的 DOM 实例，并挂载好 prop
 // 2. 给该 Fiber 的 DOM 实例挂载上 children Fiber 对应的 DOM
 // 3. Fiber.stateNode = DOM 实例
-// 4. bubbleProperties 没看明白什么意思
+// 如果有 DOM 实例：
+// 1. 进行 diff 操作
+// 2. 根据 diff 的结果，打上 commit 时要做的标记
+
+// bubbleProperties 冒泡每个子 Fiber 的优先级给父 Fiber，最终应用节点能接收到全部优先级
+
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -1034,7 +1043,6 @@ function completeWork(
           markRef(workInProgress);
         }
       }
-      // 暂时没搞懂什么意思
       bubbleProperties(workInProgress);
       return null;
     }
