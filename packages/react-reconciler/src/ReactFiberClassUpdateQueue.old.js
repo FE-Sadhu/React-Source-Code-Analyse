@@ -209,11 +209,11 @@ export function cloneUpdateQueue<State>(
 
 export function createUpdate(eventTime: number, lane: Lane): Update<*> {
   const update: Update<*> = {
-    eventTime,
-    lane,
-
+    eventTime, // 创建时间
+    lane, // 优先级
+    // 区分触发更新的场景
     tag: UpdateState,
-    payload: null,
+    payload: null, // 更新的内容
     callback: null,
 
     next: null, // 链表
