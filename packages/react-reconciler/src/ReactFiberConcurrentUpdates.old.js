@@ -67,7 +67,17 @@ export function finishQueueingConcurrentUpdates(): void {
     concurrentQueues[i++] = null;
     const lane: Lane = concurrentQueues[i];
     concurrentQueues[i++] = null;
+    // 只有 a 更新，且为第一次更新
+    // a -> a
+    
+    // 接着 b 更新
+    // b -> a -> b
 
+    // 接着 c 更新
+    // c -> a -> b -> c
+
+    // 接着 d 更新
+    // d -> a -> b -> c -> d
     if (queue !== null && update !== null) {
       const pending = queue.pending;
       if (pending === null) {
