@@ -507,10 +507,15 @@ export function processUpdateQueue<State>(
 
     // The pending queue is circular. Disconnect the pointer between first
     // and last so that it's non-circular.
+    // d -> a -> b -> c -> d
+    // d
     const lastPendingUpdate = pendingQueue;
+    // a
     const firstPendingUpdate = lastPendingUpdate.next;
+    // 剪断环状链表 a -> b -> c -> d -> null
     lastPendingUpdate.next = null;
     // Append pending updates to base queue
+    // 把本次更新产生的 Update 链表串联进 base queue
     if (lastBaseUpdate === null) {
       firstBaseUpdate = firstPendingUpdate;
     } else {
@@ -523,6 +528,7 @@ export function processUpdateQueue<State>(
     // queue is a singly-linked list with no cycles, we can append to both
     // lists and take advantage of structural sharing.
     // TODO: Pass `current` as argument
+    // 同步更新 current.updateQueue 的 firstBaseUpdate、lastBaseUpdate
     const current = workInProgress.alternate;
     if (current !== null) {
       // This is always non-null on a ClassComponent or HostRoot
