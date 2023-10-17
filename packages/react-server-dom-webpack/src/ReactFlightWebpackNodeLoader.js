@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,11 +7,7 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import * as acorn from 'acorn';
-=======
 import * as acorn from 'acorn-loose';
->>>>>>> remotes/upstream/main
 
 type ResolveContext = {
   conditions: Array<string>,
@@ -49,8 +41,6 @@ type TransformSourceFunction = (
   TransformSourceFunction,
 ) => Promise<{source: Source}>;
 
-<<<<<<< HEAD
-=======
 type LoadContext = {
   conditions: Array<string>,
   format: string | null | void,
@@ -63,7 +53,6 @@ type LoadFunction = (
   LoadFunction,
 ) => Promise<{format: string, shortCircuit?: boolean, source: Source}>;
 
->>>>>>> remotes/upstream/main
 type Source = string | ArrayBuffer | Uint8Array;
 
 let warnedAboutConditionsFlag = false;
@@ -93,28 +82,7 @@ export async function resolve(
       );
     }
   }
-<<<<<<< HEAD
-  const resolved = await defaultResolve(specifier, context, defaultResolve);
-  if (resolved.url.endsWith('.server.js')) {
-    const parentURL = context.parentURL;
-    if (parentURL && !parentURL.endsWith('.server.js')) {
-      let reason;
-      if (specifier.endsWith('.server.js')) {
-        reason = `"${specifier}"`;
-      } else {
-        reason = `"${specifier}" (which expands to "${resolved.url}")`;
-      }
-      throw new Error(
-        `Cannot import ${reason} from "${parentURL}". ` +
-          'By react-server convention, .server.js files can only be imported from other .server.js files. ' +
-          'That way nobody accidentally sends these to the client by indirectly importing it.',
-      );
-    }
-  }
-  return resolved;
-=======
   return await defaultResolve(specifier, context, defaultResolve);
->>>>>>> remotes/upstream/main
 }
 
 export async function getSource(
@@ -127,9 +95,6 @@ export async function getSource(
   return defaultGetSource(url, context, defaultGetSource);
 }
 
-<<<<<<< HEAD
-function addExportNames(names, node) {
-=======
 function addLocalExportedNames(names: Map<string, string>, node: any) {
   switch (node.type) {
     case 'Identifier':
@@ -232,7 +197,6 @@ function transformServerModule(
 }
 
 function addExportNames(names: Array<string>, node: any) {
->>>>>>> remotes/upstream/main
   switch (node.type) {
     case 'Identifier':
       names.push(node.name);
@@ -280,47 +244,12 @@ function resolveClientImport(
   return stashedResolve(specifier, {conditions, parentURL}, stashedResolve);
 }
 
-<<<<<<< HEAD
-async function loadClientImport(
-  url: string,
-  defaultTransformSource: TransformSourceFunction,
-): Promise<{source: Source}> {
-  if (stashedGetSource === null) {
-    throw new Error(
-      'Expected getSource to have been called before transformSource',
-    );
-  }
-  // TODO: Validate that this is another module by calling getFormat.
-  const {source} = await stashedGetSource(
-    url,
-    {format: 'module'},
-    stashedGetSource,
-  );
-  return defaultTransformSource(
-    source,
-    {format: 'module', url},
-    defaultTransformSource,
-  );
-}
-
-async function parseExportNamesInto(
-  transformedSource: string,
-  names: Array<string>,
-  parentURL: string,
-  defaultTransformSource,
-): Promise<void> {
-  const {body} = acorn.parse(transformedSource, {
-    ecmaVersion: '2019',
-    sourceType: 'module',
-  });
-=======
 async function parseExportNamesInto(
   body: any,
   names: Array<string>,
   parentURL: string,
   loader: LoadFunction,
 ): Promise<void> {
->>>>>>> remotes/upstream/main
   for (let i = 0; i < body.length; i++) {
     const node = body[i];
     switch (node.type) {
@@ -330,13 +259,6 @@ async function parseExportNamesInto(
           continue;
         } else {
           const {url} = await resolveClientImport(node.source.value, parentURL);
-<<<<<<< HEAD
-          const {source} = await loadClientImport(url, defaultTransformSource);
-          if (typeof source !== 'string') {
-            throw new Error('Expected the transformed source to be a string.');
-          }
-          parseExportNamesInto(source, names, url, defaultTransformSource);
-=======
           const {source} = await loader(
             url,
             {format: 'module', conditions: [], importAssertions: {}},
@@ -357,7 +279,6 @@ async function parseExportNamesInto(
             continue;
           }
           await parseExportNamesInto(childBody, names, url, loader);
->>>>>>> remotes/upstream/main
           continue;
         }
       case 'ExportDefaultDeclaration':
@@ -385,8 +306,6 @@ async function parseExportNamesInto(
   }
 }
 
-<<<<<<< HEAD
-=======
 async function transformClientModule(
   body: any,
   url: string,
@@ -516,7 +435,6 @@ async function transformModuleIfNeeded(
   return transformServerModule(source, body, url, loader);
 }
 
->>>>>>> remotes/upstream/main
 export async function transformSource(
   source: Source,
   context: TransformSourceContext,
@@ -527,42 +445,11 @@ export async function transformSource(
     context,
     defaultTransformSource,
   );
-<<<<<<< HEAD
-  if (context.format === 'module' && context.url.endsWith('.client.js')) {
-=======
   if (context.format === 'module') {
->>>>>>> remotes/upstream/main
     const transformedSource = transformed.source;
     if (typeof transformedSource !== 'string') {
       throw new Error('Expected source to have been transformed to a string.');
     }
-<<<<<<< HEAD
-
-    const names = [];
-    await parseExportNamesInto(
-      transformedSource,
-      names,
-      context.url,
-      defaultTransformSource,
-    );
-
-    let newSrc =
-      "const MODULE_REFERENCE = Symbol.for('react.module.reference');\n";
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i];
-      if (name === 'default') {
-        newSrc += 'export default ';
-      } else {
-        newSrc += 'export const ' + name + ' = ';
-      }
-      newSrc += '{ $$typeof: MODULE_REFERENCE, filepath: ';
-      newSrc += JSON.stringify(context.url);
-      newSrc += ', name: ';
-      newSrc += JSON.stringify(name);
-      newSrc += '};\n';
-    }
-
-=======
     const newSrc = await transformModuleIfNeeded(
       transformedSource,
       context.url,
@@ -570,13 +457,10 @@ export async function transformSource(
         return loadClientImport(url, defaultTransformSource);
       },
     );
->>>>>>> remotes/upstream/main
     return {source: newSrc};
   }
   return transformed;
 }
-<<<<<<< HEAD
-=======
 
 export async function load(
   url: string,
@@ -597,4 +481,3 @@ export async function load(
   }
   return result;
 }
->>>>>>> remotes/upstream/main

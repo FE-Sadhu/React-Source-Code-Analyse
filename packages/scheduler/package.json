@@ -2,10 +2,6 @@
   "name": "scheduler",
   "version": "0.23.0",
   "description": "Cooperative scheduler for the browser environment.",
-<<<<<<< HEAD
-  "main": "index.js",
-=======
->>>>>>> remotes/upstream/main
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/react.git",
@@ -26,10 +22,7 @@
     "LICENSE",
     "README.md",
     "index.js",
-<<<<<<< HEAD
-=======
     "index.native.js",
->>>>>>> remotes/upstream/main
     "unstable_mock.js",
     "unstable_post_task.js",
     "cjs/",

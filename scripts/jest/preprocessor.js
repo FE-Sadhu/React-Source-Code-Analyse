@@ -4,17 +4,10 @@ const path = require('path');
 
 const babel = require('@babel/core');
 const coffee = require('coffee-script');
-<<<<<<< HEAD
-
-const tsPreprocessor = require('./typescript/preprocessor');
-const createCacheKeyFunction = require('fbjs-scripts/jest/createCacheKeyFunction');
-const {getDevToolsPlugins} = require('./devtools/preprocessor.js');
-=======
 const hermesParser = require('hermes-parser');
 
 const tsPreprocessor = require('./typescript/preprocessor');
 const createCacheKeyFunction = require('fbjs-scripts/jest/createCacheKeyFunction');
->>>>>>> remotes/upstream/main
 
 const pathToBabel = path.join(
   require.resolve('@babel/core'),
@@ -24,24 +17,15 @@ const pathToBabel = path.join(
 const pathToBabelPluginReplaceConsoleCalls = require.resolve(
   '../babel/transform-replace-console-calls'
 );
-<<<<<<< HEAD
-const pathToBabelPluginAsyncToGenerator = require.resolve(
-  '@babel/plugin-transform-async-to-generator'
-);
-=======
->>>>>>> remotes/upstream/main
 const pathToTransformInfiniteLoops = require.resolve(
   '../babel/transform-prevent-infinite-loops'
 );
 const pathToTransformTestGatePragma = require.resolve(
   '../babel/transform-test-gate-pragma'
 );
-<<<<<<< HEAD
-=======
 const pathToTransformReactVersionPragma = require.resolve(
   '../babel/transform-react-version-pragma'
 );
->>>>>>> remotes/upstream/main
 const pathToBabelrc = path.join(__dirname, '..', '..', 'babel.config.js');
 const pathToErrorCodes = require.resolve('../error-codes/codes.json');
 
@@ -70,21 +54,6 @@ const babelOptions = {
 };
 
 module.exports = {
-<<<<<<< HEAD
-  process: function(src, filePath) {
-    if (filePath.match(/\.css$/)) {
-      // Don't try to parse CSS modules; they aren't needed for tests anyway.
-      return '';
-    }
-    if (filePath.match(/\.coffee$/)) {
-      return coffee.compile(src, {bare: true});
-    }
-    if (filePath.match(/\.ts$/) && !filePath.match(/\.d\.ts$/)) {
-      return tsPreprocessor.compile(src, filePath);
-    }
-    if (filePath.match(/\.json$/)) {
-      return src;
-=======
   process: function (src, filePath) {
     if (filePath.match(/\.css$/)) {
       // Don't try to parse CSS modules; they aren't needed for tests anyway.
@@ -98,7 +67,6 @@ module.exports = {
     }
     if (filePath.match(/\.json$/)) {
       return {code: src};
->>>>>>> remotes/upstream/main
     }
     if (!filePath.match(/\/third_party\//)) {
       // for test files, we also apply the async-await transform, but we want to
@@ -107,11 +75,7 @@ module.exports = {
       const isInDevToolsPackages = !!filePath.match(
         /\/packages\/react-devtools.*\//
       );
-<<<<<<< HEAD
-      const testOnlyPlugins = [pathToBabelPluginAsyncToGenerator];
-=======
       const testOnlyPlugins = [];
->>>>>>> remotes/upstream/main
       const sourceOnlyPlugins = [];
       if (process.env.NODE_ENV === 'development' && !isInDevToolsPackages) {
         sourceOnlyPlugins.push(pathToBabelPluginReplaceConsoleCalls);
@@ -120,35 +84,6 @@ module.exports = {
         babelOptions.plugins
       );
       if (isTestFile && isInDevToolsPackages) {
-<<<<<<< HEAD
-        plugins.push(...getDevToolsPlugins(filePath));
-      }
-      return babel.transform(
-        src,
-        Object.assign(
-          {filename: path.relative(process.cwd(), filePath)},
-          babelOptions,
-          {
-            plugins,
-            sourceMaps: process.env.JEST_ENABLE_SOURCE_MAPS
-              ? process.env.JEST_ENABLE_SOURCE_MAPS
-              : false,
-          }
-        )
-      );
-    }
-    return src;
-  },
-
-  getCacheKey: createCacheKeyFunction([
-    __filename,
-    pathToBabel,
-    pathToBabelrc,
-    pathToTransformInfiniteLoops,
-    pathToTransformTestGatePragma,
-    pathToErrorCodes,
-  ]),
-=======
         plugins.push(pathToTransformReactVersionPragma);
       }
       let sourceAst = hermesParser.parse(src, {babel: true});
@@ -187,5 +122,4 @@ module.exports = {
       (process.env.NODE_ENV === 'development').toString(),
     ]
   ),
->>>>>>> remotes/upstream/main
 };

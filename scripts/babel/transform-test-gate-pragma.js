@@ -2,11 +2,8 @@
 
 /* eslint-disable no-for-of-loops/no-for-of-loops */
 
-<<<<<<< HEAD
-=======
 const getComments = require('./getComments');
 
->>>>>>> remotes/upstream/main
 function transform(babel) {
   const {types: t} = babel;
 
@@ -77,11 +74,7 @@ function transform(babel) {
         continue;
       }
 
-<<<<<<< HEAD
-      const next3 = code.substring(i, i + 3);
-=======
       const next3 = code.slice(i, i + 3);
->>>>>>> remotes/upstream/main
       if (next3 === '===') {
         tokens.push({type: '=='});
         i += 3;
@@ -93,11 +86,7 @@ function transform(babel) {
         continue;
       }
 
-<<<<<<< HEAD
-      const next2 = code.substring(i, i + 2);
-=======
       const next2 = code.slice(i, i + 2);
->>>>>>> remotes/upstream/main
       switch (next2) {
         case '&&':
         case '||':
@@ -291,11 +280,7 @@ function transform(babel) {
                 callee.name === 'it' ||
                 callee.name === 'fit'
               ) {
-<<<<<<< HEAD
-                const comments = statement.leadingComments;
-=======
                 const comments = getComments(path);
->>>>>>> remotes/upstream/main
                 if (comments !== undefined) {
                   const condition = buildGateCondition(comments);
                   if (condition !== null) {
@@ -321,11 +306,7 @@ function transform(babel) {
                 callee.property.type === 'Identifier' &&
                 callee.property.name === 'only'
               ) {
-<<<<<<< HEAD
-                const comments = statement.leadingComments;
-=======
                 const comments = getComments(path);
->>>>>>> remotes/upstream/main
                 if (comments !== undefined) {
                   const condition = buildGateCondition(comments);
                   if (condition !== null) {

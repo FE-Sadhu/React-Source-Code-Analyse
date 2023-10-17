@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,11 +15,7 @@ import {smartParse} from '../../utils';
 import {parseHookPathForEdit} from './utils';
 import styles from './NewArrayValue.css';
 
-<<<<<<< HEAD
-import type {InspectedElement} from './types';
-=======
 import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 
 type Props = {
@@ -54,12 +46,8 @@ export default function NewArrayValue({
 
   // This is a bit of an unusual usage of the EditableName component,
   // but otherwise it acts the way we want for a new Array entry.
-<<<<<<< HEAD
-  const overrideName = (oldPath, newPath) => {
-=======
   // $FlowFixMe[missing-local-annot]
   const overrideName = (oldPath: any, newPath) => {
->>>>>>> remotes/upstream/main
     const value = newPath[newPath.length - 1];
 
     let parsedValue;

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,22 +12,14 @@
 const stream = require('stream');
 const shouldIgnoreConsoleError = require('../../../../../scripts/jest/shouldIgnoreConsoleError');
 
-<<<<<<< HEAD
-module.exports = function(initModules) {
-=======
 module.exports = function (initModules) {
->>>>>>> remotes/upstream/main
   let ReactDOM;
   let ReactDOMServer;
   let act;
 
   function resetModules() {
     ({ReactDOM, ReactDOMServer} = initModules());
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
   }
 
   function shouldUseDocument(reactElement) {
@@ -60,23 +48,6 @@ module.exports = function (initModules) {
   // ====================================
 
   // promisified version of ReactDOM.render()
-<<<<<<< HEAD
-  function asyncReactDOMRender(reactElement, domElement, forceHydrate) {
-    return new Promise(resolve => {
-      if (forceHydrate) {
-        act(() => {
-          ReactDOM.hydrate(reactElement, domElement);
-        });
-      } else {
-        act(() => {
-          ReactDOM.render(reactElement, domElement);
-        });
-      }
-      // We can't use the callback for resolution because that will not catch
-      // errors. They're thrown.
-      resolve();
-    });
-=======
   async function asyncReactDOMRender(reactElement, domElement, forceHydrate) {
     if (forceHydrate) {
       await act(() => {
@@ -87,26 +58,10 @@ module.exports = function (initModules) {
         ReactDOM.render(reactElement, domElement);
       });
     }
->>>>>>> remotes/upstream/main
   }
   // performs fn asynchronously and expects count errors logged to console.error.
   // will fail the test if the count of errors logged is not equal to count.
   async function expectErrors(fn, count) {
-<<<<<<< HEAD
-    if (console.error.calls && console.error.calls.reset) {
-      console.error.calls.reset();
-    } else {
-      // TODO: Rewrite tests that use this helper to enumerate expected errors.
-      // This will enable the helper to use the .toErrorDev() matcher instead of spying.
-      spyOnDev(console, 'error');
-    }
-
-    const result = await fn();
-    if (console.error.calls && console.error.calls.count() !== 0) {
-      const filteredWarnings = [];
-      for (let i = 0; i < console.error.calls.count(); i++) {
-        const args = console.error.calls.argsFor(i);
-=======
     if (console.error.mockClear) {
       console.error.mockClear();
     } else {
@@ -124,7 +79,6 @@ module.exports = function (initModules) {
       const filteredWarnings = [];
       for (let i = 0; i < console.error.mock.calls.length; i++) {
         const args = console.error.mock.calls[i];
->>>>>>> remotes/upstream/main
         const [format, ...rest] = args;
         if (!shouldIgnoreConsoleError(format, rest)) {
           filteredWarnings.push(args);
@@ -286,15 +240,10 @@ module.exports = function (initModules) {
     if (shouldUseDocument(element)) {
       // We can't render into a document during a clean render,
       // so instead, we'll render the children into the document element.
-<<<<<<< HEAD
-      cleanContainer = getContainerFromMarkup(element, '<html></html>')
-        .documentElement;
-=======
       cleanContainer = getContainerFromMarkup(
         element,
         '<html></html>',
       ).documentElement;
->>>>>>> remotes/upstream/main
       element = element.props.children;
     } else {
       cleanContainer = document.createElement('div');

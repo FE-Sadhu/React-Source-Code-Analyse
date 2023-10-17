@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -60,9 +56,6 @@ const InitialState: State = {
 export default class ErrorBoundary extends Component<Props, State> {
   state: State = InitialState;
 
-<<<<<<< HEAD
-  static getDerivedStateFromError(error: any) {
-=======
   static getDerivedStateFromError(error: any): {
     callStack: string | null,
     errorMessage: string | null,
@@ -72,7 +65,6 @@ export default class ErrorBoundary extends Component<Props, State> {
     isUnsupportedBridgeOperationError: boolean,
     isUserError: boolean,
   } {
->>>>>>> remotes/upstream/main
     const errorMessage =
       typeof error === 'object' &&
       error !== null &&
@@ -90,14 +82,7 @@ export default class ErrorBoundary extends Component<Props, State> {
       typeof error === 'object' &&
       error !== null &&
       typeof error.stack === 'string'
-<<<<<<< HEAD
-        ? error.stack
-            .split('\n')
-            .slice(1)
-            .join('\n')
-=======
         ? error.stack.split('\n').slice(1).join('\n')
->>>>>>> remotes/upstream/main
         : null;
 
     return {
@@ -132,11 +117,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-<<<<<<< HEAD
-  render() {
-=======
   render(): React.Node {
->>>>>>> remotes/upstream/main
     const {canDismiss: canDismissProp, children} = this.props;
     const {
       callStack,
@@ -225,14 +206,10 @@ export default class ErrorBoundary extends Component<Props, State> {
     return children;
   }
 
-<<<<<<< HEAD
-  _logError = (error: any, componentStack: string | null) => {
-=======
   _logError: (error: any, componentStack: string | null) => void = (
     error,
     componentStack,
   ) => {
->>>>>>> remotes/upstream/main
     logEvent({
       event_name: 'error',
       error_message: error.message ?? null,
@@ -241,11 +218,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     });
   };
 
-<<<<<<< HEAD
-  _dismissError = () => {
-=======
   _dismissError: () => void = () => {
->>>>>>> remotes/upstream/main
     const onBeforeDismissCallback = this.props.onBeforeDismissCallback;
     if (typeof onBeforeDismissCallback === 'function') {
       onBeforeDismissCallback();
@@ -254,11 +227,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     this.setState(InitialState);
   };
 
-<<<<<<< HEAD
-  _onStoreError = (error: Error) => {
-=======
   _onStoreError: (error: Error) => void = error => {
->>>>>>> remotes/upstream/main
     if (!this.state.hasError) {
       this._logError(error, null);
       this.setState({

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,14 +16,10 @@ import {
   useRef,
   useState,
 } from 'react';
-<<<<<<< HEAD
-import {LOCAL_STORAGE_OPEN_IN_EDITOR_URL} from '../../../constants';
-=======
 import {
   LOCAL_STORAGE_OPEN_IN_EDITOR_URL,
   LOCAL_STORAGE_OPEN_IN_EDITOR_URL_PRESET,
 } from '../../../constants';
->>>>>>> remotes/upstream/main
 import {useLocalStorage, useSubscription} from '../hooks';
 import {StoreContext} from '../context';
 import Button from '../Button';
@@ -48,11 +40,7 @@ import {
   ElementTypeOtherOrUnknown,
   ElementTypeProfiler,
   ElementTypeSuspense,
-<<<<<<< HEAD
-} from 'react-devtools-shared/src/types';
-=======
 } from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 import {getDefaultOpenInEditorURL} from 'react-devtools-shared/src/utils';
 
 import styles from './SettingsShared.css';
@@ -64,13 +52,9 @@ import type {
   ElementType,
   ElementTypeComponentFilter,
   RegExpComponentFilter,
-<<<<<<< HEAD
-} from 'react-devtools-shared/src/types';
-=======
 } from 'react-devtools-shared/src/frontend/types';
 
 const vscodeFilepath = 'vscode://file/{path}:{line}';
->>>>>>> remotes/upstream/main
 
 export default function ComponentsSettings(_: {}): React.Node {
   const store = useContext(StoreContext);
@@ -91,34 +75,23 @@ export default function ComponentsSettings(_: {}): React.Node {
   );
 
   const updateCollapseNodesByDefault = useCallback(
-<<<<<<< HEAD
-    ({currentTarget}) => {
-=======
     ({currentTarget}: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       store.collapseNodesByDefault = !currentTarget.checked;
     },
     [store],
   );
 
   const updateParseHookNames = useCallback(
-<<<<<<< HEAD
-    ({currentTarget}) => {
-=======
     ({currentTarget}: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       setParseHookNames(currentTarget.checked);
     },
     [setParseHookNames],
   );
 
-<<<<<<< HEAD
-=======
   const [openInEditorURLPreset, setOpenInEditorURLPreset] = useLocalStorage<
     'vscode' | 'custom',
   >(LOCAL_STORAGE_OPEN_IN_EDITOR_URL_PRESET, 'custom');
 
->>>>>>> remotes/upstream/main
   const [openInEditorURL, setOpenInEditorURL] = useLocalStorage<string>(
     LOCAL_STORAGE_OPEN_IN_EDITOR_URL,
     getDefaultOpenInEditorURL(),
@@ -245,13 +218,10 @@ export default function ComponentsSettings(_: {}): React.Node {
     });
   }, []);
 
-<<<<<<< HEAD
-=======
   const removeAllFilter = () => {
     setComponentFilters([]);
   };
 
->>>>>>> remotes/upstream/main
   const toggleFilterIsEnabled = useCallback(
     (componentFilter: ComponentFilter, isEnabled: boolean) => {
       setComponentFilters(prevComponentFilters => {
@@ -323,17 +293,6 @@ export default function ComponentsSettings(_: {}): React.Node {
 
       <label className={styles.OpenInURLSetting}>
         Open in Editor URL:{' '}
-<<<<<<< HEAD
-        <input
-          className={styles.Input}
-          type="text"
-          placeholder={process.env.EDITOR_URL ?? 'vscode://file/{path}:{line}'}
-          value={openInEditorURL}
-          onChange={event => {
-            setOpenInEditorURL(event.target.value);
-          }}
-        />
-=======
         <select
           className={styles.Select}
           value={openInEditorURLPreset}
@@ -360,7 +319,6 @@ export default function ComponentsSettings(_: {}): React.Node {
             }}
           />
         )}
->>>>>>> remotes/upstream/main
       </label>
 
       <div className={styles.Header}>Hide components where...</div>
@@ -445,11 +403,7 @@ export default function ComponentsSettings(_: {}): React.Node {
                     <option value={ElementTypeFunction}>function</option>
                     <option value={ElementTypeForwardRef}>forward ref</option>
                     <option value={ElementTypeHostComponent}>
-<<<<<<< HEAD
-                      host (e.g. &lt;div&gt;)
-=======
                       dom nodes (e.g. &lt;div&gt;)
->>>>>>> remotes/upstream/main
                     </option>
                     <option value={ElementTypeMemo}>memo</option>
                     <option value={ElementTypeOtherOrUnknown}>other</option>
@@ -484,13 +438,6 @@ export default function ComponentsSettings(_: {}): React.Node {
           ))}
         </tbody>
       </table>
-<<<<<<< HEAD
-
-      <Button onClick={addFilter}>
-        <ButtonIcon className={styles.ButtonIcon} type="add" />
-        Add filter
-      </Button>
-=======
       <Button onClick={addFilter} title="Add filter">
         <ButtonIcon className={styles.ButtonIcon} type="add" />
         Add filter
@@ -501,7 +448,6 @@ export default function ComponentsSettings(_: {}): React.Node {
           Delete all filters
         </Button>
       )}
->>>>>>> remotes/upstream/main
     </div>
   );
 }

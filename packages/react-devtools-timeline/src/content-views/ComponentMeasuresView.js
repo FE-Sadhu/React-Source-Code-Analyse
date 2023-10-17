@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -96,18 +92,8 @@ export class ComponentMeasuresView extends View {
     showHoverHighlight: boolean,
   ): boolean {
     const {frame} = this;
-<<<<<<< HEAD
-    const {
-      componentName,
-      duration,
-      timestamp,
-      type,
-      warning,
-    } = componentMeasure;
-=======
     const {componentName, duration, timestamp, type, warning} =
       componentMeasure;
->>>>>>> remotes/upstream/main
 
     const xStart = timestampToPosition(timestamp, scaleFactor, frame);
     const xStop = timestampToPosition(timestamp + duration, scaleFactor, frame);

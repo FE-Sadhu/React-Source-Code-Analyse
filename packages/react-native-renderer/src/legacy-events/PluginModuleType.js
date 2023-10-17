@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,11 +14,7 @@ import type {
 } from './ReactSyntheticEventType';
 import type {TopLevelType} from './TopLevelEventTypes';
 
-<<<<<<< HEAD
-export type EventTypes = {[key: string]: DispatchConfig, ...};
-=======
 export type EventTypes = {[key: string]: DispatchConfig};
->>>>>>> remotes/upstream/main
 
 export type AnyNativeEvent = Event | KeyboardEvent | MouseEvent | TouchEvent;
 

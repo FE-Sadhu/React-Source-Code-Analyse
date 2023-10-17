@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -66,12 +62,8 @@ describe('rendering React components at document', () => {
       expect(body === testDocument.body).toBe(true);
     });
 
-<<<<<<< HEAD
-    it('should not be able to unmount component from document node', () => {
-=======
     // @gate enableHostSingletons
     it('should be able to unmount component from document node, but leaves singleton nodes intact', () => {
->>>>>>> remotes/upstream/main
       class Root extends React.Component {
         render() {
           return (
@@ -90,9 +82,6 @@ describe('rendering React components at document', () => {
       ReactDOM.hydrate(<Root />, testDocument);
       expect(testDocument.body.innerHTML).toBe('Hello world');
 
-<<<<<<< HEAD
-      // In Fiber this actually works. It might not be a good idea though.
-=======
       const originalDocEl = testDocument.documentElement;
       const originalHead = testDocument.head;
       const originalBody = testDocument.body;
@@ -127,7 +116,6 @@ describe('rendering React components at document', () => {
       expect(testDocument.body.innerHTML).toBe('Hello world');
 
       // When we unmount everything is removed except the persistent nodes of html, head, and body
->>>>>>> remotes/upstream/main
       ReactDOM.unmountComponentAtNode(testDocument);
       expect(testDocument.firstChild).toBe(null);
     });
@@ -265,12 +253,6 @@ describe('rendering React components at document', () => {
         }
       }
 
-<<<<<<< HEAD
-      // getTestDocument() has an extra <meta> that we didn't render.
-      expect(() =>
-        ReactDOM.hydrate(<Component text="Hello world" />, testDocument),
-      ).toErrorDev('Did not expect server HTML to contain a <meta> in <head>.');
-=======
       if (gate(flags => flags.enableFloat)) {
         // with float the title no longer is a hydration mismatch so we get an error on the body mismatch
         expect(() =>
@@ -286,7 +268,6 @@ describe('rendering React components at document', () => {
           'Did not expect server HTML to contain a <meta> in <head>.',
         );
       }
->>>>>>> remotes/upstream/main
       expect(testDocument.body.innerHTML).toBe('Hello world');
     });
 

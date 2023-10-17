@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,11 +9,7 @@
 
 'use strict';
 
-<<<<<<< HEAD
-describe('SimpleEventPlugin', function() {
-=======
 describe('SimpleEventPlugin', function () {
->>>>>>> remotes/upstream/main
   let React;
   let ReactDOM;
   let ReactDOMClient;
@@ -26,11 +18,8 @@ describe('SimpleEventPlugin', function () {
 
   let onClick;
   let container;
-<<<<<<< HEAD
-=======
   let assertLog;
   let waitForAll;
->>>>>>> remotes/upstream/main
 
   function expectClickThru(element) {
     element.click();
@@ -49,24 +38,17 @@ describe('SimpleEventPlugin', function () {
     return element;
   }
 
-<<<<<<< HEAD
-  beforeEach(function() {
-=======
   beforeEach(function () {
->>>>>>> remotes/upstream/main
     jest.resetModules();
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
     Scheduler = require('scheduler');
 
-<<<<<<< HEAD
-=======
     const InternalTestUtils = require('internal-test-utils');
     assertLog = InternalTestUtils.assertLog;
     waitForAll = InternalTestUtils.waitForAll;
 
->>>>>>> remotes/upstream/main
     onClick = jest.fn();
   });
 
@@ -77,20 +59,12 @@ describe('SimpleEventPlugin', function () {
     }
   });
 
-<<<<<<< HEAD
-  it('A non-interactive tags click when disabled', function() {
-=======
   it('A non-interactive tags click when disabled', function () {
->>>>>>> remotes/upstream/main
     const element = <div onClick={onClick} />;
     expectClickThru(mounted(element));
   });
 
-<<<<<<< HEAD
-  it('A non-interactive tags clicks bubble when disabled', function() {
-=======
   it('A non-interactive tags clicks bubble when disabled', function () {
->>>>>>> remotes/upstream/main
     const element = mounted(
       <div onClick={onClick}>
         <div />
@@ -101,11 +75,7 @@ describe('SimpleEventPlugin', function () {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-<<<<<<< HEAD
-  it('does not register a click when clicking a child of a disabled element', function() {
-=======
   it('does not register a click when clicking a child of a disabled element', function () {
->>>>>>> remotes/upstream/main
     const element = mounted(
       <button onClick={onClick} disabled={true}>
         <span />
@@ -117,11 +87,7 @@ describe('SimpleEventPlugin', function () {
     expect(onClick).toHaveBeenCalledTimes(0);
   });
 
-<<<<<<< HEAD
-  it('triggers click events for children of disabled elements', function() {
-=======
   it('triggers click events for children of disabled elements', function () {
->>>>>>> remotes/upstream/main
     const element = mounted(
       <button disabled={true}>
         <span onClick={onClick} />
@@ -133,11 +99,7 @@ describe('SimpleEventPlugin', function () {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-<<<<<<< HEAD
-  it('triggers parent captured click events when target is a child of a disabled elements', function() {
-=======
   it('triggers parent captured click events when target is a child of a disabled elements', function () {
->>>>>>> remotes/upstream/main
     const element = mounted(
       <div onClickCapture={onClick}>
         <button disabled={true}>
@@ -151,11 +113,7 @@ describe('SimpleEventPlugin', function () {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-<<<<<<< HEAD
-  it('triggers captured click events for children of disabled elements', function() {
-=======
   it('triggers captured click events for children of disabled elements', function () {
->>>>>>> remotes/upstream/main
     const element = mounted(
       <button disabled={true}>
         <span onClickCapture={onClick} />
@@ -167,13 +125,8 @@ describe('SimpleEventPlugin', function () {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-<<<<<<< HEAD
-  ['button', 'input', 'select', 'textarea'].forEach(function(tagName) {
-    describe(tagName, function() {
-=======
   ['button', 'input', 'select', 'textarea'].forEach(function (tagName) {
     describe(tagName, function () {
->>>>>>> remotes/upstream/main
       it('should forward clicks when it starts out not disabled', () => {
         const element = React.createElement(tagName, {
           onClick: onClick,
@@ -247,11 +200,7 @@ describe('SimpleEventPlugin', function () {
           count: state.count + 1,
         }));
       componentDidUpdate() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(`didUpdate - Count: ${this.state.count}`);
-=======
         Scheduler.log(`didUpdate - Count: ${this.state.count}`);
->>>>>>> remotes/upstream/main
       }
       render() {
         return (
@@ -279,20 +228,12 @@ describe('SimpleEventPlugin', function () {
 
     ReactDOM.render(<Button />, container);
     expect(button.textContent).toEqual('Count: 0');
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([]);
-=======
     assertLog([]);
->>>>>>> remotes/upstream/main
 
     click();
 
     // There should be exactly one update.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['didUpdate - Count: 3']);
-=======
     assertLog(['didUpdate - Count: 3']);
->>>>>>> remotes/upstream/main
     expect(button.textContent).toEqual('Count: 3');
   });
 
@@ -305,15 +246,11 @@ describe('SimpleEventPlugin', function () {
       ReactDOMClient = require('react-dom/client');
       Scheduler = require('scheduler');
 
-<<<<<<< HEAD
-      act = require('jest-react').act;
-=======
       const InternalTestUtils = require('internal-test-utils');
       assertLog = InternalTestUtils.assertLog;
       waitForAll = InternalTestUtils.waitForAll;
 
       act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
     });
 
     it('flushes pending interactive work before exiting event handler', async () => {
@@ -326,20 +263,12 @@ describe('SimpleEventPlugin', function () {
         state = {disabled: false};
         onClick = () => {
           // Perform some side-effect
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Side-effect');
-=======
           Scheduler.log('Side-effect');
->>>>>>> remotes/upstream/main
           // Disable the button
           this.setState({disabled: true});
         };
         render() {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(
-=======
           Scheduler.log(
->>>>>>> remotes/upstream/main
             `render button: ${this.state.disabled ? 'disabled' : 'enabled'}`,
           );
           return (
@@ -355,17 +284,10 @@ describe('SimpleEventPlugin', function () {
       // Initial mount
       root.render(<Button />);
       // Should not have flushed yet because it's async
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([]);
-      expect(button).toBe(undefined);
-      // Flush async work
-      expect(Scheduler).toFlushAndYield(['render button: enabled']);
-=======
       assertLog([]);
       expect(button).toBe(undefined);
       // Flush async work
       await waitForAll(['render button: enabled']);
->>>>>>> remotes/upstream/main
 
       function click() {
         const event = new MouseEvent('click', {
@@ -379,13 +301,8 @@ describe('SimpleEventPlugin', function () {
       }
 
       // Click the button to trigger the side-effect
-<<<<<<< HEAD
-      await act(async () => click());
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => click());
       assertLog([
->>>>>>> remotes/upstream/main
         // The handler fired
         'Side-effect',
         // The component re-rendered synchronously, even in concurrent mode.
@@ -394,11 +311,7 @@ describe('SimpleEventPlugin', function () {
 
       // Click the button again
       click();
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-=======
       assertLog([
->>>>>>> remotes/upstream/main
         // The event handler was removed from the button, so there's no effect.
       ]);
 
@@ -409,11 +322,7 @@ describe('SimpleEventPlugin', function () {
       click();
       click();
       click();
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([]);
-=======
       await waitForAll([]);
->>>>>>> remotes/upstream/main
     });
 
     // NOTE: This test was written for the old behavior of discrete updates,
@@ -446,11 +355,7 @@ describe('SimpleEventPlugin', function () {
       // Should not have flushed yet because it's async
       expect(button).toBe(undefined);
       // Flush async work
-<<<<<<< HEAD
-      Scheduler.unstable_flushAll();
-=======
       await waitForAll([]);
->>>>>>> remotes/upstream/main
       expect(button.textContent).toEqual('Count: 0');
 
       function click() {
@@ -465,26 +370,11 @@ describe('SimpleEventPlugin', function () {
       }
 
       // Click the button a single time
-<<<<<<< HEAD
-      await act(async () => click());
-=======
       await act(() => click());
->>>>>>> remotes/upstream/main
       // The counter should update synchronously, even in concurrent mode.
       expect(button.textContent).toEqual('Count: 1');
 
       // Click the button many more times
-<<<<<<< HEAD
-      await act(async () => click());
-      await act(async () => click());
-      await act(async () => click());
-      await act(async () => click());
-      await act(async () => click());
-      await act(async () => click());
-
-      // Flush the remaining work
-      Scheduler.unstable_flushAll();
-=======
       await act(() => click());
       await act(() => click());
       await act(() => click());
@@ -494,23 +384,15 @@ describe('SimpleEventPlugin', function () {
 
       // Flush the remaining work
       await waitForAll([]);
->>>>>>> remotes/upstream/main
       // The counter should equal the total number of clicks
       expect(button.textContent).toEqual('Count: 7');
     });
   });
 
-<<<<<<< HEAD
-  describe('iOS bubbling click fix', function() {
-    // See http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
-
-    it('does not add a local click to interactive elements', function() {
-=======
   describe('iOS bubbling click fix', function () {
     // See http://www.quirksmode.org/blog/archives/2010/09/click_event_del.html
 
     it('does not add a local click to interactive elements', function () {
->>>>>>> remotes/upstream/main
       container = document.createElement('div');
 
       ReactDOM.render(<button onClick={onClick} />, container);
@@ -522,11 +404,7 @@ describe('SimpleEventPlugin', function () {
       expect(onClick).toHaveBeenCalledTimes(0);
     });
 
-<<<<<<< HEAD
-    it('adds a local click listener to non-interactive elements', function() {
-=======
     it('adds a local click listener to non-interactive elements', function () {
->>>>>>> remotes/upstream/main
       container = document.createElement('div');
 
       ReactDOM.render(<div onClick={onClick} />, container);
@@ -543,11 +421,7 @@ describe('SimpleEventPlugin', function () {
 
       const passiveEvents = [];
       const nativeAddEventListener = container.addEventListener;
-<<<<<<< HEAD
-      container.addEventListener = function(type, fn, options) {
-=======
       container.addEventListener = function (type, fn, options) {
->>>>>>> remotes/upstream/main
         if (options !== null && typeof options === 'object') {
           if (options.passive) {
             passiveEvents.push(type);

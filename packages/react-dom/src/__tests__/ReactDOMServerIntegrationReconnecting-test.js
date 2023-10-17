@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,11 +18,7 @@ let ReactTestUtils;
 
 function initModules() {
   // Reset warning cache.
-<<<<<<< HEAD
-  jest.resetModuleRegistry();
-=======
   jest.resetModules();
->>>>>>> remotes/upstream/main
 
   React = require('react');
   ReactDOM = require('react-dom');
@@ -41,27 +33,15 @@ function initModules() {
   };
 }
 
-<<<<<<< HEAD
-const {
-  resetModules,
-  expectMarkupMismatch,
-  expectMarkupMatch,
-} = ReactDOMServerIntegrationUtils(initModules);
-=======
 const {resetModules, expectMarkupMismatch, expectMarkupMatch} =
   ReactDOMServerIntegrationUtils(initModules);
->>>>>>> remotes/upstream/main
 
 describe('ReactDOMServerIntegration', () => {
   beforeEach(() => {
     resetModules();
   });
 
-<<<<<<< HEAD
-  describe('reconnecting to server markup', function() {
-=======
   describe('reconnecting to server markup', function () {
->>>>>>> remotes/upstream/main
     let EmptyComponent;
     beforeEach(() => {
       EmptyComponent = class extends React.Component {
@@ -71,13 +51,8 @@ describe('ReactDOMServerIntegration', () => {
       };
     });
 
-<<<<<<< HEAD
-    describe('elements', function() {
-      describe('reconnecting different component implementations', function() {
-=======
     describe('elements', function () {
       describe('reconnecting different component implementations', function () {
->>>>>>> remotes/upstream/main
         let ES6ClassComponent, PureComponent, bareElement;
         beforeEach(() => {
           // try each type of component on client and server.
@@ -187,11 +162,7 @@ describe('ReactDOMServerIntegration', () => {
         ));
     });
 
-<<<<<<< HEAD
-    describe('inline styles', function() {
-=======
     describe('inline styles', function () {
->>>>>>> remotes/upstream/main
       it('should error reconnecting missing style attribute', () =>
         expectMarkupMismatch(<div style={{width: '1px'}} />, <div />));
 
@@ -241,11 +212,7 @@ describe('ReactDOMServerIntegration', () => {
         ));
     });
 
-<<<<<<< HEAD
-    describe('text nodes', function() {
-=======
     describe('text nodes', function () {
->>>>>>> remotes/upstream/main
       it('should error reconnecting different text', () =>
         expectMarkupMismatch(<div>Text</div>, <div>Other Text</div>));
 
@@ -289,11 +256,7 @@ describe('ReactDOMServerIntegration', () => {
         ));
     });
 
-<<<<<<< HEAD
-    describe('element trees and children', function() {
-=======
     describe('element trees and children', function () {
->>>>>>> remotes/upstream/main
       it('should error reconnecting missing children', () =>
         expectMarkupMismatch(
           <div>

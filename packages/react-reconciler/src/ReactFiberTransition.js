@@ -1,20 +1,11 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
  */
-<<<<<<< HEAD
-
-import ReactSharedInternals from 'shared/ReactSharedInternals';
-import type {Transition} from './ReactFiberTracingMarkerComponent.new';
-=======
 import type {Fiber, FiberRoot} from './ReactInternalTypes';
 import type {Lanes} from './ReactFiberLane';
 import type {StackCursor} from './ReactFiberStack';
@@ -35,7 +26,6 @@ import {
 } from './ReactFiberCacheComponent';
 
 import ReactSharedInternals from 'shared/ReactSharedInternals';
->>>>>>> remotes/upstream/main
 
 const {ReactCurrentBatchConfig} = ReactSharedInternals;
 
@@ -44,8 +34,6 @@ export const NoTransition = null;
 export function requestCurrentTransition(): Transition | null {
   return ReactCurrentBatchConfig.transition;
 }
-<<<<<<< HEAD
-=======
 
 // When retrying a Suspense/Offscreen boundary, we restore the cache that was
 // used during the previous render by placing it here, on the stack.
@@ -220,4 +208,3 @@ export function getOffscreenDeferredCache(): SpawnedCachePool | null {
     pool: cacheFromPool,
   };
 }
->>>>>>> remotes/upstream/main

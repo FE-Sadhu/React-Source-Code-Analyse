@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,20 +10,12 @@
 'use strict';
 
 const React = require('react');
-<<<<<<< HEAD
-const ReactDOM = require('react-dom');
-const ReactTestUtils = require('react-dom/test-utils');
-
-// Helpers
-const testAllPermutations = function(testCases) {
-=======
 const ReactDOMClient = require('react-dom/client');
 const ReactTestUtils = require('react-dom/test-utils');
 const act = require('internal-test-utils').act;
 
 // Helpers
 const testAllPermutations = async function (testCases) {
->>>>>>> remotes/upstream/main
   for (let i = 0; i < testCases.length; i += 2) {
     const renderWithChildren = testCases[i];
     const expectedResultAfterRender = testCases[i + 1];
@@ -37,28 +25,17 @@ const testAllPermutations = async function (testCases) {
       const expectedResultAfterUpdate = testCases[j + 1];
 
       const container = document.createElement('div');
-<<<<<<< HEAD
-      ReactDOM.render(<div>{renderWithChildren}</div>, container);
-      expectChildren(container, expectedResultAfterRender);
-
-      ReactDOM.render(<div>{updateWithChildren}</div>, container);
-=======
       const root = ReactDOMClient.createRoot(container);
       await act(() => root.render(<div>{renderWithChildren}</div>));
       expectChildren(container, expectedResultAfterRender);
 
       await act(() => root.render(<div>{updateWithChildren}</div>));
->>>>>>> remotes/upstream/main
       expectChildren(container, expectedResultAfterUpdate);
     }
   }
 };
 
-<<<<<<< HEAD
-const expectChildren = function(container, children) {
-=======
 const expectChildren = function (container, children) {
->>>>>>> remotes/upstream/main
   const outerNode = container.firstChild;
   let textNode;
   if (typeof children === 'string') {
@@ -100,19 +77,12 @@ const expectChildren = function (container, children) {
  * faster to render and update.
  */
 describe('ReactMultiChildText', () => {
-<<<<<<< HEAD
-  it('should correctly handle all possible children for render and update', () => {
-    expect(() => {
-      // prettier-ignore
-      testAllPermutations([
-=======
   jest.setTimeout(20000);
 
   it('should correctly handle all possible children for render and update', async () => {
     await expect(async () => {
       // prettier-ignore
       await testAllPermutations([
->>>>>>> remotes/upstream/main
         // basic values
         undefined, [],
         null, [],
@@ -205,11 +175,7 @@ describe('ReactMultiChildText', () => {
   });
 
   it('should throw if rendering both HTML and children', () => {
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div dangerouslySetInnerHTML={{__html: 'abcdef'}}>ghjkl</div>,
       );
@@ -226,11 +192,7 @@ describe('ReactMultiChildText', () => {
       </div>,
     );
 
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div>
           <h1>A</h1>
@@ -238,11 +200,7 @@ describe('ReactMultiChildText', () => {
       );
     }).not.toThrow();
 
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div>
           <h1>{['A']}</h1>
@@ -250,11 +208,7 @@ describe('ReactMultiChildText', () => {
       );
     }).not.toThrow();
 
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div>
           <h1>{['A', 'B']}</h1>

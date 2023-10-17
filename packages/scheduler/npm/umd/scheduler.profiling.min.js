@@ -1,11 +1,7 @@
 /**
  * @license React
  *
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,23 +11,14 @@
 
 'use strict';
 
-<<<<<<< HEAD
-(function(global, factory) {
-  // eslint-disable-next-line no-unused-expressions
-=======
 (function (global, factory) {
   // eslint-disable-next-line ft-flow/no-unused-expressions
->>>>>>> remotes/upstream/main
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('react')))
     : typeof define === 'function' && define.amd // eslint-disable-line no-undef
     ? define(['react'], factory) // eslint-disable-line no-undef
     : (global.Scheduler = factory(global));
-<<<<<<< HEAD
-})(this, function(global) {
-=======
 })(this, function (global) {
->>>>>>> remotes/upstream/main
   function unstable_now() {
     return global.React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Scheduler.unstable_now.apply(
       this,

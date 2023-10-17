@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,26 +16,6 @@ const dynamicFeatureFlags: DynamicFeatureFlags = require('ReactFeatureFlags');
 
 export const {
   disableInputAttributeSyncing,
-<<<<<<< HEAD
-  enableTrustedTypesIntegration,
-  disableSchedulerTimeoutBasedOnReactExpirationTime,
-  warnAboutSpreadingKeyToJSX,
-  replayFailedUnitOfWorkWithInvokeGuardedCallback,
-  enableFilterEmptyStringAttributesDOM,
-  enableLegacyFBSupport,
-  deferRenderPhaseUpdateToNextBatch,
-  enableDebugTracing,
-  skipUnmountedBoundaries,
-  createRootStrictEffectsByDefault,
-  enableUseRefAccessWarning,
-  disableNativeComponentFrames,
-  disableSchedulerTimeoutInWorkLoop,
-  enableLazyContextPropagation,
-  enableSyncDefaultUpdates,
-  enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-  enableClientRenderFallbackOnTextMismatch,
-  enableTransitionTracing,
-=======
   disableIEWorkarounds,
   enableTrustedTypesIntegration,
   replayFailedUnitOfWorkWithInvokeGuardedCallback,
@@ -56,17 +32,11 @@ export const {
   enableDO_NOT_USE_disableStrictPassiveEffect,
   disableSchedulerTimeoutInWorkLoop,
   enableUseDeferredValueInitialArg,
->>>>>>> remotes/upstream/main
 } = dynamicFeatureFlags;
 
 // On WWW, __EXPERIMENTAL__ is used for a new modern build.
 // It's not used anywhere in production yet.
 
-<<<<<<< HEAD
-export const enableStrictEffects: boolean =
-  __DEV__ && dynamicFeatureFlags.enableStrictEffects;
-=======
->>>>>>> remotes/upstream/main
 export const debugRenderPhaseSideEffectsForStrictMode = __DEV__;
 export const enableProfilerTimer = __PROFILE__;
 export const enableProfilerCommitHooks = __PROFILE__;
@@ -75,15 +45,6 @@ export const enableProfilerNestedUpdateScheduledHook: boolean =
   __PROFILE__ && dynamicFeatureFlags.enableProfilerNestedUpdateScheduledHook;
 export const enableUpdaterTracking = __PROFILE__;
 
-<<<<<<< HEAD
-export const enableSuspenseAvoidThisFallback = true;
-export const enableSuspenseAvoidThisFallbackFizz = false;
-export const enableCPUSuspense = true;
-export const enableFloat = false;
-export const enableUseHook = true;
-export const enableUseMemoCacheHook = true;
-export const enableUseEventHook = true;
-=======
 export const createRootStrictEffectsByDefault = false;
 export const enableSuspenseAvoidThisFallback = true;
 export const enableSuspenseAvoidThisFallbackFizz = false;
@@ -95,7 +56,6 @@ export const enableUseEffectEventHook = true;
 export const enableHostSingletons = true;
 export const enableClientRenderFallbackOnTextMismatch = false;
 export const enableFilterEmptyStringAttributesDOM = true;
->>>>>>> remotes/upstream/main
 
 // Logs additional User Timing API marks for use with an experimental profiling tool.
 export const enableSchedulingProfiler: boolean =
@@ -105,16 +65,6 @@ export const enableSchedulingProfiler: boolean =
 // For now, we'll turn it on for everyone because it's *already* on for everyone in practice.
 // At least this will let us stop shipping <Profiler> implementation to all users.
 export const enableSchedulerDebugging = true;
-<<<<<<< HEAD
-export const warnAboutDeprecatedLifecycles = true;
-export const disableLegacyContext = __EXPERIMENTAL__;
-export const warnAboutStringRefs = false;
-export const warnAboutDefaultPropsOnFunctionComponents = false;
-export const enableGetInspectorDataForInstanceInProduction = false;
-
-export const enableCache = true;
-export const enableCacheElement = true;
-=======
 export const disableLegacyContext = __EXPERIMENTAL__;
 export const enableGetInspectorDataForInstanceInProduction = false;
 
@@ -129,7 +79,6 @@ export const enableBinaryFlight = true;
 export const enableTaint = false;
 
 export const enablePostpone = false;
->>>>>>> remotes/upstream/main
 
 export const disableJavaScriptURLs = true;
 
@@ -151,30 +100,6 @@ export const enableComponentStackLocations = true;
 
 export const disableTextareaChildren = __EXPERIMENTAL__;
 
-<<<<<<< HEAD
-// Enable forked reconciler. Piggy-backing on the "variant" global so that we
-// don't have to add another test dimension. The build system will compile this
-// to the correct value.
-export const enableNewReconciler = __VARIANT__;
-
-export const allowConcurrentByDefault = true;
-
-export const deletedTreeCleanUpLevel = 3;
-
-export const consoleManagedByDevToolsDuringStrictMode = true;
-export const enableServerContext = true;
-
-// Some www surfaces are still using this. Remove once they have been migrated.
-export const enableUseMutableSource = true;
-
-export const enableCustomElementPropertySupport = __EXPERIMENTAL__;
-
-// Flow magic to verify the exports of this file match the original version.
-// eslint-disable-next-line no-unused-vars
-type Check<_X, Y: _X, X: Y = _X> = null;
-// eslint-disable-next-line no-unused-expressions
-(null: Check<ExportsType, FeatureFlagsType>);
-=======
 export const allowConcurrentByDefault = true;
 
 export const consoleManagedByDevToolsDuringStrictMode = true;
@@ -190,4 +115,3 @@ export const passChildrenWhenCloningPersistedNodes = false;
 
 // Flow magic to verify the exports of this file match the original version.
 ((((null: any): ExportsType): FeatureFlagsType): ExportsType);
->>>>>>> remotes/upstream/main

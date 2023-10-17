@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -67,15 +63,9 @@ export function generateHookMap(sourceAST: File): HookMap {
   const hookNamesMapping = getHookNamesMappingFromAST(sourceAST);
   const namesMap: Map<string, number> = new Map();
   const names = [];
-<<<<<<< HEAD
-  const mappings = [];
-
-  let currentLine = null;
-=======
   const mappings: Array<HookMapLine> = [];
 
   let currentLine: $FlowFixMe | null = null;
->>>>>>> remotes/upstream/main
   hookNamesMapping.forEach(({name, start}) => {
     let nameIndex = namesMap.get(name);
     if (nameIndex == null) {

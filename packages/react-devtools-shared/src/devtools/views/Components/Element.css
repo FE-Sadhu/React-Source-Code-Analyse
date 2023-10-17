@@ -22,14 +22,6 @@
   user-select: none;
 }
 
-<<<<<<< HEAD
-.ScrollAnchor {
-  height: 100%;
-  width: 0;
-}
-
-=======
->>>>>>> remotes/upstream/main
 .SelectedElement {
   background-color: var(--color-background-selected);
   color: var(--color-text-selected);

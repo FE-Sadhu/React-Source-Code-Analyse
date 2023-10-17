@@ -2,12 +2,6 @@
 
 module.exports = {
   globalSetup: require.resolve('./setupGlobal.js'),
-<<<<<<< HEAD
-  haste: {
-    hasteImplModulePath: require.resolve('./noHaste.js'),
-  },
-=======
->>>>>>> remotes/upstream/main
   modulePathIgnorePatterns: [
     '<rootDir>/scripts/rollup/shims/',
     '<rootDir>/scripts/bench/',
@@ -23,22 +17,15 @@ module.exports = {
   rootDir: process.cwd(),
   roots: ['<rootDir>/packages', '<rootDir>/scripts'],
   collectCoverageFrom: ['packages/**/*.js'],
-<<<<<<< HEAD
-  timers: 'fake',
-=======
   fakeTimers: {
     enableGlobally: true,
     legacyFakeTimers: true,
   },
->>>>>>> remotes/upstream/main
   snapshotSerializers: [require.resolve('jest-snapshot-serializer-raw')],
 
   testSequencer: require.resolve('./jestSequencer'),
 
   testEnvironment: 'jsdom',
-<<<<<<< HEAD
-=======
 
   testRunner: 'jest-circus/runner',
->>>>>>> remotes/upstream/main
 };

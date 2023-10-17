@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -88,11 +84,7 @@ describe('DOMPropertyOperations', () => {
       // Browsers default to this behavior, but some test environments do not.
       // This ensures that we have consistent behavior.
       const obj = {
-<<<<<<< HEAD
-        toString: function() {
-=======
         toString: function () {
->>>>>>> remotes/upstream/main
           return 'css-class';
         },
       };
@@ -160,11 +152,7 @@ describe('DOMPropertyOperations', () => {
       expect(container.firstChild.hasAttribute('hidden')).toBe(false);
     });
 
-<<<<<<< HEAD
-    it('should always assign the value attribute for non-inputs', function() {
-=======
     it('should always assign the value attribute for non-inputs', function () {
->>>>>>> remotes/upstream/main
       const container = document.createElement('div');
       ReactDOM.render(<progress />, container);
       spyOnDevAndProd(container.firstChild, 'setAttribute');
@@ -1053,17 +1041,10 @@ describe('DOMPropertyOperations', () => {
       const customelement = container.querySelector('my-custom-element');
       // Install a setter to activate the `in` heuristic
       Object.defineProperty(customelement, 'oncustomevent', {
-<<<<<<< HEAD
-        set: function(x) {
-          this._oncustomevent = x;
-        },
-        get: function() {
-=======
         set: function (x) {
           this._oncustomevent = x;
         },
         get: function () {
->>>>>>> remotes/upstream/main
           return this._oncustomevent;
         },
       });
@@ -1114,17 +1095,10 @@ describe('DOMPropertyOperations', () => {
 
       // Install a setter to activate the `in` heuristic
       Object.defineProperty(customElement, 'foo', {
-<<<<<<< HEAD
-        set: function(x) {
-          this._foo = x;
-        },
-        get: function() {
-=======
         set: function (x) {
           this._foo = x;
         },
         get: function () {
->>>>>>> remotes/upstream/main
           return this._foo;
         },
       });
@@ -1142,17 +1116,10 @@ describe('DOMPropertyOperations', () => {
 
       // Install a setter to activate the `in` heuristic
       Object.defineProperty(customElement, 'foo', {
-<<<<<<< HEAD
-        set: function(x) {
-          this._foo = x;
-        },
-        get: function() {
-=======
         set: function (x) {
           this._foo = x;
         },
         get: function () {
->>>>>>> remotes/upstream/main
           return this._foo;
         },
       });
@@ -1182,11 +1149,7 @@ describe('DOMPropertyOperations', () => {
     it('should not remove attributes for special properties', () => {
       const container = document.createElement('div');
       ReactDOM.render(
-<<<<<<< HEAD
-        <input type="text" value="foo" onChange={function() {}} />,
-=======
         <input type="text" value="foo" onChange={function () {}} />,
->>>>>>> remotes/upstream/main
         container,
       );
       if (disableInputAttributeSyncing) {
@@ -1197,11 +1160,7 @@ describe('DOMPropertyOperations', () => {
       expect(container.firstChild.value).toBe('foo');
       expect(() =>
         ReactDOM.render(
-<<<<<<< HEAD
-          <input type="text" onChange={function() {}} />,
-=======
           <input type="text" onChange={function () {}} />,
->>>>>>> remotes/upstream/main
           container,
         ),
       ).toErrorDev(

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -27,11 +23,7 @@ export default function WarnIfLegacyBackendDetected(_: {}): null {
   // In this case the frontend should show upgrade instructions.
   useEffect(() => {
     // Wall.listen returns a cleanup function
-<<<<<<< HEAD
-    let unlisten = bridge.wall.listen(message => {
-=======
     let unlisten: $FlowFixMe = bridge.wall.listen(message => {
->>>>>>> remotes/upstream/main
       switch (message.type) {
         case 'call':
         case 'event':

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -33,14 +29,10 @@ import type {
   LocationKeyToHookSourceAndMetadata,
 } from './loadSourceAndMetadata';
 import type {HookSource} from 'react-debug-tools/src/ReactDebugHooks';
-<<<<<<< HEAD
-import type {HookNames, LRUCache} from 'react-devtools-shared/src/types';
-=======
 import type {
   HookNames,
   LRUCache,
 } from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 
 type AST = mixed;
 
@@ -75,36 +67,14 @@ type CachedRuntimeCodeMetadata = {
   sourceMapConsumer: SourceMapConsumerType | null,
 };
 
-<<<<<<< HEAD
-const runtimeURLToMetadataCache: LRUCache<
-  string,
-  CachedRuntimeCodeMetadata,
-> = new LRU({max: 50});
-=======
 const runtimeURLToMetadataCache: LRUCache<string, CachedRuntimeCodeMetadata> =
   new LRU({max: 50});
->>>>>>> remotes/upstream/main
 
 type CachedSourceCodeMetadata = {
   originalSourceAST: AST,
   originalSourceCode: string,
 };
 
-<<<<<<< HEAD
-const originalURLToMetadataCache: LRUCache<
-  string,
-  CachedSourceCodeMetadata,
-> = new LRU({
-  max: 50,
-  dispose: (originalSourceURL: string, metadata: CachedSourceCodeMetadata) => {
-    if (__DEBUG__) {
-      console.log(
-        `originalURLToMetadataCache.dispose() Evicting cached metadata for "${originalSourceURL}"`,
-      );
-    }
-  },
-});
-=======
 const originalURLToMetadataCache: LRUCache<string, CachedSourceCodeMetadata> =
   new LRU({
     max: 50,
@@ -119,7 +89,6 @@ const originalURLToMetadataCache: LRUCache<string, CachedSourceCodeMetadata> =
       }
     },
   });
->>>>>>> remotes/upstream/main
 
 export async function parseSourceAndMetadata(
   hooksList: HooksList,
@@ -229,12 +198,8 @@ function initializeHookParsedMetadata(
   locationKeyToHookSourceAndMetadata: LocationKeyToHookSourceAndMetadata,
 ) {
   // Create map of unique source locations (file names plus line and column numbers) to metadata about hooks.
-<<<<<<< HEAD
-  const locationKeyToHookParsedMetadata: LocationKeyToHookParsedMetadata = new Map();
-=======
   const locationKeyToHookParsedMetadata: LocationKeyToHookParsedMetadata =
     new Map();
->>>>>>> remotes/upstream/main
   locationKeyToHookSourceAndMetadata.forEach(
     (hookSourceAndMetadata, locationKey) => {
       const hookParsedMetadata: HookParsedMetadata = {
@@ -260,14 +225,8 @@ function parseSourceAST(
 ): void {
   locationKeyToHookSourceAndMetadata.forEach(
     (hookSourceAndMetadata, locationKey) => {
-<<<<<<< HEAD
-      const hookParsedMetadata = locationKeyToHookParsedMetadata.get(
-        locationKey,
-      );
-=======
       const hookParsedMetadata =
         locationKeyToHookParsedMetadata.get(locationKey);
->>>>>>> remotes/upstream/main
       if (hookParsedMetadata == null) {
         throw Error(`Expected to find HookParsedMetadata for "${locationKey}"`);
       }
@@ -293,12 +252,8 @@ function parseSourceAST(
       }
 
       const {metadataConsumer, sourceMapConsumer} = hookParsedMetadata;
-<<<<<<< HEAD
-      const runtimeSourceCode = ((hookSourceAndMetadata.runtimeSourceCode: any): string);
-=======
       const runtimeSourceCode =
         ((hookSourceAndMetadata.runtimeSourceCode: any): string);
->>>>>>> remotes/upstream/main
       let hasHookMap = false;
       let originalSourceURL;
       let originalSourceCode;
@@ -316,23 +271,11 @@ function parseSourceAST(
         // Namespace them?
         originalSourceURL = hookSourceAndMetadata.runtimeSourceURL;
       } else {
-<<<<<<< HEAD
-        const {
-          column,
-          line,
-          sourceContent,
-          sourceURL,
-        } = sourceMapConsumer.originalPositionFor({
-          columnNumber,
-          lineNumber,
-        });
-=======
         const {column, line, sourceContent, sourceURL} =
           sourceMapConsumer.originalPositionFor({
             columnNumber,
             lineNumber,
           });
->>>>>>> remotes/upstream/main
 
         originalSourceColumnNumber = column;
         originalSourceLineNumber = line;
@@ -343,12 +286,8 @@ function parseSourceAST(
       hookParsedMetadata.originalSourceCode = originalSourceCode;
       hookParsedMetadata.originalSourceURL = originalSourceURL;
       hookParsedMetadata.originalSourceLineNumber = originalSourceLineNumber;
-<<<<<<< HEAD
-      hookParsedMetadata.originalSourceColumnNumber = originalSourceColumnNumber;
-=======
       hookParsedMetadata.originalSourceColumnNumber =
         originalSourceColumnNumber;
->>>>>>> remotes/upstream/main
 
       if (
         metadataConsumer != null &&
@@ -442,14 +381,8 @@ function parseSourceMaps(
 ) {
   locationKeyToHookSourceAndMetadata.forEach(
     (hookSourceAndMetadata, locationKey) => {
-<<<<<<< HEAD
-      const hookParsedMetadata = locationKeyToHookParsedMetadata.get(
-        locationKey,
-      );
-=======
       const hookParsedMetadata =
         locationKeyToHookParsedMetadata.get(locationKey);
->>>>>>> remotes/upstream/main
       if (hookParsedMetadata == null) {
         throw Error(`Expected to find HookParsedMetadata for "${locationKey}"`);
       }

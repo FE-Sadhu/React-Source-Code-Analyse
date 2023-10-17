@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,8 +17,6 @@ function isEmptyLiteral(node) {
   );
 }
 
-<<<<<<< HEAD
-=======
 function isStringLiteral(node) {
   return (
     // TaggedTemplateExpressions can return non-strings
@@ -32,7 +26,6 @@ function isStringLiteral(node) {
   );
 }
 
->>>>>>> remotes/upstream/main
 // Symbols and Temporal.* objects will throw when using `'' + value`, but that
 // pattern can be faster than `String(value)` because JS engines can optimize
 // `+` better in some cases. Therefore, in perf-sensitive production codepaths
@@ -136,15 +129,9 @@ function isSafeTypeofExpression(originalValueNode, node) {
   return false;
 }
 
-<<<<<<< HEAD
-/** 
-  Returns true if the code is inside an `if` block that validates the value
-  excludes symbols and objects. Examples: 
-=======
 /**
   Returns true if the code is inside an `if` block that validates the value
   excludes symbols and objects. Examples:
->>>>>>> remotes/upstream/main
   * if (typeof value === 'string') { }
   * if (typeof value === 'string' || typeof value === 'number') { }
   * if (typeof value === 'string' || someOtherTest) { }
@@ -281,9 +268,6 @@ function hasCoercionCheck(node) {
   }
 }
 
-<<<<<<< HEAD
-function plusEmptyString(context, node) {
-=======
 function isOnlyAddingStrings(node) {
   if (node.operator !== '+') {
     return;
@@ -302,7 +286,6 @@ function checkBinaryExpression(context, node) {
     return;
   }
 
->>>>>>> remotes/upstream/main
   if (
     node.operator === '+' &&
     (isEmptyLiteral(node.left) || isEmptyLiteral(node.right))
@@ -380,11 +363,7 @@ module.exports = {
   },
   create(context) {
     return {
-<<<<<<< HEAD
-      BinaryExpression: node => plusEmptyString(context, node),
-=======
       BinaryExpression: node => checkBinaryExpression(context, node),
->>>>>>> remotes/upstream/main
       CallExpression: node => coerceWithStringConstructor(context, node),
     };
   },

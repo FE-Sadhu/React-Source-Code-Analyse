@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,12 +10,8 @@
 export type Destination = ReadableStreamController;
 
 export type PrecomputedChunk = Uint8Array;
-<<<<<<< HEAD
-export type Chunk = Uint8Array;
-=======
 export opaque type Chunk = Uint8Array;
 export type BinaryChunk = Uint8Array;
->>>>>>> remotes/upstream/main
 
 export function scheduleWork(callback: () => void) {
   callback();
@@ -41,15 +33,6 @@ export function beginWriting(destination: Destination) {
 
 export function writeChunk(
   destination: Destination,
-<<<<<<< HEAD
-  chunk: PrecomputedChunk | Chunk,
-): void {
-  if (chunk.length === 0) {
-    return;
-  }
-
-  if (chunk.length > VIEW_SIZE) {
-=======
   chunk: PrecomputedChunk | Chunk | BinaryChunk,
 ): void {
   if (chunk.byteLength === 0) {
@@ -66,7 +49,6 @@ export function writeChunk(
         );
       }
     }
->>>>>>> remotes/upstream/main
     // this chunk may overflow a single view which implies it was not
     // one that is cached by the streaming renderer. We will enqueu
     // it directly and expect it is not re-used
@@ -87,11 +69,7 @@ export function writeChunk(
 
   let bytesToWrite = chunk;
   const allowableBytes = ((currentView: any): Uint8Array).length - writtenBytes;
-<<<<<<< HEAD
-  if (allowableBytes < bytesToWrite.length) {
-=======
   if (allowableBytes < bytesToWrite.byteLength) {
->>>>>>> remotes/upstream/main
     // this chunk would overflow the current view. We enqueue a full view
     // and start a new view with the remaining chunk
     if (allowableBytes === 0) {
@@ -112,20 +90,12 @@ export function writeChunk(
     writtenBytes = 0;
   }
   ((currentView: any): Uint8Array).set(bytesToWrite, writtenBytes);
-<<<<<<< HEAD
-  writtenBytes += bytesToWrite.length;
-=======
   writtenBytes += bytesToWrite.byteLength;
->>>>>>> remotes/upstream/main
 }
 
 export function writeChunkAndReturn(
   destination: Destination,
-<<<<<<< HEAD
-  chunk: PrecomputedChunk | Chunk,
-=======
   chunk: PrecomputedChunk | Chunk | BinaryChunk,
->>>>>>> remotes/upstream/main
 ): boolean {
   writeChunk(destination, chunk);
   // in web streams there is no backpressure so we can alwas write more
@@ -150,15 +120,6 @@ export function stringToChunk(content: string): Chunk {
   return textEncoder.encode(content);
 }
 
-<<<<<<< HEAD
-export function stringToPrecomputedChunk(content: string): PrecomputedChunk {
-  return textEncoder.encode(content);
-}
-
-export function closeWithError(destination: Destination, error: mixed): void {
-  if (typeof destination.error === 'function') {
-    // $FlowFixMe: This is an Error object or the destination accepts other types.
-=======
 const precomputedChunkSet: Set<Chunk | BinaryChunk> = __DEV__
   ? new Set()
   : (null: any);
@@ -210,7 +171,6 @@ export function closeWithError(destination: Destination, error: mixed): void {
   // $FlowFixMe[method-unbinding]
   if (typeof destination.error === 'function') {
     // $FlowFixMe[incompatible-call]: This is an Error object or the destination accepts other types.
->>>>>>> remotes/upstream/main
     destination.error(error);
   } else {
     // Earlier implementations doesn't support this method. In that environment you're
@@ -222,8 +182,5 @@ export function closeWithError(destination: Destination, error: mixed): void {
     destination.close();
   }
 }
-<<<<<<< HEAD
-=======
 
 export {createFastHashJS as createFastHash} from 'react-server/src/createFastHashJS';
->>>>>>> remotes/upstream/main

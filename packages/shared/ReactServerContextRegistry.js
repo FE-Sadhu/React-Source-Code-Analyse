@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,21 +7,6 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import {REACT_SERVER_CONTEXT_DEFAULT_VALUE_NOT_LOADED} from 'shared/ReactSymbols';
-import ReactSharedInternals from 'shared/ReactSharedInternals';
-import {createServerContext} from 'react';
-
-const ContextRegistry = ReactSharedInternals.ContextRegistry;
-
-export function getOrCreateServerContext(globalName: string) {
-  if (!ContextRegistry[globalName]) {
-    ContextRegistry[globalName] = createServerContext(
-      globalName,
-      // $FlowFixMe function signature doesn't reflect the symbol value
-      REACT_SERVER_CONTEXT_DEFAULT_VALUE_NOT_LOADED,
-    );
-=======
 import type {ReactServerContext} from 'shared/ReactTypes';
 
 import {
@@ -91,7 +72,6 @@ export function getOrCreateServerContext(
       );
     }
     ContextRegistry[globalName] = context;
->>>>>>> remotes/upstream/main
   }
   return ContextRegistry[globalName];
 }

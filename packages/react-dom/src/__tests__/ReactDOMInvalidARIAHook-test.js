@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -23,11 +19,7 @@ describe('ReactDOMInvalidARIAHook', () => {
     React = require('react');
     ReactTestUtils = require('react-dom/test-utils');
 
-<<<<<<< HEAD
-    mountComponent = function(props) {
-=======
     mountComponent = function (props) {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<div {...props} />);
     };
   });

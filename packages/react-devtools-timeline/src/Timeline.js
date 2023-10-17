@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -37,18 +33,8 @@ import {TimelineSearchContextController} from './TimelineSearchContext';
 import styles from './Timeline.css';
 
 export function Timeline(_: {}): React.Node {
-<<<<<<< HEAD
-  const {
-    file,
-    inMemoryTimelineData,
-    isTimelineSupported,
-    setFile,
-    viewState,
-  } = useContext(TimelineContext);
-=======
   const {file, inMemoryTimelineData, isTimelineSupported, setFile, viewState} =
     useContext(TimelineContext);
->>>>>>> remotes/upstream/main
   const {didRecordCommits, isProfiling} = useContext(ProfilerContext);
 
   const ref = useRef(null);
@@ -126,10 +112,7 @@ const ProcessingData = () => (
   </div>
 );
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 const CouldNotLoadProfile = ({error, onFileSelect}) => (
   <div className={styles.EmptyStateContainer}>
     <div className={styles.Header}>Could not load profile</div>

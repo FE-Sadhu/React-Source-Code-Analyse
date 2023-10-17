@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,21 +20,13 @@ export function formatTimestamp(ms: number): string {
   );
 }
 
-<<<<<<< HEAD
-export function formatDuration(ms: number) {
-=======
 export function formatDuration(ms: number): string {
->>>>>>> remotes/upstream/main
   return prettyMilliseconds(ms, {millisecondsDecimalDigits: 1});
 }
 
 export function trimString(string: string, length: number): string {
   if (string.length > length) {
-<<<<<<< HEAD
-    return `${string.substr(0, length - 1)}…`;
-=======
     return `${string.slice(0, length - 1)}…`;
->>>>>>> remotes/upstream/main
   }
   return string;
 }

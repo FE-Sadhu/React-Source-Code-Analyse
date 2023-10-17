@@ -5,12 +5,9 @@ let startTransition;
 let useState;
 let useEffect;
 let act;
-<<<<<<< HEAD
-=======
 let assertLog;
 let waitFor;
 let waitForPaint;
->>>>>>> remotes/upstream/main
 
 describe('ReactInterleavedUpdates', () => {
   beforeEach(() => {
@@ -19,16 +16,6 @@ describe('ReactInterleavedUpdates', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-    startTransition = React.startTransition;
-    useState = React.useState;
-    useEffect = React.useEffect;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     act = require('internal-test-utils').act;
     startTransition = React.startTransition;
     useState = React.useState;
@@ -42,7 +29,6 @@ describe('ReactInterleavedUpdates', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -66,11 +52,7 @@ describe('ReactInterleavedUpdates', () => {
 
     const root = ReactNoop.createRoot();
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <>
           <Child />
@@ -79,42 +61,6 @@ describe('ReactInterleavedUpdates', () => {
         </>,
       );
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0, 0, 0]);
-    expect(root).toMatchRenderedOutput('000');
-
-    await act(async () => {
-      if (gate(flags => flags.enableSyncDefaultUpdates)) {
-        React.startTransition(() => {
-          updateChildren(1);
-        });
-      } else {
-        updateChildren(1);
-      }
-      // Partially render the children. Only the first one.
-      expect(Scheduler).toFlushAndYieldThrough([1]);
-
-      // In an interleaved event, schedule an update on each of the children.
-      // Including the two that haven't rendered yet.
-      if (gate(flags => flags.enableSyncDefaultUpdates)) {
-        React.startTransition(() => {
-          updateChildren(2);
-        });
-      } else {
-        updateChildren(2);
-      }
-
-      // We should continue rendering without including the interleaved updates.
-      expect(Scheduler).toFlushUntilNextPaint([1, 1]);
-      expect(root).toMatchRenderedOutput('111');
-    });
-    // The interleaved updates flush in a separate render.
-    expect(Scheduler).toHaveYielded([2, 2, 2]);
-    expect(root).toMatchRenderedOutput('222');
-  });
-
-  // @gate !enableSyncDefaultUpdates
-=======
     assertLog([0, 0, 0]);
     expect(root).toMatchRenderedOutput('000');
 
@@ -141,7 +87,6 @@ describe('ReactInterleavedUpdates', () => {
   });
 
   // @gate forceConcurrentByDefaultForTesting
->>>>>>> remotes/upstream/main
   test('low priority update during an interleaved event is not processed during the current render', async () => {
     // Same as previous test, but the interleaved update is lower priority than
     // the in-progress render.
@@ -173,21 +118,13 @@ describe('ReactInterleavedUpdates', () => {
         </>,
       );
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0, 0, 0]);
-=======
     assertLog([0, 0, 0]);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('000');
 
     await act(async () => {
       updateChildren(1);
       // Partially render the children. Only the first one.
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYieldThrough([1]);
-=======
       await waitFor([1]);
->>>>>>> remotes/upstream/main
 
       // In an interleaved event, schedule an update on each of the children.
       // Including the two that haven't rendered yet.
@@ -196,19 +133,11 @@ describe('ReactInterleavedUpdates', () => {
       });
 
       // We should continue rendering without including the interleaved updates.
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint([1, 1]);
-      expect(root).toMatchRenderedOutput('111');
-    });
-    // The interleaved updates flush in a separate render.
-    expect(Scheduler).toHaveYielded([2, 2, 2]);
-=======
       await waitForPaint([1, 1]);
       expect(root).toMatchRenderedOutput('111');
     });
     // The interleaved updates flush in a separate render.
     assertLog([2, 2, 2]);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('222');
   });
 
@@ -227,17 +156,10 @@ describe('ReactInterleavedUpdates', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(<App />);
-    });
-    expect(Scheduler).toHaveYielded(['A0', 'B0', 'C0']);
-=======
     await act(() => {
       root.render(<App />);
     });
     assertLog(['A0', 'B0', 'C0']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A0B0C0');
 
     await act(async () => {
@@ -245,11 +167,7 @@ describe('ReactInterleavedUpdates', () => {
       startTransition(() => {
         setStep(1);
       });
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYieldThrough(['A1', 'B1']);
-=======
       await waitFor(['A1', 'B1']);
->>>>>>> remotes/upstream/main
 
       // Schedule an interleaved update. This gets placed on a special queue.
       startTransition(() => {
@@ -257,11 +175,7 @@ describe('ReactInterleavedUpdates', () => {
       });
 
       // Finish rendering the first update.
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint(['C1']);
-=======
       await waitForPaint(['C1']);
->>>>>>> remotes/upstream/main
 
       // Schedule another update. (In the regression case, this was treated
       // as a normal, non-interleaved update and it was inserted into the queue
@@ -271,11 +185,7 @@ describe('ReactInterleavedUpdates', () => {
       });
     });
     // The last update should win.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['A3', 'B3', 'C3']);
-=======
     assertLog(['A3', 'B3', 'C3']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A3B3C3');
   });
 });

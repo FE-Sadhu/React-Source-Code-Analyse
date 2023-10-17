@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,9 +12,6 @@
 let React;
 let ReactNoop;
 let act;
-<<<<<<< HEAD
-let DiscreteEventPriority;
-=======
 let use;
 let Suspense;
 let DiscreteEventPriority;
@@ -26,17 +19,10 @@ let startTransition;
 let waitForMicrotasks;
 let Scheduler;
 let assertLog;
->>>>>>> remotes/upstream/main
 
 describe('isomorphic act()', () => {
   beforeEach(() => {
     React = require('react');
-<<<<<<< HEAD
-    ReactNoop = require('react-noop-renderer');
-    DiscreteEventPriority = require('react-reconciler/constants')
-      .DiscreteEventPriority;
-    act = React.unstable_act;
-=======
     Scheduler = require('scheduler');
 
     ReactNoop = require('react-noop-renderer');
@@ -49,15 +35,12 @@ describe('isomorphic act()', () => {
 
     waitForMicrotasks = require('internal-test-utils').waitForMicrotasks;
     assertLog = require('internal-test-utils').assertLog;
->>>>>>> remotes/upstream/main
   });
 
   beforeEach(() => {
     global.IS_REACT_ACT_ENVIRONMENT = true;
   });
 
-<<<<<<< HEAD
-=======
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -67,7 +50,6 @@ describe('isomorphic act()', () => {
     return text;
   }
 
->>>>>>> remotes/upstream/main
   // @gate __DEV__
   test('bypasses queueMicrotask', async () => {
     const root = ReactNoop.createRoot();
@@ -81,11 +63,7 @@ describe('isomorphic act()', () => {
     // Nothing has rendered yet
     expect(root).toMatchRenderedOutput(null);
     // Flush the microtasks by awaiting
-<<<<<<< HEAD
-    await null;
-=======
     await waitForMicrotasks();
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A');
 
     // Now do the same thing but wrap the update with `act`. No
@@ -163,23 +141,6 @@ describe('isomorphic act()', () => {
     const root = ReactNoop.createLegacyRoot();
 
     await act(async () => {
-<<<<<<< HEAD
-      // These updates are batched. This replicates the behavior of the original
-      // `act` implementation, for compatibility.
-      root.render('A');
-      root.render('B');
-      // Nothing has rendered yet.
-      expect(root).toMatchRenderedOutput(null);
-      await null;
-      // Updates are flushed after the first await.
-      expect(root).toMatchRenderedOutput('B');
-
-      // Subsequent updates in the same scope aren't batched.
-      root.render('C');
-      expect(root).toMatchRenderedOutput('C');
-    });
-  });
-=======
       queueMicrotask(() => {
         Scheduler.log('Current tree in microtask: ' + root.getChildrenAsJSX());
         root.render(<Text text="C" />);
@@ -386,5 +347,4 @@ describe('isomorphic act()', () => {
     });
     expect(root).toMatchRenderedOutput('Async');
   });
->>>>>>> remotes/upstream/main
 });

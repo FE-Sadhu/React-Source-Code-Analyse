@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,10 +7,7 @@
  * @flow
  */
 
-<<<<<<< HEAD
-=======
 import type {ReactContext} from 'shared/ReactTypes';
->>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -31,12 +24,8 @@ import {
 
 const initialData = {foo: 'FOO', bar: 'BAR'};
 
-<<<<<<< HEAD
-function reducer(state, action) {
-=======
 // $FlowFixMe[missing-local-annot]
 function reducer(state, action: {type: string}) {
->>>>>>> remotes/upstream/main
   switch (action.type) {
     case 'swap':
       return {foo: state.bar, bar: state.foo};
@@ -50,16 +39,10 @@ type StatefulFunctionProps = {name: string};
 function StatefulFunction({name}: StatefulFunctionProps) {
   const [count, updateCount] = useState(0);
   const debouncedCount = useDebounce(count, 1000);
-<<<<<<< HEAD
-  const handleUpdateCountClick = useCallback(() => updateCount(count + 1), [
-    count,
-  ]);
-=======
   const handleUpdateCountClick = useCallback(
     () => updateCount(count + 1),
     [count],
   );
->>>>>>> remotes/upstream/main
 
   const [data, dispatch] = useReducer(reducer, initialData);
   const handleUpdateReducerClick = useCallback(
@@ -92,32 +75,20 @@ type Props = {name: string, toggle: boolean};
 type State = {cities: Array<string>, state: string};
 
 class StatefulClass extends Component<Props, State> {
-<<<<<<< HEAD
-  static contextType = BoolContext;
-=======
   static contextType: ReactContext<boolean> = BoolContext;
->>>>>>> remotes/upstream/main
 
   state: State = {
     cities: ['San Francisco', 'San Jose'],
     state: 'California',
   };
 
-<<<<<<< HEAD
-  handleChange = ({target}) =>
-=======
   // $FlowFixMe[missing-local-annot]
   handleChange = ({target}): any =>
->>>>>>> remotes/upstream/main
     this.setState({
       state: target.value,
     });
 
-<<<<<<< HEAD
-  render() {
-=======
   render(): any {
->>>>>>> remotes/upstream/main
     return (
       <ul>
         <li>Name: {this.props.name}</li>
@@ -139,16 +110,10 @@ const ForwardRef = forwardRef<{name: string}, HTMLUListElement>(
   ({name}, ref) => {
     const [count, updateCount] = useState(0);
     const debouncedCount = useDebounce(count, 1000);
-<<<<<<< HEAD
-    const handleUpdateCountClick = useCallback(() => updateCount(count + 1), [
-      count,
-    ]);
-=======
     const handleUpdateCountClick = useCallback(
       () => updateCount(count + 1),
       [count],
     );
->>>>>>> remotes/upstream/main
     return (
       <ul ref={ref}>
         <li>Name: {name}</li>
@@ -181,11 +146,7 @@ export default function EditableProps(): React.Node {
 }
 
 // Below copied from https://usehooks.com/
-<<<<<<< HEAD
-function useDebounce(value, delay) {
-=======
 function useDebounce(value: number, delay: number) {
->>>>>>> remotes/upstream/main
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
 

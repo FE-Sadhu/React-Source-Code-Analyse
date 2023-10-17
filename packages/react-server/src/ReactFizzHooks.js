@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,44 +7,13 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {Dispatcher as DispatcherType} from 'react-reconciler/src/ReactInternalTypes';
-
-import type {
-  MutableSource,
-  MutableSourceGetSnapshotFn,
-  MutableSourceSubscribeFn,
-=======
 import type {Dispatcher} from 'react-reconciler/src/ReactInternalTypes';
 
 import type {
->>>>>>> remotes/upstream/main
   ReactContext,
   StartTransitionOptions,
   Thenable,
   Usable,
-<<<<<<< HEAD
-} from 'shared/ReactTypes';
-
-import type {ResponseState} from './ReactServerFormatConfig';
-import type {Task} from './ReactFizzServer';
-import type {ThenableState} from './ReactFizzWakeable';
-
-import {readContext as readContextImpl} from './ReactFizzNewContext';
-import {getTreeId} from './ReactFizzTreeContext';
-import {
-  getPreviouslyUsedThenableAtIndex,
-  createThenableState,
-  trackUsedThenable,
-} from './ReactFizzWakeable';
-
-import {makeId} from './ReactServerFormatConfig';
-
-import {
-  enableCache,
-  enableUseHook,
-  enableUseMemoCacheHook,
-=======
   ReactCustomFormAction,
 } from 'shared/ReactTypes';
 
@@ -71,20 +36,15 @@ import {
   enableAsyncActions,
   enableFormActions,
   enableUseDeferredValueInitialArg,
->>>>>>> remotes/upstream/main
 } from 'shared/ReactFeatureFlags';
 import is from 'shared/objectIs';
 import {
   REACT_SERVER_CONTEXT_TYPE,
   REACT_CONTEXT_TYPE,
-<<<<<<< HEAD
-} from 'shared/ReactSymbols';
-=======
   REACT_MEMO_CACHE_SENTINEL,
 } from 'shared/ReactSymbols';
 import {checkAttributeStringCoercion} from 'shared/CheckStringCoercion';
 import {getFormState} from './ReactFizzServer';
->>>>>>> remotes/upstream/main
 
 type BasicStateAction<S> = (S => S) | S;
 type Dispatch<A> = A => void;
@@ -107,11 +67,8 @@ type Hook = {
 
 let currentlyRenderingComponent: Object | null = null;
 let currentlyRenderingTask: Task | null = null;
-<<<<<<< HEAD
-=======
 let currentlyRenderingRequest: Request | null = null;
 let currentlyRenderingKeyPath: KeyNode | null = null;
->>>>>>> remotes/upstream/main
 let firstWorkInProgressHook: Hook | null = null;
 let workInProgressHook: Hook | null = null;
 // Whether the work-in-progress hook is a re-rendered hook
@@ -120,8 +77,6 @@ let isReRender: boolean = false;
 let didScheduleRenderPhaseUpdate: boolean = false;
 // Counts the number of useId hooks in this component
 let localIdCounter: number = 0;
-<<<<<<< HEAD
-=======
 // Chunks that should be pushed to the stream once the component
 // finishes rendering.
 // Counts the number of useFormState calls in this component
@@ -129,7 +84,6 @@ let formStateCounter: number = 0;
 // The index of the useFormState hook that matches the one passed in at the
 // root during an MPA navigation, if any.
 let formStateMatchingIndex: number = -1;
->>>>>>> remotes/upstream/main
 // Counts the number of use(thenable) calls in this component
 let thenableIndexCounter: number = 0;
 let thenableState: ThenableState | null = null;
@@ -200,13 +154,9 @@ function areHookInputsEqual(
       );
     }
   }
-<<<<<<< HEAD
-  for (let i = 0; i < prevDeps.length && i < nextDeps.length; i++) {
-=======
   // $FlowFixMe[incompatible-use] found when upgrading Flow
   for (let i = 0; i < prevDeps.length && i < nextDeps.length; i++) {
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     if (is(nextDeps[i], prevDeps[i])) {
       continue;
     }
@@ -252,23 +202,16 @@ function createWorkInProgressHook(): Hook {
 }
 
 export function prepareToUseHooks(
-<<<<<<< HEAD
-  task: Task,
-=======
   request: Request,
   task: Task,
   keyPath: KeyNode | null,
->>>>>>> remotes/upstream/main
   componentIdentity: Object,
   prevThenableState: ThenableState | null,
 ): void {
   currentlyRenderingComponent = componentIdentity;
   currentlyRenderingTask = task;
-<<<<<<< HEAD
-=======
   currentlyRenderingRequest = request;
   currentlyRenderingKeyPath = keyPath;
->>>>>>> remotes/upstream/main
   if (__DEV__) {
     isInHookUserCodeInDev = false;
   }
@@ -281,11 +224,8 @@ export function prepareToUseHooks(
   // workInProgressHook = null;
 
   localIdCounter = 0;
-<<<<<<< HEAD
-=======
   formStateCounter = 0;
   formStateMatchingIndex = -1;
->>>>>>> remotes/upstream/main
   thenableIndexCounter = 0;
   thenableState = prevThenableState;
 }
@@ -306,11 +246,8 @@ export function finishHooks(
     // restarting until no more updates are scheduled.
     didScheduleRenderPhaseUpdate = false;
     localIdCounter = 0;
-<<<<<<< HEAD
-=======
     formStateCounter = 0;
     formStateMatchingIndex = -1;
->>>>>>> remotes/upstream/main
     thenableIndexCounter = 0;
     numberOfReRenders += 1;
 
@@ -319,10 +256,6 @@ export function finishHooks(
 
     children = Component(props, refOrContext);
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> remotes/upstream/main
   resetHooksState();
   return children;
 }
@@ -341,8 +274,6 @@ export function checkDidRenderIdHook(): boolean {
   return didRenderIdHook;
 }
 
-<<<<<<< HEAD
-=======
 export function getFormStateCount(): number {
   // This should be called immediately after every finishHooks call.
   // Conceptually, it's part of the return value of finishHooks; it's only a
@@ -356,7 +287,6 @@ export function getFormStateMatchingIndex(): number {
   return formStateMatchingIndex;
 }
 
->>>>>>> remotes/upstream/main
 // Reset the internal hooks state if an error occurs while rendering a component
 export function resetHooksState(): void {
   if (__DEV__) {
@@ -365,11 +295,8 @@ export function resetHooksState(): void {
 
   currentlyRenderingComponent = null;
   currentlyRenderingTask = null;
-<<<<<<< HEAD
-=======
   currentlyRenderingRequest = null;
   currentlyRenderingKeyPath = null;
->>>>>>> remotes/upstream/main
   didScheduleRenderPhaseUpdate = false;
   firstWorkInProgressHook = null;
   numberOfReRenders = 0;
@@ -377,15 +304,6 @@ export function resetHooksState(): void {
   workInProgressHook = null;
 }
 
-<<<<<<< HEAD
-function getCacheForType<T>(resourceType: () => T): T {
-  // TODO: This should silently mark this as client rendered since it's not necessarily
-  // considered an error. It needs to work for things like Flight though.
-  throw new Error('Not implemented.');
-}
-
-=======
->>>>>>> remotes/upstream/main
 function readContext<T>(context: ReactContext<T>): T {
   if (__DEV__) {
     if (isInHookUserCodeInDev) {
@@ -409,11 +327,7 @@ function useContext<T>(context: ReactContext<T>): T {
 }
 
 function basicStateReducer<S>(state: S, action: BasicStateAction<S>): S {
-<<<<<<< HEAD
-  // $FlowFixMe: Flow doesn't like mixed types
-=======
   // $FlowFixMe[incompatible-use]: Flow doesn't like mixed types
->>>>>>> remotes/upstream/main
   return typeof action === 'function' ? action(state) : action;
 }
 
@@ -451,17 +365,11 @@ export function useReducer<S, I, A>(
       // Render phase updates are stored in a map of queue -> linked list
       const firstRenderPhaseUpdate = renderPhaseUpdates.get(queue);
       if (firstRenderPhaseUpdate !== undefined) {
-<<<<<<< HEAD
-        renderPhaseUpdates.delete(queue);
-        let newState = workInProgressHook.memoizedState;
-        let update = firstRenderPhaseUpdate;
-=======
         // $FlowFixMe[incompatible-use] found when upgrading Flow
         renderPhaseUpdates.delete(queue);
         // $FlowFixMe[incompatible-use] found when upgrading Flow
         let newState = workInProgressHook.memoizedState;
         let update: Update<any> = firstRenderPhaseUpdate;
->>>>>>> remotes/upstream/main
         do {
           // Process this render phase update. We don't have to check the
           // priority because it will always be the same as the current
@@ -474,26 +382,17 @@ export function useReducer<S, I, A>(
           if (__DEV__) {
             isInHookUserCodeInDev = false;
           }
-<<<<<<< HEAD
-          update = update.next;
-        } while (update !== null);
-
-=======
           // $FlowFixMe[incompatible-type] we bail out when we get a null
           update = update.next;
         } while (update !== null);
 
         // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
         workInProgressHook.memoizedState = newState;
 
         return [newState, dispatch];
       }
     }
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     return [workInProgressHook.memoizedState, dispatch];
   } else {
     if (__DEV__) {
@@ -513,13 +412,9 @@ export function useReducer<S, I, A>(
     if (__DEV__) {
       isInHookUserCodeInDev = false;
     }
-<<<<<<< HEAD
-    workInProgressHook.memoizedState = initialState;
-=======
     // $FlowFixMe[incompatible-use] found when upgrading Flow
     workInProgressHook.memoizedState = initialState;
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     const queue: UpdateQueue<A> = (workInProgressHook.queue = {
       last: null,
       dispatch: null,
@@ -529,10 +424,7 @@ export function useReducer<S, I, A>(
       currentlyRenderingComponent,
       queue,
     ): any));
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     return [workInProgressHook.memoizedState, dispatch];
   }
 }
@@ -562,10 +454,7 @@ function useMemo<T>(nextCreate: () => T, deps: Array<mixed> | void | null): T {
   if (__DEV__) {
     isInHookUserCodeInDev = false;
   }
-<<<<<<< HEAD
-=======
   // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
   workInProgressHook.memoizedState = [nextValue, nextDeps];
   return nextValue;
 }
@@ -579,10 +468,7 @@ function useRef<T>(initialValue: T): {current: T} {
     if (__DEV__) {
       Object.seal(ref);
     }
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     workInProgressHook.memoizedState = ref;
     return ref;
   } else {
@@ -590,35 +476,11 @@ function useRef<T>(initialValue: T): {current: T} {
   }
 }
 
-<<<<<<< HEAD
-export function useLayoutEffect(
-  create: () => (() => void) | void,
-  inputs: Array<mixed> | void | null,
-) {
-  if (__DEV__) {
-    currentHookNameInDev = 'useLayoutEffect';
-    console.error(
-      'useLayoutEffect does nothing on the server, because its effect cannot ' +
-        "be encoded into the server renderer's output format. This will lead " +
-        'to a mismatch between the initial, non-hydrated UI and the intended ' +
-        'UI. To avoid this, useLayoutEffect should only be used in ' +
-        'components that render exclusively on the client. ' +
-        'See https://reactjs.org/link/uselayouteffect-ssr for common fixes.',
-    );
-  }
-}
-
-=======
->>>>>>> remotes/upstream/main
 function dispatchAction<A>(
   componentIdentity: Object,
   queue: UpdateQueue<A>,
   action: A,
-<<<<<<< HEAD
-) {
-=======
 ): void {
->>>>>>> remotes/upstream/main
   if (numberOfReRenders >= RE_RENDER_LIMIT) {
     throw new Error(
       'Too many re-renders. React limits the number of renders to prevent ' +
@@ -640,10 +502,7 @@ function dispatchAction<A>(
     }
     const firstRenderPhaseUpdate = renderPhaseUpdates.get(queue);
     if (firstRenderPhaseUpdate === undefined) {
-<<<<<<< HEAD
-=======
       // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
       renderPhaseUpdates.set(queue, update);
     } else {
       // Append the update to the end of the list.
@@ -667,18 +526,6 @@ export function useCallback<T>(
   return useMemo(() => callback, deps);
 }
 
-<<<<<<< HEAD
-// TODO Decide on how to implement this hook for server rendering.
-// If a mutation occurs during render, consider triggering a Suspense boundary
-// and falling back to client rendering.
-function useMutableSource<Source, Snapshot>(
-  source: MutableSource<Source>,
-  getSnapshot: MutableSourceGetSnapshotFn<Source, Snapshot>,
-  subscribe: MutableSourceSubscribeFn<Source, Snapshot>,
-): Snapshot {
-  resolveCurrentlyRenderingComponent();
-  return getSnapshot(source._source);
-=======
 function throwOnUseEffectEventCall() {
   throw new Error(
     "A function wrapped in useEffectEvent can't be called during rendering.",
@@ -690,7 +537,6 @@ export function useEffectEvent<Args, Return, F: (...Array<Args>) => Return>(
 ): F {
   // $FlowIgnore[incompatible-return]
   return throwOnUseEffectEventCall;
->>>>>>> remotes/upstream/main
 }
 
 function useSyncExternalStore<T>(
@@ -707,11 +553,6 @@ function useSyncExternalStore<T>(
   return getServerSnapshot();
 }
 
-<<<<<<< HEAD
-function useDeferredValue<T>(value: T): T {
-  resolveCurrentlyRenderingComponent();
-  return value;
-=======
 function useDeferredValue<T>(value: T, initialValue?: T): T {
   resolveCurrentlyRenderingComponent();
   if (enableUseDeferredValueInitialArg) {
@@ -719,7 +560,6 @@ function useDeferredValue<T>(value: T, initialValue?: T): T {
   } else {
     return value;
   }
->>>>>>> remotes/upstream/main
 }
 
 function unsupportedStartTransition() {
@@ -734,8 +574,6 @@ function useTransition(): [
   return [false, unsupportedStartTransition];
 }
 
-<<<<<<< HEAD
-=======
 function useHostTransitionStatus(): TransitionStatus {
   resolveCurrentlyRenderingComponent();
   return NotPendingTransition;
@@ -883,99 +721,28 @@ function useFormState<S, P>(
   }
 }
 
->>>>>>> remotes/upstream/main
 function useId(): string {
   const task: Task = (currentlyRenderingTask: any);
   const treeId = getTreeId(task.treeContext);
 
-<<<<<<< HEAD
-  const responseState = currentResponseState;
-  if (responseState === null) {
-=======
   const resumableState = currentResumableState;
   if (resumableState === null) {
->>>>>>> remotes/upstream/main
     throw new Error(
       'Invalid hook call. Hooks can only be called inside of the body of a function component.',
     );
   }
 
   const localId = localIdCounter++;
-<<<<<<< HEAD
-  return makeId(responseState, treeId, localId);
-=======
   return makeId(resumableState, treeId, localId);
->>>>>>> remotes/upstream/main
 }
 
 function use<T>(usable: Usable<T>): T {
   if (usable !== null && typeof usable === 'object') {
-<<<<<<< HEAD
-    if (typeof usable.then === 'function') {
-      // This is a thenable.
-      const thenable: Thenable<T> = (usable: any);
-
-      // Track the position of the thenable within this fiber.
-      const index = thenableIndexCounter;
-      thenableIndexCounter += 1;
-
-      switch (thenable.status) {
-        case 'fulfilled': {
-          const fulfilledValue: T = thenable.value;
-          return fulfilledValue;
-        }
-        case 'rejected': {
-          const rejectedError = thenable.reason;
-          throw rejectedError;
-        }
-        default: {
-          const prevThenableAtIndex: Thenable<T> | null = getPreviouslyUsedThenableAtIndex(
-            thenableState,
-            index,
-          );
-          if (prevThenableAtIndex !== null) {
-            switch (prevThenableAtIndex.status) {
-              case 'fulfilled': {
-                const fulfilledValue: T = prevThenableAtIndex.value;
-                return fulfilledValue;
-              }
-              case 'rejected': {
-                const rejectedError: mixed = prevThenableAtIndex.reason;
-                throw rejectedError;
-              }
-              default: {
-                // The thenable still hasn't resolved. Suspend with the same
-                // thenable as last time to avoid redundant listeners.
-                throw prevThenableAtIndex;
-              }
-            }
-          } else {
-            // This is the first time something has been used at this index.
-            // Stash the thenable at the current index so we can reuse it during
-            // the next attempt.
-            if (thenableState === null) {
-              thenableState = createThenableState();
-            }
-            trackUsedThenable(thenableState, thenable, index);
-
-            // Suspend.
-            // TODO: Throwing here is an implementation detail that allows us to
-            // unwind the call stack. But we shouldn't allow it to leak into
-            // userspace. Throw an opaque placeholder value instead of the
-            // actual thenable. If it doesn't get captured by the work loop, log
-            // a warning, because that means something in userspace must have
-            // caught it.
-            throw thenable;
-          }
-        }
-      }
-=======
     // $FlowFixMe[method-unbinding]
     if (typeof usable.then === 'function') {
       // This is a thenable.
       const thenable: Thenable<T> = (usable: any);
       return unwrapThenable(thenable);
->>>>>>> remotes/upstream/main
     } else if (
       usable.$$typeof === REACT_CONTEXT_TYPE ||
       usable.$$typeof === REACT_SERVER_CONTEXT_TYPE
@@ -989,8 +756,6 @@ function use<T>(usable: Usable<T>): T {
   throw new Error('An unsupported type was passed to use(): ' + String(usable));
 }
 
-<<<<<<< HEAD
-=======
 export function unwrapThenable<T>(thenable: Thenable<T>): T {
   const index = thenableIndexCounter;
   thenableIndexCounter += 1;
@@ -1000,7 +765,6 @@ export function unwrapThenable<T>(thenable: Thenable<T>): T {
   return trackUsedThenable(thenableState, thenable, index);
 }
 
->>>>>>> remotes/upstream/main
 function unsupportedRefresh() {
   throw new Error('Cache cannot be refreshed during server rendering.');
 }
@@ -1010,38 +774,25 @@ function useCacheRefresh(): <T>(?() => T, ?T) => void {
 }
 
 function useMemoCache(size: number): Array<any> {
-<<<<<<< HEAD
-  return new Array(size);
-=======
   const data = new Array<any>(size);
   for (let i = 0; i < size; i++) {
     data[i] = REACT_MEMO_CACHE_SENTINEL;
   }
   return data;
->>>>>>> remotes/upstream/main
 }
 
 function noop(): void {}
 
-<<<<<<< HEAD
-export const Dispatcher: DispatcherType = {
-  readContext,
-=======
 export const HooksDispatcher: Dispatcher = {
   readContext,
   use,
->>>>>>> remotes/upstream/main
   useContext,
   useMemo,
   useReducer,
   useRef,
   useState,
   useInsertionEffect: noop,
-<<<<<<< HEAD
-  useLayoutEffect,
-=======
   useLayoutEffect: noop,
->>>>>>> remotes/upstream/main
   useCallback,
   // useImperativeHandle is not run in the server environment
   useImperativeHandle: noop,
@@ -1053,31 +804,10 @@ export const HooksDispatcher: Dispatcher = {
   useTransition,
   useId,
   // Subscriptions are not setup in a server environment.
-<<<<<<< HEAD
-  useMutableSource,
-=======
->>>>>>> remotes/upstream/main
   useSyncExternalStore,
 };
 
 if (enableCache) {
-<<<<<<< HEAD
-  Dispatcher.getCacheForType = getCacheForType;
-  Dispatcher.useCacheRefresh = useCacheRefresh;
-}
-if (enableUseMemoCacheHook) {
-  Dispatcher.useMemoCache = useMemoCache;
-}
-if (enableUseHook) {
-  Dispatcher.use = use;
-}
-
-export let currentResponseState: null | ResponseState = (null: any);
-export function setCurrentResponseState(
-  responseState: null | ResponseState,
-): void {
-  currentResponseState = responseState;
-=======
   HooksDispatcher.useCacheRefresh = useCacheRefresh;
 }
 if (enableUseEffectEventHook) {
@@ -1099,5 +829,4 @@ export function setCurrentResumableState(
   resumableState: null | ResumableState,
 ): void {
   currentResumableState = resumableState;
->>>>>>> remotes/upstream/main
 }

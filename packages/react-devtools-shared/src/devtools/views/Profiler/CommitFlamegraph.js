@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -44,22 +40,12 @@ export type ItemData = {
 
 export default function CommitFlamegraphAutoSizer(_: {}): React.Node {
   const {profilerStore} = useContext(StoreContext);
-<<<<<<< HEAD
-  const {rootID, selectedCommitIndex, selectFiber} = useContext(
-    ProfilerContext,
-  );
-  const {profilingCache} = profilerStore;
-
-  const deselectCurrentFiber = useCallback(
-    event => {
-=======
   const {rootID, selectedCommitIndex, selectFiber} =
     useContext(ProfilerContext);
   const {profilingCache} = profilerStore;
 
   const deselectCurrentFiber = useCallback(
     (event: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       event.stopPropagation();
       selectFiber(null, null);
     },
@@ -111,25 +97,12 @@ type Props = {
 };
 
 function CommitFlamegraph({chartData, commitTree, height, width}: Props) {
-<<<<<<< HEAD
-  const [
-    hoveredFiberData,
-    setHoveredFiberData,
-  ] = useState<TooltipFiberData | null>(null);
-  const {lineHeight} = useContext(SettingsContext);
-  const {selectFiber, selectedFiberID} = useContext(ProfilerContext);
-  const {
-    highlightNativeElement,
-    clearHighlightNativeElement,
-  } = useHighlightNativeElement();
-=======
   const [hoveredFiberData, setHoveredFiberData] =
     useState<TooltipFiberData | null>(null);
   const {lineHeight} = useContext(SettingsContext);
   const {selectFiber, selectedFiberID} = useContext(ProfilerContext);
   const {highlightNativeElement, clearHighlightNativeElement} =
     useHighlightNativeElement();
->>>>>>> remotes/upstream/main
 
   const selectedChartNodeIndex = useMemo<number>(() => {
     if (selectedFiberID === null) {
@@ -153,11 +126,7 @@ function CommitFlamegraph({chartData, commitTree, height, width}: Props) {
   }, [chartData, selectedFiberID, selectedChartNodeIndex]);
 
   const handleElementMouseEnter = useCallback(
-<<<<<<< HEAD
-    ({id, name}) => {
-=======
     ({id, name}: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       highlightNativeElement(id); // Highlight last hovered element.
       setHoveredFiberData({id, name}); // Set hovered fiber data for tooltip
     },

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -48,15 +44,8 @@ export default function ReloadAndProfileButton({
     }),
     [store],
   );
-<<<<<<< HEAD
-  const {
-    recordChangeDescriptions,
-    supportsReloadAndProfile,
-  } = useSubscription<SubscriptionData>(subscription);
-=======
   const {recordChangeDescriptions, supportsReloadAndProfile} =
     useSubscription<SubscriptionData>(subscription);
->>>>>>> remotes/upstream/main
 
   const reloadAndProfile = useCallback(() => {
     // TODO If we want to support reload-and-profile for e.g. React Native,

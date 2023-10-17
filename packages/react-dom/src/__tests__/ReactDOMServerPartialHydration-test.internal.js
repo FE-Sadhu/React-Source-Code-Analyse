@@ -1,18 +1,11 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
-<<<<<<< HEAD
-=======
  * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
->>>>>>> remotes/upstream/main
  */
 
 'use strict';
@@ -26,14 +19,6 @@ let ReactFeatureFlags;
 let Suspense;
 let SuspenseList;
 let Offscreen;
-<<<<<<< HEAD
-let act;
-let IdleEventPriority;
-
-function normalizeCodeLocInfo(strOrErr) {
-  if (strOrErr && strOrErr.replace) {
-    return strOrErr.replace(/\n +(?:at|in) ([\S]+)[^\n]*/g, function(m, name) {
-=======
 let useSyncExternalStore;
 let act;
 let IdleEventPriority;
@@ -45,7 +30,6 @@ let assertLog;
 function normalizeCodeLocInfo(strOrErr) {
   if (strOrErr && strOrErr.replace) {
     return strOrErr.replace(/\n +(?:at|in) ([\S]+)[^\n]*/g, function (m, name) {
->>>>>>> remotes/upstream/main
       return '\n    in ' + name + ' (at **)';
     });
   }
@@ -116,11 +100,7 @@ class TestAppClass extends React.Component {
 
 describe('ReactDOMServerPartialHydration', () => {
   beforeEach(() => {
-<<<<<<< HEAD
-    jest.resetModuleRegistry();
-=======
     jest.resetModules();
->>>>>>> remotes/upstream/main
 
     ReactFeatureFlags = require('shared/ReactFeatureFlags');
     ReactFeatureFlags.enableSuspenseCallback = true;
@@ -129,21 +109,11 @@ describe('ReactDOMServerPartialHydration', () => {
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
     ReactDOMServer = require('react-dom/server');
     Scheduler = require('scheduler');
     Suspense = React.Suspense;
     Offscreen = React.unstable_Offscreen;
-<<<<<<< HEAD
-    if (gate(flags => flags.enableSuspenseList)) {
-      SuspenseList = React.SuspenseList;
-    }
-
-=======
     useSyncExternalStore = React.useSyncExternalStore;
     if (gate(flags => flags.enableSuspenseList)) {
       SuspenseList = React.unstable_SuspenseList;
@@ -155,7 +125,6 @@ describe('ReactDOMServerPartialHydration', () => {
     waitForPaint = InternalTestUtils.waitForPaint;
     waitFor = InternalTestUtils.waitFor;
 
->>>>>>> remotes/upstream/main
     IdleEventPriority = require('react-reconciler/constants').IdleEventPriority;
   });
 
@@ -213,12 +182,7 @@ describe('ReactDOMServerPartialHydration', () => {
     // hydrating anyway.
     suspend = true;
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
 
@@ -226,12 +190,7 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     resolve();
     await promise;
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     // We should now have hydrated with a ref on the existing span.
     expect(ref.current).toBe(span);
@@ -275,18 +234,10 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = true;
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
         Scheduler.log(error.message);
       },
     });
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     // Expect the server-generated HTML to stay intact.
     expect(container.textContent).toBe('HelloHello');
@@ -295,12 +246,7 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     resolve();
     await promise;
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     // Hydration should not change anything.
     expect(container.textContent).toBe('HelloHello');
   });
@@ -323,26 +269,15 @@ describe('ReactDOMServerPartialHydration', () => {
     });
     function Child() {
       if (suspend) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Suspend');
-        throw promise;
-      } else {
-        Scheduler.unstable_yieldValue('Hello');
-=======
         Scheduler.log('Suspend');
         throw promise;
       } else {
         Scheduler.log('Hello');
->>>>>>> remotes/upstream/main
         return 'Hello';
       }
     }
     function Component({shouldMismatch}) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Component');
-=======
       Scheduler.log('Component');
->>>>>>> remotes/upstream/main
       if (shouldMismatch && client) {
         return <article>Mismatch</article>;
       }
@@ -363,17 +298,7 @@ describe('ReactDOMServerPartialHydration', () => {
       const finalHTML = ReactDOMServer.renderToString(<App />);
       const container = document.createElement('section');
       container.innerHTML = finalHTML;
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-        'Hello',
-        'Component',
-        'Component',
-        'Component',
-        'Component',
-      ]);
-=======
       assertLog(['Hello', 'Component', 'Component', 'Component', 'Component']);
->>>>>>> remotes/upstream/main
 
       expect(container.innerHTML).toBe(
         '<!--$-->Hello<div>Component</div><div>Component</div><div>Component</div><div>Component</div><!--/$-->',
@@ -384,23 +309,10 @@ describe('ReactDOMServerPartialHydration', () => {
 
       ReactDOMClient.hydrateRoot(container, <App />, {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      });
-      expect(Scheduler).toFlushAndYield([
-        'Suspend',
-        'Component',
-        'Component',
-        'Component',
-        'Component',
-      ]);
-=======
           Scheduler.log(error.message);
         },
       });
       await waitForAll(['Suspend']);
->>>>>>> remotes/upstream/main
       jest.runAllTimers();
 
       // Unchanged
@@ -411,11 +323,7 @@ describe('ReactDOMServerPartialHydration', () => {
       suspend = false;
       resolve();
       await promise;
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         // first pass, mismatches at end
         'Hello',
         'Component',
@@ -519,17 +427,10 @@ describe('ReactDOMServerPartialHydration', () => {
         deleted.push(node);
       },
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    expect(Scheduler).toFlushAndYield([]);
-=======
         Scheduler.log(error.message);
       },
     });
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(hydrated.length).toBe(0);
     expect(deleted.length).toBe(0);
@@ -545,22 +446,9 @@ describe('ReactDOMServerPartialHydration', () => {
     expect(deleted.length).toBe(0);
 
     // Performing an update should force it to delete the boundary
-<<<<<<< HEAD
-    root.render(<App value={true} />);
-
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client rendering. ' +
-        'The usual way to fix this is to wrap the original update ' +
-        'in startTransition.',
-    ]);
-=======
     await act(() => {
       root.render(<App value={true} />);
     });
->>>>>>> remotes/upstream/main
 
     expect(hydrated.length).toBe(1);
     expect(deleted.length).toBe(1);
@@ -582,19 +470,12 @@ describe('ReactDOMServerPartialHydration', () => {
     container.innerHTML = finalHTML;
 
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(container.innerHTML).toContain('<div>Sibling</div>');
   });
 
   it('recovers with client render when server rendered additional nodes at suspense root', async () => {
-<<<<<<< HEAD
-=======
     function CheckIfHydrating({children}) {
       // This is a trick to check whether we're hydrating or not, since React
       // doesn't expose that information currently except
@@ -615,7 +496,6 @@ describe('ReactDOMServerPartialHydration', () => {
       return null;
     }
 
->>>>>>> remotes/upstream/main
     const ref = React.createRef();
     function App({hasB}) {
       return (
@@ -623,10 +503,7 @@ describe('ReactDOMServerPartialHydration', () => {
           <Suspense fallback="Loading...">
             <span ref={ref}>A</span>
             {hasB ? <span>B</span> : null}
-<<<<<<< HEAD
-=======
             <CheckIfHydrating />
->>>>>>> remotes/upstream/main
           </Suspense>
           <div>Sibling</div>
         </div>
@@ -634,10 +511,7 @@ describe('ReactDOMServerPartialHydration', () => {
     }
 
     const finalHTML = ReactDOMServer.renderToString(<App hasB={true} />);
-<<<<<<< HEAD
-=======
     assertLog(['Server rendered']);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = finalHTML;
@@ -648,39 +522,22 @@ describe('ReactDOMServerPartialHydration', () => {
     expect(container.innerHTML).toContain('<span>B</span>');
     expect(ref.current).toBe(null);
 
-<<<<<<< HEAD
-    expect(() => {
-      act(() => {
-        ReactDOMClient.hydrateRoot(container, <App hasB={false} />, {
-          onRecoverableError(error) {
-            Scheduler.unstable_yieldValue(error.message);
-=======
     await expect(async () => {
       await act(() => {
         ReactDOMClient.hydrateRoot(container, <App hasB={false} />, {
           onRecoverableError(error) {
             Scheduler.log(error.message);
->>>>>>> remotes/upstream/main
           },
         });
       });
     }).toErrorDev('Did not expect server HTML to contain a <span> in <div>');
 
-<<<<<<< HEAD
-    jest.runAllTimers();
-
-    expect(container.innerHTML).toContain('<span>A</span>');
-    expect(container.innerHTML).not.toContain('<span>B</span>');
-
-    expect(Scheduler).toHaveYielded([
-=======
     expect(container.innerHTML).toContain('<span>A</span>');
     expect(container.innerHTML).not.toContain('<span>B</span>');
 
     assertLog([
       'Server rendered',
       'Client rendered',
->>>>>>> remotes/upstream/main
       'There was an error while hydrating this Suspense boundary. ' +
         'Switched to client rendering.',
     ]);
@@ -735,17 +592,6 @@ describe('ReactDOMServerPartialHydration', () => {
       expect(ref.current).toBe(null);
 
       shouldSuspend = true;
-<<<<<<< HEAD
-      act(() => {
-        ReactDOMClient.hydrateRoot(container, <App hasB={false} />);
-      });
-
-      resolve();
-      await promise;
-      Scheduler.unstable_flushAll();
-      await null;
-      jest.runAllTimers();
-=======
       await act(() => {
         ReactDOMClient.hydrateRoot(container, <App hasB={false} />);
       });
@@ -753,7 +599,6 @@ describe('ReactDOMServerPartialHydration', () => {
       await act(() => {
         resolve();
       });
->>>>>>> remotes/upstream/main
 
       expect(container.innerHTML).toContain('<span>A</span>');
       expect(container.innerHTML).not.toContain('<span>B</span>');
@@ -801,28 +646,16 @@ describe('ReactDOMServerPartialHydration', () => {
     expect(container.innerHTML).toContain('<span>B</span>');
     expect(ref.current).toBe(null);
 
-<<<<<<< HEAD
-    expect(() => {
-      act(() => {
-        ReactDOMClient.hydrateRoot(container, <App hasB={false} />, {
-          onRecoverableError(error) {
-            Scheduler.unstable_yieldValue(error.message);
-=======
     await expect(async () => {
       await act(() => {
         ReactDOMClient.hydrateRoot(container, <App hasB={false} />, {
           onRecoverableError(error) {
             Scheduler.log(error.message);
->>>>>>> remotes/upstream/main
           },
         });
       });
     }).toErrorDev('Did not expect server HTML to contain a <span> in <div>');
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       'Hydration failed because the initial UI does not match what was rendered on the server.',
       'There was an error while hydrating this Suspense boundary. Switched to client rendering.',
     ]);
@@ -867,18 +700,6 @@ describe('ReactDOMServerPartialHydration', () => {
     // On the client we don't have all data yet but we want to start
     // hydrating anyway.
     suspend = true;
-<<<<<<< HEAD
-    const root = ReactDOMClient.hydrateRoot(container, <App />, {
-      onDeleted(node) {
-        deleted.push(node);
-      },
-    });
-    Scheduler.unstable_flushAll();
-
-    expect(deleted.length).toBe(0);
-
-    act(() => {
-=======
     const root = await act(() => {
       return ReactDOMClient.hydrateRoot(container, <App />, {
         onDeleted(node) {
@@ -890,7 +711,6 @@ describe('ReactDOMServerPartialHydration', () => {
     expect(deleted.length).toBe(0);
 
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App deleted={true} />);
     });
 
@@ -935,13 +755,8 @@ describe('ReactDOMServerPartialHydration', () => {
 
     // On the client we try to hydrate.
     suspend = true;
-<<<<<<< HEAD
-    expect(() => {
-      act(() => {
-=======
     await expect(async () => {
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.hydrate(<App />, container);
       });
     }).toErrorDev(
@@ -972,25 +787,13 @@ describe('ReactDOMServerPartialHydration', () => {
 
     // Resolving the promise should render the final content.
     suspend = false;
-<<<<<<< HEAD
-    resolve();
-    await promise;
-    Scheduler.unstable_flushAll();
-    await null;
-    jest.runAllTimers();
-=======
     await act(() => resolve());
->>>>>>> remotes/upstream/main
 
     // We should now have hydrated with a ref on the existing span.
     expect(container.textContent).toBe('Hello');
   });
 
-<<<<<<< HEAD
-  it('can insert siblings before the dehydrated boundary', () => {
-=======
   it('can insert siblings before the dehydrated boundary', async () => {
->>>>>>> remotes/upstream/main
     let suspend = false;
     const promise = new Promise(() => {});
     let showSibling;
@@ -1034,32 +837,20 @@ describe('ReactDOMServerPartialHydration', () => {
     // hydrating anyway.
     suspend = true;
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactDOMClient.hydrateRoot(container, <App />);
     });
 
     expect(container.firstChild.firstChild.tagName).not.toBe('DIV');
 
     // In this state, we can still update the siblings.
-<<<<<<< HEAD
-    act(() => showSibling());
-=======
     await act(() => showSibling());
->>>>>>> remotes/upstream/main
 
     expect(container.firstChild.firstChild.tagName).toBe('DIV');
     expect(container.firstChild.firstChild.textContent).toBe('First');
   });
 
-<<<<<<< HEAD
-  it('can delete the dehydrated boundary before it is hydrated', () => {
-=======
   it('can delete the dehydrated boundary before it is hydrated', async () => {
->>>>>>> remotes/upstream/main
     let suspend = false;
     const promise = new Promise(() => {});
     let hideMiddle;
@@ -1102,22 +893,14 @@ describe('ReactDOMServerPartialHydration', () => {
     // On the client we don't have all data yet but we want to start
     // hydrating anyway.
     suspend = true;
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactDOMClient.hydrateRoot(container, <App />);
     });
 
     expect(container.firstChild.children[1].textContent).toBe('Middle');
 
     // In this state, we can still delete the boundary.
-<<<<<<< HEAD
-    act(() => hideMiddle());
-=======
     await act(() => hideMiddle());
->>>>>>> remotes/upstream/main
 
     expect(container.firstChild.children[1].textContent).toBe('After');
   });
@@ -1164,12 +947,7 @@ describe('ReactDOMServerPartialHydration', () => {
       container,
       <App text="Hello" className="hello" />,
     );
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(span.textContent).toBe('Hello');
@@ -1178,22 +956,12 @@ describe('ReactDOMServerPartialHydration', () => {
     root.render(<App text="Hi" className="hi" />);
 
     // At the same time, resolving the promise so that rendering can complete.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    // This should first complete the hydration and then flush the update onto the hydrated state.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     // This should first complete the hydration and then flush the update onto the hydrated state.
     await act(async () => {
       suspend = false;
       resolve();
       await promise;
     });
->>>>>>> remotes/upstream/main
 
     // The new span should be the same since we should have successfully hydrated
     // before changing it.
@@ -1251,12 +1019,7 @@ describe('ReactDOMServerPartialHydration', () => {
       container,
       <App text="Hello" className="hello" />,
     );
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(span.textContent).toBe('Hello');
@@ -1272,12 +1035,7 @@ describe('ReactDOMServerPartialHydration', () => {
     await promise;
 
     // This should first complete the hydration and then flush the update onto the hydrated state.
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     // The new span should be the same since we should have successfully hydrated
     // before changing it.
@@ -1333,39 +1091,18 @@ describe('ReactDOMServerPartialHydration', () => {
       <App text="Hello" className="hello" />,
       {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      },
-    );
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
           Scheduler.log(error.message);
         },
       },
     );
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
 
     // Render an update, but leave it still suspended.
-<<<<<<< HEAD
-    root.render(<App text="Hi" className="hi" />);
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client ' +
-        'rendering. The usual way to fix this is to wrap the original ' +
-        'update in startTransition.',
-    ]);
-=======
     await act(() => {
       root.render(<App text="Hi" className="hi" />);
     });
->>>>>>> remotes/upstream/main
 
     // Flushing now should delete the existing content and show the fallback.
 
@@ -1374,20 +1111,11 @@ describe('ReactDOMServerPartialHydration', () => {
     expect(container.textContent).toBe('Loading...');
 
     // Unsuspending shows the content.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await act(async () => {
       suspend = false;
       resolve();
       await promise;
     });
->>>>>>> remotes/upstream/main
 
     const span = container.getElementsByTagName('span')[0];
     expect(span.textContent).toBe('Hi');
@@ -1441,63 +1169,31 @@ describe('ReactDOMServerPartialHydration', () => {
       <App text="Hello" className="hello" />,
       {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      },
-    );
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
           Scheduler.log(error.message);
         },
       },
     );
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     const span = container.getElementsByTagName('span')[0];
     expect(ref.current).toBe(span);
 
     // Render an update, but leave it still suspended.
-<<<<<<< HEAD
-    root.render(<App text="Hi" className="hi" />);
-
-    // Flushing now should delete the existing content and show the fallback.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client rendering. ' +
-        'The usual way to fix this is to wrap the original update ' +
-        'in startTransition.',
-    ]);
-=======
     // Flushing now should delete the existing content and show the fallback.
     await act(() => {
       root.render(<App text="Hi" className="hi" />);
     });
->>>>>>> remotes/upstream/main
 
     expect(container.getElementsByTagName('span').length).toBe(1);
     expect(ref.current).toBe(span);
     expect(container.textContent).toBe('');
 
     // Unsuspending shows the content.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await act(async () => {
       suspend = false;
       resolve();
       await promise;
     });
->>>>>>> remotes/upstream/main
 
     expect(span.textContent).toBe('Hi');
     expect(span.className).toBe('hi');
@@ -1549,56 +1245,25 @@ describe('ReactDOMServerPartialHydration', () => {
       <App text="Hello" className="hello" />,
       {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      },
-    );
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
           Scheduler.log(error.message);
         },
       },
     );
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
 
     // Render an update, but leave it still suspended.
-<<<<<<< HEAD
-    root.render(<App text="Hi" className="hi" />);
-
-    // Flushing now should delete the existing content and show the fallback.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     // Flushing now should delete the existing content and show the fallback.
     await act(() => {
       root.render(<App text="Hi" className="hi" />);
     });
->>>>>>> remotes/upstream/main
 
     expect(container.getElementsByTagName('span').length).toBe(0);
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('Loading...');
 
     // Unsuspending shows the content.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client rendering. ' +
-        'The usual way to fix this is to wrap the original update ' +
-        'in startTransition.',
-    ]);
-
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await act(async () => {
       suspend = false;
       resolve();
@@ -1606,7 +1271,6 @@ describe('ReactDOMServerPartialHydration', () => {
     });
 
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     const span = container.getElementsByTagName('span')[0];
     expect(span.textContent).toBe('Hi');
@@ -1657,44 +1321,23 @@ describe('ReactDOMServerPartialHydration', () => {
       container,
       <App text="Hello" className="hello" />,
     );
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('Hello');
 
     // Render an update with a long timeout.
     React.startTransition(() => root.render(<App text="Hi" className="hi" />));
-<<<<<<< HEAD
-
-    // This shouldn't force the fallback yet.
-    Scheduler.unstable_flushAll();
-=======
     // This shouldn't force the fallback yet.
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('Hello');
 
     // Resolving the promise so that rendering can complete.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    // This should first complete the hydration and then flush the update onto the hydrated state.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     // This should first complete the hydration and then flush the update onto the hydrated state.
     suspend = false;
     await act(() => resolve());
->>>>>>> remotes/upstream/main
 
     // The new span should be the same since we should have successfully hydrated
     // before changing it.
@@ -1719,11 +1362,7 @@ describe('ReactDOMServerPartialHydration', () => {
     function Child() {
       const [state, setState] = React.useState('Hello');
       updateText = setState;
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Child');
-=======
       Scheduler.log('Child');
->>>>>>> remotes/upstream/main
       if (suspend) {
         throw promise;
       } else {
@@ -1732,11 +1371,7 @@ describe('ReactDOMServerPartialHydration', () => {
     }
 
     function Sibling() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Sibling');
-=======
       Scheduler.log('Sibling');
->>>>>>> remotes/upstream/main
       return null;
     }
 
@@ -1753,11 +1388,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     suspend = false;
     const finalHTML = ReactDOMServer.renderToString(<App />);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Child', 'Sibling']);
-=======
     assertLog(['Child', 'Sibling']);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = finalHTML;
@@ -1769,11 +1400,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     await act(async () => {
       suspend = true;
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYieldThrough(['Child']);
-=======
       await waitFor(['Child']);
->>>>>>> remotes/upstream/main
 
       // While we're part way through the hydration, we update the state.
       // This will schedule an update on the children of the suspense boundary.
@@ -1782,11 +1409,7 @@ describe('ReactDOMServerPartialHydration', () => {
       );
 
       // This will throw it away and rerender.
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield(['Child', 'Sibling']);
-=======
       await waitForAll(['Child']);
->>>>>>> remotes/upstream/main
 
       expect(container.textContent).toBe('Hello');
 
@@ -1794,11 +1417,7 @@ describe('ReactDOMServerPartialHydration', () => {
       resolve();
       await promise;
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Child', 'Sibling']);
-=======
     assertLog(['Child', 'Sibling']);
->>>>>>> remotes/upstream/main
 
     expect(container.textContent).toBe('Hello');
   });
@@ -1853,12 +1472,7 @@ describe('ReactDOMServerPartialHydration', () => {
         <App />
       </Context.Provider>,
     );
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(span.textContent).toBe('Hello');
@@ -1871,22 +1485,12 @@ describe('ReactDOMServerPartialHydration', () => {
     );
 
     // At the same time, resolving the promise so that rendering can complete.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    // This should first complete the hydration and then flush the update onto the hydrated state.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     // This should first complete the hydration and then flush the update onto the hydrated state.
     await act(async () => {
       suspend = false;
       resolve();
       await promise;
     });
->>>>>>> remotes/upstream/main
 
     // Since this should have been hydrated, this should still be the same span.
     const newSpan = container.getElementsByTagName('span')[0];
@@ -1949,41 +1553,15 @@ describe('ReactDOMServerPartialHydration', () => {
       </Context.Provider>,
       {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      },
-    );
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
           Scheduler.log(error.message);
         },
       },
     );
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
 
     // Render an update, but leave it still suspended.
-<<<<<<< HEAD
-    root.render(
-      <Context.Provider value={{text: 'Hi', className: 'hi'}}>
-        <App />
-      </Context.Provider>,
-    );
-
-    // Flushing now should delete the existing content and show the fallback.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client rendering. ' +
-        'The usual way to fix this is to wrap the original update ' +
-        'in startTransition.',
-    ]);
-=======
     // Flushing now should delete the existing content and show the fallback.
     await act(() => {
       root.render(
@@ -1992,27 +1570,17 @@ describe('ReactDOMServerPartialHydration', () => {
         </Context.Provider>,
       );
     });
->>>>>>> remotes/upstream/main
 
     expect(container.getElementsByTagName('span').length).toBe(0);
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('Loading...');
 
     // Unsuspending shows the content.
-<<<<<<< HEAD
-    suspend = false;
-    resolve();
-    await promise;
-
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await act(async () => {
       suspend = false;
       resolve();
       await promise;
     });
->>>>>>> remotes/upstream/main
 
     const span = container.getElementsByTagName('span')[0];
     expect(span.textContent).toBe('Hi');
@@ -2060,19 +1628,11 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    if (__DEV__) {
-      expect(Scheduler).toFlushAndYield([
-=======
         Scheduler.log(error.message);
       },
     });
     if (__DEV__) {
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server did not finish this Suspense boundary: The server used' +
           ' "renderToString" which does not support Suspense. If you intended' +
           ' for this Suspense boundary to render the fallback content on the' +
@@ -2081,11 +1641,7 @@ describe('ReactDOMServerPartialHydration', () => {
           ' please switch to "renderToPipeableStream" which supports Suspense on the server',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server could not finish this Suspense boundary, likely due to ' +
           'an error during server rendering. Switched to client rendering.',
       ]);
@@ -2145,19 +1701,11 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    if (__DEV__) {
-      expect(Scheduler).toFlushAndYield([
-=======
         Scheduler.log(error.message);
       },
     });
     if (__DEV__) {
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server did not finish this Suspense boundary: The server used' +
           ' "renderToString" which does not support Suspense. If you intended' +
           ' for this Suspense boundary to render the fallback content on the' +
@@ -2166,11 +1714,7 @@ describe('ReactDOMServerPartialHydration', () => {
           ' please switch to "renderToPipeableStream" which supports Suspense on the server',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server could not finish this Suspense boundary, likely due to ' +
           'an error during server rendering. Switched to client rendering.',
       ]);
@@ -2235,19 +1779,11 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    if (__DEV__) {
-      expect(Scheduler).toFlushAndYield([
-=======
         Scheduler.log(error.message);
       },
     });
     if (__DEV__) {
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server did not finish this Suspense boundary: The server used' +
           ' "renderToString" which does not support Suspense. If you intended' +
           ' for this Suspense boundary to render the fallback content on the' +
@@ -2256,11 +1792,7 @@ describe('ReactDOMServerPartialHydration', () => {
           ' please switch to "renderToPipeableStream" which supports Suspense on the server',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server could not finish this Suspense boundary, likely due to ' +
           'an error during server rendering. Switched to client rendering.',
       ]);
@@ -2329,30 +1861,17 @@ describe('ReactDOMServerPartialHydration', () => {
 
     const spanB = container.getElementsByTagName('span')[1];
 
-<<<<<<< HEAD
-    const root = ReactDOMClient.hydrateRoot(
-      container,
-      <App showMore={false} />,
-    );
-    suspend = true;
-    Scheduler.unstable_flushAll();
-=======
     suspend = true;
     const root = await act(() =>
       ReactDOMClient.hydrateRoot(container, <App showMore={false} />),
     );
->>>>>>> remotes/upstream/main
 
     // We're not hydrated yet.
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('AB');
 
     // Add more rows before we've hydrated the first two.
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App showMore={true} />);
     });
 
@@ -2423,20 +1942,10 @@ describe('ReactDOMServerPartialHydration', () => {
 
     const spanA = container.getElementsByTagName('span')[0];
 
-<<<<<<< HEAD
-    const root = ReactDOMClient.hydrateRoot(
-      container,
-      <App showMore={false} />,
-    );
-
-    suspend = true;
-    Scheduler.unstable_flushAll();
-=======
     suspend = true;
     const root = await act(() =>
       ReactDOMClient.hydrateRoot(container, <App showMore={false} />),
     );
->>>>>>> remotes/upstream/main
 
     // We're not hydrated yet.
     expect(ref.current).toBe(null);
@@ -2473,20 +1982,12 @@ describe('ReactDOMServerPartialHydration', () => {
     }
 
     function Before() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Before');
-=======
       Scheduler.log('Before');
->>>>>>> remotes/upstream/main
       return null;
     }
 
     function After() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('After');
-=======
       Scheduler.log('After');
->>>>>>> remotes/upstream/main
       return null;
     }
 
@@ -2519,11 +2020,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     suspend = false;
     const html = ReactDOMServer.renderToString(<App />);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Before', 'After']);
-=======
     assertLog(['Before', 'After']);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = html;
@@ -2539,15 +2036,6 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = true;
 
     await act(async () => {
-<<<<<<< HEAD
-      if (gate(flags => flags.enableSyncDefaultUpdates)) {
-        expect(Scheduler).toFlushAndYieldThrough(['Before', 'After']);
-      } else {
-        expect(Scheduler).toFlushAndYieldThrough(['Before']);
-        // This took a long time to render.
-        Scheduler.unstable_advanceTime(1000);
-        expect(Scheduler).toFlushAndYield(['After']);
-=======
       if (gate(flags => flags.forceConcurrentByDefaultForTesting)) {
         await waitFor(['Before']);
         // This took a long time to render.
@@ -2555,7 +2043,6 @@ describe('ReactDOMServerPartialHydration', () => {
         await waitFor(['After']);
       } else {
         await waitFor(['Before', 'After']);
->>>>>>> remotes/upstream/main
       }
 
       // This will cause us to skip the second row completely.
@@ -2614,21 +2101,13 @@ describe('ReactDOMServerPartialHydration', () => {
 
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-=======
         Scheduler.log(error.message);
->>>>>>> remotes/upstream/main
       },
     });
 
     suspend = true;
     if (__DEV__) {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server did not finish this Suspense boundary: The server used' +
           ' "renderToString" which does not support Suspense. If you intended' +
           ' for this Suspense boundary to render the fallback content on the' +
@@ -2637,11 +2116,7 @@ describe('ReactDOMServerPartialHydration', () => {
           ' please switch to "renderToPipeableStream" which supports Suspense on the server',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server could not finish this Suspense boundary, likely due to ' +
           'an error during server rendering. Switched to client rendering.',
       ]);
@@ -2702,19 +2177,11 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = false;
     ReactDOMClient.hydrateRoot(container, <App />, {
       onRecoverableError(error) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(error.message);
-      },
-    });
-    if (__DEV__) {
-      expect(Scheduler).toFlushAndYield([
-=======
         Scheduler.log(error.message);
       },
     });
     if (__DEV__) {
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server did not finish this Suspense boundary: The server used' +
           ' "renderToString" which does not support Suspense. If you intended' +
           ' for this Suspense boundary to render the fallback content on the' +
@@ -2723,11 +2190,7 @@ describe('ReactDOMServerPartialHydration', () => {
           ' please switch to "renderToPipeableStream" which supports Suspense on the server',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'The server could not finish this Suspense boundary, likely due to ' +
           'an error during server rendering. Switched to client rendering.',
       ]);
@@ -2773,12 +2236,7 @@ describe('ReactDOMServerPartialHydration', () => {
     // On the client we don't have all data yet but we want to start
     // hydrating anyway.
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref1.current).toBe(span1);
     expect(ref2.current).toBe(span2);
@@ -2835,44 +2293,17 @@ describe('ReactDOMServerPartialHydration', () => {
       </ClassName.Provider>,
       {
         onRecoverableError(error) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(error.message);
-        },
-      },
-    );
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
           Scheduler.log(error.message);
         },
       },
     );
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(span.textContent).toBe('Hello');
 
     // Render an update, which will be higher or the same priority as pinging the hydration.
     // The new update doesn't suspend.
-<<<<<<< HEAD
-    root.render(
-      <ClassName.Provider value={'hi'}>
-        <App text="Hi" />
-      </ClassName.Provider>,
-    );
-
-    // Since we're still suspended on the original data, we can't hydrate.
-    // This will force all expiration times to flush.
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-    expect(Scheduler).toHaveYielded([
-      'This Suspense boundary received an update before it finished ' +
-        'hydrating. This caused the boundary to switch to client rendering. ' +
-        'The usual way to fix this is to wrap the original update ' +
-        'in startTransition.',
-    ]);
-=======
     // Since we're still suspended on the original data, we can't hydrate.
     // This will force all expiration times to flush.
     await act(() => {
@@ -2882,7 +2313,6 @@ describe('ReactDOMServerPartialHydration', () => {
         </ClassName.Provider>,
       );
     });
->>>>>>> remotes/upstream/main
 
     // This will now be a new span because we weren't able to hydrate before
     const newSpan = container.getElementsByTagName('span')[0];
@@ -2952,21 +2382,12 @@ describe('ReactDOMServerPartialHydration', () => {
     // hydrating anyway.
     suspend = true;
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(container.textContent).toBe('Click meHello');
 
     // We're now partially hydrated.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     expect(clicks).toBe(0);
@@ -2978,24 +2399,9 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(clicks).toBe(0);
-      expect(container.textContent).toBe('Click meHello');
-    } else {
-      expect(clicks).toBe(1);
-      expect(container.textContent).toBe('Hello');
-    }
-=======
     expect(clicks).toBe(0);
     expect(container.textContent).toBe('Click meHello');
 
->>>>>>> remotes/upstream/main
     document.body.removeChild(container);
   });
 
@@ -3059,18 +2465,10 @@ describe('ReactDOMServerPartialHydration', () => {
     // This should be delayed.
     expect(onEvent).toHaveBeenCalledTimes(0);
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-
-    // We're now partially hydrated.
-    await act(async () => {
-=======
     await waitForAll([]);
 
     // We're now partially hydrated.
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     // We should not have invoked the event yet because we're not
@@ -3084,20 +2482,7 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(onEvent).toHaveBeenCalledTimes(0);
-    } else {
-      expect(onEvent).toHaveBeenCalledTimes(2);
-    }
-=======
     expect(onEvent).toHaveBeenCalledTimes(0);
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(container);
   });
@@ -3156,28 +2541,16 @@ describe('ReactDOMServerPartialHydration', () => {
     ReactDOMClient.hydrateRoot(container, <App />);
 
     // We'll do one click before hydrating.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     // This should be delayed.
     expect(clicks).toBe(0);
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-
-    // We're now partially hydrated.
-    await act(async () => {
-=======
     await waitForAll([]);
 
     // We're now partially hydrated.
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     expect(clicks).toBe(0);
@@ -3189,20 +2562,7 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(clicks).toBe(0);
-    } else {
-      expect(clicks).toBe(2);
-    }
-=======
     expect(clicks).toBe(0);
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(container);
   });
@@ -3270,18 +2630,10 @@ describe('ReactDOMServerPartialHydration', () => {
     // This should be delayed.
     expect(onEvent).toHaveBeenCalledTimes(0);
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-
-    // We're now partially hydrated.
-    await act(async () => {
-=======
     await waitForAll([]);
 
     // We're now partially hydrated.
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     // We should not have invoked the event yet because we're not
@@ -3294,21 +2646,8 @@ describe('ReactDOMServerPartialHydration', () => {
       resolve();
       await promise;
     });
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(onEvent).toHaveBeenCalledTimes(0);
-    } else {
-      expect(onEvent).toHaveBeenCalledTimes(2);
-    }
-=======
 
     expect(onEvent).toHaveBeenCalledTimes(0);
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(container);
   });
@@ -3363,18 +2702,10 @@ describe('ReactDOMServerPartialHydration', () => {
     // hydrating anyway.
     suspend = true;
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-
-    // We're now partially hydrated.
-    await act(async () => {
-=======
     await waitForAll([]);
 
     // We're now partially hydrated.
     await act(() => {
->>>>>>> remotes/upstream/main
       span.click();
     });
     expect(clicksOnChild).toBe(0);
@@ -3387,24 +2718,8 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(clicksOnChild).toBe(0);
-      expect(clicksOnParent).toBe(0);
-    } else {
-      expect(clicksOnChild).toBe(1);
-      // This will be zero due to the stopPropagation.
-      expect(clicksOnParent).toBe(0);
-    }
-=======
     expect(clicksOnChild).toBe(0);
     expect(clicksOnParent).toBe(0);
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(container);
   });
@@ -3450,12 +2765,7 @@ describe('ReactDOMServerPartialHydration', () => {
     // We're going to use a different root as a parent.
     // This lets us detect whether an event goes through React's event system.
     const parentRoot = ReactDOMClient.createRoot(parentContainer);
-<<<<<<< HEAD
-    parentRoot.render(<Parent />);
-    Scheduler.unstable_flushAll();
-=======
     await act(() => parentRoot.render(<Parent />));
->>>>>>> remotes/upstream/main
 
     childSlotRef.current.appendChild(childContainer);
 
@@ -3466,19 +2776,10 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend = true;
 
     // Hydrate asynchronously.
-<<<<<<< HEAD
-    ReactDOMClient.hydrateRoot(childContainer, <App />);
-    jest.runAllTimers();
-    Scheduler.unstable_flushAll();
-
-    // The Suspense boundary is not yet hydrated.
-    await act(async () => {
-=======
     await act(() => ReactDOMClient.hydrateRoot(childContainer, <App />));
 
     // The Suspense boundary is not yet hydrated.
     await act(() => {
->>>>>>> remotes/upstream/main
       a.click();
     });
     expect(clicks).toBe(0);
@@ -3490,21 +2791,7 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    // We're now full hydrated.
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      expect(clicks).toBe(0);
-    } else {
-      expect(clicks).toBe(1);
-    }
-=======
     expect(clicks).toBe(0);
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(parentContainer);
   });
@@ -3577,12 +2864,7 @@ describe('ReactDOMServerPartialHydration', () => {
     suspend2 = true;
     ReactDOMClient.hydrateRoot(container, <App />);
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     dispatchMouseEvent(appDiv, null);
     dispatchMouseEvent(firstSpan, appDiv);
@@ -3596,12 +2878,7 @@ describe('ReactDOMServerPartialHydration', () => {
     resolve2();
     await promise2;
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     // We've unblocked the current hover target so we should be
     // able to replay it now.
@@ -3612,12 +2889,7 @@ describe('ReactDOMServerPartialHydration', () => {
     resolve1();
     await promise1;
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ops).toEqual(['Mouse Enter Second']);
 
@@ -3634,25 +2906,15 @@ describe('ReactDOMServerPartialHydration', () => {
       if (suspend) {
         throw promise;
       } else {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Child');
-=======
         Scheduler.log('Child');
->>>>>>> remotes/upstream/main
         return 'Hello';
       }
     }
 
     function Sibling() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Sibling');
-      React.useLayoutEffect(() => {
-        Scheduler.unstable_yieldValue('Commit Sibling');
-=======
       Scheduler.log('Sibling');
       React.useLayoutEffect(() => {
         Scheduler.log('Commit Sibling');
->>>>>>> remotes/upstream/main
       });
       return 'World';
     }
@@ -3677,11 +2939,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     suspend = false;
     const finalHTML = ReactDOMServer.renderToString(<App />);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Child']);
-=======
     assertLog(['Child']);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = finalHTML;
@@ -3691,11 +2949,7 @@ describe('ReactDOMServerPartialHydration', () => {
       container,
       <App showSibling={false} />,
     );
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield([]);
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(ref.current).toBe(null);
     expect(container.textContent).toBe('Hello');
@@ -3712,22 +2966,14 @@ describe('ReactDOMServerPartialHydration', () => {
 
     // When we flush we expect the Normal pri render to take priority
     // over hydration.
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYieldThrough(['Sibling', 'Commit Sibling']);
-=======
     await waitFor(['Sibling', 'Commit Sibling']);
->>>>>>> remotes/upstream/main
 
     // We shouldn't have hydrated the child yet.
     expect(ref.current).toBe(null);
     // But we did have a chance to update the content.
     expect(container.textContent).toBe('HelloWorld');
 
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Child']);
-=======
     await waitForAll(['Child']);
->>>>>>> remotes/upstream/main
 
     // Now we're hydrated.
     expect(ref.current).not.toBe(null);
@@ -3789,25 +3035,14 @@ describe('ReactDOMServerPartialHydration', () => {
     // hydrating anyway.
     suspend = true;
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-    jest.runAllTimers();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
 
     expect(container.textContent).toBe('Click meHello');
 
     // We're now partially hydrated.
-<<<<<<< HEAD
-    await act(async () => {
-      form.dispatchEvent(
-        new Event('submit', {
-=======
     await act(() => {
       form.dispatchEvent(
         new window.Event('submit', {
->>>>>>> remotes/upstream/main
           bubbles: true,
         }),
       );
@@ -3821,25 +3056,9 @@ describe('ReactDOMServerPartialHydration', () => {
       await promise;
     });
 
-<<<<<<< HEAD
-    if (
-      gate(
-        flags =>
-          flags.enableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay,
-      )
-    ) {
-      // discrete event not replayed
-      expect(submits).toBe(0);
-      expect(container.textContent).toBe('Click meHello');
-    } else {
-      expect(submits).toBe(1);
-      expect(container.textContent).toBe('Hello');
-    }
-=======
     // discrete event not replayed
     expect(submits).toBe(0);
     expect(container.textContent).toBe('Click meHello');
->>>>>>> remotes/upstream/main
 
     document.body.removeChild(container);
   });
@@ -3869,17 +3088,6 @@ describe('ReactDOMServerPartialHydration', () => {
     const span = container.getElementsByTagName('span')[0];
     expect(span.innerHTML).toBe('Hidden child');
 
-<<<<<<< HEAD
-    ReactDOMClient.hydrateRoot(container, <App />, {
-      onRecoverableError(error) {
-        Scheduler.unstable_yieldValue(
-          'Log recoverable error: ' + error.message,
-        );
-      },
-    });
-
-    Scheduler.unstable_flushAll();
-=======
     await act(() =>
       ReactDOMClient.hydrateRoot(container, <App />, {
         onRecoverableError(error) {
@@ -3888,7 +3096,6 @@ describe('ReactDOMServerPartialHydration', () => {
       }),
     );
 
->>>>>>> remotes/upstream/main
     expect(ref.current).toBe(span);
     expect(span.innerHTML).toBe('Hidden child');
   });
@@ -3915,12 +3122,7 @@ describe('ReactDOMServerPartialHydration', () => {
     const span = container.getElementsByTagName('span')[0];
     expect(span.innerHTML).toBe('Hidden child');
 
-<<<<<<< HEAD
-    ReactDOMClient.hydrateRoot(container, <App />);
-    Scheduler.unstable_flushAll();
-=======
     await act(() => ReactDOMClient.hydrateRoot(container, <App />));
->>>>>>> remotes/upstream/main
     expect(ref.current).toBe(span);
     expect(span.innerHTML).toBe('Hidden child');
   });
@@ -3944,12 +3146,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     const span = container.getElementsByTagName('span')[0];
 
-<<<<<<< HEAD
-    ReactDOMClient.hydrateRoot(container, <App />);
-    Scheduler.unstable_flushAll();
-=======
     await act(() => ReactDOMClient.hydrateRoot(container, <App />));
->>>>>>> remotes/upstream/main
     expect(ref.current).toBe(span);
     expect(ref.current.innerHTML).toBe('Hidden child');
   });
@@ -3967,11 +3164,7 @@ describe('ReactDOMServerPartialHydration', () => {
     }
 
     const finalHTML = ReactDOMServer.renderToString(<App />);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([]);
-=======
     assertLog([]);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = finalHTML;
@@ -3990,11 +3183,7 @@ describe('ReactDOMServerPartialHydration', () => {
 
     // The tree successfully hydrates
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield([]);
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ref.current).toBe(span);
   });
 
@@ -4003,20 +3192,12 @@ describe('ReactDOMServerPartialHydration', () => {
     const visibleRef = React.createRef();
 
     function HiddenChild() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('HiddenChild');
-=======
       Scheduler.log('HiddenChild');
->>>>>>> remotes/upstream/main
       return <span>Hidden</span>;
     }
 
     function App() {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('App');
-=======
       Scheduler.log('App');
->>>>>>> remotes/upstream/main
       return (
         <>
           <span ref={visibleRef}>Visible</span>
@@ -4030,11 +3211,7 @@ describe('ReactDOMServerPartialHydration', () => {
     // During server rendering, the Child component should not be evaluated,
     // because it's inside a hidden tree.
     const finalHTML = ReactDOMServer.renderToString(<App />);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['App']);
-=======
     assertLog(['App']);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     container.innerHTML = finalHTML;
@@ -4052,19 +3229,11 @@ describe('ReactDOMServerPartialHydration', () => {
 
     // The visible span successfully hydrates
     ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushUntilNextPaint(['App']);
-    expect(visibleRef.current).toBe(visibleSpan);
-
-    // Subsequently, the hidden child is prerendered on the client
-    expect(Scheduler).toFlushUntilNextPaint(['HiddenChild']);
-=======
     await waitForPaint(['App']);
     expect(visibleRef.current).toBe(visibleSpan);
 
     // Subsequently, the hidden child is prerendered on the client
     await waitForPaint(['HiddenChild']);
->>>>>>> remotes/upstream/main
     expect(container).toMatchInlineSnapshot(`
       <div>
         <span>
@@ -4080,22 +3249,13 @@ describe('ReactDOMServerPartialHydration', () => {
   });
 
   function itHydratesWithoutMismatch(msg, App) {
-<<<<<<< HEAD
-    it('hydrates without mismatch ' + msg, () => {
-=======
     it('hydrates without mismatch ' + msg, async () => {
->>>>>>> remotes/upstream/main
       const container = document.createElement('div');
       document.body.appendChild(container);
       const finalHTML = ReactDOMServer.renderToString(<App />);
       container.innerHTML = finalHTML;
 
-<<<<<<< HEAD
-      ReactDOMClient.hydrateRoot(container, <App />);
-      Scheduler.unstable_flushAll();
-=======
       await act(() => ReactDOMClient.hydrateRoot(container, <App />));
->>>>>>> remotes/upstream/main
     });
   }
 
@@ -4133,10 +3293,6 @@ describe('ReactDOMServerPartialHydration', () => {
   itHydratesWithoutMismatch('an empty string in class component', TestAppClass);
 
   it('fallback to client render on hydration mismatch at root', async () => {
-<<<<<<< HEAD
-    let isClient = false;
-=======
->>>>>>> remotes/upstream/main
     let suspend = true;
     let resolve;
     const promise = new Promise((res, rej) => {
@@ -4145,17 +3301,6 @@ describe('ReactDOMServerPartialHydration', () => {
         res();
       };
     });
-<<<<<<< HEAD
-    function App() {
-      return (
-        <>
-          <Suspense fallback={<div>Loading</div>}>
-            <ChildThatSuspends id={1} />
-          </Suspense>
-          {isClient ? <span>client</span> : <div>server</div>}
-          <Suspense fallback={<div>Loading</div>}>
-            <ChildThatSuspends id={2} />
-=======
     function App({isClient}) {
       return (
         <>
@@ -4165,49 +3310,28 @@ describe('ReactDOMServerPartialHydration', () => {
           {isClient ? <span>client</span> : <div>server</div>}
           <Suspense fallback={<div>Loading</div>}>
             <ChildThatSuspends id={2} isClient={isClient} />
->>>>>>> remotes/upstream/main
           </Suspense>
         </>
       );
     }
-<<<<<<< HEAD
-    function ChildThatSuspends({id}) {
-=======
     function ChildThatSuspends({id, isClient}) {
->>>>>>> remotes/upstream/main
       if (isClient && suspend) {
         throw promise;
       }
       return <div>{id}</div>;
     }
 
-<<<<<<< HEAD
-    const finalHTML = ReactDOMServer.renderToString(<App />);
-=======
     const finalHTML = ReactDOMServer.renderToString(<App isClient={false} />);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     document.body.appendChild(container);
     container.innerHTML = finalHTML;
-<<<<<<< HEAD
-    isClient = true;
-
-    expect(() => {
-      act(() => {
-        ReactDOMClient.hydrateRoot(container, <App />, {
-          onRecoverableError(error) {
-            Scheduler.unstable_yieldValue(
-              'Log recoverable error: ' + error.message,
-            );
-=======
 
     await expect(async () => {
       await act(() => {
         ReactDOMClient.hydrateRoot(container, <App isClient={true} />, {
           onRecoverableError(error) {
             Scheduler.log('Log recoverable error: ' + error.message);
->>>>>>> remotes/upstream/main
           },
         });
       });
@@ -4221,14 +3345,7 @@ describe('ReactDOMServerPartialHydration', () => {
       ],
       {withoutStack: 1},
     );
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-      'Log recoverable error: Hydration failed because the initial UI does not match what was rendered on the server.',
-      // TODO: There were multiple mismatches in a single container. Should
-      // we attempt to de-dupe them?
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       'Log recoverable error: Hydration failed because the initial UI does not match what was rendered on the server.',
       'Log recoverable error: There was an error while hydrating. Because the error happened outside of a Suspense boundary, the entire root will switch to client rendering.',
     ]);
@@ -4257,19 +3374,11 @@ describe('ReactDOMServerPartialHydration', () => {
     container.innerHTML = ReactDOMServer.renderToString(
       <DirectTextChild text="good" />,
     );
-<<<<<<< HEAD
-    expect(() => {
-      act(() => {
-        ReactDOMClient.hydrateRoot(container, <DirectTextChild text="bad" />, {
-          onRecoverableError(error) {
-            Scheduler.unstable_yieldValue(error.message);
-=======
     await expect(async () => {
       await act(() => {
         ReactDOMClient.hydrateRoot(container, <DirectTextChild text="bad" />, {
           onRecoverableError(error) {
             Scheduler.log(error.message);
->>>>>>> remotes/upstream/main
           },
         });
       });
@@ -4281,11 +3390,7 @@ describe('ReactDOMServerPartialHydration', () => {
       ],
       {withoutStack: 1},
     );
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       'Text content does not match server-rendered HTML.',
       'There was an error while hydrating. Because the error happened outside ' +
         'of a Suspense boundary, the entire root will switch to client rendering.',
@@ -4310,23 +3415,14 @@ describe('ReactDOMServerPartialHydration', () => {
     container2.innerHTML = ReactDOMServer.renderToString(
       <TextChildWithSibling text="good" />,
     );
-<<<<<<< HEAD
-    expect(() => {
-      act(() => {
-=======
     await expect(async () => {
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOMClient.hydrateRoot(
           container2,
           <TextChildWithSibling text="bad" />,
           {
             onRecoverableError(error) {
-<<<<<<< HEAD
-              Scheduler.unstable_yieldValue(error.message);
-=======
               Scheduler.log(error.message);
->>>>>>> remotes/upstream/main
             },
           },
         );
@@ -4339,11 +3435,7 @@ describe('ReactDOMServerPartialHydration', () => {
       ],
       {withoutStack: 1},
     );
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       'Text content does not match server-rendered HTML.',
       'There was an error while hydrating. Because the error happened outside ' +
         'of a Suspense boundary, the entire root will switch to client rendering.',

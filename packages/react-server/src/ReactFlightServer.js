@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,18 +7,6 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {
-  Destination,
-  Chunk,
-  BundlerConfig,
-  ModuleMetaData,
-  ModuleReference,
-  ModuleKey,
-} from './ReactFlightServerConfig';
-import type {ContextSnapshot} from './ReactFlightNewContext';
-import type {ThenableState} from './ReactFlightWakeable';
-=======
 import type {Chunk, BinaryChunk, Destination} from './ReactServerStreamConfig';
 
 import type {Postpone} from 'react/src/ReactPostpone';
@@ -62,37 +46,10 @@ import type {
 } from './ReactFlightServerConfig';
 import type {ContextSnapshot} from './ReactFlightNewContext';
 import type {ThenableState} from './ReactFlightThenable';
->>>>>>> remotes/upstream/main
 import type {
   ReactProviderType,
   ServerContextJSONValue,
   Wakeable,
-<<<<<<< HEAD
-} from 'shared/ReactTypes';
-
-import {
-  scheduleWork,
-  beginWriting,
-  writeChunkAndReturn,
-  completeWriting,
-  flushBuffered,
-  close,
-  closeWithError,
-  processModelChunk,
-  processModuleChunk,
-  processProviderChunk,
-  processSymbolChunk,
-  processErrorChunk,
-  processReferenceChunk,
-  resolveModuleMetaData,
-  getModuleKey,
-  isModuleReference,
-} from './ReactFlightServerConfig';
-
-import {
-  Dispatcher,
-  getCurrentCache,
-=======
   Thenable,
   PendingThenable,
   FulfilledThenable,
@@ -116,18 +73,12 @@ import {
 
 import {
   HooksDispatcher,
->>>>>>> remotes/upstream/main
   prepareToUseHooksForRequest,
   prepareToUseHooksForComponent,
   getThenableStateAfterSuspending,
   resetHooksForRequest,
-<<<<<<< HEAD
-  setCurrentCache,
-} from './ReactFlightHooks';
-=======
 } from './ReactFlightHooks';
 import {DefaultCacheDispatcher} from './flight/ReactFlightServerCache';
->>>>>>> remotes/upstream/main
 import {
   pushProvider,
   popProvider,
@@ -135,28 +86,14 @@ import {
   getActiveContext,
   rootContextSnapshot,
 } from './ReactFlightNewContext';
-<<<<<<< HEAD
-import {trackSuspendedWakeable} from './ReactFlightWakeable';
-
-import {
-=======
 
 import {
   getIteratorFn,
->>>>>>> remotes/upstream/main
   REACT_ELEMENT_TYPE,
   REACT_FORWARD_REF_TYPE,
   REACT_FRAGMENT_TYPE,
   REACT_LAZY_TYPE,
   REACT_MEMO_TYPE,
-<<<<<<< HEAD
-  REACT_PROVIDER_TYPE,
-} from 'shared/ReactSymbols';
-
-import {getOrCreateServerContext} from 'shared/ReactServerContextRegistry';
-import ReactSharedInternals from 'shared/ReactSharedInternals';
-import isArray from 'shared/isArray';
-=======
   REACT_POSTPONE_TYPE,
   REACT_PROVIDER_TYPE,
 } from 'shared/ReactSymbols';
@@ -190,7 +127,6 @@ type JSONValue =
   | $ReadOnlyArray<JSONValue>;
 
 const stringify = JSON.stringify;
->>>>>>> remotes/upstream/main
 
 type ReactJSONValue =
   | string
@@ -198,12 +134,6 @@ type ReactJSONValue =
   | number
   | null
   | $ReadOnlyArray<ReactJSONValue>
-<<<<<<< HEAD
-  | ReactModelObject;
-
-export type ReactModel =
-  | React$Element<any>
-=======
   | ReactClientObject;
 
 // Serializable values
@@ -219,18 +149,11 @@ export type ReactClientValue =
   | React$Element<string>
   | React$Element<ClientReference<any> & any>
   | ReactServerContext<any>
->>>>>>> remotes/upstream/main
   | string
   | boolean
   | number
   | symbol
   | null
-<<<<<<< HEAD
-  | Iterable<ReactModel>
-  | ReactModelObject;
-
-type ReactModelObject = {+[key: string]: ReactModel};
-=======
   | void
   | bigint
   | Iterable<ReactClientValue>
@@ -242,7 +165,6 @@ type ReactModelObject = {+[key: string]: ReactModel};
   | Promise<ReactClientValue>; // Thenable<ReactClientValue>
 
 type ReactClientObject = {+[key: string]: ReactClientValue};
->>>>>>> remotes/upstream/main
 
 const PENDING = 0;
 const COMPLETED = 1;
@@ -252,11 +174,7 @@ const ERRORED = 4;
 type Task = {
   id: number,
   status: 0 | 1 | 3 | 4,
-<<<<<<< HEAD
-  model: ReactModel,
-=======
   model: ReactClientValue,
->>>>>>> remotes/upstream/main
   ping: () => void,
   context: ContextSnapshot,
   thenableState: ThenableState | null,
@@ -264,30 +182,6 @@ type Task = {
 
 export type Request = {
   status: 0 | 1 | 2,
-<<<<<<< HEAD
-  fatalError: mixed,
-  destination: null | Destination,
-  bundlerConfig: BundlerConfig,
-  cache: Map<Function, mixed>,
-  nextChunkId: number,
-  pendingChunks: number,
-  abortableTasks: Set<Task>,
-  pingedTasks: Array<Task>,
-  completedModuleChunks: Array<Chunk>,
-  completedJSONChunks: Array<Chunk>,
-  completedErrorChunks: Array<Chunk>,
-  writtenSymbols: Map<symbol, number>,
-  writtenModules: Map<ModuleKey, number>,
-  writtenProviders: Map<string, number>,
-  identifierPrefix: string,
-  identifierCount: number,
-  onError: (error: mixed) => void,
-  toJSON: (key: string, value: ReactModel) => ReactJSONValue,
-};
-
-const ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
-
-=======
   flushScheduled: boolean,
   fatalError: mixed,
   destination: null | Destination,
@@ -345,36 +239,20 @@ function cleanupTaintQueue(request: Request): void {
   cleanupQueue.length = 0;
 }
 
->>>>>>> remotes/upstream/main
 function defaultErrorHandler(error: mixed) {
   console['error'](error);
   // Don't transform to our wrapper
 }
 
-<<<<<<< HEAD
-=======
 function defaultPostponeHandler(reason: string) {
   // Noop
 }
 
->>>>>>> remotes/upstream/main
 const OPEN = 0;
 const CLOSING = 1;
 const CLOSED = 2;
 
 export function createRequest(
-<<<<<<< HEAD
-  model: ReactModel,
-  bundlerConfig: BundlerConfig,
-  onError: void | ((error: mixed) => void),
-  context?: Array<[string, ServerContextJSONValue]>,
-  identifierPrefix?: string,
-): Request {
-  const abortSet: Set<Task> = new Set();
-  const pingedTasks = [];
-  const request = {
-    status: OPEN,
-=======
   model: ReactClientValue,
   bundlerConfig: ClientManifest,
   onError: void | ((error: mixed) => ?string),
@@ -403,27 +281,12 @@ export function createRequest(
   const request: Request = {
     status: OPEN,
     flushScheduled: false,
->>>>>>> remotes/upstream/main
     fatalError: null,
     destination: null,
     bundlerConfig,
     cache: new Map(),
     nextChunkId: 0,
     pendingChunks: 0,
-<<<<<<< HEAD
-    abortableTasks: abortSet,
-    pingedTasks: pingedTasks,
-    completedModuleChunks: [],
-    completedJSONChunks: [],
-    completedErrorChunks: [],
-    writtenSymbols: new Map(),
-    writtenModules: new Map(),
-    writtenProviders: new Map(),
-    identifierPrefix: identifierPrefix || '',
-    identifierCount: 1,
-    onError: onError === undefined ? defaultErrorHandler : onError,
-    toJSON: function(key: string, value: ReactModel): ReactJSONValue {
-=======
     hints,
     abortableTasks: abortSet,
     pingedTasks: pingedTasks,
@@ -442,7 +305,6 @@ export function createRequest(
     onPostpone: onPostpone === undefined ? defaultPostponeHandler : onPostpone,
     // $FlowFixMe[missing-this-annot]
     toJSON: function (key: string, value: ReactClientValue): ReactJSONValue {
->>>>>>> remotes/upstream/main
       return resolveModelToJSON(request, this, key, value);
     },
   };
@@ -453,8 +315,6 @@ export function createRequest(
   return request;
 }
 
-<<<<<<< HEAD
-=======
 let currentRequest: null | Request = null;
 
 export function resolveRequest(): null | Request {
@@ -466,7 +326,6 @@ export function resolveRequest(): null | Request {
   return null;
 }
 
->>>>>>> remotes/upstream/main
 function createRootContext(
   reqContext?: Array<[string, ServerContextJSONValue]>,
 ) {
@@ -475,9 +334,6 @@ function createRootContext(
 
 const POP = {};
 
-<<<<<<< HEAD
-function attemptResolveElement(
-=======
 function serializeThenable(request: Request, thenable: Thenable<any>): number {
   request.pendingChunks++;
   const newTask = createTask(
@@ -632,30 +488,17 @@ function createLazyWrapperAroundWakeable(wakeable: Wakeable) {
 
 function attemptResolveElement(
   request: Request,
->>>>>>> remotes/upstream/main
   type: any,
   key: null | React$Key,
   ref: mixed,
   props: any,
   prevThenableState: ThenableState | null,
-<<<<<<< HEAD
-): ReactModel {
-=======
 ): ReactClientValue {
->>>>>>> remotes/upstream/main
   if (ref !== null && ref !== undefined) {
     // When the ref moves to the regular props object this will implicitly
     // throw for functions. We could probably relax it to a DEV warning for other
     // cases.
     throw new Error(
-<<<<<<< HEAD
-      'Refs cannot be used in server components, nor passed to client components.',
-    );
-  }
-  if (typeof type === 'function') {
-    if (isModuleReference(type)) {
-      // This is a reference to a client component.
-=======
       'Refs cannot be used in Server Components, nor passed to Client Components.',
     );
   }
@@ -668,14 +511,10 @@ function attemptResolveElement(
   if (typeof type === 'function') {
     if (isClientReference(type)) {
       // This is a reference to a Client Component.
->>>>>>> remotes/upstream/main
       return [REACT_ELEMENT_TYPE, type, key, props];
     }
     // This is a server-side component.
     prepareToUseHooksForComponent(prevThenableState);
-<<<<<<< HEAD
-    return type(props);
-=======
     const result = type(props);
     if (
       typeof result === 'object' &&
@@ -693,7 +532,6 @@ function attemptResolveElement(
       return createLazyWrapperAroundWakeable(result);
     }
     return result;
->>>>>>> remotes/upstream/main
   } else if (typeof type === 'string') {
     // This is a host element. E.g. HTML.
     return [REACT_ELEMENT_TYPE, type, key, props];
@@ -702,24 +540,15 @@ function attemptResolveElement(
       // For key-less fragments, we add a small optimization to avoid serializing
       // it as a wrapper.
       // TODO: If a key is specified, we should propagate its key to any children.
-<<<<<<< HEAD
-      // Same as if a server component has a key.
-=======
       // Same as if a Server Component has a key.
->>>>>>> remotes/upstream/main
       return props.children;
     }
     // This might be a built-in React component. We'll let the client decide.
     // Any built-in works as long as its props are serializable.
     return [REACT_ELEMENT_TYPE, type, key, props];
   } else if (type != null && typeof type === 'object') {
-<<<<<<< HEAD
-    if (isModuleReference(type)) {
-      // This is a reference to a client component.
-=======
     if (isClientReference(type)) {
       // This is a reference to a Client Component.
->>>>>>> remotes/upstream/main
       return [REACT_ELEMENT_TYPE, type, key, props];
     }
     switch (type.$$typeof) {
@@ -728,10 +557,7 @@ function attemptResolveElement(
         const init = type._init;
         const wrappedType = init(payload);
         return attemptResolveElement(
-<<<<<<< HEAD
-=======
           request,
->>>>>>> remotes/upstream/main
           wrappedType,
           key,
           ref,
@@ -746,10 +572,7 @@ function attemptResolveElement(
       }
       case REACT_MEMO_TYPE: {
         return attemptResolveElement(
-<<<<<<< HEAD
-=======
           request,
->>>>>>> remotes/upstream/main
           type.type,
           key,
           ref,
@@ -773,10 +596,6 @@ function attemptResolveElement(
             );
           }
         }
-<<<<<<< HEAD
-        // $FlowFixMe issue discovered when updating Flow
-=======
->>>>>>> remotes/upstream/main
         return [
           REACT_ELEMENT_TYPE,
           type,
@@ -788,11 +607,7 @@ function attemptResolveElement(
     }
   }
   throw new Error(
-<<<<<<< HEAD
-    `Unsupported server component type: ${describeValueForErrorMessage(type)}`,
-=======
     `Unsupported Server Component type: ${describeValueForErrorMessage(type)}`,
->>>>>>> remotes/upstream/main
   );
 }
 
@@ -800,30 +615,19 @@ function pingTask(request: Request, task: Task): void {
   const pingedTasks = request.pingedTasks;
   pingedTasks.push(task);
   if (pingedTasks.length === 1) {
-<<<<<<< HEAD
-=======
     request.flushScheduled = request.destination !== null;
->>>>>>> remotes/upstream/main
     scheduleWork(() => performWork(request));
   }
 }
 
 function createTask(
   request: Request,
-<<<<<<< HEAD
-  model: ReactModel,
-=======
   model: ReactClientValue,
->>>>>>> remotes/upstream/main
   context: ContextSnapshot,
   abortSet: Set<Task>,
 ): Task {
   const id = request.nextChunkId++;
-<<<<<<< HEAD
-  const task = {
-=======
   const task: Task = {
->>>>>>> remotes/upstream/main
     id,
     status: PENDING,
     model,
@@ -839,21 +643,6 @@ function serializeByValueID(id: number): string {
   return '$' + id.toString(16);
 }
 
-<<<<<<< HEAD
-function serializeByRefID(id: number): string {
-  return '@' + id.toString(16);
-}
-
-function serializeModuleReference(
-  request: Request,
-  parent: {+[key: string | number]: ReactModel} | $ReadOnlyArray<ReactModel>,
-  key: string,
-  moduleReference: ModuleReference<any>,
-): string {
-  const moduleKey: ModuleKey = getModuleKey(moduleReference);
-  const writtenModules = request.writtenModules;
-  const existingId = writtenModules.get(moduleKey);
-=======
 function serializeLazyID(id: number): string {
   return '$L' + id.toString(16);
 }
@@ -932,7 +721,6 @@ function serializeClientReference(
     getClientReferenceKey(clientReference);
   const writtenClientReferences = request.writtenClientReferences;
   const existingId = writtenClientReferences.get(clientReferenceKey);
->>>>>>> remotes/upstream/main
   if (existingId !== undefined) {
     if (parent[0] === REACT_ELEMENT_TYPE && key === '1') {
       // If we're encoding the "type" of an element, we can refer
@@ -940,47 +728,23 @@ function serializeClientReference(
       // knows how to deal with lazy values. This lets us suspend
       // on this component rather than its parent until the code has
       // loaded.
-<<<<<<< HEAD
-      return serializeByRefID(existingId);
-=======
       return serializeLazyID(existingId);
->>>>>>> remotes/upstream/main
     }
     return serializeByValueID(existingId);
   }
   try {
-<<<<<<< HEAD
-    const moduleMetaData: ModuleMetaData = resolveModuleMetaData(
-      request.bundlerConfig,
-      moduleReference,
-    );
-    request.pendingChunks++;
-    const moduleId = request.nextChunkId++;
-    emitModuleChunk(request, moduleId, moduleMetaData);
-    writtenModules.set(moduleKey, moduleId);
-=======
     const clientReferenceMetadata: ClientReferenceMetadata =
       resolveClientReferenceMetadata(request.bundlerConfig, clientReference);
     request.pendingChunks++;
     const importId = request.nextChunkId++;
     emitImportChunk(request, importId, clientReferenceMetadata);
     writtenClientReferences.set(clientReferenceKey, importId);
->>>>>>> remotes/upstream/main
     if (parent[0] === REACT_ELEMENT_TYPE && key === '1') {
       // If we're encoding the "type" of an element, we can refer
       // to that by a lazy reference instead of directly since React
       // knows how to deal with lazy values. This lets us suspend
       // on this component rather than its parent until the code has
       // loaded.
-<<<<<<< HEAD
-      return serializeByRefID(moduleId);
-    }
-    return serializeByValueID(moduleId);
-  } catch (x) {
-    request.pendingChunks++;
-    const errorId = request.nextChunkId++;
-    emitErrorChunk(request, errorId, x);
-=======
       return serializeLazyID(importId);
     }
     return serializeByValueID(importId);
@@ -989,16 +753,10 @@ function serializeClientReference(
     const errorId = request.nextChunkId++;
     const digest = logRecoverableError(request, x);
     emitErrorChunk(request, errorId, digest, x);
->>>>>>> remotes/upstream/main
     return serializeByValueID(errorId);
   }
 }
 
-<<<<<<< HEAD
-function escapeStringValue(value: string): string {
-  if (value[0] === '$' || value[0] === '@') {
-    // We need to escape $ or @ prefixed strings since we use those to encode
-=======
 function outlineModel(request: Request, value: any): number {
   request.pendingChunks++;
   const outlinedId = request.nextChunkId++;
@@ -1093,7 +851,6 @@ function serializeTypedArray(
 function escapeStringValue(value: string): string {
   if (value[0] === '$') {
     // We need to escape $ prefixed strings since we use those to encode
->>>>>>> remotes/upstream/main
     // references to IDs and as special symbol values.
     return '$' + value;
   } else {
@@ -1101,174 +858,6 @@ function escapeStringValue(value: string): string {
   }
 }
 
-<<<<<<< HEAD
-function isObjectPrototype(object): boolean {
-  if (!object) {
-    return false;
-  }
-  const ObjectPrototype = Object.prototype;
-  if (object === ObjectPrototype) {
-    return true;
-  }
-  // It might be an object from a different Realm which is
-  // still just a plain simple object.
-  if (Object.getPrototypeOf(object)) {
-    return false;
-  }
-  const names = Object.getOwnPropertyNames(object);
-  for (let i = 0; i < names.length; i++) {
-    if (!(names[i] in ObjectPrototype)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function isSimpleObject(object): boolean {
-  if (!isObjectPrototype(Object.getPrototypeOf(object))) {
-    return false;
-  }
-  const names = Object.getOwnPropertyNames(object);
-  for (let i = 0; i < names.length; i++) {
-    const descriptor = Object.getOwnPropertyDescriptor(object, names[i]);
-    if (!descriptor) {
-      return false;
-    }
-    if (!descriptor.enumerable) {
-      if (
-        (names[i] === 'key' || names[i] === 'ref') &&
-        typeof descriptor.get === 'function'
-      ) {
-        // React adds key and ref getters to props objects to issue warnings.
-        // Those getters will not be transferred to the client, but that's ok,
-        // so we'll special case them.
-        continue;
-      }
-      return false;
-    }
-  }
-  return true;
-}
-
-function objectName(object): string {
-  const name = Object.prototype.toString.call(object);
-  return name.replace(/^\[object (.*)\]$/, function(m, p0) {
-    return p0;
-  });
-}
-
-function describeKeyForErrorMessage(key: string): string {
-  const encodedKey = JSON.stringify(key);
-  return '"' + key + '"' === encodedKey ? key : encodedKey;
-}
-
-function describeValueForErrorMessage(value: ReactModel): string {
-  switch (typeof value) {
-    case 'string': {
-      return JSON.stringify(
-        value.length <= 10 ? value : value.substr(0, 10) + '...',
-      );
-    }
-    case 'object': {
-      if (isArray(value)) {
-        return '[...]';
-      }
-      const name = objectName(value);
-      if (name === 'Object') {
-        return '{...}';
-      }
-      return name;
-    }
-    case 'function':
-      return 'function';
-    default:
-      // eslint-disable-next-line react-internal/safe-string-coercion
-      return String(value);
-  }
-}
-
-function describeObjectForErrorMessage(
-  objectOrArray:
-    | {+[key: string | number]: ReactModel, ...}
-    | $ReadOnlyArray<ReactModel>,
-  expandedName?: string,
-): string {
-  if (isArray(objectOrArray)) {
-    let str = '[';
-    const array: $ReadOnlyArray<ReactModel> = objectOrArray;
-    for (let i = 0; i < array.length; i++) {
-      if (i > 0) {
-        str += ', ';
-      }
-      if (i > 6) {
-        str += '...';
-        break;
-      }
-      const value = array[i];
-      if (
-        '' + i === expandedName &&
-        typeof value === 'object' &&
-        value !== null
-      ) {
-        str += describeObjectForErrorMessage(value);
-      } else {
-        str += describeValueForErrorMessage(value);
-      }
-    }
-    str += ']';
-    return str;
-  } else {
-    let str = '{';
-    const object: {+[key: string | number]: ReactModel, ...} = objectOrArray;
-    const names = Object.keys(object);
-    for (let i = 0; i < names.length; i++) {
-      if (i > 0) {
-        str += ', ';
-      }
-      if (i > 6) {
-        str += '...';
-        break;
-      }
-      const name = names[i];
-      str += describeKeyForErrorMessage(name) + ': ';
-      const value = object[name];
-      if (
-        name === expandedName &&
-        typeof value === 'object' &&
-        value !== null
-      ) {
-        str += describeObjectForErrorMessage(value);
-      } else {
-        str += describeValueForErrorMessage(value);
-      }
-    }
-    str += '}';
-    return str;
-  }
-}
-
-let insideContextProps = null;
-let isInsideContextValue = false;
-
-export function resolveModelToJSON(
-  request: Request,
-  parent: {+[key: string | number]: ReactModel} | $ReadOnlyArray<ReactModel>,
-  key: string,
-  value: ReactModel,
-): ReactJSONValue {
-  if (__DEV__) {
-    // $FlowFixMe
-    const originalValue = parent[key];
-    if (typeof originalValue === 'object' && originalValue !== value) {
-      console.error(
-        'Only plain objects can be passed to client components from server components. ' +
-          'Objects with toJSON methods are not supported. Convert it manually ' +
-          'to a simple value before passing it to props. ' +
-          'Remove %s from these props: %s',
-        describeKeyForErrorMessage(key),
-        describeObjectForErrorMessage(parent),
-      );
-=======
 let insideContextProps = null;
 let isInsideContextValue = false;
 
@@ -1313,7 +902,6 @@ function resolveModelToJSON(
           describeObjectForErrorMessage(parent, key),
         );
       }
->>>>>>> remotes/upstream/main
     }
   }
 
@@ -1327,11 +915,7 @@ function resolveModelToJSON(
     if (
       parent[0] === REACT_ELEMENT_TYPE &&
       parent[1] &&
-<<<<<<< HEAD
-      parent[1].$$typeof === REACT_PROVIDER_TYPE &&
-=======
       (parent[1]: any).$$typeof === REACT_PROVIDER_TYPE &&
->>>>>>> remotes/upstream/main
       key === '3'
     ) {
       insideContextProps = value;
@@ -1342,11 +926,7 @@ function resolveModelToJSON(
     }
   }
 
-<<<<<<< HEAD
-  // Resolve server components.
-=======
   // Resolve Server Components.
->>>>>>> remotes/upstream/main
   while (
     typeof value === 'object' &&
     value !== null &&
@@ -1364,14 +944,9 @@ function resolveModelToJSON(
         case REACT_ELEMENT_TYPE: {
           // TODO: Concatenate keys of parents onto children.
           const element: React$Element<any> = (value: any);
-<<<<<<< HEAD
-          // Attempt to render the server component.
-          value = attemptResolveElement(
-=======
           // Attempt to render the Server Component.
           value = attemptResolveElement(
             request,
->>>>>>> remotes/upstream/main
             element.type,
             element.key,
             element.ref,
@@ -1387,36 +962,6 @@ function resolveModelToJSON(
           break;
         }
       }
-<<<<<<< HEAD
-    } catch (x) {
-      if (typeof x === 'object' && x !== null && typeof x.then === 'function') {
-        // Something suspended, we'll need to create a new task and resolve it later.
-        request.pendingChunks++;
-        const newTask = createTask(
-          request,
-          value,
-          getActiveContext(),
-          request.abortableTasks,
-        );
-        const ping = newTask.ping;
-        x.then(ping, ping);
-
-        const wakeable: Wakeable = x;
-        trackSuspendedWakeable(wakeable);
-        newTask.thenableState = getThenableStateAfterSuspending();
-
-        return serializeByRefID(newTask.id);
-      } else {
-        logRecoverableError(request, x);
-        // Something errored. We'll still send everything we have up until this point.
-        // We'll replace this element with a lazy reference that throws on the client
-        // once it gets rendered.
-        request.pendingChunks++;
-        const errorId = request.nextChunkId++;
-        emitErrorChunk(request, errorId, x);
-        return serializeByRefID(errorId);
-      }
-=======
     } catch (thrownValue) {
       const x =
         thrownValue === SuspenseException
@@ -1461,7 +1006,6 @@ function resolveModelToJSON(
       const digest = logRecoverableError(request, x);
       emitErrorChunk(request, errorId, digest, x);
       return serializeLazyID(errorId);
->>>>>>> remotes/upstream/main
     }
   }
 
@@ -1470,10 +1014,6 @@ function resolveModelToJSON(
   }
 
   if (typeof value === 'object') {
-<<<<<<< HEAD
-    if (isModuleReference(value)) {
-      return serializeModuleReference(request, parent, key, (value: any));
-=======
     if (enableTaint) {
       const tainted = TaintRegistryObjects.get(value);
       if (tainted !== undefined) {
@@ -1488,7 +1028,6 @@ function resolveModelToJSON(
       // or a Promise type. Either of which can be represented by a Promise.
       const promiseId = serializeThenable(request, (value: any));
       return serializePromiseID(promiseId);
->>>>>>> remotes/upstream/main
     } else if ((value: any).$$typeof === REACT_PROVIDER_TYPE) {
       const providerKey = ((value: any): ReactProviderType<any>)._context
         ._globalName;
@@ -1510,40 +1049,6 @@ function resolveModelToJSON(
       return (undefined: any);
     }
 
-<<<<<<< HEAD
-    if (__DEV__) {
-      if (value !== null && !isArray(value)) {
-        // Verify that this is a simple plain object.
-        if (objectName(value) !== 'Object') {
-          console.error(
-            'Only plain objects can be passed to client components from server components. ' +
-              'Built-ins like %s are not supported. ' +
-              'Remove %s from these props: %s',
-            objectName(value),
-            describeKeyForErrorMessage(key),
-            describeObjectForErrorMessage(parent),
-          );
-        } else if (!isSimpleObject(value)) {
-          console.error(
-            'Only plain objects can be passed to client components from server components. ' +
-              'Classes or other objects with methods are not supported. ' +
-              'Remove %s from these props: %s',
-            describeKeyForErrorMessage(key),
-            describeObjectForErrorMessage(parent, key),
-          );
-        } else if (Object.getOwnPropertySymbols) {
-          const symbols = Object.getOwnPropertySymbols(value);
-          if (symbols.length > 0) {
-            console.error(
-              'Only plain objects can be passed to client components from server components. ' +
-                'Objects with symbol properties like %s are not supported. ' +
-                'Remove %s from these props: %s',
-              symbols[0].description,
-              describeKeyForErrorMessage(key),
-              describeObjectForErrorMessage(parent, key),
-            );
-          }
-=======
     if (isArray(value)) {
       // $FlowFixMe[incompatible-return]
       return value;
@@ -1649,57 +1154,15 @@ function resolveModelToJSON(
             symbols[0].description,
             describeObjectForErrorMessage(parent, key),
           );
->>>>>>> remotes/upstream/main
         }
       }
     }
 
-<<<<<<< HEAD
-    // $FlowFixMe
-=======
     // $FlowFixMe[incompatible-return]
->>>>>>> remotes/upstream/main
     return value;
   }
 
   if (typeof value === 'string') {
-<<<<<<< HEAD
-    return escapeStringValue(value);
-  }
-
-  if (
-    typeof value === 'boolean' ||
-    typeof value === 'number' ||
-    typeof value === 'undefined'
-  ) {
-    return value;
-  }
-
-  if (typeof value === 'function') {
-    if (isModuleReference(value)) {
-      return serializeModuleReference(request, parent, key, (value: any));
-    }
-    if (/^on[A-Z]/.test(key)) {
-      throw new Error(
-        'Event handlers cannot be passed to client component props. ' +
-          `Remove ${describeKeyForErrorMessage(
-            key,
-          )} from these props if possible: ${describeObjectForErrorMessage(
-            parent,
-          )}
-` +
-          'If you need interactivity, consider converting part of this to a client component.',
-      );
-    } else {
-      throw new Error(
-        'Functions cannot be passed directly to client components ' +
-          "because they're not serializable. " +
-          `Remove ${describeKeyForErrorMessage(key)} (${value.displayName ||
-            value.name ||
-            'function'}) from this object, or avoid the entire object: ${describeObjectForErrorMessage(
-            parent,
-          )}`,
-=======
     if (enableTaint) {
       const tainted = TaintRegistryValues.get(value);
       if (tainted !== undefined) {
@@ -1760,7 +1223,6 @@ function resolveModelToJSON(
         'Functions cannot be passed directly to Client Components ' +
           'unless you explicitly expose it by marking it with "use server".' +
           describeObjectForErrorMessage(parent, key),
->>>>>>> remotes/upstream/main
       );
     }
   }
@@ -1771,24 +1233,6 @@ function resolveModelToJSON(
     if (existingId !== undefined) {
       return serializeByValueID(existingId);
     }
-<<<<<<< HEAD
-    // $FlowFixMe `description` might be undefined
-    const name: string = value.description;
-
-    // $FlowFixMe `name` might be undefined
-    if (Symbol.for(name) !== value) {
-      throw new Error(
-        'Only global symbols received from Symbol.for(...) can be passed to client components. ' +
-          `The symbol Symbol.for(${
-            // $FlowFixMe `description` might be undefined
-            value.description
-          }) cannot be found among global symbols. ` +
-          `Remove ${describeKeyForErrorMessage(
-            key,
-          )} from this object, or avoid the entire object: ${describeObjectForErrorMessage(
-            parent,
-          )}`,
-=======
     // $FlowFixMe[incompatible-type] `description` might be undefined
     const name: string = value.description;
 
@@ -1800,7 +1244,6 @@ function resolveModelToJSON(
             value.description
           }) cannot be found among global symbols.` +
           describeObjectForErrorMessage(parent, key),
->>>>>>> remotes/upstream/main
       );
     }
 
@@ -1811,36 +1254,6 @@ function resolveModelToJSON(
     return serializeByValueID(symbolId);
   }
 
-<<<<<<< HEAD
-  // $FlowFixMe: bigint isn't added to Flow yet.
-  if (typeof value === 'bigint') {
-    throw new Error(
-      `BigInt (${value}) is not yet supported in client component props. ` +
-        `Remove ${describeKeyForErrorMessage(
-          key,
-        )} from this object or use a plain number instead: ${describeObjectForErrorMessage(
-          parent,
-        )}`,
-    );
-  }
-
-  throw new Error(
-    `Type ${typeof value} is not supported in client component props. ` +
-      `Remove ${describeKeyForErrorMessage(
-        key,
-      )} from this object, or avoid the entire object: ${describeObjectForErrorMessage(
-        parent,
-      )}`,
-  );
-}
-
-function logRecoverableError(request: Request, error: mixed): void {
-  const onError = request.onError;
-  onError(error);
-}
-
-function fatalError(request: Request, error: mixed): void {
-=======
   if (typeof value === 'bigint') {
     if (enableTaint) {
       const tainted = TaintRegistryValues.get(value);
@@ -1878,7 +1291,6 @@ function fatalError(request: Request, error: mixed): void {
   if (enableTaint) {
     cleanupTaintQueue(request);
   }
->>>>>>> remotes/upstream/main
   // This is called outside error handling code such as if an error happens in React internals.
   if (request.destination !== null) {
     request.status = CLOSED;
@@ -1889,44 +1301,6 @@ function fatalError(request: Request, error: mixed): void {
   }
 }
 
-<<<<<<< HEAD
-function emitErrorChunk(request: Request, id: number, error: mixed): void {
-  // TODO: We should not leak error messages to the client in prod.
-  // Give this an error code instead and log on the server.
-  // We can serialize the error in DEV as a convenience.
-  let message;
-  let stack = '';
-  try {
-    if (error instanceof Error) {
-      // eslint-disable-next-line react-internal/safe-string-coercion
-      message = String(error.message);
-      // eslint-disable-next-line react-internal/safe-string-coercion
-      stack = String(error.stack);
-    } else {
-      message = 'Error: ' + (error: any);
-    }
-  } catch (x) {
-    message = 'An error occurred but serializing the error message failed.';
-  }
-
-  const processedChunk = processErrorChunk(request, id, message, stack);
-  request.completedErrorChunks.push(processedChunk);
-}
-
-function emitModuleChunk(
-  request: Request,
-  id: number,
-  moduleMetaData: ModuleMetaData,
-): void {
-  // $FlowFixMe ModuleMetaData is not a ReactModel
-  const processedChunk = processModuleChunk(request, id, moduleMetaData);
-  request.completedModuleChunks.push(processedChunk);
-}
-
-function emitSymbolChunk(request: Request, id: number, name: string): void {
-  const processedChunk = processSymbolChunk(request, id, name);
-  request.completedModuleChunks.push(processedChunk);
-=======
 function emitPostponeChunk(
   request: Request,
   id: number,
@@ -2010,7 +1384,6 @@ function emitSymbolChunk(request: Request, id: number, name: string): void {
   const symbolReference = serializeSymbolReference(name);
   const processedChunk = encodeReferenceChunk(request, id, symbolReference);
   request.completedImportChunks.push(processedChunk);
->>>>>>> remotes/upstream/main
 }
 
 function emitProviderChunk(
@@ -2018,10 +1391,6 @@ function emitProviderChunk(
   id: number,
   contextName: string,
 ): void {
-<<<<<<< HEAD
-  const processedChunk = processProviderChunk(request, id, contextName);
-  request.completedJSONChunks.push(processedChunk);
-=======
   const contextReference = serializeProviderReference(contextName);
   const processedChunk = encodeReferenceChunk(request, id, contextReference);
   request.completedRegularChunks.push(processedChunk);
@@ -2037,7 +1406,6 @@ function emitModelChunk(
   const row = id.toString(16) + ':' + json + '\n';
   const processedChunk = stringToChunk(row);
   request.completedRegularChunks.push(processedChunk);
->>>>>>> remotes/upstream/main
 }
 
 function retryTask(request: Request, task: Task): void {
@@ -2061,19 +1429,12 @@ function retryTask(request: Request, task: Task): void {
       // previous attempt.
       const prevThenableState = task.thenableState;
 
-<<<<<<< HEAD
-      // Attempt to render the server component.
-=======
       // Attempt to render the Server Component.
->>>>>>> remotes/upstream/main
       // Doing this here lets us reuse this same task if the next component
       // also suspends.
       task.model = value;
       value = attemptResolveElement(
-<<<<<<< HEAD
-=======
         request,
->>>>>>> remotes/upstream/main
         element.type,
         element.key,
         element.ref,
@@ -2097,10 +1458,7 @@ function retryTask(request: Request, task: Task): void {
         const nextElement: React$Element<any> = (value: any);
         task.model = value;
         value = attemptResolveElement(
-<<<<<<< HEAD
-=======
           request,
->>>>>>> remotes/upstream/main
           nextElement.type,
           nextElement.key,
           nextElement.ref,
@@ -2110,29 +1468,6 @@ function retryTask(request: Request, task: Task): void {
       }
     }
 
-<<<<<<< HEAD
-    const processedChunk = processModelChunk(request, task.id, value);
-    request.completedJSONChunks.push(processedChunk);
-    request.abortableTasks.delete(task);
-    task.status = COMPLETED;
-  } catch (x) {
-    if (typeof x === 'object' && x !== null && typeof x.then === 'function') {
-      // Something suspended again, let's pick it back up later.
-      const ping = task.ping;
-      x.then(ping, ping);
-
-      const wakeable: Wakeable = x;
-      trackSuspendedWakeable(wakeable);
-      task.thenableState = getThenableStateAfterSuspending();
-      return;
-    } else {
-      request.abortableTasks.delete(task);
-      task.status = ERRORED;
-      logRecoverableError(request, x);
-      // This errored, we need to serialize this error to the
-      emitErrorChunk(request, task.id, x);
-    }
-=======
     emitModelChunk(request, task.id, value);
     request.abortableTasks.delete(task);
     task.status = COMPLETED;
@@ -2167,21 +1502,14 @@ function retryTask(request: Request, task: Task): void {
     task.status = ERRORED;
     const digest = logRecoverableError(request, x);
     emitErrorChunk(request, task.id, digest, x);
->>>>>>> remotes/upstream/main
   }
 }
 
 function performWork(request: Request): void {
   const prevDispatcher = ReactCurrentDispatcher.current;
-<<<<<<< HEAD
-  const prevCache = getCurrentCache();
-  ReactCurrentDispatcher.current = Dispatcher;
-  setCurrentCache(request.cache);
-=======
   ReactCurrentDispatcher.current = HooksDispatcher;
   const prevRequest = currentRequest;
   currentRequest = request;
->>>>>>> remotes/upstream/main
   prepareToUseHooksForRequest(request);
 
   try {
@@ -2199,13 +1527,8 @@ function performWork(request: Request): void {
     fatalError(request, error);
   } finally {
     ReactCurrentDispatcher.current = prevDispatcher;
-<<<<<<< HEAD
-    setCurrentCache(prevCache);
-    resetHooksForRequest();
-=======
     resetHooksForRequest();
     currentRequest = prevRequest;
->>>>>>> remotes/upstream/main
   }
 }
 
@@ -2214,11 +1537,7 @@ function abortTask(task: Task, request: Request, errorId: number): void {
   // Instead of emitting an error per task.id, we emit a model that only
   // has a single value referencing the error.
   const ref = serializeByValueID(errorId);
-<<<<<<< HEAD
-  const processedChunk = processReferenceChunk(request, task.id, ref);
-=======
   const processedChunk = encodeReferenceChunk(request, task.id, ref);
->>>>>>> remotes/upstream/main
   request.completedErrorChunks.push(processedChunk);
 }
 
@@ -2230,19 +1549,11 @@ function flushCompletedChunks(
   try {
     // We emit module chunks first in the stream so that
     // they can be preloaded as early as possible.
-<<<<<<< HEAD
-    const moduleChunks = request.completedModuleChunks;
-    let i = 0;
-    for (; i < moduleChunks.length; i++) {
-      request.pendingChunks--;
-      const chunk = moduleChunks[i];
-=======
     const importsChunks = request.completedImportChunks;
     let i = 0;
     for (; i < importsChunks.length; i++) {
       request.pendingChunks--;
       const chunk = importsChunks[i];
->>>>>>> remotes/upstream/main
       const keepWriting: boolean = writeChunkAndReturn(destination, chunk);
       if (!keepWriting) {
         request.destination = null;
@@ -2250,15 +1561,6 @@ function flushCompletedChunks(
         break;
       }
     }
-<<<<<<< HEAD
-    moduleChunks.splice(0, i);
-    // Next comes model data.
-    const jsonChunks = request.completedJSONChunks;
-    i = 0;
-    for (; i < jsonChunks.length; i++) {
-      request.pendingChunks--;
-      const chunk = jsonChunks[i];
-=======
     importsChunks.splice(0, i);
 
     // Next comes hints.
@@ -2266,7 +1568,6 @@ function flushCompletedChunks(
     i = 0;
     for (; i < hintChunks.length; i++) {
       const chunk = hintChunks[i];
->>>>>>> remotes/upstream/main
       const keepWriting: boolean = writeChunkAndReturn(destination, chunk);
       if (!keepWriting) {
         request.destination = null;
@@ -2274,9 +1575,6 @@ function flushCompletedChunks(
         break;
       }
     }
-<<<<<<< HEAD
-    jsonChunks.splice(0, i);
-=======
     hintChunks.splice(0, i);
 
     // Next comes model data.
@@ -2294,7 +1592,6 @@ function flushCompletedChunks(
     }
     regularChunks.splice(0, i);
 
->>>>>>> remotes/upstream/main
     // Finally, errors are sent. The idea is that it's ok to delay
     // any error messages and prioritize display of other parts of
     // the page.
@@ -2312,29 +1609,20 @@ function flushCompletedChunks(
     }
     errorChunks.splice(0, i);
   } finally {
-<<<<<<< HEAD
-=======
     request.flushScheduled = false;
->>>>>>> remotes/upstream/main
     completeWriting(destination);
   }
   flushBuffered(destination);
   if (request.pendingChunks === 0) {
     // We're done.
-<<<<<<< HEAD
-=======
     if (enableTaint) {
       cleanupTaintQueue(request);
     }
->>>>>>> remotes/upstream/main
     close(destination);
   }
 }
 
 export function startWork(request: Request): void {
-<<<<<<< HEAD
-  scheduleWork(() => performWork(request));
-=======
   request.flushScheduled = request.destination !== null;
   if (supportsRequestStorage) {
     scheduleWork(() => requestStorage.run(request, performWork, request));
@@ -2356,7 +1644,6 @@ function enqueueFlush(request: Request): void {
     request.flushScheduled = true;
     scheduleWork(() => flushCompletedChunks(request, destination));
   }
->>>>>>> remotes/upstream/main
 }
 
 export function startFlowing(request: Request, destination: Destination): void {
@@ -2381,13 +1668,10 @@ export function startFlowing(request: Request, destination: Destination): void {
   }
 }
 
-<<<<<<< HEAD
-=======
 export function stopFlowing(request: Request): void {
   request.destination = null;
 }
 
->>>>>>> remotes/upstream/main
 // This is called to early terminate a request. It creates an error at all pending tasks.
 export function abort(request: Request, reason: mixed): void {
   try {
@@ -2400,17 +1684,10 @@ export function abort(request: Request, reason: mixed): void {
           ? new Error('The render was aborted by the server without a reason.')
           : reason;
 
-<<<<<<< HEAD
-      logRecoverableError(request, error);
-      request.pendingChunks++;
-      const errorId = request.nextChunkId++;
-      emitErrorChunk(request, errorId, error);
-=======
       const digest = logRecoverableError(request, error);
       request.pendingChunks++;
       const errorId = request.nextChunkId++;
       emitErrorChunk(request, errorId, digest, error);
->>>>>>> remotes/upstream/main
       abortableTasks.forEach(task => abortTask(task, request, errorId));
       abortableTasks.clear();
     }

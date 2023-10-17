@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,28 +17,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
   let NoError;
   let container;
   let windowOnError;
-<<<<<<< HEAD
-
-  beforeEach(() => {
-    jest.resetModules();
-    act = require('jest-react').act;
-=======
   let waitForThrow;
 
   beforeEach(() => {
     jest.resetModules();
     act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
 
-<<<<<<< HEAD
-=======
     const InternalTestUtils = require('internal-test-utils');
     waitForThrow = InternalTestUtils.waitForThrow;
 
->>>>>>> remotes/upstream/main
     ErrorBoundary = class extends React.Component {
       state = {error: null};
       static getDerivedStateFromError(error) {
@@ -55,11 +41,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         return this.props.children;
       }
     };
-<<<<<<< HEAD
-    NoError = function() {
-=======
     NoError = function () {
->>>>>>> remotes/upstream/main
       return <h1>OK</h1>;
     };
     container = document.createElement('div');
@@ -71,18 +53,11 @@ describe('ReactDOMConsoleErrorReporting', () => {
   afterEach(() => {
     document.body.removeChild(container);
     window.removeEventListener('error', windowOnError);
-<<<<<<< HEAD
-  });
-
-  describe('ReactDOMClient.createRoot', () => {
-    it('logs errors during event handlers', () => {
-=======
     jest.restoreAllMocks();
   });
 
   describe('ReactDOMClient.createRoot', () => {
     it('logs errors during event handlers', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -97,19 +72,11 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      act(() => {
-        root.render(<Foo />);
-      });
-
-      act(() => {
-=======
       await act(() => {
         root.render(<Foo />);
       });
 
       await act(() => {
->>>>>>> remotes/upstream/main
         container.firstChild.dispatchEvent(
           new MouseEvent('click', {
             bubbles: true,
@@ -133,14 +100,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported because we're in a browser click event:
@@ -149,23 +108,16 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
             // This one is jsdom-only. Real browser deduplicates it.
             // (In DEV, we have a nested event due to guarded callback.)
-<<<<<<< HEAD
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
             expect.objectContaining({
               detail: expect.objectContaining({
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
         ]);
@@ -178,14 +130,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported because we're in a browser click event:
@@ -194,7 +138,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
         ]);
@@ -202,31 +145,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs render errors without an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs render errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -234,18 +164,10 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      expect(() => {
-        act(() => {
-          root.render(<Foo />);
-        });
-      }).toThrow('Boom');
-=======
       await act(async () => {
         root.render(<Foo />);
         await waitForThrow('Boom');
       });
->>>>>>> remotes/upstream/main
 
       if (__DEV__) {
         expect(windowOnError.mock.calls).toEqual([
@@ -263,14 +185,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported due to the guarded callback:
@@ -279,23 +193,16 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
             // This is only duplicated with createRoot
             // because it retries once with a sync render.
-<<<<<<< HEAD
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
             expect.objectContaining({
               detail: expect.objectContaining({
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -309,11 +216,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -325,31 +228,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs render errors with an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs render errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -357,11 +247,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(
           <ErrorBoundary>
             <Foo />
@@ -385,14 +271,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported by jsdom due to the guarded callback:
@@ -401,23 +279,16 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
             // This is only duplicated with createRoot
             // because it retries once with a sync render.
-<<<<<<< HEAD
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
             expect.objectContaining({
               detail: expect.objectContaining({
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -431,11 +302,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -447,31 +314,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs layout effect errors without an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs layout effect errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -482,18 +336,10 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      expect(() => {
-        act(() => {
-          root.render(<Foo />);
-        });
-      }).toThrow('Boom');
-=======
       await act(async () => {
         root.render(<Foo />);
         await waitForThrow('Boom');
       });
->>>>>>> remotes/upstream/main
 
       if (__DEV__) {
         expect(windowOnError.mock.calls).toEqual([
@@ -504,14 +350,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported due to the guarded callback:
@@ -520,7 +358,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -534,11 +371,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -550,31 +383,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs layout effect errors with an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs layout effect errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -585,11 +405,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(
           <ErrorBoundary>
             <Foo />
@@ -606,14 +422,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported by jsdom due to the guarded callback:
@@ -622,7 +430,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -636,11 +443,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -652,31 +455,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs passive effect errors without an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs passive effect errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -687,18 +477,10 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      expect(() => {
-        act(() => {
-          root.render(<Foo />);
-        });
-      }).toThrow('Boom');
-=======
       await act(async () => {
         root.render(<Foo />);
         await waitForThrow('Boom');
       });
->>>>>>> remotes/upstream/main
 
       if (__DEV__) {
         expect(windowOnError.mock.calls).toEqual([
@@ -709,14 +491,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported due to the guarded callback:
@@ -725,7 +499,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -739,11 +512,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -755,31 +524,18 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-      }
-    });
-
-    it('logs passive effect errors with an error boundary', () => {
-=======
         expect(console.error.mock.calls).toEqual([]);
       }
     });
 
     it('logs passive effect errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -790,11 +546,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(
           <ErrorBoundary>
             <Foo />
@@ -811,14 +563,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported by jsdom due to the guarded callback:
@@ -827,7 +571,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -841,11 +584,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -857,33 +596,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         root.render(<NoError />);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([]);
-=======
         expect(console.error.mock.calls).toEqual([]);
->>>>>>> remotes/upstream/main
       }
     });
   });
 
   describe('ReactDOM.render', () => {
-<<<<<<< HEAD
-    it('logs errors during event handlers', () => {
-=======
     it('logs errors during event handlers', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -897,19 +623,11 @@ describe('ReactDOMConsoleErrorReporting', () => {
         );
       }
 
-<<<<<<< HEAD
-      act(() => {
-        ReactDOM.render(<Foo />, container);
-      });
-
-      act(() => {
-=======
       await act(() => {
         ReactDOM.render(<Foo />, container);
       });
 
       await act(() => {
->>>>>>> remotes/upstream/main
         container.firstChild.dispatchEvent(
           new MouseEvent('click', {
             bubbles: true,
@@ -933,15 +651,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -951,23 +660,16 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
             // This one is jsdom-only. Real browser deduplicates it.
             // (In DEV, we have a nested event due to guarded callback.)
-<<<<<<< HEAD
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
             expect.objectContaining({
               detail: expect.objectContaining({
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
         ]);
@@ -980,14 +682,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [
-            // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [
             // Reported because we're in a browser click event:
@@ -996,7 +690,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
         ]);
@@ -1004,33 +697,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs render errors without an error boundary', () => {
-=======
     it('logs render errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -1038,13 +718,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       expect(() => {
-<<<<<<< HEAD
-        act(() => {
-          ReactDOM.render(<Foo />, container);
-        });
-=======
         ReactDOM.render(<Foo />, container);
->>>>>>> remotes/upstream/main
       }).toThrow('Boom');
 
       if (__DEV__) {
@@ -1056,15 +730,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1074,7 +739,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1088,11 +752,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1104,44 +764,27 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs render errors with an error boundary', () => {
-=======
     it('logs render errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
         throw Error('Boom');
       }
 
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(
           <ErrorBoundary>
             <Foo />
@@ -1159,15 +802,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1177,7 +811,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1191,11 +824,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1207,33 +836,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs layout effect errors without an error boundary', () => {
-=======
     it('logs layout effect errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -1244,13 +860,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
       }
 
       expect(() => {
-<<<<<<< HEAD
-        act(() => {
-          ReactDOM.render(<Foo />, container);
-        });
-=======
         ReactDOM.render(<Foo />, container);
->>>>>>> remotes/upstream/main
       }).toThrow('Boom');
 
       if (__DEV__) {
@@ -1262,15 +872,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1280,7 +881,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1294,11 +894,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1310,33 +906,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs layout effect errors with an error boundary', () => {
-=======
     it('logs layout effect errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -1346,11 +929,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         return null;
       }
 
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(
           <ErrorBoundary>
             <Foo />
@@ -1368,15 +947,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1386,7 +956,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1400,11 +969,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1416,33 +981,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs passive effect errors without an error boundary', () => {
-=======
     it('logs passive effect errors without an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -1452,18 +1004,10 @@ describe('ReactDOMConsoleErrorReporting', () => {
         return null;
       }
 
-<<<<<<< HEAD
-      expect(() => {
-        act(() => {
-          ReactDOM.render(<Foo />, container);
-        });
-      }).toThrow('Boom');
-=======
       await act(async () => {
         ReactDOM.render(<Foo />, container);
         await waitForThrow('Boom');
       });
->>>>>>> remotes/upstream/main
 
       if (__DEV__) {
         expect(windowOnError.mock.calls).toEqual([
@@ -1474,15 +1018,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1492,7 +1027,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1506,11 +1040,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1522,33 +1052,20 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }
     });
 
-<<<<<<< HEAD
-    it('logs passive effect errors with an error boundary', () => {
-=======
     it('logs passive effect errors with an error boundary', async () => {
->>>>>>> remotes/upstream/main
       spyOnDevAndProd(console, 'error');
 
       function Foo() {
@@ -1558,11 +1075,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         return null;
       }
 
-<<<<<<< HEAD
-      act(() => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(
           <ErrorBoundary>
             <Foo />
@@ -1580,15 +1093,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
             }),
           ],
         ]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-          [expect.stringContaining('ReactDOM.render is no longer supported')],
-          [
-            // Reported by jsdom due to the guarded callback:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
-            expect.objectContaining({
-              message: 'Boom',
-=======
         expect(console.error.mock.calls).toEqual([
           [expect.stringContaining('ReactDOM.render is no longer supported')],
           [
@@ -1598,7 +1102,6 @@ describe('ReactDOMConsoleErrorReporting', () => {
                 message: 'Boom',
               }),
               type: 'unhandled exception',
->>>>>>> remotes/upstream/main
             }),
           ],
           [
@@ -1612,11 +1115,7 @@ describe('ReactDOMConsoleErrorReporting', () => {
         // The top-level error was caught with try/catch, and there's no guarded callback,
         // so in production we don't see an error event.
         expect(windowOnError.mock.calls).toEqual([]);
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [
             // Reported by React with no extra message:
             expect.objectContaining({
@@ -1628,23 +1127,14 @@ describe('ReactDOMConsoleErrorReporting', () => {
 
       // Check next render doesn't throw.
       windowOnError.mockReset();
-<<<<<<< HEAD
-      console.error.calls.reset();
-      act(() => {
-=======
       console.error.mockReset();
       await act(() => {
->>>>>>> remotes/upstream/main
         ReactDOM.render(<NoError />, container);
       });
       expect(container.textContent).toBe('OK');
       expect(windowOnError.mock.calls).toEqual([]);
       if (__DEV__) {
-<<<<<<< HEAD
-        expect(console.error.calls.all().map(c => c.args)).toEqual([
-=======
         expect(console.error.mock.calls).toEqual([
->>>>>>> remotes/upstream/main
           [expect.stringContaining('ReactDOM.render is no longer supported')],
         ]);
       }

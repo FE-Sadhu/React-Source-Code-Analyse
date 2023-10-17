@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,9 +24,6 @@ export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
   isEqual?: (a: Selection, b: Selection) => boolean,
 ): Selection {
   // Use this to track the rendered snapshot.
-<<<<<<< HEAD
-  const instRef = useRef(null);
-=======
   const instRef = useRef<
     | {
         hasValue: true,
@@ -42,16 +35,11 @@ export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
       }
     | null,
   >(null);
->>>>>>> remotes/upstream/main
   let inst;
   if (instRef.current === null) {
     inst = {
       hasValue: false,
-<<<<<<< HEAD
-      value: (null: Selection | null),
-=======
       value: null,
->>>>>>> remotes/upstream/main
     };
     instRef.current = inst;
   } else {
@@ -65,13 +53,8 @@ export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
     // copies of the hook/component.
     let hasMemo = false;
     let memoizedSnapshot;
-<<<<<<< HEAD
-    let memoizedSelection;
-    const memoizedSelector = nextSnapshot => {
-=======
     let memoizedSelection: Selection;
     const memoizedSelector = (nextSnapshot: Snapshot) => {
->>>>>>> remotes/upstream/main
       if (!hasMemo) {
         // The first time the hook is called, there is no memoized result.
         hasMemo = true;
@@ -135,13 +118,9 @@ export function useSyncExternalStoreWithSelector<Snapshot, Selection>(
   );
 
   useEffect(() => {
-<<<<<<< HEAD
-    inst.hasValue = true;
-=======
     // $FlowFixMe[incompatible-type] changing the variant using mutation isn't supported
     inst.hasValue = true;
     // $FlowFixMe[incompatible-type]
->>>>>>> remotes/upstream/main
     inst.value = value;
   }, [value]);
 

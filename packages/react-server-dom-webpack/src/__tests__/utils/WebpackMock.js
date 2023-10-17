@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,36 +11,6 @@ const url = require('url');
 const Module = require('module');
 
 let webpackModuleIdx = 0;
-<<<<<<< HEAD
-const webpackModules = {};
-const webpackErroredModules = {};
-const webpackMap = {};
-global.__webpack_require__ = function(id) {
-  if (webpackErroredModules[id]) {
-    throw webpackErroredModules[id];
-  }
-  return webpackModules[id];
-};
-
-const previousLoader = Module._extensions['.client.js'];
-
-const register = require('react-server-dom-webpack/node-register');
-// Register node loader
-register();
-
-const nodeLoader = Module._extensions['.client.js'];
-
-if (previousLoader === nodeLoader) {
-  throw new Error(
-    'Expected the Node loader to register the .client.js extension',
-  );
-}
-
-Module._extensions['.client.js'] = previousLoader;
-
-exports.webpackMap = webpackMap;
-exports.webpackModules = webpackModules;
-=======
 const webpackServerModules = {};
 const webpackClientModules = {};
 const webpackErroredModules = {};
@@ -79,47 +45,11 @@ exports.webpackServerMap = webpackServerMap;
 exports.moduleLoading = {
   prefix: '/',
 };
->>>>>>> remotes/upstream/main
 
 exports.clientModuleError = function clientModuleError(moduleError) {
   const idx = '' + webpackModuleIdx++;
   webpackErroredModules[idx] = moduleError;
   const path = url.pathToFileURL(idx).href;
-<<<<<<< HEAD
-  webpackMap[path] = {
-    '': {
-      id: idx,
-      chunks: [],
-      name: '',
-    },
-    '*': {
-      id: idx,
-      chunks: [],
-      name: '*',
-    },
-  };
-  const mod = {exports: {}};
-  nodeLoader(mod, idx);
-  return mod.exports;
-};
-
-exports.clientExports = function clientExports(moduleExports) {
-  const idx = '' + webpackModuleIdx++;
-  webpackModules[idx] = moduleExports;
-  const path = url.pathToFileURL(idx).href;
-  webpackMap[path] = {
-    '': {
-      id: idx,
-      chunks: [],
-      name: '',
-    },
-    '*': {
-      id: idx,
-      chunks: [],
-      name: '*',
-    },
-  };
-=======
   webpackClientMap[path] = {
     id: idx,
     chunks: [],
@@ -155,43 +85,20 @@ exports.clientExports = function clientExports(
       name: '',
     };
   }
->>>>>>> remotes/upstream/main
   if (typeof moduleExports.then === 'function') {
     moduleExports.then(
       asyncModuleExports => {
         for (const name in asyncModuleExports) {
-<<<<<<< HEAD
-          webpackMap[path] = {
-            [name]: {
-              id: idx,
-              chunks: [],
-              name: name,
-            },
-=======
           webpackClientMap[path + '#' + name] = {
             id: idx,
             chunks,
             name: name,
->>>>>>> remotes/upstream/main
           };
         }
       },
       () => {},
     );
   }
-<<<<<<< HEAD
-  for (const name in moduleExports) {
-    webpackMap[path] = {
-      [name]: {
-        id: idx,
-        chunks: [],
-        name: name,
-      },
-    };
-  }
-  const mod = {exports: {}};
-  nodeLoader(mod, idx);
-=======
   if ('split' in moduleExports) {
     // If we're testing module splitting, we encode this name in a separate module id.
     const splitIdx = '' + webpackModuleIdx++;
@@ -241,6 +148,5 @@ exports.serverExports = function serverExports(moduleExports) {
   }
   const mod = {exports: moduleExports};
   nodeCompile.call(mod, '"use server"', idx);
->>>>>>> remotes/upstream/main
   return mod.exports;
 };

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,8 +9,6 @@
 
 'use strict';
 
-<<<<<<< HEAD
-=======
 // Fix JSDOM. setAttribute is supposed to throw on things that can't be implicitly toStringed.
 const setAttribute = Element.prototype.setAttribute;
 Element.prototype.setAttribute = function (name, value) {
@@ -22,18 +16,13 @@ Element.prototype.setAttribute = function (name, value) {
   return setAttribute.call(this, name, '' + value);
 };
 
->>>>>>> remotes/upstream/main
 describe('ReactDOMSelect', () => {
   let React;
   let ReactDOM;
   let ReactDOMServer;
   let ReactTestUtils;
 
-<<<<<<< HEAD
-  const noop = function() {};
-=======
   const noop = function () {};
->>>>>>> remotes/upstream/main
 
   beforeEach(() => {
     jest.resetModules();
@@ -287,11 +276,7 @@ describe('ReactDOMSelect', () => {
   it('should allow setting `value` with `objectToString`', () => {
     const objectToString = {
       animal: 'giraffe',
-<<<<<<< HEAD
-      toString: function() {
-=======
       toString: function () {
->>>>>>> remotes/upstream/main
         return this.animal;
       },
     };
@@ -871,11 +856,7 @@ describe('ReactDOMSelect', () => {
   });
 
   describe('When given a Symbol value', () => {
-<<<<<<< HEAD
-    it('treats initial Symbol value as an empty string', () => {
-=======
     it('treats initial Symbol value as missing', () => {
->>>>>>> remotes/upstream/main
       let node;
 
       expect(() => {
@@ -888,17 +869,10 @@ describe('ReactDOMSelect', () => {
         );
       }).toErrorDev('Invalid value for prop `value`');
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-    });
-
-    it('treats updated Symbol value as an empty string', () => {
-=======
       expect(node.value).toBe('A Symbol!');
     });
 
     it('treats updated Symbol value as missing', () => {
->>>>>>> remotes/upstream/main
       let node;
 
       expect(() => {
@@ -921,11 +895,7 @@ describe('ReactDOMSelect', () => {
         </select>,
       );
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A Symbol!');
->>>>>>> remotes/upstream/main
     });
 
     it('treats initial Symbol defaultValue as an empty string', () => {
@@ -941,11 +911,7 @@ describe('ReactDOMSelect', () => {
         );
       }).toErrorDev('Invalid value for prop `value`');
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A Symbol!');
->>>>>>> remotes/upstream/main
     });
 
     it('treats updated Symbol defaultValue as an empty string', () => {
@@ -971,20 +937,12 @@ describe('ReactDOMSelect', () => {
         </select>,
       );
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A Symbol!');
->>>>>>> remotes/upstream/main
     });
   });
 
   describe('When given a function value', () => {
-<<<<<<< HEAD
-    it('treats initial function value as an empty string', () => {
-=======
     it('treats initial function value as missing', () => {
->>>>>>> remotes/upstream/main
       let node;
 
       expect(() => {
@@ -997,11 +955,7 @@ describe('ReactDOMSelect', () => {
         );
       }).toErrorDev('Invalid value for prop `value`');
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A function!');
->>>>>>> remotes/upstream/main
     });
 
     it('treats initial function defaultValue as an empty string', () => {
@@ -1017,11 +971,7 @@ describe('ReactDOMSelect', () => {
         );
       }).toErrorDev('Invalid value for prop `value`');
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A function!');
->>>>>>> remotes/upstream/main
     });
 
     it('treats updated function value as an empty string', () => {
@@ -1047,11 +997,7 @@ describe('ReactDOMSelect', () => {
         </select>,
       );
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A function!');
->>>>>>> remotes/upstream/main
     });
 
     it('treats updated function defaultValue as an empty string', () => {
@@ -1077,11 +1023,7 @@ describe('ReactDOMSelect', () => {
         </select>,
       );
 
-<<<<<<< HEAD
-      expect(node.value).toBe('');
-=======
       expect(node.value).toBe('A function!');
->>>>>>> remotes/upstream/main
     });
   });
 
@@ -1112,11 +1054,7 @@ describe('ReactDOMSelect', () => {
       ).toErrorDev(
         'Form field values (value, checked, defaultValue, or defaultChecked props)' +
           ' must be strings, not TemporalLike. ' +
-<<<<<<< HEAD
-          'This value must be coerced to a string before before using it here.',
-=======
           'This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1136,11 +1074,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1160,11 +1094,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1190,11 +1120,7 @@ describe('ReactDOMSelect', () => {
       ).toErrorDev(
         'Form field values (value, checked, defaultValue, or defaultChecked props)' +
           ' must be strings, not TemporalLike. ' +
-<<<<<<< HEAD
-          'This value must be coerced to a string before before using it here.',
-=======
           'This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1221,11 +1147,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1252,11 +1174,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1275,11 +1193,7 @@ describe('ReactDOMSelect', () => {
       ).toErrorDev(
         'Form field values (value, checked, defaultValue, or defaultChecked props)' +
           ' must be strings, not TemporalLike. ' +
-<<<<<<< HEAD
-          'This value must be coerced to a string before before using it here.',
-=======
           'This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1299,11 +1213,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1323,11 +1233,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1353,11 +1259,7 @@ describe('ReactDOMSelect', () => {
       ).toErrorDev(
         'Form field values (value, checked, defaultValue, or defaultChecked props)' +
           ' must be strings, not TemporalLike. ' +
-<<<<<<< HEAD
-          'This value must be coerced to a string before before using it here.',
-=======
           'This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
 
@@ -1384,11 +1286,7 @@ describe('ReactDOMSelect', () => {
         expect(test).toThrowError(new TypeError('prod message')),
       ).toErrorDev(
         'The provided `value` attribute is an unsupported type TemporalLike.' +
-<<<<<<< HEAD
-          ' This value must be coerced to a string before before using it here.',
-=======
           ' This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
       );
     });
   });

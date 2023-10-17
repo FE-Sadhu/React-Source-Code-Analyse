@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-declare var jasmine: any;
-=======
->>>>>>> remotes/upstream/main
 declare var __DEV__: boolean;
 declare var __TEST__: boolean;
 declare var __EXTENSION__: boolean;
@@ -74,12 +70,5 @@ interface MockFunction {
   mockReturnValueOnce(value: any): MockFunction
 }
 
-<<<<<<< HEAD
-// Allow importing jasmine-check
-declare module 'jasmine-check' {
-  export function install(global?: any): void;
-}
-=======
->>>>>>> remotes/upstream/main
 declare var check: any;
 declare var gen: any;

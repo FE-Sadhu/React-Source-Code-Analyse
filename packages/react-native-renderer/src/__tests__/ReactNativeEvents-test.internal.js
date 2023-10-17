@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -68,18 +64,6 @@ beforeEach(() => {
   jest.resetModules();
 
   PropTypes = require('prop-types');
-<<<<<<< HEAD
-  RCTEventEmitter = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
-    .RCTEventEmitter;
-  React = require('react');
-  ReactNative = require('react-native-renderer');
-  ResponderEventPlugin = require('react-native-renderer/src/legacy-events/ResponderEventPlugin')
-    .default;
-  UIManager = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
-    .UIManager;
-  createReactNativeComponentClass = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
-    .ReactNativeViewConfigRegistry.register;
-=======
   RCTEventEmitter =
     require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface').RCTEventEmitter;
   React = require('react');
@@ -91,7 +75,6 @@ beforeEach(() => {
   createReactNativeComponentClass =
     require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
       .ReactNativeViewConfigRegistry.register;
->>>>>>> remotes/upstream/main
 });
 
 it('fails to register the same event name with different types', () => {
@@ -214,10 +197,7 @@ it('handles events', () => {
   ]);
 });
 
-<<<<<<< HEAD
-=======
 // @gate !disableLegacyContext || !__DEV__
->>>>>>> remotes/upstream/main
 it('handles events on text nodes', () => {
   expect(RCTEventEmitter.register).toHaveBeenCalledTimes(1);
   const EventEmitter = RCTEventEmitter.register.mock.calls[0][0];

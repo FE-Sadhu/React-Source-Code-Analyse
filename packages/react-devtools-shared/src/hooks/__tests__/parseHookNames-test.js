@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -60,26 +56,16 @@ describe('parseHookNames', () => {
 
     fetchMock = initFetchMock();
 
-<<<<<<< HEAD
-    inspectHooks = require('react-debug-tools/src/ReactDebugHooks')
-      .inspectHooks;
-=======
     inspectHooks =
       require('react-debug-tools/src/ReactDebugHooks').inspectHooks;
->>>>>>> remotes/upstream/main
 
     // Jest can't run the workerized version of this module.
     const {
       flattenHooksList,
       loadSourceAndMetadata,
     } = require('../parseHookNames/loadSourceAndMetadata');
-<<<<<<< HEAD
-    const parseSourceAndMetadata = require('../parseHookNames/parseSourceAndMetadata')
-      .parseSourceAndMetadata;
-=======
     const parseSourceAndMetadata =
       require('../parseHookNames/parseSourceAndMetadata').parseSourceAndMetadata;
->>>>>>> remotes/upstream/main
     parseHookNames = async hooksTree => {
       const hooksList = flattenHooksList(hooksTree);
 
@@ -119,37 +105,22 @@ describe('parseHookNames', () => {
   }
 
   it('should parse names for useState()', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithUseState')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithUseState').Component;
->>>>>>> remotes/upstream/main
     const hookNames = await getHookNamesForComponent(Component);
     expectHookNamesToEqual(hookNames, ['foo', 'bar', 'baz', null]);
   });
 
   it('should parse names for useReducer()', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithUseReducer')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithUseReducer').Component;
->>>>>>> remotes/upstream/main
     const hookNames = await getHookNamesForComponent(Component);
     expectHookNamesToEqual(hookNames, ['foo', 'bar', 'baz']);
   });
 
   it('should skip loading source files for unnamed hooks like useEffect', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithUseEffect')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithUseEffect').Component;
->>>>>>> remotes/upstream/main
 
     // Since this component contains only unnamed hooks, the source code should not even be loaded.
     fetchMock.mockIf(/.+$/, request => {
@@ -161,13 +132,8 @@ describe('parseHookNames', () => {
   });
 
   it('should skip loading source files for unnamed hooks like useEffect (alternate)', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithExternalUseEffect')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithExternalUseEffect').Component;
->>>>>>> remotes/upstream/main
 
     fetchMock.mockIf(/.+$/, request => {
       // Since the custom hook contains only unnamed hooks, the source code should not be loaded.
@@ -182,13 +148,8 @@ describe('parseHookNames', () => {
   });
 
   it('should parse names for custom hooks', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithNamedCustomHooks')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithNamedCustomHooks').Component;
->>>>>>> remotes/upstream/main
     const hookNames = await getHookNamesForComponent(Component);
     expectHookNamesToEqual(hookNames, [
       'foo',
@@ -198,25 +159,15 @@ describe('parseHookNames', () => {
   });
 
   it('should parse names for code using hooks indirectly', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentUsingHooksIndirectly')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentUsingHooksIndirectly').Component;
->>>>>>> remotes/upstream/main
     const hookNames = await getHookNamesForComponent(Component);
     expectHookNamesToEqual(hookNames, ['count', 'darkMode', 'isDarkMode']);
   });
 
   it('should parse names for code using nested hooks', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithNestedHooks')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithNestedHooks').Component;
->>>>>>> remotes/upstream/main
     let InnerComponent;
     const hookNames = await getHookNamesForComponent(Component, {
       callback: innerComponent => {
@@ -229,13 +180,8 @@ describe('parseHookNames', () => {
   });
 
   it('should return null for custom hooks without explicit names', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithUnnamedCustomHooks')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithUnnamedCustomHooks').Component;
->>>>>>> remotes/upstream/main
     const hookNames = await getHookNamesForComponent(Component);
     expectHookNamesToEqual(hookNames, [
       null, // Custom hooks can have names, but this one does not even return a value.
@@ -977,13 +923,8 @@ describe('parseHookNames worker', () => {
       };
     });
 
-<<<<<<< HEAD
-    inspectHooks = require('react-debug-tools/src/ReactDebugHooks')
-      .inspectHooks;
-=======
     inspectHooks =
       require('react-debug-tools/src/ReactDebugHooks').inspectHooks;
->>>>>>> remotes/upstream/main
     parseHookNames = require('../parseHookNames').parseHookNames;
   });
 
@@ -994,13 +935,8 @@ describe('parseHookNames worker', () => {
   }
 
   it('should use worker', async () => {
-<<<<<<< HEAD
-    const Component = require('./__source__/__untransformed__/ComponentWithUseState')
-      .Component;
-=======
     const Component =
       require('./__source__/__untransformed__/ComponentWithUseState').Component;
->>>>>>> remotes/upstream/main
 
     window.Worker = true;
 

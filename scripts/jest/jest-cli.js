@@ -45,11 +45,7 @@ const argv = yargs
       describe: 'Run with the given release channel.',
       requiresArg: true,
       type: 'string',
-<<<<<<< HEAD
-      default: 'www-modern',
-=======
       default: 'experimental',
->>>>>>> remotes/upstream/main
       choices: ['experimental', 'stable', 'www-classic', 'www-modern'],
     },
     env: {
@@ -259,11 +255,7 @@ function validateOptions() {
     const buildDir = path.resolve('./build');
     if (!fs.existsSync(buildDir)) {
       logError(
-<<<<<<< HEAD
-        'Build directory does not exist, please run `yarn build-combined` or remove the --build option.'
-=======
         'Build directory does not exist, please run `yarn build` or remove the --build option.'
->>>>>>> remotes/upstream/main
       );
       success = false;
     } else if (Date.now() - fs.statSync(buildDir).mtimeMs > 1000 * 60 * 15) {

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,12 +15,9 @@ let ReactDOMClient;
 let Scheduler;
 let act;
 let container;
-<<<<<<< HEAD
-=======
 let waitForAll;
 let assertLog;
 let fakeModuleCache;
->>>>>>> remotes/upstream/main
 
 describe('ReactSuspenseEffectsSemanticsDOM', () => {
   beforeEach(() => {
@@ -34,12 +27,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-
-    container = document.createElement('div');
-    document.body.appendChild(container);
-=======
     act = require('internal-test-utils').act;
 
     const InternalTestUtils = require('internal-test-utils');
@@ -50,25 +37,12 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     document.body.appendChild(container);
 
     fakeModuleCache = new Map();
->>>>>>> remotes/upstream/main
   });
 
   afterEach(() => {
     document.body.removeChild(container);
   });
 
-<<<<<<< HEAD
-  async function fakeImport(result) {
-    return {default: result};
-  }
-
-  function Text(props) {
-    Scheduler.unstable_yieldValue(props.text);
-    return props.text;
-  }
-
-  it('should not cause a cycle when combined with a render phase update', () => {
-=======
   async function fakeImport(Component) {
     const record = fakeModuleCache.get(Component);
     if (record === undefined) {
@@ -116,7 +90,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
   }
 
   it('should not cause a cycle when combined with a render phase update', async () => {
->>>>>>> remotes/upstream/main
     let scheduleSuspendingUpdate;
 
     function App() {
@@ -146,38 +119,22 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
       return <div ref={setRef} />;
     }
 
-<<<<<<< HEAD
-    const promise = Promise.resolve();
-=======
     const neverResolves = {then() {}};
->>>>>>> remotes/upstream/main
 
     function ComponentThatSuspendsOnUpdate({shouldSuspend}) {
       if (shouldSuspend) {
         // Fake Suspend
-<<<<<<< HEAD
-        throw promise;
-=======
         throw neverResolves;
->>>>>>> remotes/upstream/main
       }
       return null;
     }
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       const root = ReactDOMClient.createRoot(container);
       root.render(<App />);
     });
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       scheduleSuspendingUpdate();
     });
   });
@@ -188,15 +145,9 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
         <span
           ref={node => {
             if (node) {
-<<<<<<< HEAD
-              Scheduler.unstable_yieldValue('Ref mount: ' + label);
-            } else {
-              Scheduler.unstable_yieldValue('Ref unmount: ' + label);
-=======
               Scheduler.log('Ref mount: ' + label);
             } else {
               Scheduler.log('Ref unmount: ' + label);
->>>>>>> remotes/upstream/main
             }
           }}>
           <Text text={label} />
@@ -209,15 +160,9 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
         <span
           ref={node => {
             if (node) {
-<<<<<<< HEAD
-              Scheduler.unstable_yieldValue('Ref mount: ' + label);
-            } else {
-              Scheduler.unstable_yieldValue('Ref unmount: ' + label);
-=======
               Scheduler.log('Ref mount: ' + label);
             } else {
               Scheduler.log('Ref unmount: ' + label);
->>>>>>> remotes/upstream/main
             }
           }}>
           <Text text={label} />
@@ -237,15 +182,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     }
 
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    act(() => {
-      root.render(<Parent swap={false} />);
-    });
-    expect(Scheduler).toHaveYielded(['Loading...']);
-
-    await LazyChildA;
-    expect(Scheduler).toFlushAndYield(['A', 'Ref mount: A']);
-=======
     await act(() => {
       root.render(<Parent swap={false} />);
     });
@@ -253,46 +189,29 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     await act(() => resolveFakeImport(ChildA));
     assertLog(['A', 'Ref mount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<span>A</span>');
 
     // Swap the position of A and B
     ReactDOM.flushSync(() => {
       root.render(<Parent swap={true} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Loading...', 'Ref unmount: A']);
-=======
     assertLog(['Loading...', 'Ref unmount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe(
       '<span style="display: none;">A</span>Loading...',
     );
 
-<<<<<<< HEAD
-    await LazyChildB;
-    expect(Scheduler).toFlushAndYield(['B', 'Ref mount: B']);
-=======
     await act(() => resolveFakeImport(ChildB));
     assertLog(['B', 'Ref mount: B']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<span>B</span>');
   });
 
   it('does not call componentWillUnmount twice when hidden child is removed', async () => {
     class ChildA extends React.Component {
       componentDidMount() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + this.props.label);
-      }
-      componentWillUnmount() {
-        Scheduler.unstable_yieldValue('Will unmount: ' + this.props.label);
-=======
         Scheduler.log('Did mount: ' + this.props.label);
       }
       componentWillUnmount() {
         Scheduler.log('Will unmount: ' + this.props.label);
->>>>>>> remotes/upstream/main
       }
       render() {
         return <Text text={this.props.label} />;
@@ -301,17 +220,10 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     class ChildB extends React.Component {
       componentDidMount() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + this.props.label);
-      }
-      componentWillUnmount() {
-        Scheduler.unstable_yieldValue('Will unmount: ' + this.props.label);
-=======
         Scheduler.log('Did mount: ' + this.props.label);
       }
       componentWillUnmount() {
         Scheduler.log('Will unmount: ' + this.props.label);
->>>>>>> remotes/upstream/main
       }
       render() {
         return <Text text={this.props.label} />;
@@ -330,15 +242,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     }
 
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    act(() => {
-      root.render(<Parent swap={false} />);
-    });
-    expect(Scheduler).toHaveYielded(['Loading...']);
-
-    await LazyChildA;
-    expect(Scheduler).toFlushAndYield(['A', 'Did mount: A']);
-=======
     await act(() => {
       root.render(<Parent swap={false} />);
     });
@@ -346,56 +249,35 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     await act(() => resolveFakeImport(ChildA));
     assertLog(['A', 'Did mount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('A');
 
     // Swap the position of A and B
     ReactDOM.flushSync(() => {
       root.render(<Parent swap={true} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Loading...', 'Will unmount: A']);
-    expect(container.innerHTML).toBe('Loading...');
-
-    await LazyChildB;
-    expect(Scheduler).toFlushAndYield(['B', 'Did mount: B']);
-=======
     assertLog(['Loading...', 'Will unmount: A']);
     expect(container.innerHTML).toBe('Loading...');
 
     await act(() => resolveFakeImport(ChildB));
     assertLog(['B', 'Did mount: B']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('B');
   });
 
   it('does not destroy layout effects twice when parent suspense is removed', async () => {
     function ChildA({label}) {
       React.useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + label);
-        return () => {
-          Scheduler.unstable_yieldValue('Will unmount: ' + label);
-=======
         Scheduler.log('Did mount: ' + label);
         return () => {
           Scheduler.log('Will unmount: ' + label);
->>>>>>> remotes/upstream/main
         };
       }, []);
       return <Text text={label} />;
     }
     function ChildB({label}) {
       React.useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + label);
-        return () => {
-          Scheduler.unstable_yieldValue('Will unmount: ' + label);
-=======
         Scheduler.log('Did mount: ' + label);
         return () => {
           Scheduler.log('Will unmount: ' + label);
->>>>>>> remotes/upstream/main
         };
       }, []);
       return <Text text={label} />;
@@ -412,15 +294,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     }
 
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    act(() => {
-      root.render(<Parent swap={false} />);
-    });
-    expect(Scheduler).toHaveYielded(['Loading...']);
-
-    await LazyChildA;
-    expect(Scheduler).toFlushAndYield(['A', 'Did mount: A']);
-=======
     await act(() => {
       root.render(<Parent swap={false} />);
     });
@@ -428,29 +301,20 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     await act(() => resolveFakeImport(ChildA));
     assertLog(['A', 'Did mount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('A');
 
     // Swap the position of A and B
     ReactDOM.flushSync(() => {
       root.render(<Parent swap={true} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Loading...', 'Will unmount: A']);
-=======
     assertLog(['Loading...', 'Will unmount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('Loading...');
 
     // Destroy the whole tree, including the hidden A
     ReactDOM.flushSync(() => {
       root.render(<h1>Hello</h1>);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield([]);
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<h1>Hello</h1>');
   });
 
@@ -460,15 +324,9 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
         <span
           ref={node => {
             if (node) {
-<<<<<<< HEAD
-              Scheduler.unstable_yieldValue('Ref mount: ' + label);
-            } else {
-              Scheduler.unstable_yieldValue('Ref unmount: ' + label);
-=======
               Scheduler.log('Ref mount: ' + label);
             } else {
               Scheduler.log('Ref unmount: ' + label);
->>>>>>> remotes/upstream/main
             }
           }}>
           <Text text={label} />
@@ -481,15 +339,9 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
         <span
           ref={node => {
             if (node) {
-<<<<<<< HEAD
-              Scheduler.unstable_yieldValue('Ref mount: ' + label);
-            } else {
-              Scheduler.unstable_yieldValue('Ref unmount: ' + label);
-=======
               Scheduler.log('Ref mount: ' + label);
             } else {
               Scheduler.log('Ref unmount: ' + label);
->>>>>>> remotes/upstream/main
             }
           }}>
           <Text text={label} />
@@ -509,15 +361,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     }
 
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    act(() => {
-      root.render(<Parent swap={false} />);
-    });
-    expect(Scheduler).toHaveYielded(['Loading...']);
-
-    await LazyChildA;
-    expect(Scheduler).toFlushAndYield(['A', 'Ref mount: A']);
-=======
     await act(() => {
       root.render(<Parent swap={false} />);
     });
@@ -525,18 +368,13 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     await act(() => resolveFakeImport(ChildA));
     assertLog(['A', 'Ref mount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<span>A</span>');
 
     // Swap the position of A and B
     ReactDOM.flushSync(() => {
       root.render(<Parent swap={true} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Loading...', 'Ref unmount: A']);
-=======
     assertLog(['Loading...', 'Ref unmount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe(
       '<span style="display: none;">A</span>Loading...',
     );
@@ -545,28 +383,17 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     ReactDOM.flushSync(() => {
       root.render(<h1>Hello</h1>);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield([]);
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<h1>Hello</h1>');
   });
 
   it('does not call componentWillUnmount twice when parent suspense is removed', async () => {
     class ChildA extends React.Component {
       componentDidMount() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + this.props.label);
-      }
-      componentWillUnmount() {
-        Scheduler.unstable_yieldValue('Will unmount: ' + this.props.label);
-=======
         Scheduler.log('Did mount: ' + this.props.label);
       }
       componentWillUnmount() {
         Scheduler.log('Will unmount: ' + this.props.label);
->>>>>>> remotes/upstream/main
       }
       render() {
         return <Text text={this.props.label} />;
@@ -575,17 +402,10 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     class ChildB extends React.Component {
       componentDidMount() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Did mount: ' + this.props.label);
-      }
-      componentWillUnmount() {
-        Scheduler.unstable_yieldValue('Will unmount: ' + this.props.label);
-=======
         Scheduler.log('Did mount: ' + this.props.label);
       }
       componentWillUnmount() {
         Scheduler.log('Will unmount: ' + this.props.label);
->>>>>>> remotes/upstream/main
       }
       render() {
         return <Text text={this.props.label} />;
@@ -604,15 +424,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
     }
 
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    act(() => {
-      root.render(<Parent swap={false} />);
-    });
-    expect(Scheduler).toHaveYielded(['Loading...']);
-
-    await LazyChildA;
-    expect(Scheduler).toFlushAndYield(['A', 'Did mount: A']);
-=======
     await act(() => {
       root.render(<Parent swap={false} />);
     });
@@ -620,29 +431,20 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     await act(() => resolveFakeImport(ChildA));
     assertLog(['A', 'Did mount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('A');
 
     // Swap the position of A and B
     ReactDOM.flushSync(() => {
       root.render(<Parent swap={true} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Loading...', 'Will unmount: A']);
-=======
     assertLog(['Loading...', 'Will unmount: A']);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('Loading...');
 
     // Destroy the whole tree, including the hidden A
     ReactDOM.flushSync(() => {
       root.render(<h1>Hello</h1>);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield([]);
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe('<h1>Hello</h1>');
   });
 
@@ -652,15 +454,9 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     function Child() {
       React.useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Mount');
-        return () => {
-          Scheduler.unstable_yieldValue('Unmount');
-=======
         Scheduler.log('Mount');
         return () => {
           Scheduler.log('Unmount');
->>>>>>> remotes/upstream/main
         };
       }, []);
       return <Text text="Child" />;
@@ -682,20 +478,12 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     // Initial render
     ReactDOM.render(<App showMore={false} />, container);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Child', 'Mount']);
-=======
     assertLog(['Child', 'Mount']);
->>>>>>> remotes/upstream/main
 
     // Update that suspends, causing the existing tree to switches it to
     // a fallback.
     ReactDOM.render(<App showMore={true} />, container);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       'Child',
       'Loading...',
 
@@ -706,9 +494,6 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
 
     // Delete the tree and unmount the effect
     ReactDOM.render(null, container);
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Unmount']);
-=======
     assertLog(['Unmount']);
   });
 
@@ -788,6 +573,5 @@ describe('ReactSuspenseEffectsSemanticsDOM', () => {
       root.unmount();
     });
     assertLog(['Will unmount: B1']);
->>>>>>> remotes/upstream/main
   });
 });

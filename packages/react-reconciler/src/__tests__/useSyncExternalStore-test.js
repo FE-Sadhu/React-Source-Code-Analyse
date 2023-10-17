@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,16 +18,12 @@ let useLayoutEffect;
 let forwardRef;
 let useImperativeHandle;
 let useRef;
-<<<<<<< HEAD
-let startTransition;
-=======
 let useState;
 let use;
 let startTransition;
 let waitFor;
 let waitForAll;
 let assertLog;
->>>>>>> remotes/upstream/main
 
 // This tests the native useSyncExternalStore implementation, not the shim.
 // Tests that apply to both the native implementation and the shim should go
@@ -49,16 +41,6 @@ describe('useSyncExternalStore', () => {
     useImperativeHandle = React.useImperativeHandle;
     forwardRef = React.forwardRef;
     useRef = React.useRef;
-<<<<<<< HEAD
-    useSyncExternalStore = React.useSyncExternalStore;
-    startTransition = React.startTransition;
-
-    act = require('jest-react').act;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     useState = React.useState;
     use = React.use;
     useSyncExternalStore = React.useSyncExternalStore;
@@ -74,7 +56,6 @@ describe('useSyncExternalStore', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -131,11 +112,7 @@ describe('useSyncExternalStore', () => {
           const aText = refA.current;
           const bText = refB.current;
           const cText = refC.current;
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(
-=======
           Scheduler.log(
->>>>>>> remotes/upstream/main
             `Children observed during layout: A${aText}B${bText}C${cText}`,
           );
         });
@@ -155,21 +132,13 @@ describe('useSyncExternalStore', () => {
           root.render(<App store={store1} />);
         });
 
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough(['A0', 'B0']);
-=======
         await waitFor(['A0', 'B0']);
->>>>>>> remotes/upstream/main
 
         // During an interleaved event, the store is mutated.
         store1.set(1);
 
         // Then we continue rendering.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYield([
-=======
         await waitForAll([
->>>>>>> remotes/upstream/main
           // C reads a newer value from the store than A or B, which means they
           // are inconsistent.
           'C1',
@@ -193,21 +162,13 @@ describe('useSyncExternalStore', () => {
         });
 
         // Start a concurrent render that reads from the store, then yield.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough(['A0', 'B0']);
-=======
         await waitFor(['A0', 'B0']);
->>>>>>> remotes/upstream/main
 
         // During an interleaved event, the store is mutated.
         store2.set(1);
 
         // Then we continue rendering.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYield([
-=======
         await waitForAll([
->>>>>>> remotes/upstream/main
           // C reads a newer value from the store than A or B, which means they
           // are inconsistent.
           'C1',
@@ -224,8 +185,6 @@ describe('useSyncExternalStore', () => {
       });
     },
   );
-<<<<<<< HEAD
-=======
 
   test('next value is correctly cached when state is dispatched in render phase', async () => {
     const store = createExternalStore('value:initial');
@@ -335,5 +294,4 @@ describe('useSyncExternalStore', () => {
       );
     },
   );
->>>>>>> remotes/upstream/main
 });

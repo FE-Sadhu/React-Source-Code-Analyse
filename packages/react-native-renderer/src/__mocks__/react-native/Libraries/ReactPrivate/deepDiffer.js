@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,11 +15,7 @@ type Options = {+unsafelyIgnoreFunctions?: boolean};
 /*
  * @returns {bool} true if different, false if equal
  */
-<<<<<<< HEAD
-const deepDiffer = function(
-=======
 function deepDiffer(
->>>>>>> remotes/upstream/main
   one: any,
   two: any,
   maxDepthOrOptions: Options | number = -1,
@@ -87,10 +79,6 @@ function deepDiffer(
     }
   }
   return false;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> remotes/upstream/main
 
 module.exports = deepDiffer;

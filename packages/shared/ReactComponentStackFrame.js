@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,14 +10,7 @@
 import type {Source} from 'shared/ReactElementType';
 import type {LazyComponent} from 'react/src/ReactLazy';
 
-<<<<<<< HEAD
-import {
-  enableComponentStackLocations,
-  disableNativeComponentFrames,
-} from 'shared/ReactFeatureFlags';
-=======
 import {enableComponentStackLocations} from 'shared/ReactFeatureFlags';
->>>>>>> remotes/upstream/main
 
 import {
   REACT_SUSPENSE_TYPE,
@@ -68,11 +57,7 @@ let reentry = false;
 let componentFrameCache;
 if (__DEV__) {
   const PossiblyWeakMap = typeof WeakMap === 'function' ? WeakMap : Map;
-<<<<<<< HEAD
-  componentFrameCache = new PossiblyWeakMap();
-=======
   componentFrameCache = new PossiblyWeakMap<Function, string>();
->>>>>>> remotes/upstream/main
 }
 
 export function describeNativeComponentFrame(
@@ -80,11 +65,7 @@ export function describeNativeComponentFrame(
   construct: boolean,
 ): string {
   // If something asked for a stack inside a fake render, it should get ignored.
-<<<<<<< HEAD
-  if (disableNativeComponentFrames || !fn || reentry) {
-=======
   if (!fn || reentry) {
->>>>>>> remotes/upstream/main
     return '';
   }
 
@@ -99,11 +80,7 @@ export function describeNativeComponentFrame(
 
   reentry = true;
   const previousPrepareStackTrace = Error.prepareStackTrace;
-<<<<<<< HEAD
-  // $FlowFixMe It does accept undefined.
-=======
   // $FlowFixMe[incompatible-type] It does accept undefined.
->>>>>>> remotes/upstream/main
   Error.prepareStackTrace = undefined;
   let previousDispatcher;
   if (__DEV__) {
@@ -117,21 +94,12 @@ export function describeNativeComponentFrame(
     // This should throw.
     if (construct) {
       // Something should be setting the props in the constructor.
-<<<<<<< HEAD
-      const Fake = function() {
-        throw Error();
-      };
-      // $FlowFixMe
-      Object.defineProperty(Fake.prototype, 'props', {
-        set: function() {
-=======
       const Fake = function () {
         throw Error();
       };
       // $FlowFixMe[prop-missing]
       Object.defineProperty(Fake.prototype, 'props', {
         set: function () {
->>>>>>> remotes/upstream/main
           // We use a throwing setter instead of frozen or non-writable props
           // because that won't throw in a non-strict mode function.
           throw Error();
@@ -152,10 +120,7 @@ export function describeNativeComponentFrame(
         } catch (x) {
           control = x;
         }
-<<<<<<< HEAD
-=======
         // $FlowFixMe[prop-missing] found when upgrading Flow
->>>>>>> remotes/upstream/main
         fn.call(Fake.prototype);
       }
     } else {
@@ -167,9 +132,6 @@ export function describeNativeComponentFrame(
       // TODO(luna): This will currently only throw if the function component
       // tries to access React/ReactDOM/props. We should probably make this throw
       // in simple components too
-<<<<<<< HEAD
-      fn();
-=======
       const maybePromise = fn();
 
       // If the function component returns a promise, it's likely an async
@@ -179,7 +141,6 @@ export function describeNativeComponentFrame(
       if (maybePromise && typeof maybePromise.catch === 'function') {
         maybePromise.catch(() => {});
       }
->>>>>>> remotes/upstream/main
     }
   } catch (sample) {
     // This is inlined manually because closure doesn't do it for us.

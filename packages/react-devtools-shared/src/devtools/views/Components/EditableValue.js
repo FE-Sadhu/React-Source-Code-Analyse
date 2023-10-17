@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -40,10 +36,7 @@ export default function EditableValue({
       externalValue: value,
     });
 
-<<<<<<< HEAD
-=======
   // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
   const handleChange = ({target}) =>
     dispatch({
       type: 'UPDATE',
@@ -51,10 +44,7 @@ export default function EditableValue({
       externalValue: value,
     });
 
-<<<<<<< HEAD
-=======
   // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
   const handleCheckBoxToggle = ({target}) => {
     dispatch({
       type: 'UPDATE',
@@ -70,10 +60,7 @@ export default function EditableValue({
     overrideValue(path, target.checked);
   };
 
-<<<<<<< HEAD
-=======
   // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
   const handleKeyDown = event => {
     // Prevent keydown events from e.g. change selected element in the tree
     event.stopPropagation();

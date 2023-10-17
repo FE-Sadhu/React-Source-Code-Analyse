@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -72,11 +68,7 @@ export class NetworkMeasuresView extends View {
       if (!this._depthToNetworkMeasure.has(depth)) {
         this._depthToNetworkMeasure.set(depth, [event]);
       } else {
-<<<<<<< HEAD
-        // $FlowFixMe This is unnecessary.
-=======
         // $FlowFixMe[incompatible-use] This is unnecessary.
->>>>>>> remotes/upstream/main
         this._depthToNetworkMeasure.get(depth).push(event);
       }
     });

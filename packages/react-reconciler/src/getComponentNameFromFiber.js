@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -23,11 +19,8 @@ import {
   HostRoot,
   HostPortal,
   HostComponent,
-<<<<<<< HEAD
-=======
   HostHoistable,
   HostSingleton,
->>>>>>> remotes/upstream/main
   HostText,
   Fragment,
   Mode,
@@ -86,11 +79,8 @@ export default function getComponentNameFromFiber(fiber: Fiber): string | null {
       return getWrappedName(type, type.render, 'ForwardRef');
     case Fragment:
       return 'Fragment';
-<<<<<<< HEAD
-=======
     case HostHoistable:
     case HostSingleton:
->>>>>>> remotes/upstream/main
     case HostComponent:
       // Host component type is the display name (e.g. "div", "View")
       return type;

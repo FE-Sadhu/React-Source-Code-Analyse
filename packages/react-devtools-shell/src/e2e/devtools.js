@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -9,7 +7,6 @@
  * @noflow
  */
 
->>>>>>> remotes/upstream/main
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {createRoot} from 'react-dom/client';
@@ -21,10 +18,6 @@ import {initialize as createDevTools} from 'react-devtools-inline/frontend';
 
 // This is a pretty gross hack to make the runtime loaded named-hooks-code work.
 // TODO (Webpack 5) Hoepfully we can remove this once we upgrade to Webpack 5.
-<<<<<<< HEAD
-// $FlowFixMe
-=======
->>>>>>> remotes/upstream/main
 __webpack_public_path__ = '/dist/'; // eslint-disable-line no-undef
 
 // TODO (Webpack 5) Hopefully we can remove this prop after the Webpack 5 migration.
@@ -48,10 +41,6 @@ function init(appIframe, devtoolsContainer, appSource) {
   const DevTools = createDevTools(contentWindow);
 
   inject(contentDocument, appSource, () => {
-<<<<<<< HEAD
-    // $FlowFixMe Flow doesn't know about createRoot() yet.
-=======
->>>>>>> remotes/upstream/main
     createRoot(devtoolsContainer).render(
       <DevTools
         hookNamesModuleLoaderFunction={hookNamesModuleLoaderFunction}

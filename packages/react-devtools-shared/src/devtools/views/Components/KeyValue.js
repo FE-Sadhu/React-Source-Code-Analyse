@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -32,13 +28,6 @@ import isArray from 'react-devtools-shared/src/isArray';
 import {InspectedElementContext} from './InspectedElementContext';
 import {PROTOCOLS_SUPPORTED_AS_LINKS_IN_KEY_VALUE} from './constants';
 
-<<<<<<< HEAD
-import type {InspectedElement} from './types';
-import type {Element} from 'react-devtools-shared/src/devtools/views/Components/types';
-import type {Element as ReactElement} from 'react';
-import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
-
-=======
 import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
 import type {Element} from 'react-devtools-shared/src/frontend/types';
 import type {Element as ReactElement} from 'react';
@@ -47,7 +36,6 @@ import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 // $FlowFixMe[method-unbinding]
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
->>>>>>> remotes/upstream/main
 type Type = 'props' | 'state' | 'context' | 'hooks';
 
 type KeyValueProps = {
@@ -90,11 +78,7 @@ export default function KeyValue({
   pathRoot,
   store,
   value,
-<<<<<<< HEAD
-}: KeyValueProps) {
-=======
 }: KeyValueProps): React.Node {
->>>>>>> remotes/upstream/main
   const {readOnly: readOnlyGlobalFlag} = useContext(OptionsContext);
   canDeletePaths = !readOnlyGlobalFlag && canDeletePaths;
   canEditValues = !readOnlyGlobalFlag && canEditValues;
@@ -154,11 +138,7 @@ export default function KeyValue({
     paddingLeft: `${(depth - 1) * 0.75}rem`,
   };
 
-<<<<<<< HEAD
-  const overrideValue = (newPath, newValue) => {
-=======
   const overrideValue = (newPath: Array<string | number>, newValue: any) => {
->>>>>>> remotes/upstream/main
     if (hookID != null) {
       newPath = parseHookPathForEdit(newPath);
     }
@@ -176,11 +156,7 @@ export default function KeyValue({
     }
   };
 
-<<<<<<< HEAD
-  const deletePath = pathToDelete => {
-=======
   const deletePath = (pathToDelete: Array<string | number>) => {
->>>>>>> remotes/upstream/main
     if (hookID != null) {
       pathToDelete = parseHookPathForEdit(pathToDelete);
     }
@@ -197,14 +173,10 @@ export default function KeyValue({
     }
   };
 
-<<<<<<< HEAD
-  const renamePath = (oldPath, newPath) => {
-=======
   const renamePath = (
     oldPath: Array<string | number>,
     newPath: Array<string | number>,
   ) => {
->>>>>>> remotes/upstream/main
     if (newPath[newPath.length - 1] === '') {
       // Deleting the key suggests an intent to delete the whole path.
       if (canDeletePaths) {
@@ -283,11 +255,8 @@ export default function KeyValue({
       displayValue = 'null';
     } else if (value === undefined) {
       displayValue = 'undefined';
-<<<<<<< HEAD
-=======
     } else if (isNaN(value)) {
       displayValue = 'NaN';
->>>>>>> remotes/upstream/main
     }
 
     let shouldDisplayValueAsLink = false;
@@ -447,11 +416,7 @@ export default function KeyValue({
       const hasChildren = entries.length > 0 || canEditValues;
       const displayName = getMetaValueLabel(value);
 
-<<<<<<< HEAD
-      children = entries.map<ReactElement<any>>(([key, keyValue]) => (
-=======
       children = entries.map(([key, keyValue]): ReactElement<any> => (
->>>>>>> remotes/upstream/main
         <KeyValue
           key={key}
           alphaSort={alphaSort}
@@ -517,13 +482,9 @@ export default function KeyValue({
   return children;
 }
 
-<<<<<<< HEAD
-function DeleteToggle({deletePath, name, path}) {
-=======
 // $FlowFixMe[missing-local-annot]
 function DeleteToggle({deletePath, name, path}) {
   // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
   const handleClick = event => {
     event.stopPropagation();
     deletePath(path);

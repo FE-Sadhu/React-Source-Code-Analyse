@@ -13,13 +13,6 @@
   overflow-y: auto;
 }
 
-<<<<<<< HEAD
-.WhatChanged {
-  margin-bottom: 1rem;
-}
-
-=======
->>>>>>> remotes/upstream/main
 .Component {
   flex: 1;
   color: var(--color-component-name);

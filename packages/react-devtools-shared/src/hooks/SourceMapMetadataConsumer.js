@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -135,11 +131,7 @@ export class SourceMapMetadataConsumer {
   _getMetadataObjectsBySourceNames(sourcemap: MixedSourceMap): MetadataMap {
     if (sourcemap.mappings === undefined) {
       const indexSourceMap: IndexSourceMap = sourcemap;
-<<<<<<< HEAD
-      const metadataMap = new Map();
-=======
       const metadataMap = new Map<string, ?ReactSourceMetadata>();
->>>>>>> remotes/upstream/main
       indexSourceMap.sections.forEach(section => {
         const metadataMapForIndexMap = this._getMetadataObjectsBySourceNames(
           section.map,
@@ -151,11 +143,7 @@ export class SourceMapMetadataConsumer {
       return metadataMap;
     }
 
-<<<<<<< HEAD
-    const metadataMap = new Map();
-=======
     const metadataMap: MetadataMap = new Map();
->>>>>>> remotes/upstream/main
     const basicMap: BasicSourceMap = sourcemap;
     const updateMap = (metadata: ReactSourceMetadata, sourceIndex: number) => {
       let source = basicMap.sources[sourceIndex];

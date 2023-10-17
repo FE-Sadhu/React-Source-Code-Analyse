@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,19 +7,6 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {AnyNativeEvent} from './legacy-events/PluginModuleType';
-import type {Fiber} from 'react-reconciler/src/ReactInternalTypes';
-import type {LegacyPluginModule} from './legacy-events/PluginModuleType';
-import type {ReactSyntheticEvent} from './legacy-events/ReactSyntheticEventType';
-import type {TopLevelType} from './legacy-events/TopLevelEventTypes';
-
-import {registrationNameModules} from './legacy-events/EventPluginRegistry';
-import {batchedUpdates} from './legacy-events/ReactGenericBatching';
-import {runEventsInBatch} from './legacy-events/EventBatching';
-import {plugins} from './legacy-events/EventPluginRegistry';
-import getListeners from './ReactNativeGetListeners';
-=======
 import type {
   AnyNativeEvent,
   LegacyPluginModule,
@@ -39,16 +22,11 @@ import {
 import {batchedUpdates} from './legacy-events/ReactGenericBatching';
 import {runEventsInBatch} from './legacy-events/EventBatching';
 import getListener from './ReactNativeGetListener';
->>>>>>> remotes/upstream/main
 import accumulateInto from './legacy-events/accumulateInto';
 
 import {getInstanceFromNode} from './ReactNativeComponentTree';
 
-<<<<<<< HEAD
-export {getListeners, registrationNameModules as registrationNames};
-=======
 export {getListener, registrationNameModules as registrationNames};
->>>>>>> remotes/upstream/main
 
 /**
  * Version of `ReactBrowserEventEmitter` that works on the receiving side of a
@@ -65,22 +43,14 @@ const EMPTY_NATIVE_EVENT = (({}: any): AnyNativeEvent);
  * @param {Array<number>} indices Indices by which to pull subsequence.
  * @return {Array<Touch>} Subsequence of touch objects.
  */
-<<<<<<< HEAD
-const touchSubsequence = function(touches, indices) {
-=======
 // $FlowFixMe[missing-local-annot]
 function touchSubsequence(touches, indices) {
->>>>>>> remotes/upstream/main
   const ret = [];
   for (let i = 0; i < indices.length; i++) {
     ret.push(touches[indices[i]]);
   }
   return ret;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> remotes/upstream/main
 
 /**
  * TODO: Pool all of this.
@@ -93,11 +63,7 @@ function touchSubsequence(touches, indices) {
  * @param {Array<number>} indices Indices to remove from `touches`.
  * @return {Array<Touch>} Subsequence of removed touch objects.
  */
-<<<<<<< HEAD
-const removeTouchesAtIndices = function(
-=======
 function removeTouchesAtIndices(
->>>>>>> remotes/upstream/main
   touches: Array<Object>,
   indices: Array<number>,
 ): Array<Object> {
@@ -119,11 +85,7 @@ function removeTouchesAtIndices(
   }
   temp.length = fillAt;
   return rippedOut;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> remotes/upstream/main
 
 /**
  * Internal version of `receiveEvent` in terms of normalized (non-tag)
@@ -148,11 +110,7 @@ function _receiveRootNodeIDEvent(
     target = inst.stateNode;
   }
 
-<<<<<<< HEAD
-  batchedUpdates(function() {
-=======
   batchedUpdates(function () {
->>>>>>> remotes/upstream/main
     runExtractedPluginEventsInBatch(topLevelType, inst, nativeEvent, target);
   });
   // React Native doesn't use ReactControlledComponent but if it did, here's
@@ -172,11 +130,7 @@ function extractPluginEvents(
   nativeEvent: AnyNativeEvent,
   nativeEventTarget: null | EventTarget,
 ): Array<ReactSyntheticEvent> | ReactSyntheticEvent | null {
-<<<<<<< HEAD
-  let events = null;
-=======
   let events: Array<ReactSyntheticEvent> | ReactSyntheticEvent | null = null;
->>>>>>> remotes/upstream/main
   const legacyPlugins = ((plugins: any): Array<LegacyPluginModule<Event>>);
   for (let i = 0; i < legacyPlugins.length; i++) {
     // Not every plugin in the ordering may be loaded at runtime.
@@ -281,11 +235,7 @@ export function receiveTouches(
         rootNodeID = target;
       }
     }
-<<<<<<< HEAD
-    // $FlowFixMe Shouldn't we *not* call it if rootNodeID is null?
-=======
     // $FlowFixMe[incompatible-call] Shouldn't we *not* call it if rootNodeID is null?
->>>>>>> remotes/upstream/main
     _receiveRootNodeIDEvent(rootNodeID, eventTopLevelType, nativeEvent);
   }
 }

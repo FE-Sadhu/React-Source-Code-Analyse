@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,11 +8,6 @@
  */
 
 import type {Fiber} from 'react-reconciler/src/ReactInternalTypes';
-<<<<<<< HEAD
-import type {Instance} from './ReactFiberHostConfig';
-
-import {HostComponent, HostText} from 'react-reconciler/src/ReactWorkTags';
-=======
 import type {Instance} from './ReactFiberConfig';
 
 import {
@@ -25,7 +16,6 @@ import {
   HostSingleton,
   HostText,
 } from 'react-reconciler/src/ReactWorkTags';
->>>>>>> remotes/upstream/main
 import getComponentNameFromType from 'shared/getComponentNameFromType';
 import {
   findFiberRoot,
@@ -37,15 +27,6 @@ import {
   setFocusIfFocusable,
   setupIntersectionObserver,
   supportsTestSelectors,
-<<<<<<< HEAD
-} from './ReactFiberHostConfig';
-
-let COMPONENT_TYPE = 0b000;
-let HAS_PSEUDO_CLASS_TYPE = 0b001;
-let ROLE_TYPE = 0b010;
-let TEST_NAME_TYPE = 0b011;
-let TEXT_TYPE = 0b100;
-=======
 } from './ReactFiberConfig';
 
 let COMPONENT_TYPE: symbol | number = 0b000;
@@ -53,7 +34,6 @@ let HAS_PSEUDO_CLASS_TYPE: symbol | number = 0b001;
 let ROLE_TYPE: symbol | number = 0b010;
 let TEST_NAME_TYPE: symbol | number = 0b011;
 let TEXT_TYPE: symbol | number = 0b100;
->>>>>>> remotes/upstream/main
 
 if (typeof Symbol === 'function' && Symbol.for) {
   const symbolFor = Symbol.for;
@@ -163,10 +143,7 @@ function findFiberRootForHostRoot(hostRoot: Instance): Fiber {
 }
 
 function matchSelector(fiber: Fiber, selector: Selector): boolean {
-<<<<<<< HEAD
-=======
   const tag = fiber.tag;
->>>>>>> remotes/upstream/main
   switch (selector.$$typeof) {
     case COMPONENT_TYPE:
       if (fiber.type === selector.value) {
@@ -179,15 +156,11 @@ function matchSelector(fiber: Fiber, selector: Selector): boolean {
         ((selector: any): HasPseudoClassSelector).value,
       );
     case ROLE_TYPE:
-<<<<<<< HEAD
-      if (fiber.tag === HostComponent) {
-=======
       if (
         tag === HostComponent ||
         tag === HostHoistable ||
         tag === HostSingleton
       ) {
->>>>>>> remotes/upstream/main
         const node = fiber.stateNode;
         if (
           matchAccessibilityRole(node, ((selector: any): RoleSelector).value)
@@ -197,16 +170,12 @@ function matchSelector(fiber: Fiber, selector: Selector): boolean {
       }
       break;
     case TEXT_TYPE:
-<<<<<<< HEAD
-      if (fiber.tag === HostComponent || fiber.tag === HostText) {
-=======
       if (
         tag === HostComponent ||
         tag === HostText ||
         tag === HostHoistable ||
         tag === HostSingleton
       ) {
->>>>>>> remotes/upstream/main
         const textContent = getTextContent(fiber);
         if (
           textContent !== null &&
@@ -217,15 +186,11 @@ function matchSelector(fiber: Fiber, selector: Selector): boolean {
       }
       break;
     case TEST_NAME_TYPE:
-<<<<<<< HEAD
-      if (fiber.tag === HostComponent) {
-=======
       if (
         tag === HostComponent ||
         tag === HostHoistable ||
         tag === HostSingleton
       ) {
->>>>>>> remotes/upstream/main
         const dataTestID = fiber.memoizedProps['data-testname'];
         if (
           typeof dataTestID === 'string' &&
@@ -268,12 +233,6 @@ function findPaths(root: Fiber, selectors: Array<Selector>): Array<Fiber> {
   let index = 0;
   while (index < stack.length) {
     const fiber = ((stack[index++]: any): Fiber);
-<<<<<<< HEAD
-    let selectorIndex = ((stack[index++]: any): number);
-    let selector = selectors[selectorIndex];
-
-    if (fiber.tag === HostComponent && isHiddenSubtree(fiber)) {
-=======
     const tag = fiber.tag;
     let selectorIndex = ((stack[index++]: any): number);
     let selector = selectors[selectorIndex];
@@ -284,7 +243,6 @@ function findPaths(root: Fiber, selectors: Array<Selector>): Array<Fiber> {
         tag === HostSingleton) &&
       isHiddenSubtree(fiber)
     ) {
->>>>>>> remotes/upstream/main
       continue;
     } else {
       while (selector != null && matchSelector(fiber, selector)) {
@@ -313,12 +271,6 @@ function hasMatchingPaths(root: Fiber, selectors: Array<Selector>): boolean {
   let index = 0;
   while (index < stack.length) {
     const fiber = ((stack[index++]: any): Fiber);
-<<<<<<< HEAD
-    let selectorIndex = ((stack[index++]: any): number);
-    let selector = selectors[selectorIndex];
-
-    if (fiber.tag === HostComponent && isHiddenSubtree(fiber)) {
-=======
     const tag = fiber.tag;
     let selectorIndex = ((stack[index++]: any): number);
     let selector = selectors[selectorIndex];
@@ -329,7 +281,6 @@ function hasMatchingPaths(root: Fiber, selectors: Array<Selector>): boolean {
         tag === HostSingleton) &&
       isHiddenSubtree(fiber)
     ) {
->>>>>>> remotes/upstream/main
       continue;
     } else {
       while (selector != null && matchSelector(fiber, selector)) {
@@ -369,16 +320,12 @@ export function findAllNodes(
   let index = 0;
   while (index < stack.length) {
     const node = ((stack[index++]: any): Fiber);
-<<<<<<< HEAD
-    if (node.tag === HostComponent) {
-=======
     const tag = node.tag;
     if (
       tag === HostComponent ||
       tag === HostHoistable ||
       tag === HostSingleton
     ) {
->>>>>>> remotes/upstream/main
       if (isHiddenSubtree(node)) {
         continue;
       }
@@ -413,12 +360,6 @@ export function getFindAllNodesFailureDescription(
   let index = 0;
   while (index < stack.length) {
     const fiber = ((stack[index++]: any): Fiber);
-<<<<<<< HEAD
-    let selectorIndex = ((stack[index++]: any): number);
-    const selector = selectors[selectorIndex];
-
-    if (fiber.tag === HostComponent && isHiddenSubtree(fiber)) {
-=======
     const tag = fiber.tag;
     let selectorIndex = ((stack[index++]: any): number);
     const selector = selectors[selectorIndex];
@@ -429,7 +370,6 @@ export function getFindAllNodesFailureDescription(
         tag === HostSingleton) &&
       isHiddenSubtree(fiber)
     ) {
->>>>>>> remotes/upstream/main
       continue;
     } else if (matchSelector(fiber, selector)) {
       matchedNames.push(selectorToString(selector));
@@ -578,12 +518,6 @@ export function focusWithin(
   let index = 0;
   while (index < stack.length) {
     const fiber = ((stack[index++]: any): Fiber);
-<<<<<<< HEAD
-    if (isHiddenSubtree(fiber)) {
-      continue;
-    }
-    if (fiber.tag === HostComponent) {
-=======
     const tag = fiber.tag;
     if (isHiddenSubtree(fiber)) {
       continue;
@@ -593,7 +527,6 @@ export function focusWithin(
       tag === HostHoistable ||
       tag === HostSingleton
     ) {
->>>>>>> remotes/upstream/main
       const node = fiber.stateNode;
       if (setFocusIfFocusable(node)) {
         return true;

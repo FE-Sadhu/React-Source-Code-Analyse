@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -68,20 +64,10 @@ export default function Tree(props: Props): React.Node {
   const bridge = useContext(BridgeContext);
   const store = useContext(StoreContext);
   const {hideSettings} = useContext(OptionsContext);
-<<<<<<< HEAD
-  const [isNavigatingWithKeyboard, setIsNavigatingWithKeyboard] = useState(
-    false,
-  );
-  const {
-    highlightNativeElement,
-    clearHighlightNativeElement,
-  } = useHighlightNativeElement();
-=======
   const [isNavigatingWithKeyboard, setIsNavigatingWithKeyboard] =
     useState(false);
   const {highlightNativeElement, clearHighlightNativeElement} =
     useHighlightNativeElement();
->>>>>>> remotes/upstream/main
   const treeRef = useRef<HTMLDivElement | null>(null);
   const focusTargetRef = useRef<HTMLDivElement | null>(null);
 
@@ -101,11 +87,7 @@ export default function Tree(props: Props): React.Node {
   // meaning the scroll action would be skipped (since ref updates don't re-run effects).
   // Using a callback ref accounts for this case...
   const listCallbackRef = useCallback(
-<<<<<<< HEAD
-    list => {
-=======
     (list: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       if (list != null && selectedElementIndex !== null) {
         list.scrollToItem(selectedElementIndex, 'smart');
       }
@@ -116,11 +98,7 @@ export default function Tree(props: Props): React.Node {
   // Picking an element in the inspector should put focus into the tree.
   // This ensures that keyboard navigation works right after picking a node.
   useEffect(() => {
-<<<<<<< HEAD
-    function handleStopInspectingNative(didSelectNode) {
-=======
     function handleStopInspectingNative(didSelectNode: boolean) {
->>>>>>> remotes/upstream/main
       if (didSelectNode && focusTargetRef.current !== null) {
         focusTargetRef.current.focus();
         logEvent({
@@ -248,11 +226,7 @@ export default function Tree(props: Props): React.Node {
   }, [dispatch, numElements, selectedElementIndex]);
 
   const handleKeyPress = useCallback(
-<<<<<<< HEAD
-    event => {
-=======
     (event: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       switch (event.key) {
         case 'Enter':
         case ' ':
@@ -298,11 +272,7 @@ export default function Tree(props: Props): React.Node {
 
   // Highlight last hovered element.
   const handleElementMouseEnter = useCallback(
-<<<<<<< HEAD
-    id => {
-=======
     (id: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       // Ignore hover while we're navigating with keyboard.
       // This avoids flicker from the hovered nodes under the mouse.
       if (!isNavigatingWithKeyboard) {
@@ -371,8 +341,6 @@ export default function Tree(props: Props): React.Node {
     clearErrorsAndWarningsAPI({bridge, store});
   };
 
-<<<<<<< HEAD
-=======
   const zeroElementsNotice = (
     <div className={styles.ZeroElementsNotice}>
       <p>Loading React Element Tree...</p>
@@ -389,7 +357,6 @@ export default function Tree(props: Props): React.Node {
     </div>
   );
 
->>>>>>> remotes/upstream/main
   return (
     <TreeFocusedContext.Provider value={treeFocused}>
       <div className={styles.Tree} ref={treeRef}>
@@ -444,35 +411,6 @@ export default function Tree(props: Props): React.Node {
             </Fragment>
           )}
         </div>
-<<<<<<< HEAD
-        <div
-          className={styles.AutoSizerWrapper}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          onKeyPress={handleKeyPress}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          ref={focusTargetRef}
-          tabIndex={0}>
-          <AutoSizer>
-            {({height, width}) => (
-              // $FlowFixMe https://github.com/facebook/flow/issues/7341
-              <FixedSizeList
-                className={styles.List}
-                height={height}
-                innerElementType={InnerElementType}
-                itemCount={numElements}
-                itemData={itemData}
-                itemKey={itemKey}
-                itemSize={lineHeight}
-                ref={listCallbackRef}
-                width={width}>
-                {Element}
-              </FixedSizeList>
-            )}
-          </AutoSizer>
-        </div>
-=======
         {numElements === 0 ? (
           zeroElementsNotice
         ) : (
@@ -503,7 +441,6 @@ export default function Tree(props: Props): React.Node {
             </AutoSizer>
           </div>
         )}
->>>>>>> remotes/upstream/main
       </div>
     </TreeFocusedContext.Provider>
   );
@@ -600,10 +537,7 @@ function updateIndentationSizeVar(
   list.style.setProperty('--indentation-size', `${maxIndentationSize}px`);
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function InnerElementType({children, style, ...rest}) {
   const {ownerID} = useContext(TreeStateContext);
 

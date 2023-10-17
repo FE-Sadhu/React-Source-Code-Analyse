@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -44,11 +40,7 @@ function CommitRankedListItem({data, index, style}: Props) {
   const {lineHeight} = useContext(SettingsContext);
 
   const handleClick = useCallback(
-<<<<<<< HEAD
-    event => {
-=======
     (event: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       event.stopPropagation();
       const {id, name} = node;
       selectFiber(id, name);
@@ -88,11 +80,7 @@ function CommitRankedListItem({data, index, style}: Props) {
   );
 }
 
-<<<<<<< HEAD
-export default memo<Props>(CommitRankedListItem, areEqual);
-=======
 export default (memo(
   CommitRankedListItem,
   areEqual,
 ): React.ComponentType<Props>);
->>>>>>> remotes/upstream/main

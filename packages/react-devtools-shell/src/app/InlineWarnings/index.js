@@ -3,19 +3,13 @@
 import * as React from 'react';
 import {Fragment, useEffect, useRef, useState} from 'react';
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function WarnDuringRender({children = null}) {
   console.warn('This warning fires during every render');
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function WarnOnMount({children = null}) {
   useEffect(() => {
     console.warn('This warning fires on initial mount only');
@@ -23,10 +17,7 @@ function WarnOnMount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function WarnOnUpdate({children = null}) {
   const didMountRef = useRef(false);
   useEffect(() => {
@@ -39,10 +30,7 @@ function WarnOnUpdate({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function WarnOnUnmount({children = null}) {
   useEffect(() => {
     return () => {
@@ -52,19 +40,13 @@ function WarnOnUnmount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorDuringRender({children = null}) {
   console.error('This error fires during every render');
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorOnMount({children = null}) {
   useEffect(() => {
     console.error('This error fires on initial mount only');
@@ -72,10 +54,7 @@ function ErrorOnMount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorOnUpdate({children = null}) {
   const didMountRef = useRef(false);
   useEffect(() => {
@@ -88,10 +67,7 @@ function ErrorOnUpdate({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorOnUnmount({children = null}) {
   useEffect(() => {
     return () => {
@@ -101,20 +77,14 @@ function ErrorOnUnmount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorAndWarningDuringRender({children = null}) {
   console.warn('This warning fires during every render');
   console.error('This error fires during every render');
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorAndWarningOnMount({children = null}) {
   useEffect(() => {
     console.warn('This warning fires on initial mount only');
@@ -123,10 +93,7 @@ function ErrorAndWarningOnMount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorAndWarningOnUpdate({children = null}) {
   const didMountRef = useRef(false);
   useEffect(() => {
@@ -140,10 +107,7 @@ function ErrorAndWarningOnUpdate({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorAndWarningOnUnmount({children = null}) {
   useEffect(() => {
     return () => {
@@ -154,10 +118,7 @@ function ErrorAndWarningOnUnmount({children = null}) {
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ReallyLongErrorMessageThatWillCauseTextToBeTruncated({
   children = null,
 }) {
@@ -167,36 +128,24 @@ function ReallyLongErrorMessageThatWillCauseTextToBeTruncated({
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorWithMultipleArgs({children = null}) {
   console.error('This error', 'passes console', 4, 'arguments');
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ErrorWithStringSubstitutions({children = null}) {
   console.error('This error uses "%s" substitutions', 'string');
   return children;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ReactErrorOnHostComponent({children = null}) {
   return <div data-camelCasedAttribute="should-lower-case">{children}</div>;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function DuplicateWarningsAndErrors({children = null}) {
   console.warn('this warning is logged twice per render');
   console.warn('this warning is logged twice per render');
@@ -205,10 +154,7 @@ function DuplicateWarningsAndErrors({children = null}) {
   return <div data-camelCasedAttribute="should-lower-case">{children}</div>;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function MultipleWarningsAndErrors({children = null}) {
   console.warn('this is the first warning logged');
   console.warn('this is the second warning logged');
@@ -217,10 +163,7 @@ function MultipleWarningsAndErrors({children = null}) {
   return <div data-camelCasedAttribute="should-lower-case">{children}</div>;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function ComponentWithMissingKey({children}) {
   return [<div />];
 }

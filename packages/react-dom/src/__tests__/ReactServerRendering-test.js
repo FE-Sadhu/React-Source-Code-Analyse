@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -344,10 +340,7 @@ describe('ReactDOMServer', () => {
       expect(markup).toContain('hello, world');
     });
 
-<<<<<<< HEAD
-=======
     // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
     it('renders with context when using custom constructor', () => {
       class Component extends React.Component {
         constructor() {
@@ -621,14 +614,8 @@ describe('ReactDOMServer', () => {
   describe('renderToStaticNodeStream', () => {
     it('should generate simple markup', () => {
       const SuccessfulElement = React.createElement(() => <img />);
-<<<<<<< HEAD
-      const response = ReactDOMServer.renderToStaticNodeStream(
-        SuccessfulElement,
-      );
-=======
       const response =
         ReactDOMServer.renderToStaticNodeStream(SuccessfulElement);
->>>>>>> remotes/upstream/main
       expect(response.read().toString()).toMatch(new RegExp('<img' + '/>'));
     });
 
@@ -695,13 +682,7 @@ describe('ReactDOMServer', () => {
     }
 
     ReactDOMServer.renderToString(<Foo />);
-<<<<<<< HEAD
-    expect(() =>
-      jest.runOnlyPendingTimers(),
-    ).toErrorDev(
-=======
     expect(() => jest.runOnlyPendingTimers()).toErrorDev(
->>>>>>> remotes/upstream/main
       'Warning: setState(...): Can only update a mounting component.' +
         ' This usually means you called setState() outside componentWillMount() on the server.' +
         ' This is a no-op.\n\nPlease check the code for the Foo component.',
@@ -729,13 +710,7 @@ describe('ReactDOMServer', () => {
     }
 
     ReactDOMServer.renderToString(<Baz />);
-<<<<<<< HEAD
-    expect(() =>
-      jest.runOnlyPendingTimers(),
-    ).toErrorDev(
-=======
     expect(() => jest.runOnlyPendingTimers()).toErrorDev(
->>>>>>> remotes/upstream/main
       'Warning: forceUpdate(...): Can only update a mounting component. ' +
         'This usually means you called forceUpdate() outside componentWillMount() on the server. ' +
         'This is a no-op.\n\nPlease check the code for the Baz component.',

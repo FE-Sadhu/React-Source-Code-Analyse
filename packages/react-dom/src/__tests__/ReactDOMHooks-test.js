@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,13 +12,8 @@
 let React;
 let ReactDOM;
 let ReactDOMClient;
-<<<<<<< HEAD
-let Scheduler;
-let act;
-=======
 let act;
 let waitForAll;
->>>>>>> remotes/upstream/main
 
 describe('ReactDOMHooks', () => {
   let container;
@@ -33,13 +24,8 @@ describe('ReactDOMHooks', () => {
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
-<<<<<<< HEAD
-    Scheduler = require('scheduler');
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
     waitForAll = require('internal-test-utils').waitForAll;
->>>>>>> remotes/upstream/main
 
     container = document.createElement('div');
     document.body.appendChild(container);
@@ -49,11 +35,7 @@ describe('ReactDOMHooks', () => {
     document.body.removeChild(container);
   });
 
-<<<<<<< HEAD
-  it('can ReactDOM.render() from useEffect', () => {
-=======
   it('can ReactDOM.render() from useEffect', async () => {
->>>>>>> remotes/upstream/main
     const container2 = document.createElement('div');
     const container3 = document.createElement('div');
 
@@ -79,11 +61,7 @@ describe('ReactDOMHooks', () => {
     expect(container.textContent).toBe('1');
     expect(container2.textContent).toBe('');
     expect(container3.textContent).toBe('');
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toBe('1');
     expect(container2.textContent).toBe('2');
     expect(container3.textContent).toBe('3');
@@ -92,11 +70,7 @@ describe('ReactDOMHooks', () => {
     expect(container.textContent).toBe('2');
     expect(container2.textContent).toBe('2'); // Not flushed yet
     expect(container3.textContent).toBe('3'); // Not flushed yet
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toBe('2');
     expect(container2.textContent).toBe('4');
     expect(container3.textContent).toBe('6');
@@ -158,17 +132,10 @@ describe('ReactDOMHooks', () => {
     const root = ReactDOMClient.createRoot(container);
     root.render(<Example inputRef={inputRef} labelRef={labelRef} />);
 
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-
-    inputRef.current.value = 'abc';
-    await act(async () => {
-=======
     await waitForAll([]);
 
     inputRef.current.value = 'abc';
     await act(() => {
->>>>>>> remotes/upstream/main
       inputRef.current.dispatchEvent(
         new Event('input', {
           bubbles: true,

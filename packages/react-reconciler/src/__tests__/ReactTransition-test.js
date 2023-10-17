@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,13 +20,10 @@ let useTransition;
 let startTransition;
 let act;
 let getCacheForType;
-<<<<<<< HEAD
-=======
 let waitForAll;
 let waitFor;
 let waitForPaint;
 let assertLog;
->>>>>>> remotes/upstream/main
 
 let caches;
 let seededCache;
@@ -47,9 +40,6 @@ describe('ReactTransition', () => {
     Suspense = React.Suspense;
     startTransition = React.startTransition;
     getCacheForType = React.unstable_getCacheForType;
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
 
     const InternalTestUtils = require('internal-test-utils');
@@ -57,7 +47,6 @@ describe('ReactTransition', () => {
     waitFor = InternalTestUtils.waitFor;
     waitForPaint = InternalTestUtils.waitForPaint;
     assertLog = InternalTestUtils.assertLog;
->>>>>>> remotes/upstream/main
 
     caches = [];
     seededCache = null;
@@ -119,27 +108,16 @@ describe('ReactTransition', () => {
     if (record !== undefined) {
       switch (record.status) {
         case 'pending':
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
-          throw record.value;
-        case 'rejected':
-          Scheduler.unstable_yieldValue(`Error! [${text}]`);
-=======
           Scheduler.log(`Suspend! [${text}]`);
           throw record.value;
         case 'rejected':
           Scheduler.log(`Error! [${text}]`);
->>>>>>> remotes/upstream/main
           throw record.value;
         case 'resolved':
           return textCache.version;
       }
     } else {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
-=======
       Scheduler.log(`Suspend! [${text}]`);
->>>>>>> remotes/upstream/main
 
       const thenable = {
         pings: [],
@@ -163,21 +141,13 @@ describe('ReactTransition', () => {
   }
 
   function Text({text}) {
-<<<<<<< HEAD
-    Scheduler.unstable_yieldValue(text);
-=======
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
   function AsyncText({text}) {
     readText(text);
-<<<<<<< HEAD
-    Scheduler.unstable_yieldValue(text);
-=======
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -198,11 +168,7 @@ describe('ReactTransition', () => {
     }
   }
 
-<<<<<<< HEAD
-  // @gate enableCache
-=======
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test('isPending works even if called from outside an input event', async () => {
     let start;
     function App() {
@@ -219,27 +185,16 @@ describe('ReactTransition', () => {
 
     const root = ReactNoop.createRoot();
 
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(<App />);
-    });
-    expect(Scheduler).toHaveYielded(['(empty)']);
-=======
     await act(() => {
       root.render(<App />);
     });
     assertLog(['(empty)']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('(empty)');
 
     await act(async () => {
       start();
 
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYield([
-=======
       await waitForAll([
->>>>>>> remotes/upstream/main
         'Pending...',
         '(empty)',
         'Suspend! [Async]',
@@ -250,19 +205,11 @@ describe('ReactTransition', () => {
 
       await resolveText('Async');
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Async']);
-    expect(root).toMatchRenderedOutput('Async');
-  });
-
-  // @gate enableCache
-=======
     assertLog(['Async']);
     expect(root).toMatchRenderedOutput('Async');
   });
 
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test(
     'when multiple transitions update the same queue, only the most recent ' +
       'one is allowed to finish (no intermediate states)',
@@ -298,19 +245,11 @@ describe('ReactTransition', () => {
 
       // Initial render
       const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-      await act(async () => {
-        seedNextTextCache('A content');
-        root.render(<App />);
-      });
-      expect(Scheduler).toHaveYielded(['A label', 'A content']);
-=======
       await act(() => {
         seedNextTextCache('A content');
         root.render(<App />);
       });
       assertLog(['A label', 'A content']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           A label<div>A content</div>
@@ -318,17 +257,10 @@ describe('ReactTransition', () => {
       );
 
       // Switch to B
-<<<<<<< HEAD
-      await act(async () => {
-        update('B');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         update('B');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Commit pending state
         'B label (loading...)',
         'A content',
@@ -346,17 +278,10 @@ describe('ReactTransition', () => {
       );
 
       // Before B finishes loading, switch to C
-<<<<<<< HEAD
-      await act(async () => {
-        update('C');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         update('C');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Commit pending state
         'C label (loading...)',
         'A content',
@@ -374,17 +299,10 @@ describe('ReactTransition', () => {
 
       // Finish loading B. But we're not allowed to render B because it's
       // entangled with C. So we're still pending.
-<<<<<<< HEAD
-      await act(async () => {
-        resolveText('B content');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         resolveText('B content');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Attempt to render C, but it suspends
         'C label',
         'Suspend! [C content]',
@@ -397,17 +315,10 @@ describe('ReactTransition', () => {
       );
 
       // Now finish loading C. This is the terminal update, so it can finish.
-<<<<<<< HEAD
-      await act(async () => {
-        resolveText('C content');
-      });
-      expect(Scheduler).toHaveYielded(['C label', 'C content']);
-=======
       await act(() => {
         resolveText('C content');
       });
       assertLog(['C label', 'C content']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           C label<div>C content</div>
@@ -417,11 +328,7 @@ describe('ReactTransition', () => {
   );
 
   // Same as previous test, but for class update queue.
-<<<<<<< HEAD
-  // @gate enableCache
-=======
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test(
     'when multiple transitions update the same queue, only the most recent ' +
       'one is allowed to finish (no intermediate states) (classes)',
@@ -463,19 +370,11 @@ describe('ReactTransition', () => {
 
       // Initial render
       const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-      await act(async () => {
-        seedNextTextCache('A content');
-        root.render(<App />);
-      });
-      expect(Scheduler).toHaveYielded(['A label', 'A content']);
-=======
       await act(() => {
         seedNextTextCache('A content');
         root.render(<App />);
       });
       assertLog(['A label', 'A content']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           A label<div>A content</div>
@@ -483,17 +382,10 @@ describe('ReactTransition', () => {
       );
 
       // Switch to B
-<<<<<<< HEAD
-      await act(async () => {
-        update('B');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         update('B');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Commit pending state
         'B label (loading...)',
         'A content',
@@ -511,17 +403,10 @@ describe('ReactTransition', () => {
       );
 
       // Before B finishes loading, switch to C
-<<<<<<< HEAD
-      await act(async () => {
-        update('C');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         update('C');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Commit pending state
         'C label (loading...)',
         'A content',
@@ -539,17 +424,10 @@ describe('ReactTransition', () => {
 
       // Finish loading B. But we're not allowed to render B because it's
       // entangled with C. So we're still pending.
-<<<<<<< HEAD
-      await act(async () => {
-        resolveText('B content');
-      });
-      expect(Scheduler).toHaveYielded([
-=======
       await act(() => {
         resolveText('B content');
       });
       assertLog([
->>>>>>> remotes/upstream/main
         // Attempt to render C, but it suspends
         'C label',
         'Suspend! [C content]',
@@ -562,17 +440,10 @@ describe('ReactTransition', () => {
       );
 
       // Now finish loading C. This is the terminal update, so it can finish.
-<<<<<<< HEAD
-      await act(async () => {
-        resolveText('C content');
-      });
-      expect(Scheduler).toHaveYielded(['C label', 'C content']);
-=======
       await act(() => {
         resolveText('C content');
       });
       assertLog(['C label', 'C content']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           C label<div>C content</div>
@@ -581,11 +452,7 @@ describe('ReactTransition', () => {
     },
   );
 
-<<<<<<< HEAD
-  // @gate enableCache
-=======
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test(
     'when multiple transitions update overlapping queues, all the transitions ' +
       'across all the queues are entangled',
@@ -621,16 +488,6 @@ describe('ReactTransition', () => {
 
       // Initial render. Start with all children hidden.
       const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-      await act(async () => {
-        root.render(<App />);
-      });
-      expect(Scheduler).toHaveYielded([]);
-      expect(root).toMatchRenderedOutput(null);
-
-      // Switch to A.
-      await act(async () => {
-=======
       await act(() => {
         root.render(<App />);
       });
@@ -639,125 +496,72 @@ describe('ReactTransition', () => {
 
       // Switch to A.
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           setShowA(true);
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Suspend! [A]', 'Loading...']);
-      expect(root).toMatchRenderedOutput(null);
-
-      // Before A loads, switch to B. This should entangle A with B.
-      await act(async () => {
-=======
       assertLog(['Suspend! [A]', 'Loading...']);
       expect(root).toMatchRenderedOutput(null);
 
       // Before A loads, switch to B. This should entangle A with B.
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           setShowA(false);
           setShowB(true);
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Suspend! [B]', 'Loading...']);
-=======
       assertLog(['Suspend! [B]', 'Loading...']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(null);
 
       // Before A or B loads, switch to C. This should entangle C with B, and
       // transitively entangle C with A.
-<<<<<<< HEAD
-      await act(async () => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           setShowB(false);
           setShowC(true);
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Suspend! [C]', 'Loading...']);
-=======
       assertLog(['Suspend! [C]', 'Loading...']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(null);
 
       // Now the data starts resolving out of order.
 
       // First resolve B. This will attempt to render C, since everything is
       // entangled.
-<<<<<<< HEAD
-      await act(async () => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           resolveText('B');
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Suspend! [C]', 'Loading...']);
-=======
       assertLog(['Suspend! [C]', 'Loading...']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(null);
 
       // Now resolve A. Again, this will attempt to render C, since everything
       // is entangled.
-<<<<<<< HEAD
-      await act(async () => {
-=======
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           resolveText('A');
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Suspend! [C]', 'Loading...']);
-      expect(root).toMatchRenderedOutput(null);
-
-      // Finally, resolve C. This time we can finish.
-      await act(async () => {
-=======
       assertLog(['Suspend! [C]', 'Loading...']);
       expect(root).toMatchRenderedOutput(null);
 
       // Finally, resolve C. This time we can finish.
       await act(() => {
->>>>>>> remotes/upstream/main
         startTransition(() => {
           resolveText('C');
         });
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['C']);
-=======
       assertLog(['C']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput('C');
     },
   );
 
-<<<<<<< HEAD
-  // @gate enableCache
-  test('interrupt a refresh transition if a new transition is scheduled', async () => {
-    const root = ReactNoop.createRoot();
-
-    await act(async () => {
-=======
   // @gate enableLegacyCache
   test('interrupt a refresh transition if a new transition is scheduled', async () => {
     const root = ReactNoop.createRoot();
 
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <>
           <Suspense fallback={<Text text="Loading..." />} />
@@ -765,11 +569,7 @@ describe('ReactTransition', () => {
         </>,
       );
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Initial']);
-=======
     assertLog(['Initial']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('Initial');
 
     await act(async () => {
@@ -787,11 +587,7 @@ describe('ReactTransition', () => {
       });
 
       // Partially render it.
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYieldThrough([
-=======
       await waitFor([
->>>>>>> remotes/upstream/main
         // Once we the update suspends, we know it's a refresh transition,
         // because the Suspense boundary has already mounted.
         'Suspend! [Async]',
@@ -812,19 +608,11 @@ describe('ReactTransition', () => {
 
     // Because the first one is going to suspend regardless, we should
     // immediately switch to rendering the new transition.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Updated']);
-    expect(root).toMatchRenderedOutput('Updated');
-  });
-
-  // @gate enableCache
-=======
     assertLog(['Updated']);
     expect(root).toMatchRenderedOutput('Updated');
   });
 
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test(
     "interrupt a refresh transition when something suspends and we've " +
       'already bailed out on another transition in a parent',
@@ -834,13 +622,7 @@ describe('ReactTransition', () => {
       function Parent({children}) {
         const [shouldHideInParent, _setShouldHideInParent] = useState(false);
         setShouldHideInParent = _setShouldHideInParent;
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(
-          'shouldHideInParent: ' + shouldHideInParent,
-        );
-=======
         Scheduler.log('shouldHideInParent: ' + shouldHideInParent);
->>>>>>> remotes/upstream/main
         if (shouldHideInParent) {
           return <Text text="(empty)" />;
         }
@@ -869,16 +651,7 @@ describe('ReactTransition', () => {
 
       await act(async () => {
         root.render(<App />);
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYield([
-          'A',
-          'shouldHideInParent: false',
-          'B',
-          'C',
-        ]);
-=======
         await waitForAll(['A', 'shouldHideInParent: false', 'B', 'C']);
->>>>>>> remotes/upstream/main
         expect(root).toMatchRenderedOutput('ABC');
 
         // Schedule an update
@@ -890,22 +663,14 @@ describe('ReactTransition', () => {
         // lane from the first one. At the time this was written, all transitions are worked on
         // simultaneously, unless a transition was already in progress when a
         // new one was scheduled. So, partially render the first transition.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough(['A']);
-=======
         await waitFor(['A']);
->>>>>>> remotes/upstream/main
 
         // Now schedule a second transition. We won't interrupt the first one.
         React.startTransition(() => {
           setShouldHideInParent(true);
         });
         // Continue rendering the first transition.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough([
-=======
         await waitFor([
->>>>>>> remotes/upstream/main
           'shouldHideInParent: false',
           'Suspend! [Async]',
           'Loading...',
@@ -921,24 +686,13 @@ describe('ReactTransition', () => {
         // time we re-enter the work loop (we don't interrupt immediately, we
         // just wait for the next time slice), we should throw out the
         // suspended first transition and try the second one.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushUntilNextPaint([
-          'shouldHideInParent: true',
-          '(empty)',
-        ]);
-=======
         await waitForPaint(['shouldHideInParent: true', '(empty)']);
->>>>>>> remotes/upstream/main
         expect(root).toMatchRenderedOutput('A(empty)BC');
 
         // Since the two transitions are not entangled, we then later go back
         // and finish retry the first transition. Not really relevant to this
         // test but I'll assert the result anyway.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYield([
-=======
         await waitForAll([
->>>>>>> remotes/upstream/main
           'A',
           'shouldHideInParent: true',
           '(empty)',
@@ -950,11 +704,7 @@ describe('ReactTransition', () => {
     },
   );
 
-<<<<<<< HEAD
-  // @gate enableCache
-=======
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   test(
     'interrupt a refresh transition when something suspends and a parent ' +
       'component received an interleaved update after its queue was processed',
@@ -979,17 +729,10 @@ describe('ReactTransition', () => {
 
       const root = ReactNoop.createRoot();
 
-<<<<<<< HEAD
-      await act(async () => {
-        root.render(<App shouldSuspend={false} step={0} />);
-      });
-      expect(Scheduler).toHaveYielded(['A0', 'B0', 'C0']);
-=======
       await act(() => {
         root.render(<App shouldSuspend={false} step={0} />);
       });
       assertLog(['A0', 'B0', 'C0']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput('A0B0C0');
 
       await act(async () => {
@@ -998,22 +741,14 @@ describe('ReactTransition', () => {
           root.render(<App shouldSuspend={true} step={1} />);
         });
         // Flush past the root, but stop before the async component.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough(['A1']);
-=======
         await waitFor(['A1']);
->>>>>>> remotes/upstream/main
 
         // Schedule another transition on the root, which already completed.
         startTransition(() => {
           root.render(<App shouldSuspend={false} step={2} />);
         });
         // We'll keep working on the first update.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough([
-=======
         await waitFor([
->>>>>>> remotes/upstream/main
           // Now the async component suspends
           'Suspend! [Async]',
           'Loading...',
@@ -1027,11 +762,7 @@ describe('ReactTransition', () => {
         // TODO: This should work even if React does not yield to the main
         // thread. Should use same mechanism as selective hydration to interrupt
         // the render before the end of the current slice of work.
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYield(['A2', 'B2', 'C2']);
-=======
         await waitForAll(['A2', 'B2', 'C2']);
->>>>>>> remotes/upstream/main
 
         expect(root).toMatchRenderedOutput('A2B2C2');
       });
@@ -1049,11 +780,7 @@ describe('ReactTransition', () => {
       updateNormalPri = () => setNormalPri(n => n + 1);
 
       useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Commit');
-=======
         Scheduler.log('Commit');
->>>>>>> remotes/upstream/main
       });
 
       return (
@@ -1066,39 +793,20 @@ describe('ReactTransition', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App />);
     });
 
     // Initial render.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-      'Transition pri: 0',
-      'Normal pri: 0',
-      'Commit',
-    ]);
-    expect(root).toMatchRenderedOutput('Transition pri: 0, Normal pri: 0');
-
-    await act(async () => {
-=======
     assertLog(['Transition pri: 0', 'Normal pri: 0', 'Commit']);
     expect(root).toMatchRenderedOutput('Transition pri: 0, Normal pri: 0');
 
     await act(() => {
->>>>>>> remotes/upstream/main
       updateTransitionPri();
       updateNormalPri();
     });
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       // Normal update first.
       'Transition pri: 0',
       'Normal pri: 1',
@@ -1112,11 +820,7 @@ describe('ReactTransition', () => {
     expect(root).toMatchRenderedOutput('Transition pri: 1, Normal pri: 1');
   });
 
-<<<<<<< HEAD
-  // @gate enableCache
-=======
   // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
   it('should render normal pri updates before transition suspense retries', async () => {
     let updateTransitionPri;
     let updateNormalPri;
@@ -1128,11 +832,7 @@ describe('ReactTransition', () => {
       updateNormalPri = () => setNormalPri(n => n + 1);
 
       useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Commit');
-=======
         Scheduler.log('Commit');
->>>>>>> remotes/upstream/main
       });
 
       return (
@@ -1145,28 +845,11 @@ describe('ReactTransition', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App />);
     });
 
     // Initial render.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['(empty)', 'Normal pri: 0', 'Commit']);
-    expect(root).toMatchRenderedOutput('(empty), Normal pri: 0');
-
-    await act(async () => {
-      updateTransitionPri();
-    });
-
-    expect(Scheduler).toHaveYielded([
-      // Suspend.
-      'Suspend! [Async]',
-      'Normal pri: 0',
-=======
     assertLog(['(empty)', 'Normal pri: 0', 'Commit']);
     expect(root).toMatchRenderedOutput('(empty), Normal pri: 0');
 
@@ -1177,7 +860,6 @@ describe('ReactTransition', () => {
     assertLog([
       // Suspend.
       'Suspend! [Async]',
->>>>>>> remotes/upstream/main
       'Loading...',
     ]);
     expect(root).toMatchRenderedOutput('(empty), Normal pri: 0');
@@ -1187,11 +869,7 @@ describe('ReactTransition', () => {
       updateNormalPri();
     });
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       // Normal pri update.
       '(empty)',
       'Normal pri: 1',
@@ -1216,11 +894,7 @@ describe('ReactTransition', () => {
       updateNormalPri = () => setNormalPri(n => n + 1);
 
       useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Commit');
-=======
         Scheduler.log('Commit');
->>>>>>> remotes/upstream/main
       });
       return (
         <>
@@ -1232,31 +906,16 @@ describe('ReactTransition', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(<App />);
-    });
-    expect(Scheduler).toHaveYielded([
-      'Transition pri: 0',
-      'Normal pri: 0',
-      'Commit',
-    ]);
-=======
     await act(() => {
       root.render(<App />);
     });
     assertLog(['Transition pri: 0', 'Normal pri: 0', 'Commit']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('Transition pri: 0, Normal pri: 0');
 
     await act(async () => {
       updateTransitionPri();
 
-<<<<<<< HEAD
-      expect(Scheduler).toFlushAndYieldThrough([
-=======
       await waitFor([
->>>>>>> remotes/upstream/main
         // Start transition update.
         'Transition pri: 1',
       ]);
@@ -1266,21 +925,6 @@ describe('ReactTransition', () => {
       updateNormalPri();
     });
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-      // Finish transition update.
-      'Normal pri: 0',
-      'Commit',
-
-      // Normal pri update.
-      'Transition pri: 1',
-      'Normal pri: 1',
-      'Commit',
-    ]);
-
-    expect(root).toMatchRenderedOutput('Transition pri: 1, Normal pri: 1');
-  });
-=======
     if (gate(flags => flags.enableUnifiedSyncLane)) {
       assertLog([
         'Normal pri: 0',
@@ -1345,5 +989,4 @@ describe('ReactTransition', () => {
     assertLog([0, 'A true', 'B true', 1, 'A false', 'B false']);
     expect(root).toMatchRenderedOutput('1, A false, B false');
   });
->>>>>>> remotes/upstream/main
 });

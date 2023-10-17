@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,11 +9,7 @@
 
 import type {HookSourceAndMetadata} from './loadSourceAndMetadata';
 import type {HooksNode, HooksTree} from 'react-debug-tools/src/ReactDebugHooks';
-<<<<<<< HEAD
-import type {HookNames} from 'react-devtools-shared/src/types';
-=======
 import type {HookNames} from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 import type {FetchFileWithCaching} from 'react-devtools-shared/src/devtools/views/Components/FetchFileWithCachingContext';
 
 import {withAsyncPerfMeasurements} from 'react-devtools-shared/src/PerformanceLoggingUtils';
@@ -25,12 +17,8 @@ import WorkerizedParseSourceAndMetadata from './parseSourceAndMetadata.worker';
 import typeof * as ParseSourceAndMetadataModule from './parseSourceAndMetadata';
 import {flattenHooksList, loadSourceAndMetadata} from './loadSourceAndMetadata';
 
-<<<<<<< HEAD
-const workerizedParseHookNames: ParseSourceAndMetadataModule = WorkerizedParseSourceAndMetadata();
-=======
 const workerizedParseHookNames: ParseSourceAndMetadataModule =
   WorkerizedParseSourceAndMetadata();
->>>>>>> remotes/upstream/main
 
 export function parseSourceAndMetadata(
   hooksList: Array<HooksNode>,
@@ -44,11 +32,7 @@ export function parseSourceAndMetadata(
 
 export const purgeCachedMetadata = workerizedParseHookNames.purgeCachedMetadata;
 
-<<<<<<< HEAD
-const EMPTY_MAP = new Map();
-=======
 const EMPTY_MAP: HookNames = new Map();
->>>>>>> remotes/upstream/main
 
 export async function parseHookNames(
   hooksTree: HooksTree,

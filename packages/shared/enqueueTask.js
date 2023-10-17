@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,11 +10,7 @@
 let didWarnAboutMessageChannel = false;
 let enqueueTaskImpl = null;
 
-<<<<<<< HEAD
-export default function enqueueTask(task: () => void) {
-=======
 export default function enqueueTask(task: () => void): void {
->>>>>>> remotes/upstream/main
   if (enqueueTaskImpl === null) {
     try {
       // read require off the module object to get around the bundlers.
@@ -32,11 +24,7 @@ export default function enqueueTask(task: () => void): void {
       // we're in a browser
       // we can't use regular timers because they may still be faked
       // so we try MessageChannel+postMessage instead
-<<<<<<< HEAD
-      enqueueTaskImpl = function(callback: () => void) {
-=======
       enqueueTaskImpl = function (callback: () => void) {
->>>>>>> remotes/upstream/main
         if (__DEV__) {
           if (didWarnAboutMessageChannel === false) {
             didWarnAboutMessageChannel = true;

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -27,28 +23,11 @@
 // So `$$$config` looks like a global variable, but it's
 // really an argument to a top-level wrapping function.
 
-<<<<<<< HEAD
-declare var $$$hostConfig: any;
-=======
 declare var $$$config: any;
->>>>>>> remotes/upstream/main
 export opaque type Destination = mixed; // eslint-disable-line no-undef
 
 export opaque type PrecomputedChunk = mixed; // eslint-disable-line no-undef
 export opaque type Chunk = mixed; // eslint-disable-line no-undef
-<<<<<<< HEAD
-
-export const scheduleWork = $$$hostConfig.scheduleWork;
-export const beginWriting = $$$hostConfig.beginWriting;
-export const writeChunk = $$$hostConfig.writeChunk;
-export const writeChunkAndReturn = $$$hostConfig.writeChunkAndReturn;
-export const completeWriting = $$$hostConfig.completeWriting;
-export const flushBuffered = $$$hostConfig.flushBuffered;
-export const close = $$$hostConfig.close;
-export const closeWithError = $$$hostConfig.closeWithError;
-export const stringToChunk = $$$hostConfig.stringToChunk;
-export const stringToPrecomputedChunk = $$$hostConfig.stringToPrecomputedChunk;
-=======
 export opaque type BinaryChunk = mixed; // eslint-disable-line no-undef
 
 export const scheduleWork = $$$config.scheduleWork;
@@ -66,4 +45,3 @@ export const clonePrecomputedChunk = $$$config.clonePrecomputedChunk;
 export const byteLengthOfChunk = $$$config.byteLengthOfChunk;
 export const byteLengthOfBinaryChunk = $$$config.byteLengthOfBinaryChunk;
 export const createFastHash = $$$config.createFastHash;
->>>>>>> remotes/upstream/main

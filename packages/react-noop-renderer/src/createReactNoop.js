@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,11 +18,7 @@ import type {
   Fiber,
   TransitionTracingCallbacks,
 } from 'react-reconciler/src/ReactInternalTypes';
-<<<<<<< HEAD
-import type {UpdateQueue} from 'react-reconciler/src/ReactFiberClassUpdateQueue.new';
-=======
 import type {UpdateQueue} from 'react-reconciler/src/ReactFiberClassUpdateQueue';
->>>>>>> remotes/upstream/main
 import type {ReactNodeList} from 'shared/ReactTypes';
 import type {RootTag} from 'react-reconciler/src/ReactRootTags';
 
@@ -55,10 +47,7 @@ type Props = {
   left?: null | number,
   right?: null | number,
   top?: null | number,
-<<<<<<< HEAD
-=======
   src?: string,
->>>>>>> remotes/upstream/main
   ...
 };
 type Instance = {
@@ -84,14 +73,6 @@ type CreateRootOptions = {
   ...
 };
 
-<<<<<<< HEAD
-const NO_CONTEXT = {};
-const UPPERCASE_CONTEXT = {};
-const UPDATE_SIGNAL = {};
-if (__DEV__) {
-  Object.freeze(NO_CONTEXT);
-  Object.freeze(UPDATE_SIGNAL);
-=======
 type SuspenseyCommitSubscription = {
   pendingCount: number,
   commit: null | (() => void),
@@ -103,15 +84,10 @@ const NO_CONTEXT = {};
 const UPPERCASE_CONTEXT = {};
 if (__DEV__) {
   Object.freeze(NO_CONTEXT);
->>>>>>> remotes/upstream/main
 }
 
 function createReactNoop(reconciler: Function, useMutation: boolean) {
   let instanceCounter = 0;
-<<<<<<< HEAD
-  let hostDiffCounter = 0;
-=======
->>>>>>> remotes/upstream/main
   let hostUpdateCounter = 0;
   let hostCloneCounter = 0;
 
@@ -244,21 +220,11 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
 
   function cloneInstance(
     instance: Instance,
-<<<<<<< HEAD
-    updatePayload: null | Object,
-    type: string,
-    oldProps: Props,
-    newProps: Props,
-    internalInstanceHandle: Object,
-    keepChildren: boolean,
-    recyclableInstance: null | Instance,
-=======
     type: string,
     oldProps: Props,
     newProps: Props,
     keepChildren: boolean,
     children: ?$ReadOnlyArray<Instance>,
->>>>>>> remotes/upstream/main
   ): Instance {
     if (__DEV__) {
       checkPropStringCoercion(newProps.children, 'children');
@@ -267,11 +233,7 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       id: instance.id,
       type: type,
       parent: instance.parent,
-<<<<<<< HEAD
-      children: keepChildren ? instance.children : [],
-=======
       children: keepChildren ? instance.children : children ?? [],
->>>>>>> remotes/upstream/main
       text: shouldSetTextContent(type, newProps)
         ? computeText((newProps.children: any) + '', instance.context)
         : null,
@@ -279,14 +241,11 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       hidden: !!newProps.hidden,
       context: instance.context,
     };
-<<<<<<< HEAD
-=======
 
     if (type === 'suspensey-thing' && typeof newProps.src === 'string') {
       clone.src = newProps.src;
     }
 
->>>>>>> remotes/upstream/main
     Object.defineProperty(clone, 'id', {
       value: clone.id,
       enumerable: false,
@@ -320,9 +279,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
     return hostContext === UPPERCASE_CONTEXT ? rawText.toUpperCase() : rawText;
   }
 
-<<<<<<< HEAD
-  const sharedHostConfig = {
-=======
   type SuspenseyThingRecord = {
     status: 'pending' | 'fulfilled',
     subscriptions: Array<SuspenseyCommitSubscription> | null,
@@ -399,7 +355,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
   const sharedHostConfig = {
     supportsSingletons: false,
 
->>>>>>> remotes/upstream/main
     getRootHostContext() {
       return NO_CONTEXT;
     },
@@ -448,14 +403,11 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
         hidden: !!props.hidden,
         context: hostContext,
       };
-<<<<<<< HEAD
-=======
 
       if (type === 'suspensey-thing' && typeof props.src === 'string') {
         inst.src = props.src;
       }
 
->>>>>>> remotes/upstream/main
       // Hide from unit tests
       Object.defineProperty(inst, 'id', {value: inst.id, enumerable: false});
       Object.defineProperty(inst, 'parent', {
@@ -497,28 +449,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       return false;
     },
 
-<<<<<<< HEAD
-    prepareUpdate(
-      instance: Instance,
-      type: string,
-      oldProps: Props,
-      newProps: Props,
-    ): null | {...} {
-      if (type === 'errorInCompletePhase') {
-        throw new Error('Error in host config.');
-      }
-      if (oldProps === null) {
-        throw new Error('Should have old props');
-      }
-      if (newProps === null) {
-        throw new Error('Should have new props');
-      }
-      hostDiffCounter++;
-      return UPDATE_SIGNAL;
-    },
-
-=======
->>>>>>> remotes/upstream/main
     shouldSetTextContent,
 
     createTextInstance(
@@ -579,13 +509,10 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       return currentEventPriority;
     },
 
-<<<<<<< HEAD
-=======
     shouldAttemptEagerTransition(): boolean {
       return false;
     },
 
->>>>>>> remotes/upstream/main
     now: Scheduler.unstable_now,
 
     isPrimaryRenderer: true,
@@ -624,8 +551,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       const endTime = Scheduler.unstable_now();
       callback(endTime);
     },
-<<<<<<< HEAD
-=======
 
     maySuspendCommit(type: string, props: Props): boolean {
       // Asks whether it's possible for this combination of type and props
@@ -689,7 +614,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
     waitForCommitToBeReady,
 
     NotPendingTransition: (null: TransitionStatus),
->>>>>>> remotes/upstream/main
   };
 
   const hostConfig = useMutation
@@ -716,14 +640,11 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
           hostUpdateCounter++;
           instance.prop = newProps.prop;
           instance.hidden = !!newProps.hidden;
-<<<<<<< HEAD
-=======
 
           if (type === 'suspensey-thing' && typeof newProps.src === 'string') {
             instance.src = newProps.src;
           }
 
->>>>>>> remotes/upstream/main
           if (shouldSetTextContent(type, newProps)) {
             if (__DEV__) {
               checkPropStringCoercion(newProps.children, 'children');
@@ -782,13 +703,7 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
         cloneInstance,
         clearContainer,
 
-<<<<<<< HEAD
-        createContainerChildSet(
-          container: Container,
-        ): Array<Instance | TextInstance> {
-=======
         createContainerChildSet(): Array<Instance | TextInstance> {
->>>>>>> remotes/upstream/main
           return [];
         },
 
@@ -824,23 +739,8 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
           instance: Instance,
           type: string,
           props: Props,
-<<<<<<< HEAD
-          internalInstanceHandle: Object,
-        ): Instance {
-          const clone = cloneInstance(
-            instance,
-            null,
-            type,
-            props,
-            props,
-            internalInstanceHandle,
-            true,
-            null,
-          );
-=======
         ): Instance {
           const clone = cloneInstance(instance, type, props, props, true, null);
->>>>>>> remotes/upstream/main
           clone.hidden = true;
           return clone;
         },
@@ -848,10 +748,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
         cloneHiddenTextInstance(
           instance: TextInstance,
           text: string,
-<<<<<<< HEAD
-          internalInstanceHandle: Object,
-=======
->>>>>>> remotes/upstream/main
         ): TextInstance {
           const clone = {
             text: instance.text,
@@ -902,10 +798,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       if (child.length === 1) {
         return childToJSX(child[0], null);
       }
-<<<<<<< HEAD
-      // $FlowFixMe
-=======
->>>>>>> remotes/upstream/main
       const children = child.map(c => childToJSX(c, null));
       if (children.every(c => typeof c === 'string' || typeof c === 'number')) {
         return children.join('');
@@ -920,12 +812,9 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       if (instance.hidden) {
         props.hidden = true;
       }
-<<<<<<< HEAD
-=======
       if (instance.src) {
         props.src = instance.src;
       }
->>>>>>> remotes/upstream/main
       if (children !== null) {
         props.children = children;
       }
@@ -1026,8 +915,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
     _Scheduler: Scheduler,
 
     getChildren(rootID: string = DEFAULT_ROOT_ID) {
-<<<<<<< HEAD
-=======
       throw new Error(
         'No longer supported due to bad performance when used with `expect()`. ' +
           'Use `ReactNoop.getChildrenAsJSX()` instead or, if you really need to, `dangerouslyGetChildren` after you carefully considered the warning in its JSDOC.',
@@ -1047,21 +934,16 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
      * Make sure you deeply remove enumerable properties before passing it to `.toEqual`, or, better, use `getChildrenAsJSX` or `toMatchRenderedOutput`.
      */
     dangerouslyGetChildren(rootID: string = DEFAULT_ROOT_ID) {
->>>>>>> remotes/upstream/main
       const container = rootContainers.get(rootID);
       return getChildren(container);
     },
 
-<<<<<<< HEAD
-    getPendingChildren(rootID: string = DEFAULT_ROOT_ID) {
-=======
     /**
      * Prefer using `getPendingChildrenAsJSX`.
      * Using the returned children in `.toEqual` has very poor performance on mismatch due to deep equality checking of fiber structures.
      * Make sure you deeply remove enumerable properties before passing it to `.toEqual`, or, better, use `getChildrenAsJSX` or `toMatchRenderedOutput`.
      */
     dangerouslyGetPendingChildren(rootID: string = DEFAULT_ROOT_ID) {
->>>>>>> remotes/upstream/main
       const container = rootContainers.get(rootID);
       return getPendingChildren(container);
     },
@@ -1159,8 +1041,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       return getPendingChildrenAsJSX(container);
     },
 
-<<<<<<< HEAD
-=======
     getSuspenseyThingStatus(src): string | null {
       if (suspenseyThingCache === null) {
         return null;
@@ -1205,7 +1085,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       suspenseyThingCache = null;
     },
 
->>>>>>> remotes/upstream/main
     createPortal(
       children: ReactNodeList,
       container: Container,
@@ -1271,41 +1150,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
 
     flushNextYield(): Array<mixed> {
       Scheduler.unstable_flushNumberOfYields(1);
-<<<<<<< HEAD
-      return Scheduler.unstable_clearYields();
-    },
-
-    flushWithHostCounters(
-      fn: () => void,
-    ):
-      | {
-          hostDiffCounter: number,
-          hostUpdateCounter: number,
-        }
-      | {
-          hostDiffCounter: number,
-          hostCloneCounter: number,
-        } {
-      hostDiffCounter = 0;
-      hostUpdateCounter = 0;
-      hostCloneCounter = 0;
-      try {
-        Scheduler.unstable_flushAll();
-        return useMutation
-          ? {
-              hostDiffCounter,
-              hostUpdateCounter,
-            }
-          : {
-              hostDiffCounter,
-              hostCloneCounter,
-            };
-      } finally {
-        hostDiffCounter = 0;
-        hostUpdateCounter = 0;
-        hostCloneCounter = 0;
-      }
-=======
       return Scheduler.unstable_clearLog();
     },
 
@@ -1332,7 +1176,6 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
       hostCloneCounter = 0;
 
       return result;
->>>>>>> remotes/upstream/main
     },
 
     expire: Scheduler.unstable_advanceTime,
@@ -1387,13 +1230,7 @@ function createReactNoop(reconciler: Function, useMutation: boolean) {
           if (typeof child.text === 'string') {
             log(indent + '- ' + child.text);
           } else {
-<<<<<<< HEAD
-            // $FlowFixMe - The child should've been refined now.
             log(indent + '- ' + child.type + '#' + child.id);
-            // $FlowFixMe - The child should've been refined now.
-=======
-            log(indent + '- ' + child.type + '#' + child.id);
->>>>>>> remotes/upstream/main
             logHostInstances(child.children, depth + 1);
           }
         }

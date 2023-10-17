@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -52,22 +48,14 @@ describe('ReactCompositeComponent-state', () => {
 
       UNSAFE_componentWillMount() {
         this.peekAtState('componentWillMount-start');
-<<<<<<< HEAD
-        this.setState(function(state) {
-=======
         this.setState(function (state) {
->>>>>>> remotes/upstream/main
           this.peekAtState('before-setState-sunrise', state);
         });
         this.setState(
           {color: 'sunrise'},
           this.peekAtCallback('setState-sunrise'),
         );
-<<<<<<< HEAD
-        this.setState(function(state) {
-=======
         this.setState(function (state) {
->>>>>>> remotes/upstream/main
           this.peekAtState('after-setState-sunrise', state);
         });
         this.peekAtState('componentWillMount-after-sunrise');
@@ -75,11 +63,7 @@ describe('ReactCompositeComponent-state', () => {
           {color: 'orange'},
           this.peekAtCallback('setState-orange'),
         );
-<<<<<<< HEAD
-        this.setState(function(state) {
-=======
         this.setState(function (state) {
->>>>>>> remotes/upstream/main
           this.peekAtState('after-setState-orange', state);
         });
         this.peekAtState('componentWillMount-end');
@@ -97,30 +81,18 @@ describe('ReactCompositeComponent-state', () => {
       UNSAFE_componentWillReceiveProps(newProps) {
         this.peekAtState('componentWillReceiveProps-start');
         if (newProps.nextColor) {
-<<<<<<< HEAD
-          this.setState(function(state) {
-=======
           this.setState(function (state) {
->>>>>>> remotes/upstream/main
             this.peekAtState('before-setState-receiveProps', state);
             return {color: newProps.nextColor};
           });
           // No longer a public API, but we can test that it works internally by
           // reaching into the updater.
           this.updater.enqueueReplaceState(this, {color: undefined});
-<<<<<<< HEAD
-          this.setState(function(state) {
-            this.peekAtState('before-setState-again-receiveProps', state);
-            return {color: newProps.nextColor};
-          }, this.peekAtCallback('setState-receiveProps'));
-          this.setState(function(state) {
-=======
           this.setState(function (state) {
             this.peekAtState('before-setState-again-receiveProps', state);
             return {color: newProps.nextColor};
           }, this.peekAtCallback('setState-receiveProps'));
           this.setState(function (state) {
->>>>>>> remotes/upstream/main
             this.peekAtState('after-setState-receiveProps', state);
           });
         }
@@ -338,11 +310,7 @@ describe('ReactCompositeComponent-state', () => {
     }).not.toThrow();
   });
 
-<<<<<<< HEAD
-  it('should update state when called from child cWRP', function() {
-=======
   it('should update state when called from child cWRP', function () {
->>>>>>> remotes/upstream/main
     const log = [];
     class Parent extends React.Component {
       state = {value: 'one'};
@@ -382,11 +350,7 @@ describe('ReactCompositeComponent-state', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  it('should merge state when sCU returns false', function() {
-=======
   it('should merge state when sCU returns false', function () {
->>>>>>> remotes/upstream/main
     const log = [];
     class Test extends React.Component {
       state = {a: 0};

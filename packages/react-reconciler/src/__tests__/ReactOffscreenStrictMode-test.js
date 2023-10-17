@@ -12,11 +12,7 @@ describe('ReactOffscreenStrictMode', () => {
     React = require('react');
     Offscreen = React.unstable_Offscreen;
     ReactNoop = require('react-noop-renderer');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
   });
 
   function Component({label}) {
@@ -35,15 +31,9 @@ describe('ReactOffscreenStrictMode', () => {
     return <span>label</span>;
   }
 
-<<<<<<< HEAD
-  // @gate __DEV__ && enableStrictEffects && enableOffscreen
-  it('should trigger strict effects when offscreen is visible', () => {
-    act(() => {
-=======
   // @gate __DEV__ && enableOffscreen
   it('should trigger strict effects when offscreen is visible', async () => {
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <Offscreen mode="visible">
@@ -65,11 +55,6 @@ describe('ReactOffscreenStrictMode', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  // @gate __DEV__ && enableStrictEffects && enableOffscreen
-  it('should not trigger strict effects when offscreen is hidden', () => {
-    act(() => {
-=======
   // @gate __DEV__ && enableOffscreen && enableDO_NOT_USE_disableStrictPassiveEffect
   it('does not trigger strict effects when disableStrictPassiveEffect is presented on StrictMode', async () => {
     await act(() => {
@@ -95,7 +80,6 @@ describe('ReactOffscreenStrictMode', () => {
   // @gate __DEV__ && enableOffscreen && useModernStrictMode
   it('should not trigger strict effects when offscreen is hidden', async () => {
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <Offscreen mode="hidden">
@@ -109,11 +93,7 @@ describe('ReactOffscreenStrictMode', () => {
 
     log = [];
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <Offscreen mode="hidden">
@@ -128,11 +108,7 @@ describe('ReactOffscreenStrictMode', () => {
 
     log = [];
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <Offscreen mode="visible">
@@ -155,11 +131,7 @@ describe('ReactOffscreenStrictMode', () => {
 
     log = [];
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <Offscreen mode="hidden">
@@ -177,11 +149,7 @@ describe('ReactOffscreenStrictMode', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  it('should not cause infinite render loop when StrictMode is used with Suspense and synchronous set states', () => {
-=======
   it('should not cause infinite render loop when StrictMode is used with Suspense and synchronous set states', async () => {
->>>>>>> remotes/upstream/main
     // This is a regression test, see https://github.com/facebook/react/pull/25179 for more details.
     function App() {
       const [state, setState] = React.useState(false);
@@ -197,11 +165,7 @@ describe('ReactOffscreenStrictMode', () => {
       return state;
     }
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.render(
         <React.StrictMode>
           <React.Suspense>
@@ -211,8 +175,6 @@ describe('ReactOffscreenStrictMode', () => {
       );
     });
   });
-<<<<<<< HEAD
-=======
 
   // @gate __DEV__ && enableOffscreen
   it('should double invoke effects on unsuspended child', async () => {
@@ -286,5 +248,4 @@ describe('ReactOffscreenStrictMode', () => {
       'Child mount',
     ]);
   });
->>>>>>> remotes/upstream/main
 });

@@ -5,11 +5,8 @@ let act;
 let useState;
 let useEffect;
 let startTransition;
-<<<<<<< HEAD
-=======
 let assertLog;
 let waitForPaint;
->>>>>>> remotes/upstream/main
 
 // TODO: Migrate tests to React DOM instead of React Noop
 
@@ -20,16 +17,6 @@ describe('ReactFlushSync', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-    useState = React.useState;
-    useEffect = React.useEffect;
-    startTransition = React.startTransition;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     act = require('internal-test-utils').act;
     useState = React.useState;
     useEffect = React.useEffect;
@@ -42,16 +29,12 @@ describe('ReactFlushSync', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
   test('changes priority of updates in useEffect', async () => {
-<<<<<<< HEAD
-=======
     spyOnDev(console, 'error').mockImplementation(() => {});
 
->>>>>>> remotes/upstream/main
     function App() {
       const [syncState, setSyncState] = useState(0);
       const [state, setState] = useState(0);
@@ -66,32 +49,6 @@ describe('ReactFlushSync', () => {
 
     const root = ReactNoop.createRoot();
     await act(async () => {
-<<<<<<< HEAD
-      if (gate(flags => flags.enableSyncDefaultUpdates)) {
-        React.startTransition(() => {
-          root.render(<App />);
-        });
-      } else {
-        root.render(<App />);
-      }
-      // This will yield right before the passive effect fires
-      expect(Scheduler).toFlushUntilNextPaint(['0, 0']);
-
-      // The passive effect will schedule a sync update and a normal update.
-      // They should commit in two separate batches. First the sync one.
-      expect(() => {
-        expect(Scheduler).toFlushUntilNextPaint(['1, 0']);
-      }).toErrorDev('flushSync was called from inside a lifecycle method');
-
-      // The remaining update is not sync
-      ReactNoop.flushSync();
-      expect(Scheduler).toHaveYielded([]);
-
-      // Now flush it.
-      expect(Scheduler).toFlushUntilNextPaint(['1, 1']);
-    });
-    expect(root).toMatchRenderedOutput('1, 1');
-=======
       React.startTransition(() => {
         root.render(<App />);
       });
@@ -124,7 +81,6 @@ describe('ReactFlushSync', () => {
           'call to a scheduler task or micro task.%s',
       );
     }
->>>>>>> remotes/upstream/main
   });
 
   test('nested with startTransition', async () => {
@@ -139,15 +95,6 @@ describe('ReactFlushSync', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(<App />);
-    });
-    expect(Scheduler).toHaveYielded(['0, 0']);
-    expect(root).toMatchRenderedOutput('0, 0');
-
-    await act(async () => {
-=======
     await act(() => {
       root.render(<App />);
     });
@@ -155,7 +102,6 @@ describe('ReactFlushSync', () => {
     expect(root).toMatchRenderedOutput('0, 0');
 
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactNoop.flushSync(() => {
         startTransition(() => {
           // This should be async even though flushSync is on the stack, because
@@ -169,48 +115,28 @@ describe('ReactFlushSync', () => {
         });
       });
       // Only the sync update should have flushed
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['1, 0']);
-      expect(root).toMatchRenderedOutput('1, 0');
-    });
-    // Now the async update has flushed, too.
-    expect(Scheduler).toHaveYielded(['1, 1']);
-=======
       assertLog(['1, 0']);
       expect(root).toMatchRenderedOutput('1, 0');
     });
     // Now the async update has flushed, too.
     assertLog(['1, 1']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('1, 1');
   });
 
   test('flushes passive effects synchronously when they are the result of a sync render', async () => {
     function App() {
       useEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Effect');
-=======
         Scheduler.log('Effect');
->>>>>>> remotes/upstream/main
       }, []);
       return <Text text="Child" />;
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      ReactNoop.flushSync(() => {
-        root.render(<App />);
-      });
-      expect(Scheduler).toHaveYielded([
-=======
     await act(() => {
       ReactNoop.flushSync(() => {
         root.render(<App />);
       });
       assertLog([
->>>>>>> remotes/upstream/main
         'Child',
         // Because the pending effect was the result of a sync update, calling
         // flushSync should flush it.
@@ -223,29 +149,17 @@ describe('ReactFlushSync', () => {
   test('do not flush passive effects synchronously after render in legacy mode', async () => {
     function App() {
       useEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Effect');
-=======
         Scheduler.log('Effect');
->>>>>>> remotes/upstream/main
       }, []);
       return <Text text="Child" />;
     }
 
     const root = ReactNoop.createLegacyRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      ReactNoop.flushSync(() => {
-        root.render(<App />);
-      });
-      expect(Scheduler).toHaveYielded([
-=======
     await act(() => {
       ReactNoop.flushSync(() => {
         root.render(<App />);
       });
       assertLog([
->>>>>>> remotes/upstream/main
         'Child',
         // Because we're in legacy mode, we shouldn't have flushed the passive
         // effects yet.
@@ -253,11 +167,7 @@ describe('ReactFlushSync', () => {
       expect(root).toMatchRenderedOutput('Child');
     });
     // Effect flushes after paint.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Effect']);
-=======
     assertLog(['Effect']);
->>>>>>> remotes/upstream/main
   });
 
   test('flush pending passive effects before scope is called in legacy mode', async () => {
@@ -266,29 +176,17 @@ describe('ReactFlushSync', () => {
     function App({step}) {
       useEffect(() => {
         currentStep = step;
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Effect: ' + step);
-=======
         Scheduler.log('Effect: ' + step);
->>>>>>> remotes/upstream/main
       }, [step]);
       return <Text text={step} />;
     }
 
     const root = ReactNoop.createLegacyRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      ReactNoop.flushSync(() => {
-        root.render(<App step={1} />);
-      });
-      expect(Scheduler).toHaveYielded([
-=======
     await act(() => {
       ReactNoop.flushSync(() => {
         root.render(<App step={1} />);
       });
       assertLog([
->>>>>>> remotes/upstream/main
         1,
         // Because we're in legacy mode, we shouldn't have flushed the passive
         // effects yet.
@@ -300,27 +198,16 @@ describe('ReactFlushSync', () => {
         // fired, before the scope function is called.
         root.render(<App step={currentStep + 1} />);
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Effect: 1', 2]);
-      expect(root).toMatchRenderedOutput('2');
-    });
-    expect(Scheduler).toHaveYielded(['Effect: 2']);
-=======
       assertLog(['Effect: 1', 2]);
       expect(root).toMatchRenderedOutput('2');
     });
     assertLog(['Effect: 2']);
->>>>>>> remotes/upstream/main
   });
 
   test("do not flush passive effects synchronously when they aren't the result of a sync render", async () => {
     function App() {
       useEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Effect');
-=======
         Scheduler.log('Effect');
->>>>>>> remotes/upstream/main
       }, []);
       return <Text text="Child" />;
     }
@@ -328,11 +215,7 @@ describe('ReactFlushSync', () => {
     const root = ReactNoop.createRoot();
     await act(async () => {
       root.render(<App />);
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint([
-=======
       await waitForPaint([
->>>>>>> remotes/upstream/main
         'Child',
         // Because the passive effect was not the result of a sync update, it
         // should not flush before paint.
@@ -340,21 +223,13 @@ describe('ReactFlushSync', () => {
       expect(root).toMatchRenderedOutput('Child');
     });
     // Effect flushes after paint.
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Effect']);
-=======
     assertLog(['Effect']);
->>>>>>> remotes/upstream/main
   });
 
   test('does not flush pending passive effects', async () => {
     function App() {
       useEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Effect');
-=======
         Scheduler.log('Effect');
->>>>>>> remotes/upstream/main
       }, []);
       return <Text text="Child" />;
     }
@@ -362,22 +237,12 @@ describe('ReactFlushSync', () => {
     const root = ReactNoop.createRoot();
     await act(async () => {
       root.render(<App />);
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint(['Child']);
-=======
       await waitForPaint(['Child']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput('Child');
 
       // Passive effects are pending. Calling flushSync should not affect them.
       ReactNoop.flushSync();
       // Effects still haven't fired.
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([]);
-    });
-    // Now the effects have fired.
-    expect(Scheduler).toHaveYielded(['Effect']);
-=======
       assertLog([]);
     });
     // Now the effects have fired.
@@ -428,6 +293,5 @@ describe('ReactFlushSync', () => {
     expect(error.errors.length).toBe(2);
     expect(error.errors[0]).toBe(aahh);
     expect(error.errors[1]).toBe(nooo);
->>>>>>> remotes/upstream/main
   });
 });

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,10 +15,6 @@ import {
   memo,
   Component,
   Fragment,
-<<<<<<< HEAD
-  // $FlowFixMe Flow doesn't know about the Profiler import yet
-=======
->>>>>>> remotes/upstream/main
   Profiler,
   StrictMode,
   Suspense,
@@ -33,11 +25,7 @@ const Context = createContext('abc');
 Context.displayName = 'ExampleContext';
 
 class ClassComponent extends Component<any> {
-<<<<<<< HEAD
-  render() {
-=======
   render(): null {
->>>>>>> remotes/upstream/main
     return null;
   }
 }
@@ -70,11 +58,7 @@ export default function ElementTypes(): React.Node {
     <Profiler id="test" onRender={() => {}}>
       <Fragment>
         <Context.Provider value={'def'}>
-<<<<<<< HEAD
-          <Context.Consumer>{value => null}</Context.Consumer>
-=======
           <Context.Consumer>{(value: $FlowFixMe) => null}</Context.Consumer>
->>>>>>> remotes/upstream/main
         </Context.Provider>
         <StrictMode>
           <Cache>

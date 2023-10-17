@@ -74,11 +74,7 @@ async function buildBenchmarkBundlesFromGitRepo(
       await cleanDir(remoteRepoDir);
     }
     // check if remote-repo directory already exists
-<<<<<<< HEAD
-    if (existsSync(join(__dirname, 'remote-repo'))) {
-=======
     if (existsSync(remoteRepoDir)) {
->>>>>>> remotes/upstream/main
       repo = await Git.Repository.open(remoteRepoDir);
       // fetch all the latest remote changes
       await repo.fetchAll();

@@ -1,18 +1,11 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
-<<<<<<< HEAD
-=======
  * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
->>>>>>> remotes/upstream/main
  */
 
 'use strict';
@@ -28,11 +21,7 @@ let ReactTestUtils;
 
 function initModules() {
   // Reset warning cache.
-<<<<<<< HEAD
-  jest.resetModuleRegistry();
-=======
   jest.resetModules();
->>>>>>> remotes/upstream/main
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMServer = require('react-dom/server');
@@ -53,11 +42,7 @@ describe('ReactDOMServerIntegration', () => {
     resetModules();
   });
 
-<<<<<<< HEAD
-  describe('basic rendering', function() {
-=======
   describe('basic rendering', function () {
->>>>>>> remotes/upstream/main
     itRenders('a blank div', async render => {
       const e = await render(<div />);
       expect(e.tagName).toBe('DIV');
@@ -131,17 +116,10 @@ describe('ReactDOMServerIntegration', () => {
 
     itRenders('an iterable', async render => {
       const threeDivIterable = {
-<<<<<<< HEAD
-        '@@iterator': function() {
-          let i = 0;
-          return {
-            next: function() {
-=======
         '@@iterator': function () {
           let i = 0;
           return {
             next: function () {
->>>>>>> remotes/upstream/main
               if (i++ < 3) {
                 return {value: <div key={i} />, done: false};
               } else {

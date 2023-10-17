@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,12 +7,6 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {Container} from './ReactDOMHostConfig';
-import type {FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
-import type {ReactNodeList} from 'shared/ReactTypes';
-
-=======
 import type {
   Container,
   PublicInstance,
@@ -25,29 +15,19 @@ import type {FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
 import type {ReactNodeList} from 'shared/ReactTypes';
 
 import {clearContainer} from 'react-dom-bindings/src/client/ReactFiberConfigDOM';
->>>>>>> remotes/upstream/main
 import {
   getInstanceFromNode,
   isContainerMarkedAsRoot,
   markContainerAsRoot,
   unmarkContainerAsRoot,
-<<<<<<< HEAD
-} from './ReactDOMComponentTree';
-import {listenToAllSupportedEvents} from '../events/DOMPluginEventSystem';
-=======
 } from 'react-dom-bindings/src/client/ReactDOMComponentTree';
 import {listenToAllSupportedEvents} from 'react-dom-bindings/src/events/DOMPluginEventSystem';
->>>>>>> remotes/upstream/main
 import {isValidContainerLegacy} from './ReactDOMRoot';
 import {
   DOCUMENT_NODE,
   ELEMENT_NODE,
   COMMENT_NODE,
-<<<<<<< HEAD
-} from '../shared/HTMLNodeType';
-=======
 } from 'react-dom-bindings/src/client/HTMLNodeType';
->>>>>>> remotes/upstream/main
 
 import {
   createContainer,
@@ -63,10 +43,7 @@ import {LegacyRoot} from 'react-reconciler/src/ReactRootTags';
 import getComponentNameFromType from 'shared/getComponentNameFromType';
 import ReactSharedInternals from 'shared/ReactSharedInternals';
 import {has as hasInstance} from 'shared/ReactInstanceMap';
-<<<<<<< HEAD
-=======
 import {enableHostSingletons} from '../../../shared/ReactFeatureFlags';
->>>>>>> remotes/upstream/main
 
 const ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
 
@@ -104,10 +81,7 @@ if (__DEV__) {
     }
 
     if (
-<<<<<<< HEAD
-=======
       !enableHostSingletons &&
->>>>>>> remotes/upstream/main
       container.nodeType === ELEMENT_NODE &&
       ((container: any): Element).tagName &&
       ((container: any): Element).tagName.toUpperCase() === 'BODY'
@@ -150,21 +124,13 @@ function legacyCreateRootFromDOMContainer(
   if (isHydrationContainer) {
     if (typeof callback === 'function') {
       const originalCallback = callback;
-<<<<<<< HEAD
-      callback = function() {
-=======
       callback = function () {
->>>>>>> remotes/upstream/main
         const instance = getPublicRootInstance(root);
         originalCallback.call(instance);
       };
     }
 
-<<<<<<< HEAD
-    const root = createHydrationContainer(
-=======
     const root: FiberRoot = createHydrationContainer(
->>>>>>> remotes/upstream/main
       initialChildren,
       callback,
       container,
@@ -176,42 +142,25 @@ function legacyCreateRootFromDOMContainer(
       noopOnRecoverableError,
       // TODO(luna) Support hydration later
       null,
-<<<<<<< HEAD
-=======
       null,
->>>>>>> remotes/upstream/main
     );
     container._reactRootContainer = root;
     markContainerAsRoot(root.current, container);
 
     const rootContainerElement =
       container.nodeType === COMMENT_NODE ? container.parentNode : container;
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-call]
->>>>>>> remotes/upstream/main
     listenToAllSupportedEvents(rootContainerElement);
 
     flushSync();
     return root;
   } else {
     // First clear any existing content.
-<<<<<<< HEAD
-    let rootSibling;
-    while ((rootSibling = container.lastChild)) {
-      container.removeChild(rootSibling);
-    }
-
-    if (typeof callback === 'function') {
-      const originalCallback = callback;
-      callback = function() {
-=======
     clearContainer(container);
 
     if (typeof callback === 'function') {
       const originalCallback = callback;
       callback = function () {
->>>>>>> remotes/upstream/main
         const instance = getPublicRootInstance(root);
         originalCallback.call(instance);
       };
@@ -232,10 +181,7 @@ function legacyCreateRootFromDOMContainer(
 
     const rootContainerElement =
       container.nodeType === COMMENT_NODE ? container.parentNode : container;
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-call]
->>>>>>> remotes/upstream/main
     listenToAllSupportedEvents(rootContainerElement);
 
     // Initial mount should not be batched.
@@ -266,11 +212,7 @@ function legacyRenderSubtreeIntoContainer(
   container: Container,
   forceHydrate: boolean,
   callback: ?Function,
-<<<<<<< HEAD
-) {
-=======
 ): React$Component<any, any> | PublicInstance | null {
->>>>>>> remotes/upstream/main
   if (__DEV__) {
     topLevelUpdateWarnings(container);
     warnOnInvalidCallback(callback === undefined ? null : callback, 'render');
@@ -291,11 +233,7 @@ function legacyRenderSubtreeIntoContainer(
     root = maybeRoot;
     if (typeof callback === 'function') {
       const originalCallback = callback;
-<<<<<<< HEAD
-      callback = function() {
-=======
       callback = function () {
->>>>>>> remotes/upstream/main
         const instance = getPublicRootInstance(root);
         originalCallback.call(instance);
       };
@@ -342,11 +280,7 @@ export function hydrate(
   element: React$Node,
   container: Container,
   callback: ?Function,
-<<<<<<< HEAD
-) {
-=======
 ): React$Component<any, any> | PublicInstance | null {
->>>>>>> remotes/upstream/main
   if (__DEV__) {
     console.error(
       'ReactDOM.hydrate is no longer supported in React 18. Use hydrateRoot ' +
@@ -386,11 +320,7 @@ export function render(
   element: React$Element<any>,
   container: Container,
   callback: ?Function,
-<<<<<<< HEAD
-) {
-=======
 ): React$Component<any, any> | PublicInstance | null {
->>>>>>> remotes/upstream/main
   if (__DEV__) {
     console.error(
       'ReactDOM.render is no longer supported in React 18. Use createRoot ' +
@@ -430,11 +360,7 @@ export function unstable_renderSubtreeIntoContainer(
   element: React$Element<any>,
   containerNode: Container,
   callback: ?Function,
-<<<<<<< HEAD
-) {
-=======
 ): React$Component<any, any> | PublicInstance | null {
->>>>>>> remotes/upstream/main
   if (__DEV__) {
     console.error(
       'ReactDOM.unstable_renderSubtreeIntoContainer() is no longer supported ' +
@@ -461,11 +387,7 @@ export function unstable_renderSubtreeIntoContainer(
   );
 }
 
-<<<<<<< HEAD
-export function unmountComponentAtNode(container: Container) {
-=======
 export function unmountComponentAtNode(container: Container): boolean {
->>>>>>> remotes/upstream/main
   if (!isValidContainerLegacy(container)) {
     throw new Error(
       'unmountComponentAtNode(...): Target container is not a DOM element.',
@@ -499,11 +421,7 @@ export function unmountComponentAtNode(container: Container): boolean {
     // Unmount should not be batched.
     flushSync(() => {
       legacyRenderSubtreeIntoContainer(null, null, container, false, () => {
-<<<<<<< HEAD
-        // $FlowFixMe This should probably use `delete container._reactRootContainer`
-=======
         // $FlowFixMe[incompatible-type] This should probably use `delete container._reactRootContainer`
->>>>>>> remotes/upstream/main
         container._reactRootContainer = null;
         unmarkContainerAsRoot(container);
       });
@@ -520,11 +438,8 @@ export function unmountComponentAtNode(container: Container): boolean {
       const isContainerReactRoot =
         container.nodeType === ELEMENT_NODE &&
         isValidContainerLegacy(container.parentNode) &&
-<<<<<<< HEAD
-=======
         // $FlowFixMe[prop-missing]
         // $FlowFixMe[incompatible-use]
->>>>>>> remotes/upstream/main
         !!container.parentNode._reactRootContainer;
 
       if (hasNonRootReactChild) {

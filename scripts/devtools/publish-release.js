@@ -82,9 +82,6 @@ async function publishToNPM() {
     // If so we might be resuming from a previous run.
     // We could infer this by comparing the build-info.json,
     // But for now the easiest way is just to ask if this is expected.
-<<<<<<< HEAD
-    const info = await execRead(`npm view ${npmPackage}@${version}`);
-=======
     const info = await execRead(`npm view ${npmPackage}@${version}`)
       // Early versions of npm view gives empty response, but newer versions give 404 error.
       // Catch the error to keep it consistent.
@@ -96,7 +93,6 @@ async function publishToNPM() {
         throw childProcessError;
       });
 
->>>>>>> remotes/upstream/main
     if (info) {
       console.log('');
       console.log(
@@ -105,12 +101,8 @@ async function publishToNPM() {
         )} has already been published.`
       );
 
-<<<<<<< HEAD
-      await confirm('Is this expected?');
-=======
       await confirm(`Is this expected (will skip ${npmPackage}@${version})?`);
       continue;
->>>>>>> remotes/upstream/main
     }
 
     if (DRY_RUN) {

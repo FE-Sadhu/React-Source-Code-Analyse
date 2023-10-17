@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,19 +15,12 @@ import type {
   ReactComponentMeasure,
   ReactEventInfo,
   ReactMeasure,
-<<<<<<< HEAD
-  TimelineData,
-=======
   ReactMeasureType,
->>>>>>> remotes/upstream/main
   SchedulingEvent,
   Snapshot,
   SuspenseEvent,
   ThrownError,
-<<<<<<< HEAD
-=======
   TimelineData,
->>>>>>> remotes/upstream/main
   UserTimingMark,
 } from './types';
 
@@ -57,11 +46,7 @@ type Props = {
   width: number,
 };
 
-<<<<<<< HEAD
-function getReactMeasureLabel(type): string | null {
-=======
 function getReactMeasureLabel(type: ReactMeasureType): string | null {
->>>>>>> remotes/upstream/main
   switch (type) {
     case 'commit':
       return 'react commit';
@@ -264,11 +249,7 @@ const TooltipNetworkMeasure = ({
   let urlToDisplay = url;
   if (urlToDisplay.length > MAX_TOOLTIP_TEXT_LENGTH) {
     const half = Math.floor(MAX_TOOLTIP_TEXT_LENGTH / 2);
-<<<<<<< HEAD
-    urlToDisplay = url.substr(0, half) + '…' + url.substr(url.length - half);
-=======
     urlToDisplay = url.slice(0, half) + '…' + url.slice(url.length - half);
->>>>>>> remotes/upstream/main
   }
 
   const timestampBegin = sendRequestTimestamp;

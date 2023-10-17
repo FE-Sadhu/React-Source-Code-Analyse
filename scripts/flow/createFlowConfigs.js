@@ -1,27 +1,15 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
->>>>>>> remotes/upstream/main
  */
 
 'use strict';
 
 const chalk = require('chalk');
 const fs = require('fs');
-<<<<<<< HEAD
-=======
 const path = require('path');
->>>>>>> remotes/upstream/main
 const mkdirp = require('mkdirp');
 const inlinedHostConfigs = require('../shared/inlinedHostConfigs');
 
@@ -29,13 +17,6 @@ const configTemplate = fs
   .readFileSync(__dirname + '/config/flowconfig')
   .toString();
 
-<<<<<<< HEAD
-function writeConfig(renderer, rendererInfo, isServerSupported) {
-  const folder = __dirname + '/' + renderer;
-  mkdirp.sync(folder);
-
-  const serverRenderer = isServerSupported ? renderer : 'custom';
-=======
 // stores all forks discovered during config generation
 const allForks = new Set();
 // maps forked file to the base path containing it and it's forks (it's parent)
@@ -85,7 +66,6 @@ function writeConfig(
 
   const serverRenderer = isServerSupported ? renderer : 'custom';
   const flightRenderer = isFlightSupported ? renderer : 'custom';
->>>>>>> remotes/upstream/main
 
   const ignoredPaths = [];
 
@@ -99,28 +79,6 @@ function writeConfig(
       }
       ignoredPaths.push(`.*/packages/${otherPath}`);
     });
-<<<<<<< HEAD
-
-    if (otherRenderer.shortName !== serverRenderer) {
-      ignoredPaths.push(
-        `.*/packages/.*/forks/.*.${otherRenderer.shortName}.js`,
-      );
-    }
-  });
-
-  const config = configTemplate
-    .replace(
-      '%REACT_RENDERER_FLOW_OPTIONS%',
-      `
-module.name_mapper='ReactFiberHostConfig$$' -> 'forks/ReactFiberHostConfig.${renderer}'
-module.name_mapper='ReactServerStreamConfig$$' -> 'forks/ReactServerStreamConfig.${serverRenderer}'
-module.name_mapper='ReactServerFormatConfig$$' -> 'forks/ReactServerFormatConfig.${serverRenderer}'
-module.name_mapper='ReactFlightServerConfig$$' -> 'forks/ReactFlightServerConfig.${serverRenderer}'
-module.name_mapper='ReactFlightClientHostConfig$$' -> 'forks/ReactFlightClientHostConfig.${serverRenderer}'
-module.name_mapper='react-devtools-feature-flags' -> 'react-devtools-shared/src/config/DevToolsFeatureFlags.default'
-    `.trim(),
-    )
-=======
   });
 
   const forks = new Map();
@@ -154,7 +112,6 @@ module.name_mapper='react-devtools-feature-flags' -> 'react-devtools-shared/src/
       process.env.CI ? 'server.max_workers=4\n' : '',
     )
     .replace('%REACT_RENDERER_FLOW_OPTIONS%', moduleMappings.trim())
->>>>>>> remotes/upstream/main
     .replace('%REACT_RENDERER_FLOW_IGNORES%', ignoredPaths.join('\n'));
 
   const disclaimer = `
@@ -192,10 +149,7 @@ inlinedHostConfigs.forEach(rendererInfo => {
       rendererInfo.shortName,
       rendererInfo,
       rendererInfo.isServerSupported,
-<<<<<<< HEAD
-=======
       rendererInfo.isFlightSupported,
->>>>>>> remotes/upstream/main
     );
   }
 });

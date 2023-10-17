@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,17 +7,10 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {Interaction} from '../useCanvasInteraction';
-import type {Rect} from '../geometry';
-import type {Surface, ViewRefs} from '../Surface';
-import type {
-=======
 import type {Rect} from '../geometry';
 import type {Surface, ViewRefs} from '../Surface';
 import type {
   Interaction,
->>>>>>> remotes/upstream/main
   ClickInteraction,
   MouseDownInteraction,
   MouseMoveInteraction,

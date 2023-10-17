@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,10 +17,7 @@ let Scheduler;
 let useSyncExternalStore;
 let useSyncExternalStoreWithSelector;
 let act;
-<<<<<<< HEAD
-=======
 let assertLog;
->>>>>>> remotes/upstream/main
 
 // This tests the userspace shim of `useSyncExternalStore` in a server-rendering
 // (Node) environment
@@ -56,14 +49,10 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
 
     const InternalTestUtils = require('internal-test-utils');
     assertLog = InternalTestUtils.assertLog;
->>>>>>> remotes/upstream/main
 
     if (gate(flags => flags.source)) {
       // The `shim/with-selector` module composes the main
@@ -81,16 +70,6 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
         ),
       );
     }
-<<<<<<< HEAD
-    useSyncExternalStore = require('use-sync-external-store/shim')
-      .useSyncExternalStore;
-    useSyncExternalStoreWithSelector = require('use-sync-external-store/shim/with-selector')
-      .useSyncExternalStoreWithSelector;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     useSyncExternalStore =
       require('use-sync-external-store/shim').useSyncExternalStore;
     useSyncExternalStoreWithSelector =
@@ -99,7 +78,6 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -142,11 +120,7 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
     await act(() => {
       root.render(<App />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['client']);
-=======
     assertLog(['client']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('client');
   });
 
@@ -187,15 +161,9 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-
-    expect(Scheduler).toHaveYielded(['A0', 'B0']);
-=======
     await act(() => root.render(<App />));
 
     assertLog(['A0', 'B0']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A0B0');
 
     // Update b but not a
@@ -203,11 +171,7 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
       store.set({a: 0, b: 1});
     });
     // Only b re-renders
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['B1']);
-=======
     assertLog(['B1']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A0B1');
 
     // Update a but not b
@@ -215,11 +179,7 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
       store.set({a: 1, b: 1});
     });
     // Only a re-renders
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['A1']);
-=======
     assertLog(['A1']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A1B1');
   });
 });

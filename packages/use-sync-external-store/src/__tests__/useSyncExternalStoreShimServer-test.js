@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,10 +16,7 @@ let React;
 let ReactDOM;
 let ReactDOMServer;
 let Scheduler;
-<<<<<<< HEAD
-=======
 let assertLog;
->>>>>>> remotes/upstream/main
 
 // This tests the userspace shim of `useSyncExternalStore` in a server-rendering
 // (Node) environment
@@ -53,14 +46,6 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
     ReactDOMServer = require('react-dom/server');
     Scheduler = require('scheduler');
 
-<<<<<<< HEAD
-    useSyncExternalStore = require('use-sync-external-store/shim')
-      .useSyncExternalStore;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     const InternalTestUtils = require('internal-test-utils');
     assertLog = InternalTestUtils.assertLog;
 
@@ -70,7 +55,6 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -112,11 +96,7 @@ describe('useSyncExternalStore (userspace shim, server rendering)', () => {
     const html = ReactDOMServer.renderToString(<App />);
 
     // We don't call getServerSnapshot in the shim
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['client']);
-=======
     assertLog(['client']);
->>>>>>> remotes/upstream/main
     expect(html).toEqual('client');
   });
 });

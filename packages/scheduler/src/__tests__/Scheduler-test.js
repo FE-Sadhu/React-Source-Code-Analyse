@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -348,11 +344,7 @@ describe('SchedulerBrowser', () => {
       // about, like a network event.
       gate(flags =>
         flags.enableIsInputPending
-<<<<<<< HEAD
-          ? 'Yield at 300ms'
-=======
           ? 'Yield at 10ms'
->>>>>>> remotes/upstream/main
           : // When isInputPending is disabled, we always yield quickly
             'Yield at 5ms',
       ),
@@ -406,11 +398,7 @@ describe('SchedulerBrowser', () => {
         // about, like a network event.
         gate(flags =>
           flags.enableIsInputPending
-<<<<<<< HEAD
-            ? 'Yield at 300ms'
-=======
             ? 'Yield at 10ms'
->>>>>>> remotes/upstream/main
             : // When isInputPending is disabled, we always yield quickly
               'Yield at 5ms',
         ),
@@ -435,11 +423,7 @@ describe('SchedulerBrowser', () => {
         // as quickly as for a discrete event.
         gate(flags =>
           flags.enableIsInputPending
-<<<<<<< HEAD
-            ? 'Yield at 50ms'
-=======
             ? 'Yield at 10ms'
->>>>>>> remotes/upstream/main
             : // When isInputPending is disabled, we always yield quickly
               'Yield at 5ms',
         ),
@@ -469,11 +453,7 @@ describe('SchedulerBrowser', () => {
       'Task with no paint',
       gate(flags =>
         flags.enableIsInputPending
-<<<<<<< HEAD
-          ? 'Yield at 300ms'
-=======
           ? 'Yield at 10ms'
->>>>>>> remotes/upstream/main
           : // When isInputPending is disabled, we always yield quickly
             'Yield at 5ms',
       ),

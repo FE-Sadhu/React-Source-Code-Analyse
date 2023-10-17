@@ -1,27 +1,16 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
-<<<<<<< HEAD
-=======
  * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
->>>>>>> remotes/upstream/main
  */
 
 let JSDOM;
 let React;
 let ReactDOMClient;
-<<<<<<< HEAD
-let Scheduler;
-=======
->>>>>>> remotes/upstream/main
 let clientAct;
 let ReactDOMFizzServer;
 let Stream;
@@ -34,10 +23,7 @@ let container;
 let buffer = '';
 let hasErrored = false;
 let fatalError = undefined;
-<<<<<<< HEAD
-=======
 let waitForPaint;
->>>>>>> remotes/upstream/main
 
 describe('useId', () => {
   beforeEach(() => {
@@ -45,24 +31,16 @@ describe('useId', () => {
     JSDOM = require('jsdom').JSDOM;
     React = require('react');
     ReactDOMClient = require('react-dom/client');
-<<<<<<< HEAD
-    Scheduler = require('scheduler');
-    clientAct = require('jest-react').act;
-=======
     clientAct = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
     ReactDOMFizzServer = require('react-dom/server');
     Stream = require('stream');
     Suspense = React.Suspense;
     useId = React.useId;
     useState = React.useState;
 
-<<<<<<< HEAD
-=======
     const InternalTestUtils = require('internal-test-utils');
     waitForPaint = InternalTestUtils.waitForPaint;
 
->>>>>>> remotes/upstream/main
     // Test Environment
     const jsdom = new JSDOM(
       '<!DOCTYPE html><html><head></head><body><div id="container">',
@@ -467,11 +445,7 @@ describe('useId', () => {
     const dehydratedSpan = container.getElementsByTagName('span')[0];
     await clientAct(async () => {
       const root = ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint([]);
-=======
       await waitForPaint([]);
->>>>>>> remotes/upstream/main
       expect(container).toMatchInlineSnapshot(`
         <div
           id="container"
@@ -552,11 +526,7 @@ describe('useId', () => {
     const dehydratedSpan = container.getElementsByTagName('span')[0];
     await clientAct(async () => {
       const root = ReactDOMClient.hydrateRoot(container, <App />);
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint([]);
-=======
       await waitForPaint([]);
->>>>>>> remotes/upstream/main
       expect(container).toMatchInlineSnapshot(`
         <div
           id="container"
@@ -666,8 +636,6 @@ describe('useId', () => {
       </div>
     `);
   });
-<<<<<<< HEAD
-=======
 
   // https://github.com/vercel/next.js/issues/43033
   // re-rendering in strict mode caused the localIdCounter to be reset but it the rerender hook does not
@@ -732,5 +700,4 @@ describe('useId', () => {
       </div>
     `);
   });
->>>>>>> remotes/upstream/main
 });

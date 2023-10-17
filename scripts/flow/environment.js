@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,10 +18,6 @@ declare var __REACT_DEVTOOLS_GLOBAL_HOOK__: any; /*?{
   inject: ?((stuff: Object) => void)
 };*/
 
-<<<<<<< HEAD
-declare var queueMicrotask: (fn: Function) => void;
-declare var reportError: (error: mixed) => void;
-=======
 declare var globalThis: Object;
 
 declare var queueMicrotask: (fn: Function) => void;
@@ -33,7 +25,6 @@ declare var reportError: (error: mixed) => void;
 declare var AggregateError: Class<Error>;
 
 declare var FinalizationRegistry: any;
->>>>>>> remotes/upstream/main
 
 declare module 'create-react-class' {
   declare var exports: React$CreateClass;
@@ -85,9 +76,6 @@ declare module 'EventListener' {
 }
 
 declare function __webpack_chunk_load__(id: string): Promise<mixed>;
-<<<<<<< HEAD
-declare function __webpack_require__(id: string): any;
-=======
 declare var __webpack_require__: ((id: string) => any) & {
   u: string => string,
 };
@@ -96,7 +84,6 @@ declare function __turbopack_load__(id: string): Promise<mixed>;
 declare var __turbopack_require__: ((id: string) => any) & {
   u: string => string,
 };
->>>>>>> remotes/upstream/main
 
 declare module 'fs/promises' {
   declare var access: (path: string, mode?: number) => Promise<void>;
@@ -143,13 +130,7 @@ declare module 'fs/promises' {
   ) => Promise<mixed>;
 }
 declare module 'pg' {
-<<<<<<< HEAD
-  declare var Pool: (
-    options: mixed,
-  ) => {
-=======
   declare var Pool: (options: mixed) => {
->>>>>>> remotes/upstream/main
     query: (query: string, values?: Array<mixed>) => void,
   };
 }
@@ -170,8 +151,6 @@ declare module 'util' {
   declare function deprecate(f: Function, string: string): Function;
   declare function promisify(f: Function): Function;
   declare function callbackify(f: Function): Function;
-<<<<<<< HEAD
-=======
   declare class TextDecoder {
     constructor(
       encoding?: string,
@@ -189,7 +168,6 @@ declare module 'util' {
     fatal: boolean;
     ignoreBOM: boolean;
   }
->>>>>>> remotes/upstream/main
   declare class TextEncoder {
     constructor(encoding?: string): TextEncoder;
     encode(buffer: string): Uint8Array;
@@ -201,8 +179,6 @@ declare module 'util' {
   }
 }
 
-<<<<<<< HEAD
-=======
 declare module 'busboy' {
   import type {Writable, Readable} from 'stream';
 
@@ -286,14 +262,11 @@ declare module 'busboy' {
   }
 }
 
->>>>>>> remotes/upstream/main
 declare module 'pg/lib/utils' {
   declare module.exports: {
     prepareValue(val: any): mixed,
   };
 }
-<<<<<<< HEAD
-=======
 
 declare class AsyncLocalStorage<T> {
   disable(): void;
@@ -323,4 +296,3 @@ declare var Bun: {
     input: string | $TypedArray | DataView | ArrayBuffer | SharedArrayBuffer,
   ): number,
 };
->>>>>>> remotes/upstream/main

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -74,15 +70,9 @@ export function Component() {
 
     const encodedHookMap = generateEncodedHookMap(parsed);
     expect(encodedHookMap).toMatchInlineSnapshot(`
-<<<<<<< HEAD
-    Object {
-      "mappings": "CAAD;KYCA,AgBDA;MREA,AWFA;SnBGA,AaHA,AMIA,AaJA;WpBKA,AiCLA;Y7CMA,AYNA",
-      "names": Array [
-=======
     {
       "mappings": "CAAD;KYCA,AgBDA;MREA,AWFA;SnBGA,AaHA,AMIA,AaJA;WpBKA,AiCLA;Y7CMA,AYNA",
       "names": [
->>>>>>> remotes/upstream/main
         "<no-hook>",
         "a",
         "b",
@@ -125,15 +115,9 @@ export function Component() {
 
     const encodedHookMap = generateEncodedHookMap(parsed);
     expect(encodedHookMap).toMatchInlineSnapshot(`
-<<<<<<< HEAD
-    Object {
-      "mappings": "CAAD;MgBCA,AUDA;OFEA,AUFA",
-      "names": Array [
-=======
     {
       "mappings": "CAAD;MgBCA,AUDA;OFEA,AUFA",
       "names": [
->>>>>>> remotes/upstream/main
         "<no-hook>",
         "theme",
         "val",
@@ -174,15 +158,9 @@ export function Component() {
 
     const encodedHookMap = generateEncodedHookMap(parsed);
     expect(encodedHookMap).toMatchInlineSnapshot(`
-<<<<<<< HEAD
-    Object {
-      "mappings": "CAAD;KyBCA;MKCA,AWDA;SrCDA",
-      "names": Array [
-=======
     {
       "mappings": "CAAD;KyBCA;MKCA,AWDA;SrCDA",
       "names": [
->>>>>>> remotes/upstream/main
         "<no-hook>",
         "InnerComponent",
         "state",
@@ -222,15 +200,9 @@ export function Component() {
 
     const encodedHookMap = generateEncodedHookMap(parsed);
     expect(encodedHookMap).toMatchInlineSnapshot(`
-<<<<<<< HEAD
-    Object {
-      "mappings": "CAAD;MwBCA,AWDA",
-      "names": Array [
-=======
     {
       "mappings": "CAAD;MwBCA,AWDA",
       "names": [
->>>>>>> remotes/upstream/main
         "<no-hook>",
         "val",
       ],

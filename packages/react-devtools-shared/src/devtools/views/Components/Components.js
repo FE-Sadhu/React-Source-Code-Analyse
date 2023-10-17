@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -104,10 +100,7 @@ function Components(_: {}) {
     onResizeEnd = () =>
       dispatch({type: 'ACTION_SET_IS_RESIZING', payload: false});
 
-<<<<<<< HEAD
-=======
     // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
     onResize = event => {
       const resizeElement = resizeElementRef.current;
       const wrapperElement = wrapperElementRef.current;
@@ -266,10 +259,6 @@ function setResizeCSSVariable(
   }
 }
 
-<<<<<<< HEAD
-export default portaledContent(Components);
-=======
 export default (portaledContent(
   Components,
 ): React$StatelessFunctionalComponent<{}>);
->>>>>>> remotes/upstream/main

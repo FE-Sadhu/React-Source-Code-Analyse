@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -31,22 +27,7 @@ export const TEXT_PADDING = 3;
 export const SNAPSHOT_SCRUBBER_SIZE = 3;
 
 export const INTERVAL_TIMES = [
-<<<<<<< HEAD
-  1,
-  2,
-  5,
-  10,
-  20,
-  50,
-  100,
-  200,
-  500,
-  1000,
-  2000,
-  5000,
-=======
   1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000,
->>>>>>> remotes/upstream/main
 ];
 export const MIN_INTERVAL_SIZE_PX = 70;
 

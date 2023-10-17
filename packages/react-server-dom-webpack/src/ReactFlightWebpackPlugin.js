@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,19 +7,12 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import {join} from 'path';
-import {pathToFileURL} from 'url';
-
-import asyncLib from 'neo-async';
-=======
 import type {ImportManifestEntry} from './shared/ReactFlightImportMetadata';
 
 import {join} from 'path';
 import {pathToFileURL} from 'url';
 import asyncLib from 'neo-async';
 import * as acorn from 'acorn-loose';
->>>>>>> remotes/upstream/main
 
 import ModuleDependency from 'webpack/lib/dependencies/ModuleDependency';
 import NullDependency from 'webpack/lib/dependencies/NullDependency';
@@ -52,13 +41,8 @@ class ClientReferenceDependency extends ModuleDependency {
 // We use the Flight client implementation because you can't get to these
 // without the client runtime so it's the first time in the loading sequence
 // you might want them.
-<<<<<<< HEAD
-const clientImportName = 'react-server-dom-webpack';
-const clientFileName = require.resolve('../');
-=======
 const clientImportName = 'react-server-dom-webpack/client';
 const clientFileName = require.resolve('../client.browser.js');
->>>>>>> remotes/upstream/main
 
 type ClientReferenceSearchPath = {
   directory: string,
@@ -73,12 +57,8 @@ type Options = {
   isServer: boolean,
   clientReferences?: ClientReferencePath | $ReadOnlyArray<ClientReferencePath>,
   chunkName?: string,
-<<<<<<< HEAD
-  manifestFilename?: string,
-=======
   clientManifestFilename?: string,
   ssrManifestFilename?: string,
->>>>>>> remotes/upstream/main
 };
 
 const PLUGIN_NAME = 'React Server Plugin';
@@ -86,12 +66,8 @@ const PLUGIN_NAME = 'React Server Plugin';
 export default class ReactFlightWebpackPlugin {
   clientReferences: $ReadOnlyArray<ClientReferencePath>;
   chunkName: string;
-<<<<<<< HEAD
-  manifestFilename: string;
-=======
   clientManifestFilename: string;
   ssrManifestFilename: string;
->>>>>>> remotes/upstream/main
 
   constructor(options: Options) {
     if (!options || typeof options.isServer !== 'boolean') {
@@ -107,11 +83,7 @@ export default class ReactFlightWebpackPlugin {
         {
           directory: '.',
           recursive: true,
-<<<<<<< HEAD
-          include: /\.client\.(js|ts|jsx|tsx)$/,
-=======
           include: /\.(js|ts|jsx|tsx)$/,
->>>>>>> remotes/upstream/main
         },
       ];
     } else if (
@@ -120,10 +92,7 @@ export default class ReactFlightWebpackPlugin {
     ) {
       this.clientReferences = [(options.clientReferences: $FlowFixMe)];
     } else {
-<<<<<<< HEAD
-=======
       // $FlowFixMe[incompatible-type] found when upgrading Flow
->>>>>>> remotes/upstream/main
       this.clientReferences = options.clientReferences;
     }
     if (typeof options.chunkName === 'string') {
@@ -134,15 +103,10 @@ export default class ReactFlightWebpackPlugin {
     } else {
       this.chunkName = 'client[index]';
     }
-<<<<<<< HEAD
-    this.manifestFilename =
-      options.manifestFilename || 'react-client-manifest.json';
-=======
     this.clientManifestFilename =
       options.clientManifestFilename || 'react-client-manifest.json';
     this.ssrManifestFilename =
       options.ssrManifestFilename || 'react-ssr-manifest.json';
->>>>>>> remotes/upstream/main
   }
 
   apply(compiler: any) {
@@ -155,24 +119,15 @@ export default class ReactFlightWebpackPlugin {
       PLUGIN_NAME,
       ({contextModuleFactory}, callback) => {
         const contextResolver = compiler.resolverFactory.get('context', {});
-<<<<<<< HEAD
-=======
         const normalResolver = compiler.resolverFactory.get('normal');
->>>>>>> remotes/upstream/main
 
         _this.resolveAllClientFiles(
           compiler.context,
           contextResolver,
-<<<<<<< HEAD
-          compiler.inputFileSystem,
-          contextModuleFactory,
-          function(err, resolvedClientRefs) {
-=======
           normalResolver,
           compiler.inputFileSystem,
           contextModuleFactory,
           function (err, resolvedClientRefs) {
->>>>>>> remotes/upstream/main
             if (err) {
               callback(err);
               return;
@@ -197,10 +152,7 @@ export default class ReactFlightWebpackPlugin {
           new NullDependency.Template(),
         );
 
-<<<<<<< HEAD
-=======
         // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
         const handler = parser => {
           // We need to add all client references as dependency of something in the graph so
           // Webpack knows which entries need to know about the relevant chunks and include the
@@ -217,13 +169,9 @@ export default class ReactFlightWebpackPlugin {
             clientFileNameFound = true;
 
             if (resolvedClientReferences) {
-<<<<<<< HEAD
-              for (let i = 0; i < resolvedClientReferences.length; i++) {
-=======
               // $FlowFixMe[incompatible-use] found when upgrading Flow
               for (let i = 0; i < resolvedClientReferences.length; i++) {
                 // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
                 const dep = resolvedClientReferences[i];
 
                 const chunkName = _this.chunkName
@@ -265,72 +213,16 @@ export default class ReactFlightWebpackPlugin {
           name: PLUGIN_NAME,
           stage: Compilation.PROCESS_ASSETS_STAGE_REPORT,
         },
-<<<<<<< HEAD
-        function() {
-          if (clientFileNameFound === false) {
-            compilation.warnings.push(
-              new WebpackError(
-                `Client runtime at ${clientImportName} was not found. React Server Components module map file ${_this.manifestFilename} was not created.`,
-=======
         function () {
           if (clientFileNameFound === false) {
             compilation.warnings.push(
               new WebpackError(
                 `Client runtime at ${clientImportName} was not found. React Server Components module map file ${_this.clientManifestFilename} was not created.`,
->>>>>>> remotes/upstream/main
               ),
             );
             return;
           }
 
-<<<<<<< HEAD
-          const json = {};
-          compilation.chunkGroups.forEach(function(chunkGroup) {
-            const chunkIds = chunkGroup.chunks.map(function(c) {
-              return c.id;
-            });
-
-            function recordModule(id, module) {
-              // TODO: Hook into deps instead of the target module.
-              // That way we know by the type of dep whether to include.
-              // It also resolves conflicts when the same module is in multiple chunks.
-
-              if (!/\.client\.(js|ts)x?$/.test(module.resource)) {
-                return;
-              }
-
-              const moduleProvidedExports = compilation.moduleGraph
-                .getExportsInfo(module)
-                .getProvidedExports();
-
-              const moduleExports = {};
-              ['', '*']
-                .concat(
-                  Array.isArray(moduleProvidedExports)
-                    ? moduleProvidedExports
-                    : [],
-                )
-                .forEach(function(name) {
-                  moduleExports[name] = {
-                    id,
-                    chunks: chunkIds,
-                    name: name,
-                  };
-                });
-              const href = pathToFileURL(module.resource).href;
-
-              if (href !== undefined) {
-                json[href] = moduleExports;
-              }
-            }
-
-            chunkGroup.chunks.forEach(function(chunk) {
-              const chunkModules = compilation.chunkGraph.getChunkModulesIterable(
-                chunk,
-              );
-
-              Array.from(chunkModules).forEach(function(module) {
-=======
           const configuredCrossOriginLoading =
             compilation.outputOptions.crossOriginLoading;
           const crossOriginMode =
@@ -462,7 +354,6 @@ export default class ReactFlightWebpackPlugin {
                 compilation.chunkGraph.getChunkModulesIterable(chunk);
 
               Array.from(chunkModules).forEach(function (module) {
->>>>>>> remotes/upstream/main
                 const moduleId = compilation.chunkGraph.getModuleId(module);
 
                 recordModule(moduleId, module);
@@ -476,12 +367,6 @@ export default class ReactFlightWebpackPlugin {
             });
           });
 
-<<<<<<< HEAD
-          const output = JSON.stringify(json, null, 2);
-          compilation.emitAsset(
-            _this.manifestFilename,
-            new sources.RawSource(output, false),
-=======
           const clientOutput = JSON.stringify(clientManifest, null, 2);
           compilation.emitAsset(
             _this.clientManifestFilename,
@@ -491,7 +376,6 @@ export default class ReactFlightWebpackPlugin {
           compilation.emitAsset(
             _this.ssrManifestFilename,
             new sources.RawSource(ssrOutput, false),
->>>>>>> remotes/upstream/main
           );
         },
       );
@@ -503,10 +387,7 @@ export default class ReactFlightWebpackPlugin {
   resolveAllClientFiles(
     context: string,
     contextResolver: any,
-<<<<<<< HEAD
-=======
     normalResolver: any,
->>>>>>> remotes/upstream/main
     fs: any,
     contextModuleFactory: any,
     callback: (
@@ -514,8 +395,6 @@ export default class ReactFlightWebpackPlugin {
       result?: $ReadOnlyArray<ClientReferenceDependency>,
     ) => void,
   ) {
-<<<<<<< HEAD
-=======
     function hasUseClientDirective(source: string): boolean {
       if (source.indexOf('use client') === -1) {
         return false;
@@ -541,7 +420,6 @@ export default class ReactFlightWebpackPlugin {
       return false;
     }
 
->>>>>>> remotes/upstream/main
     asyncLib.map(
       this.clientReferences,
       (
@@ -555,12 +433,8 @@ export default class ReactFlightWebpackPlugin {
           cb(null, [new ClientReferenceDependency(clientReferencePath)]);
           return;
         }
-<<<<<<< HEAD
-        const clientReferenceSearch: ClientReferenceSearchPath = clientReferencePath;
-=======
         const clientReferenceSearch: ClientReferenceSearchPath =
           clientReferencePath;
->>>>>>> remotes/upstream/main
         contextResolver.resolve(
           {},
           context,
@@ -584,10 +458,6 @@ export default class ReactFlightWebpackPlugin {
               options,
               (err2: null | Error, deps: Array<any /*ModuleDependency*/>) => {
                 if (err2) return cb(err2);
-<<<<<<< HEAD
-=======
-
->>>>>>> remotes/upstream/main
                 const clientRefDeps = deps.map(dep => {
                   // use userRequest instead of request. request always end with undefined which is wrong
                   const request = join(resolvedDirectory, dep.userRequest);
@@ -595,9 +465,6 @@ export default class ReactFlightWebpackPlugin {
                   clientRefDep.userRequest = dep.userRequest;
                   return clientRefDep;
                 });
-<<<<<<< HEAD
-                cb(null, clientRefDeps);
-=======
 
                 asyncLib.filter(
                   clientRefDeps,
@@ -630,7 +497,6 @@ export default class ReactFlightWebpackPlugin {
                   },
                   cb,
                 );
->>>>>>> remotes/upstream/main
               },
             );
           },
@@ -641,14 +507,9 @@ export default class ReactFlightWebpackPlugin {
         result: $ReadOnlyArray<$ReadOnlyArray<ClientReferenceDependency>>,
       ): void => {
         if (err) return callback(err);
-<<<<<<< HEAD
-        const flat = [];
-        for (let i = 0; i < result.length; i++) {
-=======
         const flat: Array<any> = [];
         for (let i = 0; i < result.length; i++) {
           // $FlowFixMe[method-unbinding]
->>>>>>> remotes/upstream/main
           flat.push.apply(flat, result[i]);
         }
         callback(null, flat);

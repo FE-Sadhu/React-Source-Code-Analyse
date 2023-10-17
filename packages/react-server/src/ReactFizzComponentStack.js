@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,11 +39,7 @@ export function getStackByComponentStackNode(
 ): string {
   try {
     let info = '';
-<<<<<<< HEAD
-    let node = componentStack;
-=======
     let node: ComponentStackNode = componentStack;
->>>>>>> remotes/upstream/main
     do {
       switch (node.tag) {
         case 0:
@@ -60,10 +52,7 @@ export function getStackByComponentStackNode(
           info += describeClassComponentFrame(node.type, null, null);
           break;
       }
-<<<<<<< HEAD
-=======
       // $FlowFixMe[incompatible-type] we bail out when we get a null
->>>>>>> remotes/upstream/main
       node = node.parent;
     } while (node);
     return info;

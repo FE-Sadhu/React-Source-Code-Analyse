@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -59,10 +55,7 @@ describe('dangerouslySetInnerHTML', () => {
       );
     });
 
-<<<<<<< HEAD
-=======
     // @gate !disableIEWorkarounds
->>>>>>> remotes/upstream/main
     it('sets innerHTML on it', () => {
       const html = '<circle></circle>';
       const container = document.createElementNS(
@@ -77,10 +70,7 @@ describe('dangerouslySetInnerHTML', () => {
       expect(circle.tagName).toBe('circle');
     });
 
-<<<<<<< HEAD
-=======
     // @gate !disableIEWorkarounds
->>>>>>> remotes/upstream/main
     it('clears previous children', () => {
       const firstHtml = '<rect></rect>';
       const secondHtml = '<circle></circle>';

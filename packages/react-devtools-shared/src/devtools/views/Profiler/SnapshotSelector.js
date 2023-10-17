@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -49,11 +45,7 @@ export default function SnapshotSelector(_: Props): React.Node {
 
   const filteredCommitIndices = useMemo(
     () =>
-<<<<<<< HEAD
-      commitData.reduce((reduced, commitDatum, index) => {
-=======
       commitData.reduce((reduced: $FlowFixMe, commitDatum, index) => {
->>>>>>> remotes/upstream/main
         if (
           !isCommitFilterEnabled ||
           commitDatum.duration >= minCommitDuration
@@ -94,10 +86,7 @@ export default function SnapshotSelector(_: Props): React.Node {
 
   let label = null;
   if (numFilteredCommits > 0) {
-<<<<<<< HEAD
-=======
     // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
     const handleCommitInputChange = event => {
       const value = parseInt(event.currentTarget.value, 10);
       if (!isNaN(value)) {
@@ -112,18 +101,12 @@ export default function SnapshotSelector(_: Props): React.Node {
       }
     };
 
-<<<<<<< HEAD
-=======
     // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
     const handleClick = event => {
       event.currentTarget.select();
     };
 
-<<<<<<< HEAD
-=======
     // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
     const handleKeyDown = event => {
       switch (event.key) {
         case 'ArrowDown':
@@ -179,10 +162,7 @@ export default function SnapshotSelector(_: Props): React.Node {
     selectCommitIndex(filteredCommitIndices[nextCommitIndex]);
   };
 
-<<<<<<< HEAD
-=======
   // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
   const handleKeyDown = event => {
     switch (event.key) {
       case 'ArrowLeft':

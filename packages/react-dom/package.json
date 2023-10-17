@@ -31,14 +31,6 @@
     "profiling.js",
     "server.js",
     "server.browser.js",
-<<<<<<< HEAD
-    "server.node.js",
-    "static.js",
-    "static.browser.js",
-    "static.node.js",
-    "test-utils.js",
-    "unstable_testing.js",
-=======
     "server.edge.js",
     "server.node.js",
     "server.bun.js",
@@ -51,34 +43,10 @@
     "unstable_testing.js",
     "unstable_server-external-runtime.js",
     "react-dom.shared-subset.js",
->>>>>>> remotes/upstream/main
     "cjs/",
     "umd/"
   ],
   "exports": {
-<<<<<<< HEAD
-    ".": "./index.js",
-    "./client": "./client.js",
-    "./server": {
-      "deno": "./server.browser.js",
-      "worker": "./server.browser.js",
-      "browser": "./server.browser.js",
-      "default": "./server.node.js"
-    },
-    "./server.browser": "./server.browser.js",
-    "./server.node": "./server.node.js",
-    "./static": {
-      "deno": "./static.browser.js",
-      "worker": "./static.browser.js",
-      "browser": "./static.browser.js",
-      "default": "./static.node.js"
-    },
-    "./static.browser": "./static.browser.js",
-    "./static.node": "./static.node.js",
-    "./profiling": "./profiling.js",
-    "./test-utils": "./test-utils.js",
-    "./unstable_testing": "./unstable_testing.js",
-=======
     ".": {
       "react-server": "./react-dom.shared-subset.js",
       "default": "./index.js"
@@ -115,7 +83,6 @@
     "./test-utils": "./test-utils.js",
     "./unstable_testing": "./unstable_testing.js",
     "./unstable_server-external-runtime": "./unstable_server-external-runtime.js",
->>>>>>> remotes/upstream/main
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },

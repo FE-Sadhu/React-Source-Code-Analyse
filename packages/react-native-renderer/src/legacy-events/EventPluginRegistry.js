@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,17 +13,10 @@ import type {
   PluginName,
   LegacyPluginModule,
 } from './PluginModuleType';
-<<<<<<< HEAD
-
-type NamesToPlugins = {
-  [key: PluginName]: LegacyPluginModule<AnyNativeEvent>,
-  ...,
-=======
 import type {TopLevelType} from './TopLevelEventTypes';
 
 type NamesToPlugins = {
   [key: PluginName]: LegacyPluginModule<AnyNativeEvent>,
->>>>>>> remotes/upstream/main
 };
 type EventPluginOrder = null | Array<PluginName>;
 
@@ -53,10 +42,7 @@ function recomputePluginOrdering(): void {
   }
   for (const pluginName in namesToPlugins) {
     const pluginModule = namesToPlugins[pluginName];
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
     const pluginIndex = eventPluginOrder.indexOf(pluginName);
 
     if (pluginIndex <= -1) {
@@ -181,44 +167,28 @@ function publishRegistrationName(
 /**
  * Ordered list of injected plugins.
  */
-<<<<<<< HEAD
-export const plugins = [];
-=======
 export const plugins: Array<LegacyPluginModule<AnyNativeEvent>> = [];
->>>>>>> remotes/upstream/main
 
 /**
  * Mapping from event name to dispatch config
  */
-<<<<<<< HEAD
-export const eventNameDispatchConfigs = {};
-=======
 export const eventNameDispatchConfigs: {
   [eventName: string]: DispatchConfig,
 } = {};
->>>>>>> remotes/upstream/main
 
 /**
  * Mapping from registration name to plugin module
  */
-<<<<<<< HEAD
-export const registrationNameModules = {};
-=======
 export const registrationNameModules: {
   [registrationName: string]: LegacyPluginModule<AnyNativeEvent>,
 } = {};
->>>>>>> remotes/upstream/main
 
 /**
  * Mapping from registration name to event name
  */
-<<<<<<< HEAD
-export const registrationNameDependencies = {};
-=======
 export const registrationNameDependencies: {
   [registrationName: string]: Array<TopLevelType> | void,
 } = {};
->>>>>>> remotes/upstream/main
 
 /**
  * Mapping from lowercase registration names to the properly cased version,
@@ -226,13 +196,9 @@ export const registrationNameDependencies: {
  * only in __DEV__.
  * @type {Object}
  */
-<<<<<<< HEAD
-export const possibleRegistrationNames = __DEV__ ? {} : (null: any);
-=======
 export const possibleRegistrationNames: {
   [lowerCasedName: string]: string,
 } = __DEV__ ? {} : (null: any);
->>>>>>> remotes/upstream/main
 // Trust the developer to only use possibleRegistrationNames in __DEV__
 
 /**
@@ -254,10 +220,7 @@ export function injectEventPluginOrder(
   }
 
   // Clone the ordering so it cannot be dynamically mutated.
-<<<<<<< HEAD
-=======
   // $FlowFixMe[method-unbinding] found when upgrading Flow
->>>>>>> remotes/upstream/main
   eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
   recomputePluginOrdering();
 }

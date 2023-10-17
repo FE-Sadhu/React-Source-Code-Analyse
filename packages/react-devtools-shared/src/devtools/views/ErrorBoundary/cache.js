@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -69,15 +65,9 @@ export function findGitHubIssue(errorMessage: string): GitHubIssue | null {
   let record = map.get(errorMessage);
 
   if (!record) {
-<<<<<<< HEAD
-    const callbacks = new Set();
-    const wakeable: Wakeable = {
-      then(callback) {
-=======
     const callbacks = new Set<() => mixed>();
     const wakeable: Wakeable = {
       then(callback: () => mixed) {
->>>>>>> remotes/upstream/main
         callbacks.add(callback);
       },
 
@@ -103,12 +93,8 @@ export function findGitHubIssue(errorMessage: string): GitHubIssue | null {
         }
 
         if (maybeItem) {
-<<<<<<< HEAD
-          const resolvedRecord = ((newRecord: any): ResolvedRecord<GitHubIssue>);
-=======
           const resolvedRecord =
             ((newRecord: any): ResolvedRecord<GitHubIssue>);
->>>>>>> remotes/upstream/main
           resolvedRecord.status = Resolved;
           resolvedRecord.value = maybeItem;
         } else {

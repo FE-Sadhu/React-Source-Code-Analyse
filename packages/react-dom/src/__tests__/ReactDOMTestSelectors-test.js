@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -562,11 +558,7 @@ No matching component was found for:
     // Stub out getBoundingClientRect for the specified target.
     // This API is required by the test selectors but it isn't implemented by jsdom.
     function setBoundingClientRect(target, {x, y, width, height}) {
-<<<<<<< HEAD
-      target.getBoundingClientRect = function() {
-=======
       target.getBoundingClientRect = function () {
->>>>>>> remotes/upstream/main
         return {
           width,
           height,
@@ -1142,11 +1134,7 @@ No matching component was found for:
     // Stub out getBoundingClientRect for the specified target.
     // This API is required by the test selectors but it isn't implemented by jsdom.
     function setBoundingClientRect(target, {x, y, width, height}) {
-<<<<<<< HEAD
-      target.getBoundingClientRect = function() {
-=======
       target.getBoundingClientRect = function () {
->>>>>>> remotes/upstream/main
         return {
           width,
           height,

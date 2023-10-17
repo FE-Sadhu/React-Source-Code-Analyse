@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -197,14 +193,6 @@ describe('ReactDOMEventListener', () => {
     const onMouseOut = event => mouseOut(event.target);
 
     class Wrapper extends React.Component {
-<<<<<<< HEAD
-      getInner = () => {
-        return this.refs.inner;
-      };
-
-      render() {
-        const inner = <div ref="inner">Inner</div>;
-=======
       innerRef = React.createRef();
       getInner = () => {
         return this.innerRef.current;
@@ -212,7 +200,6 @@ describe('ReactDOMEventListener', () => {
 
       render() {
         const inner = <div ref={this.innerRef}>Inner</div>;
->>>>>>> remotes/upstream/main
         return (
           <div>
             <div onMouseOut={onMouseOut} id="outer">
@@ -414,11 +401,7 @@ describe('ReactDOMEventListener', () => {
 
     const originalDocAddEventListener = document.addEventListener;
     const originalRootAddEventListener = container.addEventListener;
-<<<<<<< HEAD
-    document.addEventListener = function(type) {
-=======
     document.addEventListener = function (type) {
->>>>>>> remotes/upstream/main
       switch (type) {
         case 'selectionchange':
           break;
@@ -428,11 +411,7 @@ describe('ReactDOMEventListener', () => {
           );
       }
     };
-<<<<<<< HEAD
-    container.addEventListener = function(type, fn, options) {
-=======
     container.addEventListener = function (type, fn, options) {
->>>>>>> remotes/upstream/main
       if (options && (options === true || options.capture)) {
         return;
       }
@@ -738,12 +717,6 @@ describe('ReactDOMEventListener', () => {
     const ref = React.createRef();
     const log = [];
     const onScroll = jest.fn(e =>
-<<<<<<< HEAD
-      log.push(['bubble', e.currentTarget.className]),
-    );
-    const onScrollCapture = jest.fn(e =>
-      log.push(['capture', e.currentTarget.className]),
-=======
       log.push(['onScroll', 'bubble', e.currentTarget.className]),
     );
     const onScrollCapture = jest.fn(e =>
@@ -754,7 +727,6 @@ describe('ReactDOMEventListener', () => {
     );
     const onScrollEndCapture = jest.fn(e =>
       log.push(['onScrollEnd', 'capture', e.currentTarget.className]),
->>>>>>> remotes/upstream/main
     );
     document.body.appendChild(container);
     try {
@@ -762,13 +734,6 @@ describe('ReactDOMEventListener', () => {
         <div
           className="grand"
           onScroll={onScroll}
-<<<<<<< HEAD
-          onScrollCapture={onScrollCapture}>
-          <div
-            className="parent"
-            onScroll={onScroll}
-            onScrollCapture={onScrollCapture}>
-=======
           onScrollCapture={onScrollCapture}
           onScrollEnd={onScrollEnd}
           onScrollEndCapture={onScrollEndCapture}>
@@ -778,16 +743,12 @@ describe('ReactDOMEventListener', () => {
             onScrollCapture={onScrollCapture}
             onScrollEnd={onScrollEnd}
             onScrollEndCapture={onScrollEndCapture}>
->>>>>>> remotes/upstream/main
             <div
               className="child"
               onScroll={onScroll}
               onScrollCapture={onScrollCapture}
-<<<<<<< HEAD
-=======
               onScrollEnd={onScrollEnd}
               onScrollEndCapture={onScrollEndCapture}
->>>>>>> remotes/upstream/main
               ref={ref}
             />
           </div>
@@ -799,13 +760,6 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-      expect(log).toEqual([
-        ['capture', 'grand'],
-        ['capture', 'parent'],
-        ['capture', 'child'],
-        ['bubble', 'child'],
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
@@ -820,7 +774,6 @@ describe('ReactDOMEventListener', () => {
         ['onScrollEnd', 'capture', 'parent'],
         ['onScrollEnd', 'capture', 'child'],
         ['onScrollEnd', 'bubble', 'child'],
->>>>>>> remotes/upstream/main
       ]);
     } finally {
       document.body.removeChild(container);
@@ -835,12 +788,6 @@ describe('ReactDOMEventListener', () => {
     const ref = React.createRef();
     const log = [];
     const onScroll = jest.fn(e =>
-<<<<<<< HEAD
-      log.push(['bubble', e.currentTarget.className]),
-    );
-    const onScrollCapture = jest.fn(e =>
-      log.push(['capture', e.currentTarget.className]),
-=======
       log.push(['onScroll', 'bubble', e.currentTarget.className]),
     );
     const onScrollCapture = jest.fn(e =>
@@ -851,7 +798,6 @@ describe('ReactDOMEventListener', () => {
     );
     const onScrollEndCapture = jest.fn(e =>
       log.push(['onScrollEnd', 'capture', e.currentTarget.className]),
->>>>>>> remotes/upstream/main
     );
     document.body.appendChild(container);
     try {
@@ -859,13 +805,6 @@ describe('ReactDOMEventListener', () => {
         <div
           className="grand"
           onScroll={onScroll}
-<<<<<<< HEAD
-          onScrollCapture={onScrollCapture}>
-          <div
-            className="parent"
-            onScroll={onScroll}
-            onScrollCapture={onScrollCapture}>
-=======
           onScrollCapture={onScrollCapture}
           onScrollEnd={onScrollEnd}
           onScrollEndCapture={onScrollEndCapture}>
@@ -875,7 +814,6 @@ describe('ReactDOMEventListener', () => {
             onScrollCapture={onScrollCapture}
             onScrollEnd={onScrollEnd}
             onScrollEndCapture={onScrollEndCapture}>
->>>>>>> remotes/upstream/main
             {/* Intentionally no handler on the child: */}
             <div className="child" ref={ref} />
           </div>
@@ -887,11 +825,6 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-      expect(log).toEqual([
-        ['capture', 'grand'],
-        ['capture', 'parent'],
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
@@ -902,7 +835,6 @@ describe('ReactDOMEventListener', () => {
         ['onScroll', 'capture', 'parent'],
         ['onScrollEnd', 'capture', 'grand'],
         ['onScrollEnd', 'capture', 'parent'],
->>>>>>> remotes/upstream/main
       ]);
     } finally {
       document.body.removeChild(container);
@@ -914,12 +846,6 @@ describe('ReactDOMEventListener', () => {
     const ref = React.createRef();
     const log = [];
     const onScroll = jest.fn(e =>
-<<<<<<< HEAD
-      log.push(['bubble', e.currentTarget.className]),
-    );
-    const onScrollCapture = jest.fn(e =>
-      log.push(['capture', e.currentTarget.className]),
-=======
       log.push(['onScroll', 'bubble', e.currentTarget.className]),
     );
     const onScrollCapture = jest.fn(e =>
@@ -930,7 +856,6 @@ describe('ReactDOMEventListener', () => {
     );
     const onScrollEndCapture = jest.fn(e =>
       log.push(['onScrollEnd', 'capture', e.currentTarget.className]),
->>>>>>> remotes/upstream/main
     );
     document.body.appendChild(container);
     try {
@@ -948,13 +873,6 @@ describe('ReactDOMEventListener', () => {
         <div
           className="grand"
           onScroll={e => onScroll(e)}
-<<<<<<< HEAD
-          onScrollCapture={e => onScrollCapture(e)}>
-          <div
-            className="parent"
-            onScroll={e => onScroll(e)}
-            onScrollCapture={e => onScrollCapture(e)}>
-=======
           onScrollCapture={e => onScrollCapture(e)}
           onScrollEnd={e => onScrollEnd(e)}
           onScrollEndCapture={e => onScrollEndCapture(e)}>
@@ -964,16 +882,12 @@ describe('ReactDOMEventListener', () => {
             onScrollCapture={e => onScrollCapture(e)}
             onScrollEnd={e => onScrollEnd(e)}
             onScrollEndCapture={e => onScrollEndCapture(e)}>
->>>>>>> remotes/upstream/main
             <div
               className="child"
               onScroll={e => onScroll(e)}
               onScrollCapture={e => onScrollCapture(e)}
-<<<<<<< HEAD
-=======
               onScrollEnd={e => onScrollEnd(e)}
               onScrollEndCapture={e => onScrollEndCapture(e)}
->>>>>>> remotes/upstream/main
               ref={ref}
             />
           </div>
@@ -985,13 +899,6 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-      expect(log).toEqual([
-        ['capture', 'grand'],
-        ['capture', 'parent'],
-        ['capture', 'child'],
-        ['bubble', 'child'],
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
@@ -1006,7 +913,6 @@ describe('ReactDOMEventListener', () => {
         ['onScrollEnd', 'capture', 'parent'],
         ['onScrollEnd', 'capture', 'child'],
         ['onScrollEnd', 'bubble', 'child'],
->>>>>>> remotes/upstream/main
       ]);
 
       // Update to verify deduplication.
@@ -1017,13 +923,6 @@ describe('ReactDOMEventListener', () => {
           // Note: these are intentionally inline functions so that
           // we hit the reattachment codepath instead of bailing out.
           onScroll={e => onScroll(e)}
-<<<<<<< HEAD
-          onScrollCapture={e => onScrollCapture(e)}>
-          <div
-            className="parent"
-            onScroll={e => onScroll(e)}
-            onScrollCapture={e => onScrollCapture(e)}>
-=======
           onScrollCapture={e => onScrollCapture(e)}
           onScrollEnd={e => onScrollEnd(e)}
           onScrollEndCapture={e => onScrollEndCapture(e)}>
@@ -1033,16 +932,12 @@ describe('ReactDOMEventListener', () => {
             onScrollCapture={e => onScrollCapture(e)}
             onScrollEnd={e => onScrollEnd(e)}
             onScrollEndCapture={e => onScrollEndCapture(e)}>
->>>>>>> remotes/upstream/main
             <div
               className="child"
               onScroll={e => onScroll(e)}
               onScrollCapture={e => onScrollCapture(e)}
-<<<<<<< HEAD
-=======
               onScrollEnd={e => onScrollEnd(e)}
               onScrollEndCapture={e => onScrollEndCapture(e)}
->>>>>>> remotes/upstream/main
               ref={ref}
             />
           </div>
@@ -1054,13 +949,6 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-      expect(log).toEqual([
-        ['capture', 'grand'],
-        ['capture', 'parent'],
-        ['capture', 'child'],
-        ['bubble', 'child'],
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
@@ -1075,7 +963,6 @@ describe('ReactDOMEventListener', () => {
         ['onScrollEnd', 'capture', 'parent'],
         ['onScrollEnd', 'capture', 'child'],
         ['onScrollEnd', 'bubble', 'child'],
->>>>>>> remotes/upstream/main
       ]);
 
       // Update to detach.
@@ -1093,14 +980,11 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
         }),
       );
->>>>>>> remotes/upstream/main
       expect(log).toEqual([]);
     } finally {
       document.body.removeChild(container);
@@ -1113,13 +997,6 @@ describe('ReactDOMEventListener', () => {
     const ref = React.createRef();
     const log = [];
     const onScroll = jest.fn(e =>
-<<<<<<< HEAD
-      log.push(['bubble', e.currentTarget.className]),
-    );
-    const onScrollCapture = jest.fn(e =>
-      log.push(['capture', e.currentTarget.className]),
-    );
-=======
       log.push(['onScroll', 'bubble', e.currentTarget.className]),
     );
     const onScrollCapture = jest.fn(e =>
@@ -1132,18 +1009,10 @@ describe('ReactDOMEventListener', () => {
       log.push(['onScrollEnd', 'capture', e.currentTarget.className]),
     );
 
->>>>>>> remotes/upstream/main
     const tree = (
       <div
         className="grand"
         onScroll={onScroll}
-<<<<<<< HEAD
-        onScrollCapture={onScrollCapture}>
-        <div
-          className="parent"
-          onScroll={onScroll}
-          onScrollCapture={onScrollCapture}>
-=======
         onScrollCapture={onScrollCapture}
         onScrollEnd={onScrollEnd}
         onScrollEndCapture={onScrollEndCapture}>
@@ -1153,16 +1022,12 @@ describe('ReactDOMEventListener', () => {
           onScrollCapture={onScrollCapture}
           onScrollEnd={onScrollEnd}
           onScrollEndCapture={onScrollEndCapture}>
->>>>>>> remotes/upstream/main
           <div
             className="child"
             onScroll={onScroll}
             onScrollCapture={onScrollCapture}
-<<<<<<< HEAD
-=======
             onScrollEnd={onScrollEnd}
             onScrollEndCapture={onScrollEndCapture}
->>>>>>> remotes/upstream/main
             ref={ref}
           />
         </div>
@@ -1177,13 +1042,6 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-      expect(log).toEqual([
-        ['capture', 'grand'],
-        ['capture', 'parent'],
-        ['capture', 'child'],
-        ['bubble', 'child'],
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
@@ -1198,7 +1056,6 @@ describe('ReactDOMEventListener', () => {
         ['onScrollEnd', 'capture', 'parent'],
         ['onScrollEnd', 'capture', 'child'],
         ['onScrollEnd', 'bubble', 'child'],
->>>>>>> remotes/upstream/main
       ]);
 
       log.length = 0;
@@ -1215,14 +1072,11 @@ describe('ReactDOMEventListener', () => {
           bubbles: false,
         }),
       );
-<<<<<<< HEAD
-=======
       ref.current.dispatchEvent(
         new Event('scrollend', {
           bubbles: false,
         }),
       );
->>>>>>> remotes/upstream/main
       expect(log).toEqual([]);
     } finally {
       document.body.removeChild(container);
@@ -1233,11 +1087,7 @@ describe('ReactDOMEventListener', () => {
     const log = [];
 
     const originalDocAddEventListener = document.addEventListener;
-<<<<<<< HEAD
-    document.addEventListener = function(type, fn, options) {
-=======
     document.addEventListener = function (type, fn, options) {
->>>>>>> remotes/upstream/main
       switch (type) {
         case 'selectionchange':
           log.push(options);

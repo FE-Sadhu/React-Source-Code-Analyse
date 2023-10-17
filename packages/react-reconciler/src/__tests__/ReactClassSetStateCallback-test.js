@@ -2,10 +2,7 @@ let React;
 let ReactNoop;
 let Scheduler;
 let act;
-<<<<<<< HEAD
-=======
 let assertLog;
->>>>>>> remotes/upstream/main
 
 describe('ReactClassSetStateCallback', () => {
   beforeEach(() => {
@@ -14,13 +11,6 @@ describe('ReactClassSetStateCallback', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     act = require('internal-test-utils').act;
 
     const InternalTestUtils = require('internal-test-utils');
@@ -29,7 +19,6 @@ describe('ReactClassSetStateCallback', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -44,24 +33,6 @@ describe('ReactClassSetStateCallback', () => {
     }
 
     const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(<App />);
-    });
-    expect(Scheduler).toHaveYielded([0]);
-
-    await act(async () => {
-      app.setState({step: 1}, () =>
-        Scheduler.unstable_yieldValue('Callback 1'),
-      );
-      ReactNoop.flushSync(() => {
-        app.setState({step: 2}, () =>
-          Scheduler.unstable_yieldValue('Callback 2'),
-        );
-      });
-    });
-    expect(Scheduler).toHaveYielded([2, 'Callback 2', 2, 'Callback 1']);
-=======
     await act(() => {
       root.render(<App />);
     });
@@ -80,6 +51,5 @@ describe('ReactClassSetStateCallback', () => {
       });
     });
     assertLog([2, 'Callback 2', 2, 'Callback 1']);
->>>>>>> remotes/upstream/main
   });
 });

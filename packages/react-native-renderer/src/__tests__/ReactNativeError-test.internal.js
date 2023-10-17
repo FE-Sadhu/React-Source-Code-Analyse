@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,11 +18,7 @@ let computeComponentStackForErrorReporting;
 function normalizeCodeLocInfo(str) {
   return (
     str &&
-<<<<<<< HEAD
-    str.replace(/\n +(?:at|in) ([\S]+)[^\n]*/g, function(m, name) {
-=======
     str.replace(/\n +(?:at|in) ([\S]+)[^\n]*/g, function (m, name) {
->>>>>>> remotes/upstream/main
       return '\n    in ' + name + ' (at **)';
     })
   );
@@ -38,14 +30,9 @@ describe('ReactNativeError', () => {
 
     React = require('react');
     ReactNative = require('react-native-renderer');
-<<<<<<< HEAD
-    createReactNativeComponentClass = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
-      .ReactNativeViewConfigRegistry.register;
-=======
     createReactNativeComponentClass =
       require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
         .ReactNativeViewConfigRegistry.register;
->>>>>>> remotes/upstream/main
     computeComponentStackForErrorReporting =
       ReactNative.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
         .computeComponentStackForErrorReporting;

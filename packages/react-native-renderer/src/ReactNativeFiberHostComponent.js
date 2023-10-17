@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,17 +13,10 @@ import type {
   MeasureInWindowOnSuccessCallback,
   MeasureLayoutOnSuccessCallback,
   MeasureOnSuccessCallback,
-<<<<<<< HEAD
-  NativeMethods,
-  ViewConfig,
-} from './ReactNativeTypes';
-import type {Instance} from './ReactNativeHostConfig';
-=======
   INativeMethods,
   ViewConfig,
 } from './ReactNativeTypes';
 import type {Instance} from './ReactFiberConfigNative';
->>>>>>> remotes/upstream/main
 
 // Modules provided by RN:
 import {
@@ -41,11 +30,7 @@ import {
   warnForStyleProps,
 } from './NativeMethodsMixinUtils';
 
-<<<<<<< HEAD
-class ReactNativeFiberHostComponent {
-=======
 class ReactNativeFiberHostComponent implements INativeMethods {
->>>>>>> remotes/upstream/main
   _children: Array<Instance | number>;
   _nativeTag: number;
   _internalFiberInstanceHandleDEV: Object;
@@ -97,12 +82,8 @@ class ReactNativeFiberHostComponent implements INativeMethods {
       // Already a node handle
       relativeNode = relativeToNativeNode;
     } else {
-<<<<<<< HEAD
-      const nativeNode: ReactNativeFiberHostComponent = (relativeToNativeNode: any);
-=======
       const nativeNode: ReactNativeFiberHostComponent =
         (relativeToNativeNode: any);
->>>>>>> remotes/upstream/main
       if (nativeNode._nativeTag) {
         relativeNode = nativeNode._nativeTag;
       }
@@ -146,10 +127,4 @@ class ReactNativeFiberHostComponent implements INativeMethods {
   }
 }
 
-<<<<<<< HEAD
-// eslint-disable-next-line no-unused-expressions
-(ReactNativeFiberHostComponent.prototype: $ReadOnly<{...NativeMethods, ...}>);
-
-=======
->>>>>>> remotes/upstream/main
 export default ReactNativeFiberHostComponent;

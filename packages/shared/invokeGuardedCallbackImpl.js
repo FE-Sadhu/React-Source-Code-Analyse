@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,99 +7,12 @@
  * @flow
  */
 
-<<<<<<< HEAD
-function invokeGuardedCallbackProd<A, B, C, D, E, F, Context>(
-  name: string | null,
-  func: (a: A, b: B, c: C, d: D, e: E, f: F) => mixed,
-  context: Context,
-  a: A,
-  b: B,
-  c: C,
-  d: D,
-  e: E,
-  f: F,
-) {
-  const funcArgs = Array.prototype.slice.call(arguments, 3);
-  try {
-    func.apply(context, funcArgs);
-  } catch (error) {
-    this.onError(error);
-  }
-}
-
-let invokeGuardedCallbackImpl = invokeGuardedCallbackProd;
-
-if (__DEV__) {
-  // In DEV mode, we swap out invokeGuardedCallback for a special version
-  // that plays more nicely with the browser's DevTools. The idea is to preserve
-  // "Pause on exceptions" behavior. Because React wraps all user-provided
-  // functions in invokeGuardedCallback, and the production version of
-  // invokeGuardedCallback uses a try-catch, all user exceptions are treated
-  // like caught exceptions, and the DevTools won't pause unless the developer
-  // takes the extra step of enabling pause on caught exceptions. This is
-  // unintuitive, though, because even though React has caught the error, from
-  // the developer's perspective, the error is uncaught.
-  //
-  // To preserve the expected "Pause on exceptions" behavior, we don't use a
-  // try-catch in DEV. Instead, we synchronously dispatch a fake event to a fake
-  // DOM node, and call the user-provided callback from inside an event handler
-  // for that fake event. If the callback throws, the error is "captured" using
-  // a global event handler. But because the error happens in a different
-  // event loop context, it does not interrupt the normal program flow.
-  // Effectively, this gives us try-catch behavior without actually using
-  // try-catch. Neat!
-
-  // Check that the browser supports the APIs we need to implement our special
-  // DEV version of invokeGuardedCallback
-=======
 let fakeNode: Element = (null: any);
 if (__DEV__) {
->>>>>>> remotes/upstream/main
   if (
     typeof window !== 'undefined' &&
     typeof window.dispatchEvent === 'function' &&
     typeof document !== 'undefined' &&
-<<<<<<< HEAD
-    typeof document.createEvent === 'function'
-  ) {
-    const fakeNode = document.createElement('react');
-
-    invokeGuardedCallbackImpl = function invokeGuardedCallbackDev<
-      A,
-      B,
-      C,
-      D,
-      E,
-      F,
-      Context,
-    >(
-      name: string | null,
-      func: (a: A, b: B, c: C, d: D, e: E, f: F) => mixed,
-      context: Context,
-      a: A,
-      b: B,
-      c: C,
-      d: D,
-      e: E,
-      f: F,
-    ) {
-      // If document doesn't exist we know for sure we will crash in this method
-      // when we call document.createEvent(). However this can cause confusing
-      // errors: https://github.com/facebook/create-react-app/issues/3482
-      // So we preemptively throw with a better message instead.
-      if (typeof document === 'undefined' || document === null) {
-        throw new Error(
-          'The `document` global was defined when React was initialized, but is not ' +
-            'defined anymore. This can happen in a test environment if a component ' +
-            'schedules an update from an asynchronous callback, but the test has already ' +
-            'finished running. To solve this, you can either unmount the component at ' +
-            'the end of your test (and ensure that any asynchronous operations get ' +
-            'canceled in `componentWillUnmount`), or you can change the test itself ' +
-            'to be asynchronous.',
-        );
-      }
-
-=======
     // $FlowFixMe[method-unbinding]
     typeof document.createEvent === 'function'
   ) {
@@ -138,7 +47,6 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
 
     // fakeNode signifies we are in an environment with a document and window object
     if (fakeNode) {
->>>>>>> remotes/upstream/main
       const evt = document.createEvent('Event');
 
       let didCall = false;
@@ -162,11 +70,7 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
         'event',
       );
 
-<<<<<<< HEAD
-      function restoreAfterDispatch() {
-=======
       const restoreAfterDispatch = () => {
->>>>>>> remotes/upstream/main
         // We immediately remove the callback from event listeners so that
         // nested `invokeGuardedCallback` calls do not clash. Otherwise, a
         // nested call would trigger the fake event handlers of any call higher
@@ -183,24 +87,11 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
         ) {
           window.event = windowEvent;
         }
-<<<<<<< HEAD
-      }
-=======
       };
->>>>>>> remotes/upstream/main
 
       // Create an event handler for our fake event. We will synchronously
       // dispatch our fake event using `dispatchEvent`. Inside the handler, we
       // call the user-provided callback.
-<<<<<<< HEAD
-      const funcArgs = Array.prototype.slice.call(arguments, 3);
-      function callCallback() {
-        didCall = true;
-        restoreAfterDispatch();
-        func.apply(context, funcArgs);
-        didError = false;
-      }
-=======
       // $FlowFixMe[method-unbinding]
       const funcArgs = Array.prototype.slice.call(arguments, 3);
       const callCallback = () => {
@@ -210,7 +101,6 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
         func.apply(context, funcArgs);
         didError = false;
       };
->>>>>>> remotes/upstream/main
 
       // Create a global error event handler. We use this to capture the value
       // that was thrown. It's possible that this error handler will fire more
@@ -228,11 +118,7 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
       let didSetError = false;
       let isCrossOriginError = false;
 
-<<<<<<< HEAD
-      function handleWindowError(event) {
-=======
       const handleWindowError = (event: ErrorEvent) => {
->>>>>>> remotes/upstream/main
         error = event.error;
         didSetError = true;
         if (error === null && event.colno === 0 && event.lineno === 0) {
@@ -250,11 +136,7 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
             }
           }
         }
-<<<<<<< HEAD
-      }
-=======
       };
->>>>>>> remotes/upstream/main
 
       // Create a fake event type.
       const evtType = `react-${name ? name : 'invokeguardedcallback'}`;
@@ -267,10 +149,6 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
       // errors, it will trigger our global error handler.
       evt.initEvent(evtType, false, false);
       fakeNode.dispatchEvent(evt);
-<<<<<<< HEAD
-
-=======
->>>>>>> remotes/upstream/main
       if (windowEventDescriptor) {
         Object.defineProperty(window, 'event', windowEventDescriptor);
       }
@@ -303,27 +181,14 @@ export default function invokeGuardedCallbackImpl<Args: Array<mixed>, Context>(
       // Remove our event listeners
       window.removeEventListener('error', handleWindowError);
 
-<<<<<<< HEAD
-      if (!didCall) {
-=======
       if (didCall) {
         return;
       } else {
->>>>>>> remotes/upstream/main
         // Something went really wrong, and our event was not dispatched.
         // https://github.com/facebook/react/issues/16734
         // https://github.com/facebook/react/issues/16585
         // Fall back to the production implementation.
         restoreAfterDispatch();
-<<<<<<< HEAD
-        return invokeGuardedCallbackProd.apply(this, arguments);
-      }
-    };
-  }
-}
-
-export default invokeGuardedCallbackImpl;
-=======
         // we fall through and call the prod version instead
       }
     }
@@ -348,4 +213,3 @@ export default invokeGuardedCallbackImpl;
     }
   }
 }
->>>>>>> remotes/upstream/main

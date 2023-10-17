@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-(function() {
-=======
 (function () {
->>>>>>> remotes/upstream/main
   'use strict';
 
   class ReactImage0 extends React.Component {
@@ -250,11 +246,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           null,
           React.createElement(
@@ -287,11 +279,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           undefined,
           'Remove',
@@ -305,11 +293,7 @@
             target: '_blank',
             href: '/ads/manage/billing.php?act=10149999073643408',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           React.createElement(XUIText29, {x: 48})
         );
@@ -324,11 +308,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           null,
           React.createElement(
@@ -350,11 +330,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           null,
           React.createElement(
@@ -377,11 +353,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           undefined,
           'Lifetime',
@@ -391,33 +363,21 @@
       if (this.props.x === 207) {
         return React.createElement(
           'a',
-<<<<<<< HEAD
-          {href: '#', rel: undefined, onClick: function() {}},
-=======
           {href: '#', rel: undefined, onClick: function () {}},
->>>>>>> remotes/upstream/main
           'Create Ad Set'
         );
       }
       if (this.props.x === 209) {
         return React.createElement(
           'a',
-<<<<<<< HEAD
-          {href: '#', rel: undefined, onClick: function() {}},
-=======
           {href: '#', rel: undefined, onClick: function () {}},
->>>>>>> remotes/upstream/main
           'View Ad Set'
         );
       }
       if (this.props.x === 241) {
         return React.createElement(
           'a',
-<<<<<<< HEAD
-          {href: '#', rel: undefined, onClick: function() {}},
-=======
           {href: '#', rel: undefined, onClick: function () {}},
->>>>>>> remotes/upstream/main
           'Set a Limit'
         );
       }
@@ -431,11 +391,7 @@
             label: null,
             href: '#',
             rel: undefined,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
           },
           null,
           React.createElement(
@@ -495,11 +451,7 @@
           'button',
           {
             className: '_5n7z _4jy0 _4jy4 _517h _51sy _42ft',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -515,11 +467,7 @@
           {
             className: '_5n7z _2yak _4lj- _4jy0 _4jy4 _517h _51sy _42ft _42fr',
             disabled: true,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             'data-tooltip-content': 'You have no changes to publish',
             'data-hover': 'tooltip',
             label: null,
@@ -539,11 +487,7 @@
           'button',
           {
             className: '_u_k _4jy0 _4jy4 _517h _51sy _42ft',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -576,11 +520,7 @@
             'data-hover': 'tooltip',
             className: '_d2_ _u_k noMargin _4jy0 _4jy4 _517h _51sy _42ft',
             disabled: false,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -614,11 +554,7 @@
             'data-hover': 'tooltip',
             'data-tooltip-content': 'Revert',
             disabled: true,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -637,11 +573,7 @@
             'data-hover': 'tooltip',
             'data-tooltip-content': 'Delete',
             disabled: false,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -660,11 +592,7 @@
             'data-hover': 'tooltip',
             'data-tooltip-content': 'Duplicate',
             disabled: false,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -682,11 +610,7 @@
             className: '_u_k noMargin _p _4jy0 _4jy4 _517h _51sy _42ft',
             'data-hover': 'tooltip',
             'data-tooltip-content': 'Export & Import',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -706,11 +630,7 @@
             'data-tooltip-content': 'Create Report',
             disabled: false,
             style: {boxSizing: 'border-box', height: '28px', width: '48px'},
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -729,11 +649,7 @@
             'data-hover': 'tooltip',
             'data-tooltip-content': 'Campaign Tags',
             disabled: false,
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -755,11 +671,7 @@
           {
             className: '_3yz9 _1t-2 _50z- _50zy _50zz _50z- _5upp _42ft',
             size: 'small',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             type: 'button',
             title: 'Remove',
             'data-hover': undefined,
@@ -777,11 +689,7 @@
           'button',
           {
             className: '_5b5u _5b5v _4jy0 _4jy3 _517h _51sy _42ft',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -796,11 +704,7 @@
           'button',
           {
             className: '_1wdf _4jy0 _517i _517h _51sy _42ft',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -821,11 +725,7 @@
             className: '_u_k _3c5o _1-r0 _4jy0 _4jy4 _517h _51sy _42ft',
             'data-hover': 'tooltip',
             'data-tooltip-content': 'List Settings',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -846,11 +746,7 @@
             'data-tooltip-position': 'right',
             'data-tooltip-content': 'Campaigns',
             'data-hover': 'tooltip',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -874,11 +770,7 @@
             'data-tooltip-position': 'right',
             'data-tooltip-content': 'Ad Sets',
             'data-hover': 'tooltip',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -902,11 +794,7 @@
             'data-tooltip-position': 'right',
             'data-tooltip-content': 'Ads',
             'data-hover': 'tooltip',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             label: null,
             type: 'submit',
             value: '1',
@@ -1201,11 +1089,7 @@
       if (this.props.x === 16) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {className: '_3ut-', onClick: function() {}},
-=======
           {className: '_3ut-', onClick: function () {}},
->>>>>>> remotes/upstream/main
           React.createElement(
             'span',
             {className: '_3uu0'},
@@ -1981,11 +1865,7 @@
             disabled: true,
             name: 'filterUnpublished',
             value: 'on',
-<<<<<<< HEAD
-            onClick: function() {},
-=======
             onClick: function () {},
->>>>>>> remotes/upstream/main
             className: null,
             id: 'js_input_label_21',
             type: 'checkbox',
@@ -2002,11 +1882,7 @@
           {className: '_4h2r _55sg _kv1'},
           React.createElement('input', {
             checked: undefined,
-<<<<<<< HEAD
-            onChange: function() {},
-=======
             onChange: function () {},
->>>>>>> remotes/upstream/main
             className: null,
             type: 'checkbox',
           }),
@@ -2056,13 +1932,8 @@
           React.createElement(
             'span',
             {
-<<<<<<< HEAD
-              onMouseEnter: function() {},
-              onMouseLeave: function() {},
-=======
               onMouseEnter: function () {},
               onMouseLeave: function () {},
->>>>>>> remotes/upstream/main
               onMouseUp: undefined,
             },
             React.createElement('span', {className: '_3o_j'}),
@@ -2078,13 +1949,8 @@
           React.createElement(
             'span',
             {
-<<<<<<< HEAD
-              onMouseEnter: function() {},
-              onMouseLeave: function() {},
-=======
               onMouseEnter: function () {},
               onMouseLeave: function () {},
->>>>>>> remotes/upstream/main
               onMouseUp: undefined,
             },
             React.createElement('span', {className: '_3o_j'}),
@@ -2141,11 +2007,7 @@
             {className: '_3yz4', 'aria-hidden': false},
             React.createElement(
               'div',
-<<<<<<< HEAD
-              {onClick: function() {}, className: '_3yz5'},
-=======
               {onClick: function () {}, className: '_3yz5'},
->>>>>>> remotes/upstream/main
               React.createElement(ReactImage0, {x: 148}),
               React.createElement('div', {className: '_3yz7'}, 'Campaigns:'),
               React.createElement(
@@ -2319,17 +2181,10 @@
                   id: undefined,
                   maxLength: null,
                   value: 'Test Campaign',
-<<<<<<< HEAD
-                  onBlur: function() {},
-                  onChange: function() {},
-                  onFocus: function() {},
-                  onKeyDown: function() {},
-=======
                   onBlur: function () {},
                   onChange: function () {},
                   onFocus: function () {},
                   onKeyDown: function () {},
->>>>>>> remotes/upstream/main
                 }),
                 null
               ),
@@ -2415,11 +2270,7 @@
       if (this.props.x === 196) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {className: '_1-ly _59j9 _d9a', onClick: function() {}},
-=======
           {className: '_1-ly _59j9 _d9a', onClick: function () {}},
->>>>>>> remotes/upstream/main
           React.createElement(ReactImage0, {x: 195}),
           React.createElement('div', {className: '_vf7'}),
           React.createElement('div', {className: '_vf8'})
@@ -2428,11 +2279,7 @@
       if (this.props.x === 199) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {className: ' _1-lz _d9a', onClick: function() {}},
-=======
           {className: ' _1-lz _d9a', onClick: function () {}},
->>>>>>> remotes/upstream/main
           React.createElement(ReactImage0, {x: 198}),
           React.createElement('div', {className: '_vf7'}),
           React.createElement('div', {className: '_vf8'})
@@ -2915,22 +2762,14 @@
         return React.createElement(
           'div',
           {},
-<<<<<<< HEAD
-          React.createElement('div', {onWheel: function() {}})
-=======
           React.createElement('div', {onWheel: function () {}})
->>>>>>> remotes/upstream/main
         );
       }
       if (this.props.x === 292) {
         return React.createElement(
           'div',
           {},
-<<<<<<< HEAD
-          React.createElement('div', {onWheel: function() {}}, [
-=======
           React.createElement('div', {onWheel: function () {}}, [
->>>>>>> remotes/upstream/main
             React.createElement(
               'div',
               {key: 'campaign_group_errors_section98010048849317'},
@@ -2997,11 +2836,7 @@
             'data-tooltip-position': 'below',
             disabled: false,
             value: true,
-<<<<<<< HEAD
-            onToggle: function() {},
-=======
             onToggle: function () {},
->>>>>>> remotes/upstream/main
             className: '_128j _128k _128n',
             role: 'checkbox',
             'aria-checked': 'true',
@@ -3010,15 +2845,9 @@
             'div',
             {
               className: '_128o',
-<<<<<<< HEAD
-              onClick: function() {},
-              onKeyDown: function() {},
-              onMouseDown: function() {},
-=======
               onClick: function () {},
               onKeyDown: function () {},
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
               tabIndex: '0',
             },
             React.createElement('div', {className: '_128p'})
@@ -4242,11 +4071,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4292,11 +4117,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4318,11 +4139,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4344,11 +4161,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4370,11 +4183,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4396,11 +4205,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4422,11 +4227,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4448,11 +4249,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4474,11 +4271,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4500,11 +4293,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4526,11 +4315,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4552,11 +4337,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4578,11 +4359,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4604,11 +4381,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4630,11 +4403,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4656,11 +4425,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4682,11 +4447,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4708,11 +4469,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -4734,11 +4491,7 @@
             {
               className: '_4lg9',
               style: {height: 25},
-<<<<<<< HEAD
-              onMouseDown: function() {},
-=======
               onMouseDown: function () {},
->>>>>>> remotes/upstream/main
             },
             React.createElement('div', {
               className: '_4lga _4lgb',
@@ -5000,11 +4753,7 @@
       if (this.props.x === 341) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5016,11 +4765,7 @@
       if (this.props.x === 347) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _1kst _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _1kst _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5032,11 +4777,7 @@
       if (this.props.x === 353) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _1kst _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _1kst _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5048,11 +4789,7 @@
       if (this.props.x === 358) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5064,11 +4801,7 @@
       if (this.props.x === 363) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _54_9 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _54_9 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5080,11 +4813,7 @@
       if (this.props.x === 370) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5096,11 +4825,7 @@
       if (this.props.x === 375) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5112,11 +4837,7 @@
       if (this.props.x === 380) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5128,11 +4849,7 @@
       if (this.props.x === 385) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5144,11 +4861,7 @@
       if (this.props.x === 390) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5160,11 +4873,7 @@
       if (this.props.x === 395) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5176,11 +4885,7 @@
       if (this.props.x === 400) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5192,11 +4897,7 @@
       if (this.props.x === 405) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5208,11 +4909,7 @@
       if (this.props.x === 410) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5224,11 +4921,7 @@
       if (this.props.x === 415) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5240,11 +4933,7 @@
       if (this.props.x === 420) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5256,11 +4945,7 @@
       if (this.props.x === 425) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5272,11 +4957,7 @@
       if (this.props.x === 430) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5288,11 +4969,7 @@
       if (this.props.x === 435) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5304,11 +4981,7 @@
       if (this.props.x === 440) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5320,11 +4993,7 @@
       if (this.props.x === 445) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onClick: function() {}, className: '_54_8 _4h2r _2wzx'},
-=======
           {onClick: function () {}, className: '_54_8 _4h2r _2wzx'},
->>>>>>> remotes/upstream/main
           React.createElement(
             'div',
             {className: '_2eq6'},
@@ -5470,19 +5139,11 @@
         return React.createElement(
           'div',
           {
-<<<<<<< HEAD
-            onFocus: function() {},
-            onBlur: function() {},
-            onKeyDown: function() {},
-            onMouseDown: function() {},
-            onWheel: function() {},
-=======
             onFocus: function () {},
             onBlur: function () {},
             onKeyDown: function () {},
             onMouseDown: function () {},
             onWheel: function () {},
->>>>>>> remotes/upstream/main
             className: '_1t0r _1t0t _4jdr _1t0u',
             style: {width: 1209, zIndex: 99},
             tabIndex: 0,
@@ -5532,11 +5193,7 @@
           'div',
           {
             className: '_3h1i _1mie',
-<<<<<<< HEAD
-            onWheel: function() {},
-=======
             onWheel: function () {},
->>>>>>> remotes/upstream/main
             style: {height: 25, width: 1209},
           },
           React.createElement(
@@ -5588,11 +5245,7 @@
       if (this.props.x === 466) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {className: '_5d6f', tabIndex: '0', onKeyDown: function() {}},
-=======
           {className: '_5d6f', tabIndex: '0', onKeyDown: function () {}},
->>>>>>> remotes/upstream/main
           React.createElement(AdsSelectableFixedDataTable155, {x: 465})
         );
       }
@@ -5604,11 +5257,7 @@
       if (this.props.x === 467) {
         return React.createElement(
           'div',
-<<<<<<< HEAD
-          {onCopy: function() {}},
-=======
           {onCopy: function () {}},
->>>>>>> remotes/upstream/main
           React.createElement(AdsDataTableKeyboardSupportDecorator156, {x: 466})
         );
       }

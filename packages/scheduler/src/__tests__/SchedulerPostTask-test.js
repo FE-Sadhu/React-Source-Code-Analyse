@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -87,12 +83,8 @@ describe('SchedulerPostTask', () => {
     const scheduler = {};
     global.scheduler = scheduler;
 
-<<<<<<< HEAD
-    scheduler.postTask = function(callback, {priority, signal}) {
-=======
     scheduler.postTask = function (callback, {signal}) {
       const {priority} = signal;
->>>>>>> remotes/upstream/main
       const id = idCounter++;
       log(
         `Post Task ${id} [${priority === undefined ? '<default>' : priority}]`,
@@ -103,11 +95,6 @@ describe('SchedulerPostTask', () => {
       });
     };
 
-<<<<<<< HEAD
-    global.TaskController = class TaskController {
-      constructor() {
-        this.signal = {_controller: this};
-=======
     scheduler.yield = function ({signal}) {
       const {priority} = signal;
       const id = idCounter++;
@@ -128,7 +115,6 @@ describe('SchedulerPostTask', () => {
     global.TaskController = class TaskController {
       constructor({priority}) {
         this.signal = {_controller: this, priority};
->>>>>>> remotes/upstream/main
       }
       abort() {
         const task = taskQueue.get(this);
@@ -210,11 +196,7 @@ describe('SchedulerPostTask', () => {
       'Task 0 Fired',
       'A',
       'Yield at 5ms',
-<<<<<<< HEAD
-      'Post Task 1 [user-visible]',
-=======
       'Yield 1 [user-visible]',
->>>>>>> remotes/upstream/main
     ]);
 
     runtime.flushTasks();
@@ -357,11 +339,7 @@ describe('SchedulerPostTask', () => {
 
       // The continuation should be scheduled in a separate macrotask even
       // though there's time remaining.
-<<<<<<< HEAD
-      'Post Task 1 [user-visible]',
-=======
       'Yield 1 [user-visible]',
->>>>>>> remotes/upstream/main
     ]);
 
     // No time has elapsed
@@ -370,8 +348,6 @@ describe('SchedulerPostTask', () => {
     runtime.flushTasks();
     runtime.assertLog(['Task 1 Fired', 'Continuation Task']);
   });
-<<<<<<< HEAD
-=======
 
   describe('falls back to postTask for scheduling continuations when scheduler.yield is not available', () => {
     beforeEach(() => {
@@ -435,5 +411,4 @@ describe('SchedulerPostTask', () => {
       runtime.assertLog(['Task 1 Fired', 'Continuation Task']);
     });
   });
->>>>>>> remotes/upstream/main
 });

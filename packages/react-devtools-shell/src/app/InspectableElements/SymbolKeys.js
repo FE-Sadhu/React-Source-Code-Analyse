@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,10 +16,7 @@ const base = Object.create(Object.prototype, {
     enumerable: true,
     configurable: true,
   },
-<<<<<<< HEAD
-=======
   // $FlowFixMe[invalid-computed-prop]
->>>>>>> remotes/upstream/main
   [Symbol('enumerableSymbolBase')]: {
     value: 1,
     writable: true,
@@ -36,10 +29,7 @@ const base = Object.create(Object.prototype, {
     enumerable: false,
     configurable: true,
   },
-<<<<<<< HEAD
-=======
   // $FlowFixMe[invalid-computed-prop]
->>>>>>> remotes/upstream/main
   [Symbol('nonEnumerableSymbolBase')]: {
     value: 1,
     writable: true,
@@ -67,20 +57,14 @@ const data = Object.create(base, {
     enumerable: true,
     configurable: true,
   },
-<<<<<<< HEAD
-=======
   // $FlowFixMe[invalid-computed-prop]
->>>>>>> remotes/upstream/main
   [Symbol('nonEnumerableSymbol')]: {
     value: 2,
     writable: true,
     enumerable: false,
     configurable: true,
   },
-<<<<<<< HEAD
-=======
   // $FlowFixMe[invalid-computed-prop]
->>>>>>> remotes/upstream/main
   [Symbol('enumerableSymbol')]: {
     value: 3,
     writable: true,

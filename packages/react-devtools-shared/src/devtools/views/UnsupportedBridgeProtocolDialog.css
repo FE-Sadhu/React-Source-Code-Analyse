@@ -8,13 +8,6 @@
   margin-bottom: 0.5rem;  
 } 
 
-<<<<<<< HEAD
-.ReleaseNotesLink { 
-  color: var(--color-button-active);  
-}
-
-=======
->>>>>>> remotes/upstream/main
 .Version {
   color: var(--color-bridge-version-number);
   font-weight: bold;

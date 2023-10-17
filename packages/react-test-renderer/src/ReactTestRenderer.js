@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,18 +7,12 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {Fiber} from 'react-reconciler/src/ReactInternalTypes';
-import type {FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
-import type {Instance, TextInstance} from './ReactTestHostConfig';
-=======
 import type {Fiber, FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
 import type {
   PublicInstance,
   Instance,
   TextInstance,
 } from './ReactFiberConfigTestHost';
->>>>>>> remotes/upstream/main
 
 import * as React from 'react';
 import * as Scheduler from 'scheduler/unstable_mock';
@@ -40,11 +30,8 @@ import {
   FunctionComponent,
   ClassComponent,
   HostComponent,
-<<<<<<< HEAD
-=======
   HostHoistable,
   HostSingleton,
->>>>>>> remotes/upstream/main
   HostPortal,
   HostText,
   HostRoot,
@@ -63,11 +50,7 @@ import getComponentNameFromType from 'shared/getComponentNameFromType';
 import ReactVersion from 'shared/ReactVersion';
 import {checkPropStringCoercion} from 'shared/CheckStringCoercion';
 
-<<<<<<< HEAD
-import {getPublicInstance} from './ReactTestHostConfig';
-=======
 import {getPublicInstance} from './ReactFiberConfigTestHost';
->>>>>>> remotes/upstream/main
 import {ConcurrentRoot, LegacyRoot} from 'react-reconciler/src/ReactRootTags';
 import {allowConcurrentByDefault} from 'shared/ReactFeatureFlags';
 
@@ -91,29 +74,16 @@ type ReactTestRendererJSON = {
 };
 type ReactTestRendererNode = ReactTestRendererJSON | string;
 
-<<<<<<< HEAD
-type FindOptions = $Shape<{
-  // performs a "greedy" search: if a matching node is found, will continue
-  // to search within the matching node's children. (default: true)
-  deep: boolean,
-  ...
-}>;
-=======
 type FindOptions = {
   // performs a "greedy" search: if a matching node is found, will continue
   // to search within the matching node's children. (default: true)
   deep?: boolean,
 };
->>>>>>> remotes/upstream/main
 
 export type Predicate = (node: ReactTestInstance) => ?boolean;
 
 const defaultTestOptions = {
-<<<<<<< HEAD
-  createNodeMock: function() {
-=======
   createNodeMock: function () {
->>>>>>> remotes/upstream/main
     return null;
   },
 };
@@ -162,11 +132,7 @@ function toJSON(inst: Instance | TextInstance): ReactTestRendererNode | null {
   }
 }
 
-<<<<<<< HEAD
-function childrenToTree(node) {
-=======
 function childrenToTree(node: null | Fiber) {
->>>>>>> remotes/upstream/main
   if (!node) {
     return null;
   }
@@ -179,10 +145,7 @@ function childrenToTree(node: null | Fiber) {
   return flatten(children.map(toTree));
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function nodeAndSiblingsArray(nodeWithSibling) {
   const array = [];
   let node = nodeWithSibling;
@@ -193,10 +156,7 @@ function nodeAndSiblingsArray(nodeWithSibling) {
   return array;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function flatten(arr) {
   const result = [];
   const stack = [{i: 0, array: arr}];
@@ -216,11 +176,7 @@ function flatten(arr) {
   return result;
 }
 
-<<<<<<< HEAD
-function toTree(node: ?Fiber) {
-=======
 function toTree(node: null | Fiber): $FlowFixMe {
->>>>>>> remotes/upstream/main
   if (node == null) {
     return null;
   }
@@ -246,11 +202,8 @@ function toTree(node: null | Fiber): $FlowFixMe {
         instance: null,
         rendered: childrenToTree(node.child),
       };
-<<<<<<< HEAD
-=======
     case HostHoistable:
     case HostSingleton:
->>>>>>> remotes/upstream/main
     case HostComponent: {
       return {
         nodeType: 'host',
@@ -356,10 +309,6 @@ class ReactTestInstance {
     this._fiber = fiber;
   }
 
-<<<<<<< HEAD
-  get instance() {
-    if (this._fiber.tag === HostComponent) {
-=======
   get instance(): $FlowFixMe {
     const tag = this._fiber.tag;
     if (
@@ -367,18 +316,13 @@ class ReactTestInstance {
       tag === HostHoistable ||
       tag === HostSingleton
     ) {
->>>>>>> remotes/upstream/main
       return getPublicInstance(this._fiber.stateNode);
     } else {
       return this._fiber.stateNode;
     }
   }
 
-<<<<<<< HEAD
-  get type() {
-=======
   get type(): any {
->>>>>>> remotes/upstream/main
     return this._fiber.type;
   }
 
@@ -506,19 +450,13 @@ function propsMatch(props: Object, filter: Object): boolean {
   return true;
 }
 
-<<<<<<< HEAD
-=======
 // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
 function onRecoverableError(error) {
   // TODO: Expose onRecoverableError option to userspace
   // eslint-disable-next-line react-internal/no-production-logging, react-internal/warning-args
   console.error(error);
 }
 
-<<<<<<< HEAD
-function create(element: React$Element<any>, options: TestRendererOptions) {
-=======
 function create(
   element: React$Element<any>,
   options: TestRendererOptions,
@@ -532,17 +470,13 @@ function create(
   getInstance(): React$Component<any, any> | PublicInstance | null,
   unstable_flushSync: typeof flushSync,
 } {
->>>>>>> remotes/upstream/main
   let createNodeMock = defaultTestOptions.createNodeMock;
   let isConcurrent = false;
   let isStrictMode = false;
   let concurrentUpdatesByDefault = null;
   if (typeof options === 'object' && options !== null) {
     if (typeof options.createNodeMock === 'function') {
-<<<<<<< HEAD
-=======
       // $FlowFixMe[incompatible-type] found when upgrading Flow
->>>>>>> remotes/upstream/main
       createNodeMock = options.createNodeMock;
     }
     if (options.unstable_isConcurrent === true) {
@@ -559,11 +493,7 @@ function create(
     }
   }
   let container = {
-<<<<<<< HEAD
-    children: [],
-=======
     children: ([]: Array<Instance | TextInstance>),
->>>>>>> remotes/upstream/main
     createNodeMock,
     tag: 'CONTAINER',
   };
@@ -629,11 +559,7 @@ function create(
       }
       return toTree(root.current);
     },
-<<<<<<< HEAD
-    update(newElement: React$Element<any>) {
-=======
     update(newElement: React$Element<any>): number | void {
->>>>>>> remotes/upstream/main
       if (root == null || root.current == null) {
         return;
       }
@@ -644,10 +570,7 @@ function create(
         return;
       }
       updateContainer(null, root, null, null);
-<<<<<<< HEAD
-=======
       // $FlowFixMe[incompatible-type] found when upgrading Flow
->>>>>>> remotes/upstream/main
       container = null;
       root = null;
     },
@@ -667,11 +590,7 @@ function create(
     ({
       configurable: true,
       enumerable: true,
-<<<<<<< HEAD
-      get: function() {
-=======
       get: function () {
->>>>>>> remotes/upstream/main
         if (root === null) {
           throw new Error("Can't access .root on unmounted test renderer");
         }
@@ -684,10 +603,7 @@ function create(
         } else {
           // However, we give you the root if there's more than one root child.
           // We could make this the behavior for all cases but it would be a breaking change.
-<<<<<<< HEAD
-=======
           // $FlowFixMe[incompatible-use] found when upgrading Flow
->>>>>>> remotes/upstream/main
           return wrapFiber(root.current);
         }
       },
@@ -697,11 +613,7 @@ function create(
   return entry;
 }
 
-<<<<<<< HEAD
-const fiberToWrapper = new WeakMap();
-=======
 const fiberToWrapper = new WeakMap<Fiber, ReactTestInstance>();
->>>>>>> remotes/upstream/main
 function wrapFiber(fiber: Fiber): ReactTestInstance {
   let wrapper = fiberToWrapper.get(fiber);
   if (wrapper === undefined && fiber.alternate !== null) {

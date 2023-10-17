@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,24 +14,16 @@
  * environment.
  */
 
-<<<<<<< HEAD
-import type {ReactModel} from 'react-server/src/ReactFlightServer';
-=======
 import type {ReactClientValue} from 'react-server/src/ReactFlightServer';
->>>>>>> remotes/upstream/main
 import type {ServerContextJSONValue} from 'shared/ReactTypes';
 
 import {saveModule} from 'react-noop-renderer/flight-modules';
 
 import ReactFlightServer from 'react-server/flight';
 
-<<<<<<< HEAD
-type Destination = Array<string>;
-=======
 type Destination = Array<Uint8Array>;
 
 const textEncoder = new TextEncoder();
->>>>>>> remotes/upstream/main
 
 const ReactNoopFlightServer = ReactFlightServer({
   scheduleWork(callback: () => void) {
@@ -53,21 +41,6 @@ const ReactNoopFlightServer = ReactFlightServer({
   close(destination: Destination): void {},
   closeWithError(destination: Destination, error: mixed): void {},
   flushBuffered(destination: Destination): void {},
-<<<<<<< HEAD
-  stringToChunk(content: string): string {
-    return content;
-  },
-  stringToPrecomputedChunk(content: string): string {
-    return content;
-  },
-  isModuleReference(reference: Object): boolean {
-    return reference.$$typeof === Symbol.for('react.module.reference');
-  },
-  getModuleKey(reference: Object): Object {
-    return reference;
-  },
-  resolveModuleMetaData(
-=======
   stringToChunk(content: string): Uint8Array {
     return textEncoder.encode(content);
   },
@@ -87,16 +60,12 @@ const ReactNoopFlightServer = ReactFlightServer({
     return reference;
   },
   resolveClientReferenceMetadata(
->>>>>>> remotes/upstream/main
     config: void,
     reference: {$$typeof: symbol, value: any},
   ) {
     return saveModule(reference.value);
   },
-<<<<<<< HEAD
-=======
   prepareHostDispatcher() {},
->>>>>>> remotes/upstream/main
 });
 
 type Options = {
@@ -105,11 +74,7 @@ type Options = {
   identifierPrefix?: string,
 };
 
-<<<<<<< HEAD
-function render(model: ReactModel, options?: Options): Destination {
-=======
 function render(model: ReactClientValue, options?: Options): Destination {
->>>>>>> remotes/upstream/main
   const destination: Destination = [];
   const bundlerConfig = undefined;
   const request = ReactNoopFlightServer.createRequest(

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -47,14 +43,10 @@ type UseEditableValueState = {
   parsedValue: any,
 };
 
-<<<<<<< HEAD
-function useEditableValueReducer(state, action) {
-=======
 function useEditableValueReducer(
   state: UseEditableValueState,
   action: UseEditableValueAction,
 ) {
->>>>>>> remotes/upstream/main
   switch (action.type) {
     case 'RESET':
       return {
@@ -176,11 +168,7 @@ export function useLocalStorage<T>(
   const [storedValue, setStoredValue] = useState<any>(getValueFromLocalStorage);
 
   const setValue = useCallback(
-<<<<<<< HEAD
-    value => {
-=======
     (value: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       try {
         const valueToStore =
           value instanceof Function ? (value: any)(storedValue) : value;
@@ -203,10 +191,7 @@ export function useLocalStorage<T>(
   // Listen for changes to this local storage value made from other windows.
   // This enables the e.g. "⚛️ Elements" tab to update in response to changes from "⚛️ Settings".
   useLayoutEffect(() => {
-<<<<<<< HEAD
-=======
     // $FlowFixMe[missing-local-annot]
->>>>>>> remotes/upstream/main
     const onStorage = event => {
       const newValue = getValueFromLocalStorage();
       if (key === event.key && storedValue !== newValue) {
@@ -257,11 +242,7 @@ export function useModalDismissSignal(
     // Delay until after the current call stack is empty,
     // in case this effect is being run while an event is currently bubbling.
     // In that case, we don't want to listen to the pre-existing event.
-<<<<<<< HEAD
-    let timeoutID = setTimeout(() => {
-=======
     let timeoutID: null | TimeoutID = setTimeout(() => {
->>>>>>> remotes/upstream/main
       timeoutID = null;
 
       // It's important to listen to the ownerDocument to support the browser extension.

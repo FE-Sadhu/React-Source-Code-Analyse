@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -215,33 +211,19 @@ describe('ReactNativeAttributePayload', () => {
     expect(
       diff(
         {
-<<<<<<< HEAD
-          a: function() {
-            return 1;
-          },
-          b: function() {
-=======
           a: function () {
             return 1;
           },
           b: function () {
->>>>>>> remotes/upstream/main
             return 2;
           },
           c: 3,
         },
         {
-<<<<<<< HEAD
-          b: function() {
-            return 9;
-          },
-          c: function() {
-=======
           b: function () {
             return 9;
           },
           c: function () {
->>>>>>> remotes/upstream/main
             return 3;
           },
         },
@@ -254,20 +236,12 @@ describe('ReactNativeAttributePayload', () => {
     expect(
       diff(
         {
-<<<<<<< HEAD
-          a: function() {
-=======
           a: function () {
->>>>>>> remotes/upstream/main
             return 1;
           },
         },
         {
-<<<<<<< HEAD
-          a: function() {
-=======
           a: function () {
->>>>>>> remotes/upstream/main
             return 9;
           },
         },
@@ -281,22 +255,14 @@ describe('ReactNativeAttributePayload', () => {
       diff(
         {
           wrapper: {
-<<<<<<< HEAD
-            a: function() {
-=======
             a: function () {
->>>>>>> remotes/upstream/main
               return 1;
             },
           },
         },
         {
           wrapper: {
-<<<<<<< HEAD
-            a: function() {
-=======
             a: function () {
->>>>>>> remotes/upstream/main
               return 9;
             },
           },

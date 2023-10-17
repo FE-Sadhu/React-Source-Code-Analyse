@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,10 +7,7 @@
  * @flow
  */
 
-<<<<<<< HEAD
-=======
 import type {Size, IntrinsicSize, Rect} from './geometry';
->>>>>>> remotes/upstream/main
 import type {
   Interaction,
   MouseDownInteraction,
@@ -22,10 +15,6 @@ import type {
   MouseUpInteraction,
   WheelWithShiftInteraction,
 } from './useCanvasInteraction';
-<<<<<<< HEAD
-import type {Rect} from './geometry';
-=======
->>>>>>> remotes/upstream/main
 import type {ScrollState} from './utils/scrollState';
 import type {ViewRefs} from './Surface';
 import type {ViewState} from '../types';
@@ -89,11 +78,7 @@ export class VerticalScrollView extends View {
     this._setScrollState(this._scrollState);
   }
 
-<<<<<<< HEAD
-  desiredSize() {
-=======
   desiredSize(): Size | IntrinsicSize {
->>>>>>> remotes/upstream/main
     return this._contentView.desiredSize();
   }
 
@@ -210,11 +195,7 @@ export class VerticalScrollView extends View {
     }
   }
 
-<<<<<<< HEAD
-  _handleMouseMove(interaction: MouseMoveInteraction) {
-=======
   _handleMouseMove(interaction: MouseMoveInteraction): void | boolean {
->>>>>>> remotes/upstream/main
     if (!this._isPanning) {
       return;
     }

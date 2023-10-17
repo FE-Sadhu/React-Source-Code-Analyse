@@ -49,17 +49,6 @@ function handleRequest(res) {
 
 ### `react-dom`
 
-<<<<<<< HEAD
-See https://reactjs.org/docs/react-dom.html
-
-### `react-dom/client`
-
-See https://reactjs.org/docs/react-dom-client.html
-
-### `react-dom/server`
-
-See https://reactjs.org/docs/react-dom-server.html
-=======
 See https://react.dev/reference/react-dom
 
 ### `react-dom/client`
@@ -69,4 +58,3 @@ See https://react.dev/reference/react-dom/client
 ### `react-dom/server`
 
 See https://react.dev/reference/react-dom/server
->>>>>>> remotes/upstream/main

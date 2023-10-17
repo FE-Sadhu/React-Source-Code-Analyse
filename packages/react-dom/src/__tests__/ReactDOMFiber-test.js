@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,10 +24,7 @@ describe('ReactDOMFiber', () => {
   afterEach(() => {
     document.body.removeChild(container);
     container = null;
-<<<<<<< HEAD
-=======
     jest.restoreAllMocks();
->>>>>>> remotes/upstream/main
   });
 
   it('should render strings as children', () => {
@@ -214,19 +207,11 @@ describe('ReactDOMFiber', () => {
   const expectHTML = {ref: el => htmlEls.push(el)};
   const expectMath = {ref: el => mathEls.push(el)};
 
-<<<<<<< HEAD
-  const usePortal = function(tree) {
-    return ReactDOM.createPortal(tree, document.createElement('div'));
-  };
-
-  const assertNamespacesMatch = function(tree) {
-=======
   const usePortal = function (tree) {
     return ReactDOM.createPortal(tree, document.createElement('div'));
   };
 
   const assertNamespacesMatch = function (tree) {
->>>>>>> remotes/upstream/main
     const testContainer = document.createElement('div');
     svgEls = [];
     htmlEls = [];
@@ -733,10 +718,7 @@ describe('ReactDOMFiber', () => {
     );
   });
 
-<<<<<<< HEAD
-=======
   // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
   it('should pass portal context when rendering subtree elsewhere', () => {
     const portalContainer = document.createElement('div');
 
@@ -771,10 +753,7 @@ describe('ReactDOMFiber', () => {
     expect(portalContainer.innerHTML).toBe('<div>bar</div>');
   });
 
-<<<<<<< HEAD
-=======
   // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
   it('should update portal context if it changes due to setState', () => {
     const portalContainer = document.createElement('div');
 
@@ -819,10 +798,7 @@ describe('ReactDOMFiber', () => {
     expect(container.innerHTML).toBe('');
   });
 
-<<<<<<< HEAD
-=======
   // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
   it('should update portal context if it changes due to re-render', () => {
     const portalContainer = document.createElement('div');
 
@@ -1182,19 +1158,11 @@ describe('ReactDOMFiber', () => {
     expect(ops).toEqual(['A']);
 
     if (__DEV__) {
-<<<<<<< HEAD
-      expect(console.error.calls.count()).toBe(2);
-      expect(console.error.calls.argsFor(0)[0]).toMatch(
-        'ReactDOM.render is no longer supported in React 18',
-      );
-      expect(console.error.calls.argsFor(1)[0]).toMatch(
-=======
       expect(console.error).toHaveBeenCalledTimes(2);
       expect(console.error.mock.calls[0][0]).toMatch(
         'ReactDOM.render is no longer supported in React 18',
       );
       expect(console.error.mock.calls[1][0]).toMatch(
->>>>>>> remotes/upstream/main
         'ReactDOM.render is no longer supported in React 18',
       );
     }
@@ -1249,13 +1217,7 @@ describe('ReactDOMFiber', () => {
     expect(container.innerHTML).toBe('<div>bar</div>');
     // then we mess with the DOM before an update
     container.innerHTML = '<div>MEOW.</div>';
-<<<<<<< HEAD
-    expect(() =>
-      ReactDOM.render(<div>baz</div>, container),
-    ).toErrorDev(
-=======
     expect(() => ReactDOM.render(<div>baz</div>, container)).toErrorDev(
->>>>>>> remotes/upstream/main
       'render(...): ' +
         'It looks like the React-rendered content of this container was ' +
         'removed without using React. This is not supported and will ' +
@@ -1272,13 +1234,7 @@ describe('ReactDOMFiber', () => {
     expect(container.innerHTML).toBe('<div>bar</div>');
     // then we mess with the DOM before an update
     container.innerHTML = '';
-<<<<<<< HEAD
-    expect(() =>
-      ReactDOM.render(<div>baz</div>, container),
-    ).toErrorDev(
-=======
     expect(() => ReactDOM.render(<div>baz</div>, container)).toErrorDev(
->>>>>>> remotes/upstream/main
       'render(...): ' +
         'It looks like the React-rendered content of this container was ' +
         'removed without using React. This is not supported and will ' +
@@ -1305,11 +1261,7 @@ describe('ReactDOMFiber', () => {
     let actualDocument;
     let textNode;
 
-<<<<<<< HEAD
-    spyOnDevAndProd(iframeContainer, 'appendChild').and.callFake(node => {
-=======
     spyOnDevAndProd(iframeContainer, 'appendChild').mockImplementation(node => {
->>>>>>> remotes/upstream/main
       actualDocument = node.ownerDocument;
       textNode = node;
     });

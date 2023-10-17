@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,13 +18,10 @@ let NormalPriority;
 let IdlePriority;
 let runWithPriority;
 let startTransition;
-<<<<<<< HEAD
-=======
 let waitForAll;
 let waitForPaint;
 let assertLog;
 let waitFor;
->>>>>>> remotes/upstream/main
 
 describe('ReactSchedulerIntegration', () => {
   beforeEach(() => {
@@ -37,24 +30,17 @@ describe('ReactSchedulerIntegration', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-    act = require('jest-react').act;
-=======
     act = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
     NormalPriority = Scheduler.unstable_NormalPriority;
     IdlePriority = Scheduler.unstable_IdlePriority;
     runWithPriority = Scheduler.unstable_runWithPriority;
     startTransition = React.startTransition;
-<<<<<<< HEAD
-=======
 
     const InternalTestUtils = require('internal-test-utils');
     waitForAll = InternalTestUtils.waitForAll;
     waitForPaint = InternalTestUtils.waitForPaint;
     assertLog = InternalTestUtils.assertLog;
     waitFor = InternalTestUtils.waitFor;
->>>>>>> remotes/upstream/main
   });
 
   // Note: This is based on a similar component we use in www. We can delete
@@ -74,17 +60,6 @@ describe('ReactSchedulerIntegration', () => {
     const {useEffect, useLayoutEffect} = React;
     function Effects({step}) {
       useLayoutEffect(() => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Layout Effect');
-        Scheduler.unstable_scheduleCallback(NormalPriority, () =>
-          Scheduler.unstable_yieldValue(
-            'Scheduled Normal Callback from Layout Effect',
-          ),
-        );
-      });
-      useEffect(() => {
-        Scheduler.unstable_yieldValue('Passive Effect');
-=======
         Scheduler.log('Layout Effect');
         Scheduler.unstable_scheduleCallback(NormalPriority, () =>
           Scheduler.log('Scheduled Normal Callback from Layout Effect'),
@@ -92,37 +67,18 @@ describe('ReactSchedulerIntegration', () => {
       });
       useEffect(() => {
         Scheduler.log('Passive Effect');
->>>>>>> remotes/upstream/main
       });
       return null;
     }
     function CleanupEffect() {
       useLayoutEffect(() => () => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Cleanup Layout Effect');
-        Scheduler.unstable_scheduleCallback(NormalPriority, () =>
-          Scheduler.unstable_yieldValue(
-            'Scheduled Normal Callback from Cleanup Layout Effect',
-          ),
-=======
         Scheduler.log('Cleanup Layout Effect');
         Scheduler.unstable_scheduleCallback(NormalPriority, () =>
           Scheduler.log('Scheduled Normal Callback from Cleanup Layout Effect'),
->>>>>>> remotes/upstream/main
         );
       });
       return null;
     }
-<<<<<<< HEAD
-    await act(async () => {
-      ReactNoop.render(<CleanupEffect />);
-    });
-    expect(Scheduler).toHaveYielded([]);
-    await act(async () => {
-      ReactNoop.render(<Effects />);
-    });
-    expect(Scheduler).toHaveYielded([
-=======
     await act(() => {
       ReactNoop.render(<CleanupEffect />);
     });
@@ -131,7 +87,6 @@ describe('ReactSchedulerIntegration', () => {
       ReactNoop.render(<Effects />);
     });
     assertLog([
->>>>>>> remotes/upstream/main
       'Cleanup Layout Effect',
       'Layout Effect',
       'Passive Effect',
@@ -141,42 +96,11 @@ describe('ReactSchedulerIntegration', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  it('requests a paint after committing', () => {
-=======
   it('requests a paint after committing', async () => {
->>>>>>> remotes/upstream/main
     const scheduleCallback = Scheduler.unstable_scheduleCallback;
 
     const root = ReactNoop.createRoot();
     root.render('Initial');
-<<<<<<< HEAD
-    Scheduler.unstable_flushAll();
-
-    scheduleCallback(NormalPriority, () => Scheduler.unstable_yieldValue('A'));
-    scheduleCallback(NormalPriority, () => Scheduler.unstable_yieldValue('B'));
-    scheduleCallback(NormalPriority, () => Scheduler.unstable_yieldValue('C'));
-
-    // Schedule a React render. React will request a paint after committing it.
-    if (gate(flags => flags.enableSyncDefaultUpdates)) {
-      React.startTransition(() => {
-        root.render('Update');
-      });
-    } else {
-      root.render('Update');
-    }
-
-    // Advance time just to be sure the next tasks have lower priority
-    Scheduler.unstable_advanceTime(2000);
-
-    scheduleCallback(NormalPriority, () => Scheduler.unstable_yieldValue('D'));
-    scheduleCallback(NormalPriority, () => Scheduler.unstable_yieldValue('E'));
-
-    // Flush everything up to the next paint. Should yield after the
-    // React commit.
-    Scheduler.unstable_flushUntilNextPaint();
-    expect(Scheduler).toHaveYielded(['A', 'B', 'C']);
-=======
     await waitForAll([]);
     expect(root).toMatchRenderedOutput('Initial');
 
@@ -205,17 +129,12 @@ describe('ReactSchedulerIntegration', () => {
 
     // Now flush the rest of the work.
     await waitForAll(['D', 'E']);
->>>>>>> remotes/upstream/main
   });
 
   // @gate www
   it('idle updates are not blocked by offscreen work', async () => {
     function Text({text}) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue(text);
-=======
       Scheduler.log(text);
->>>>>>> remotes/upstream/main
       return text;
     }
 
@@ -235,11 +154,7 @@ describe('ReactSchedulerIntegration', () => {
       root.render(<App label="A" />);
 
       // Commit the visible content
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint(['Visible: A']);
-=======
       await waitForPaint(['Visible: A']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           Visible: A
@@ -254,11 +169,7 @@ describe('ReactSchedulerIntegration', () => {
       });
 
       // The next commit should only include the visible content
-<<<<<<< HEAD
-      expect(Scheduler).toFlushUntilNextPaint(['Visible: B']);
-=======
       await waitForPaint(['Visible: B']);
->>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           Visible: B
@@ -268,11 +179,7 @@ describe('ReactSchedulerIntegration', () => {
     });
 
     // The hidden content commits later
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Hidden: B']);
-=======
     assertLog(['Hidden: B']);
->>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Visible: B<div hidden={true}>Hidden: B</div>
@@ -296,11 +203,7 @@ describe(
           ...actual,
           unstable_shouldYield() {
             if (logDuringShouldYield) {
-<<<<<<< HEAD
-              actual.unstable_yieldValue('shouldYield');
-=======
               actual.log('shouldYield');
->>>>>>> remotes/upstream/main
             }
             return actual.unstable_shouldYield();
           },
@@ -311,8 +214,6 @@ describe(
       ReactNoop = require('react-noop-renderer');
       Scheduler = require('scheduler');
       startTransition = React.startTransition;
-<<<<<<< HEAD
-=======
 
       const InternalTestUtils = require('internal-test-utils');
       waitForAll = InternalTestUtils.waitForAll;
@@ -320,7 +221,6 @@ describe(
       assertLog = InternalTestUtils.assertLog;
       waitFor = InternalTestUtils.waitFor;
       act = InternalTestUtils.act;
->>>>>>> remotes/upstream/main
     });
 
     afterEach(() => {
@@ -364,13 +264,8 @@ describe(
 
       await act(async () => {
         ReactNoop.render(<App />);
-<<<<<<< HEAD
-        expect(Scheduler).toFlushUntilNextPaint([]);
-        expect(Scheduler).toFlushUntilNextPaint([]);
-=======
         await waitForPaint([]);
         await waitForPaint([]);
->>>>>>> remotes/upstream/main
       });
     });
 
@@ -382,11 +277,7 @@ describe(
       // Scheduler API. That being said, feel free to rewrite or delete this
       // test if/when the API changes.
       function Text({text}) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(text);
-=======
         Scheduler.log(text);
->>>>>>> remotes/upstream/main
         return text;
       }
 
@@ -405,21 +296,12 @@ describe(
         startTransition(() => {
           ReactNoop.render(<App />);
         });
-<<<<<<< HEAD
-        expect(Scheduler).toFlushAndYieldThrough(['A']);
-=======
         await waitFor(['A']);
->>>>>>> remotes/upstream/main
 
         // Start logging whenever shouldYield is called
         logDuringShouldYield = true;
         // Let's call it once to confirm the mock actually works
-<<<<<<< HEAD
-        Scheduler.unstable_shouldYield();
-        expect(Scheduler).toHaveYielded(['shouldYield']);
-=======
         await waitFor(['shouldYield']);
->>>>>>> remotes/upstream/main
 
         // Expire the task
         Scheduler.unstable_advanceTime(10000);
@@ -432,23 +314,13 @@ describe(
         startTransition(() => {
           ReactNoop.render(<App />);
         });
-<<<<<<< HEAD
-
-        // Because the render expired, React should finish the tree without
-        // consulting `shouldYield` again
-        Scheduler.unstable_flushNumberOfYields(1);
-        expect(Scheduler).toHaveYielded(['B', 'C']);
-=======
         // Because the render expired, React should finish the tree without
         // consulting `shouldYield` again
         await waitFor(['B', 'C']);
->>>>>>> remotes/upstream/main
       });
     });
   },
 );
-<<<<<<< HEAD
-=======
 
 describe('`act` bypasses Scheduler methods completely,', () => {
   let infiniteLoopGuard;
@@ -517,4 +389,3 @@ describe('`act` bypasses Scheduler methods completely,', () => {
     );
   });
 });
->>>>>>> remotes/upstream/main

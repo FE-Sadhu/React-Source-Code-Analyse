@@ -2,14 +2,10 @@
 
 /* eslint-disable no-for-of-loops/no-for-of-loops */
 
-<<<<<<< HEAD
-const GATE_VERSION_STR = '@reactVersion ';
-=======
 const getComments = require('./getComments');
 
 const GATE_VERSION_STR = '@reactVersion ';
 const REACT_VERSION_ENV = process.env.REACT_VERSION;
->>>>>>> remotes/upstream/main
 
 function transform(babel) {
   const {types: t} = babel;
@@ -30,33 +26,6 @@ function transform(babel) {
       return null;
     }
 
-<<<<<<< HEAD
-    let conditions = null;
-    for (const line of comments) {
-      const commentStr = line.value.trim();
-      if (commentStr.startsWith(GATE_VERSION_STR)) {
-        const condition = t.stringLiteral(
-          commentStr.slice(GATE_VERSION_STR.length)
-        );
-        if (conditions === null) {
-          conditions = [condition];
-        } else {
-          conditions.push(condition);
-        }
-      }
-    }
-
-    if (conditions !== null) {
-      let condition = conditions[0];
-      for (let i = 1; i < conditions.length; i++) {
-        const right = conditions[i];
-        condition = t.logicalExpression('&&', condition, right);
-      }
-      return condition;
-    } else {
-      return null;
-    }
-=======
     const resultingCondition = comments.reduce(
       (accumulatedCondition, commentLine) => {
         const commentStr = commentLine.value.trim();
@@ -80,7 +49,6 @@ function transform(babel) {
     }
 
     return t.stringLiteral(resultingCondition);
->>>>>>> remotes/upstream/main
   }
 
   return {
@@ -98,11 +66,7 @@ function transform(babel) {
                 callee.name === 'it' ||
                 callee.name === 'fit'
               ) {
-<<<<<<< HEAD
-                const comments = statement.leadingComments;
-=======
                 const comments = getComments(path);
->>>>>>> remotes/upstream/main
                 const condition = buildGateVersionCondition(comments);
                 if (condition !== null) {
                   callee.name =
@@ -110,11 +74,7 @@ function transform(babel) {
                       ? '_test_react_version_focus'
                       : '_test_react_version';
                   expression.arguments = [condition, ...expression.arguments];
-<<<<<<< HEAD
-                } else {
-=======
                 } else if (REACT_VERSION_ENV) {
->>>>>>> remotes/upstream/main
                   callee.name = '_test_ignore_for_react_version';
                 }
               }
@@ -128,22 +88,14 @@ function transform(babel) {
                 callee.property.type === 'Identifier' &&
                 callee.property.name === 'only'
               ) {
-<<<<<<< HEAD
-                const comments = statement.leadingComments;
-=======
                 const comments = getComments(path);
->>>>>>> remotes/upstream/main
                 const condition = buildGateVersionCondition(comments);
                 if (condition !== null) {
                   statement.expression = t.callExpression(
                     t.identifier('_test_react_version_focus'),
                     [condition, ...expression.arguments]
                   );
-<<<<<<< HEAD
-                } else {
-=======
                 } else if (REACT_VERSION_ENV) {
->>>>>>> remotes/upstream/main
                   statement.expression = t.callExpression(
                     t.identifier('_test_ignore_for_react_version'),
                     expression.arguments

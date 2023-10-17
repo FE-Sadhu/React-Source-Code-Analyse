@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -47,11 +43,7 @@ export default function EditableName({
   const [isValid, setIsValid] = useState(false);
 
   const handleChange = useCallback(
-<<<<<<< HEAD
-    ({target}) => {
-=======
     ({target}: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       let value = target.value;
       if (!allowWhiteSpace) {
         value = value.trim();
@@ -69,11 +61,7 @@ export default function EditableName({
   );
 
   const handleKeyDown = useCallback(
-<<<<<<< HEAD
-    event => {
-=======
     (event: $FlowFixMe) => {
->>>>>>> remotes/upstream/main
       // Prevent keydown events from e.g. change selected element in the tree
       event.stopPropagation();
 

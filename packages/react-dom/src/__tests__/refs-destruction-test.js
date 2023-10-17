@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,12 +30,9 @@ describe('refs-destruction', () => {
     }
 
     TestComponent = class extends React.Component {
-<<<<<<< HEAD
-=======
       theInnerDivRef = React.createRef();
       theInnerClassComponentRef = React.createRef();
 
->>>>>>> remotes/upstream/main
       render() {
         if (this.props.destroy) {
           return <div />;
@@ -53,13 +46,8 @@ describe('refs-destruction', () => {
         } else {
           return (
             <div>
-<<<<<<< HEAD
-              <div ref="theInnerDiv" />
-              <ClassComponent ref="theInnerClassComponent" />
-=======
               <div ref={this.theInnerDivRef} />
               <ClassComponent ref={this.theInnerClassComponentRef} />
->>>>>>> remotes/upstream/main
             </div>
           );
         }
@@ -70,20 +58,6 @@ describe('refs-destruction', () => {
   it('should remove refs when destroying the parent', () => {
     const container = document.createElement('div');
     const testInstance = ReactDOM.render(<TestComponent />, container);
-<<<<<<< HEAD
-    expect(ReactTestUtils.isDOMComponent(testInstance.refs.theInnerDiv)).toBe(
-      true,
-    );
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(2);
-    ReactDOM.unmountComponentAtNode(container);
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(0);
-=======
 
     expect(
       ReactTestUtils.isDOMComponent(testInstance.theInnerDivRef.current),
@@ -94,26 +68,11 @@ describe('refs-destruction', () => {
 
     expect(testInstance.theInnerDivRef.current).toBe(null);
     expect(testInstance.theInnerClassComponentRef.current).toBe(null);
->>>>>>> remotes/upstream/main
   });
 
   it('should remove refs when destroying the child', () => {
     const container = document.createElement('div');
     const testInstance = ReactDOM.render(<TestComponent />, container);
-<<<<<<< HEAD
-    expect(ReactTestUtils.isDOMComponent(testInstance.refs.theInnerDiv)).toBe(
-      true,
-    );
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(2);
-    ReactDOM.render(<TestComponent destroy={true} />, container);
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(0);
-=======
     expect(
       ReactTestUtils.isDOMComponent(testInstance.theInnerDivRef.current),
     ).toBe(true);
@@ -123,26 +82,11 @@ describe('refs-destruction', () => {
 
     expect(testInstance.theInnerDivRef.current).toBe(null);
     expect(testInstance.theInnerClassComponentRef.current).toBe(null);
->>>>>>> remotes/upstream/main
   });
 
   it('should remove refs when removing the child ref attribute', () => {
     const container = document.createElement('div');
     const testInstance = ReactDOM.render(<TestComponent />, container);
-<<<<<<< HEAD
-    expect(ReactTestUtils.isDOMComponent(testInstance.refs.theInnerDiv)).toBe(
-      true,
-    );
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(2);
-    ReactDOM.render(<TestComponent removeRef={true} />, container);
-    expect(
-      Object.keys(testInstance.refs || {}).filter(key => testInstance.refs[key])
-        .length,
-    ).toEqual(0);
-=======
 
     expect(
       ReactTestUtils.isDOMComponent(testInstance.theInnerDivRef.current),
@@ -153,7 +97,6 @@ describe('refs-destruction', () => {
 
     expect(testInstance.theInnerDivRef.current).toBe(null);
     expect(testInstance.theInnerClassComponentRef.current).toBe(null);
->>>>>>> remotes/upstream/main
   });
 
   it('should not error when destroying child with ref asynchronously', () => {
@@ -171,13 +114,8 @@ describe('refs-destruction', () => {
       componentWillUnmount() {
         const self = this;
         // some async animation
-<<<<<<< HEAD
-        setTimeout(function() {
-          expect(function() {
-=======
         setTimeout(function () {
           expect(function () {
->>>>>>> remotes/upstream/main
             ReactDOM.unmountComponentAtNode(self.div);
           }).not.toThrow();
           document.body.removeChild(self.div);
@@ -193,11 +131,7 @@ describe('refs-destruction', () => {
       render() {
         return (
           <Modal>
-<<<<<<< HEAD
-            <a ref="ref" />
-=======
             <a ref={React.createRef()} />
->>>>>>> remotes/upstream/main
           </Modal>
         );
       }

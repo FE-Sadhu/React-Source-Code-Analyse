@@ -79,8 +79,6 @@
 .WarningIcon {
   color: var(--color-console-warning-icon);
 }
-<<<<<<< HEAD
-=======
 
 .ZeroElementsNotice {
   padding-left: 1em;
@@ -100,4 +98,3 @@
 .Link {
   color: var(--color-button-active);
 }
->>>>>>> remotes/upstream/main

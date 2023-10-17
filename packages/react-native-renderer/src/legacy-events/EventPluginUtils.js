@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,14 +30,8 @@ export function setComponentTree(
   }
 }
 
-<<<<<<< HEAD
-let validateEventDispatches;
-if (__DEV__) {
-  validateEventDispatches = function(event) {
-=======
 function validateEventDispatches(event) {
   if (__DEV__) {
->>>>>>> remotes/upstream/main
     const dispatchListeners = event._dispatchListeners;
     const dispatchInstances = event._dispatchInstances;
 
@@ -62,11 +52,7 @@ function validateEventDispatches(event) {
     if (instancesIsArr !== listenersIsArr || instancesLen !== listenersLen) {
       console.error('EventPluginUtils: Invalid `event`.');
     }
-<<<<<<< HEAD
-  };
-=======
   }
->>>>>>> remotes/upstream/main
 }
 
 /**

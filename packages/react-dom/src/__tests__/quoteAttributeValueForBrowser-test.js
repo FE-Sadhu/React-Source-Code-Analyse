@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -55,11 +51,7 @@ describe('quoteAttributeValueForBrowser', () => {
 
   it('object is passed to a string inside attributes', () => {
     const sampleObject = {
-<<<<<<< HEAD
-      toString: function() {
-=======
       toString: function () {
->>>>>>> remotes/upstream/main
         return 'ponys';
       },
     };

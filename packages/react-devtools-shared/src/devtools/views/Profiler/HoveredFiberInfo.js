@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -48,15 +44,8 @@ export default function HoveredFiberInfo({fiberData}: Props): React.Node {
   for (i = 0; i < commitIndices.length; i++) {
     const commitIndex = commitIndices[i];
     if (selectedCommitIndex === commitIndex) {
-<<<<<<< HEAD
-      const {
-        fiberActualDurations,
-        fiberSelfDurations,
-      } = profilerStore.getCommitData(((rootID: any): number), commitIndex);
-=======
       const {fiberActualDurations, fiberSelfDurations} =
         profilerStore.getCommitData(((rootID: any): number), commitIndex);
->>>>>>> remotes/upstream/main
       const actualDuration = fiberActualDurations.get(id) || 0;
       const selfDuration = fiberSelfDurations.get(id) || 0;
 

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -138,15 +134,9 @@ function decodeBase64String(encoded: string): Object {
 
 function extractAndLoadSourceMapJSON(
   locationKeyToHookSourceAndMetadata: LocationKeyToHookSourceAndMetadata,
-<<<<<<< HEAD
-): Promise<*> {
-  // Deduplicate fetches, since there can be multiple location keys per source map.
-  const dedupedFetchPromises = new Map();
-=======
 ): Promise<Array<$Call<<T>(p: Promise<T> | T) => T, Promise<void>>>> {
   // Deduplicate fetches, since there can be multiple location keys per source map.
   const dedupedFetchPromises = new Map<string, Promise<$FlowFixMe>>();
->>>>>>> remotes/upstream/main
 
   if (__DEBUG__) {
     console.log(
@@ -159,12 +149,8 @@ function extractAndLoadSourceMapJSON(
   const setterPromises = [];
   locationKeyToHookSourceAndMetadata.forEach(hookSourceAndMetadata => {
     const sourceMapRegex = / ?sourceMappingURL=([^\s'"]+)/gm;
-<<<<<<< HEAD
-    const runtimeSourceCode = ((hookSourceAndMetadata.runtimeSourceCode: any): string);
-=======
     const runtimeSourceCode =
       ((hookSourceAndMetadata.runtimeSourceCode: any): string);
->>>>>>> remotes/upstream/main
 
     // TODO (named hooks) Search for our custom metadata first.
     // If it's found, we should use it rather than source maps.
@@ -329,11 +315,7 @@ function extractAndLoadSourceMapJSON(
 
 function fetchFile(
   url: string,
-<<<<<<< HEAD
-  markName?: string = 'fetchFile',
-=======
   markName: string = 'fetchFile',
->>>>>>> remotes/upstream/main
 ): Promise<string> {
   return withCallbackPerfMeasurements(`${markName}("${url}")`, done => {
     return new Promise((resolve, reject) => {
@@ -434,12 +416,8 @@ function initializeHookSourceAndMetadata(
   hooksList: Array<HooksNode>,
 ): LocationKeyToHookSourceAndMetadata {
   // Create map of unique source locations (file names plus line and column numbers) to metadata about hooks.
-<<<<<<< HEAD
-  const locationKeyToHookSourceAndMetadata: LocationKeyToHookSourceAndMetadata = new Map();
-=======
   const locationKeyToHookSourceAndMetadata: LocationKeyToHookSourceAndMetadata =
     new Map();
->>>>>>> remotes/upstream/main
   for (let i = 0; i < hooksList.length; i++) {
     const hook = hooksList[i];
 
@@ -483,15 +461,9 @@ function isUnnamedBuiltInHook(hook: HooksNode) {
 function loadSourceFiles(
   locationKeyToHookSourceAndMetadata: LocationKeyToHookSourceAndMetadata,
   fetchFileWithCaching: FetchFileWithCaching | null,
-<<<<<<< HEAD
-): Promise<*> {
-  // Deduplicate fetches, since there can be multiple location keys per file.
-  const dedupedFetchPromises = new Map();
-=======
 ): Promise<Array<$Call<<T>(p: Promise<T> | T) => T, Promise<void>>>> {
   // Deduplicate fetches, since there can be multiple location keys per file.
   const dedupedFetchPromises = new Map<string, Promise<$FlowFixMe>>();
->>>>>>> remotes/upstream/main
 
   const setterPromises = [];
   locationKeyToHookSourceAndMetadata.forEach(hookSourceAndMetadata => {

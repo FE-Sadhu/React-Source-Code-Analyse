@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -59,15 +55,9 @@ export function importFile(file: File): TimelineData | Error {
   let record = fileNameToProfilerDataMap.get(fileName);
 
   if (!record) {
-<<<<<<< HEAD
-    const callbacks = new Set();
-    const wakeable: Wakeable = {
-      then(callback) {
-=======
     const callbacks = new Set<() => mixed>();
     const wakeable: Wakeable = {
       then(callback: () => mixed) {
->>>>>>> remotes/upstream/main
         callbacks.add(callback);
       },
 
@@ -89,12 +79,8 @@ export function importFile(file: File): TimelineData | Error {
     importFileWorker(file).then(data => {
       switch (data.status) {
         case 'SUCCESS':
-<<<<<<< HEAD
-          const resolvedRecord = ((newRecord: any): ResolvedRecord<TimelineData>);
-=======
           const resolvedRecord =
             ((newRecord: any): ResolvedRecord<TimelineData>);
->>>>>>> remotes/upstream/main
           resolvedRecord.status = Resolved;
           resolvedRecord.value = data.processedData;
           break;

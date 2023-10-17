@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -101,11 +97,7 @@ function handleGlobalFocusVisibleEvent(
 
 function handleFocusVisibleTargetEvents(
   event: SyntheticEvent<EventTarget>,
-<<<<<<< HEAD
-  callback,
-=======
   callback: boolean => void,
->>>>>>> remotes/upstream/main
 ): void {
   if (event.type === 'keydown') {
     const {nativeEvent} = (event: any);
@@ -133,16 +125,10 @@ function isRelatedTargetWithin(
 }
 
 function setFocusVisibleListeners(
-<<<<<<< HEAD
-  focusVisibleHandles,
-  focusTarget: EventTarget,
-  callback,
-=======
   // $FlowFixMe[missing-local-annot]
   focusVisibleHandles,
   focusTarget: EventTarget,
   callback: boolean => void,
->>>>>>> remotes/upstream/main
 ) {
   focusVisibleHandles.forEach(focusVisibleHandle => {
     focusVisibleHandle.setListener(focusTarget, event =>
@@ -302,11 +288,7 @@ export function useFocusWithin<T>(
         // Handle focus visible
         setFocusVisibleListeners(
           focusVisibleHandles,
-<<<<<<< HEAD
-          // $FlowFixMe focusWithinTarget is not null here
-=======
           // $FlowFixMe[incompatible-call] focusWithinTarget is not null here
->>>>>>> remotes/upstream/main
           focusWithinTarget,
           isFocusVisible => {
             if (state.isFocused && state.isFocusVisible !== isFocusVisible) {
@@ -319,11 +301,7 @@ export function useFocusWithin<T>(
         );
 
         // Handle focus
-<<<<<<< HEAD
-        // $FlowFixMe focusWithinTarget is not null here
-=======
         // $FlowFixMe[incompatible-call] focusWithinTarget is not null here
->>>>>>> remotes/upstream/main
         focusHandle.setListener(focusWithinTarget, (event: FocusEvent) => {
           if (disabled) {
             return;
@@ -350,11 +328,7 @@ export function useFocusWithin<T>(
         });
 
         // Handle blur
-<<<<<<< HEAD
-        // $FlowFixMe focusWithinTarget is not null here
-=======
         // $FlowFixMe[incompatible-call] focusWithinTarget is not null here
->>>>>>> remotes/upstream/main
         blurHandle.setListener(focusWithinTarget, (event: FocusEvent) => {
           if (disabled) {
             return;
@@ -380,11 +354,7 @@ export function useFocusWithin<T>(
 
         // Handle before blur. This is a special
         // React provided event.
-<<<<<<< HEAD
-        // $FlowFixMe focusWithinTarget is not null here
-=======
         // $FlowFixMe[incompatible-call] focusWithinTarget is not null here
->>>>>>> remotes/upstream/main
         beforeBlurHandle.setListener(focusWithinTarget, (event: FocusEvent) => {
           if (disabled) {
             return;

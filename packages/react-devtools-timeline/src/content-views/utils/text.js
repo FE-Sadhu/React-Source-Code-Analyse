@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,11 +12,7 @@ import type {Rect} from '../../view-base';
 import {rectEqualToRect} from '../../view-base';
 import {COLORS, FONT_SIZE, TEXT_PADDING} from '../constants';
 
-<<<<<<< HEAD
-const cachedTextWidths = new Map();
-=======
 const cachedTextWidths = new Map<string, number>();
->>>>>>> remotes/upstream/main
 
 export function getTextWidth(
   context: CanvasRenderingContext2D,
@@ -53,11 +45,7 @@ export function trimText(
   while (startIndex <= stopIndex) {
     const currentIndex = Math.floor((startIndex + stopIndex) / 2);
     const trimmedText =
-<<<<<<< HEAD
-      currentIndex === maxIndex ? text : text.substr(0, currentIndex) + '…';
-=======
       currentIndex === maxIndex ? text : text.slice(0, currentIndex) + '…';
->>>>>>> remotes/upstream/main
 
     if (getTextWidth(context, trimmedText) <= width) {
       if (longestValidIndex < currentIndex) {

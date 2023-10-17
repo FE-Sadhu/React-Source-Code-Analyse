@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,12 +10,8 @@
 'use strict';
 
 // Polyfills for test environment
-<<<<<<< HEAD
-global.ReadableStream = require('web-streams-polyfill/ponyfill/es6').ReadableStream;
-=======
 global.ReadableStream =
   require('web-streams-polyfill/ponyfill/es6').ReadableStream;
->>>>>>> remotes/upstream/main
 global.TextEncoder = require('util').TextEncoder;
 
 let React;
@@ -70,11 +62,6 @@ describe('ReactDOMFizzServerBrowser', () => {
       </html>,
     );
     const result = await readResult(stream);
-<<<<<<< HEAD
-    expect(result).toMatchInlineSnapshot(
-      `"<!DOCTYPE html><html><body>hello world</body></html>"`,
-    );
-=======
     if (gate(flags => flags.enableFloat)) {
       expect(result).toMatchInlineSnapshot(
         `"<!DOCTYPE html><html><head></head><body>hello world</body></html>"`,
@@ -84,7 +71,6 @@ describe('ReactDOMFizzServerBrowser', () => {
         `"<!DOCTYPE html><html><body>hello world</body></html>"`,
       );
     }
->>>>>>> remotes/upstream/main
   });
 
   it('should emit bootstrap script src at the end', async () => {
@@ -98,11 +84,7 @@ describe('ReactDOMFizzServerBrowser', () => {
     );
     const result = await readResult(stream);
     expect(result).toMatchInlineSnapshot(
-<<<<<<< HEAD
-      `"<div>hello world</div><script>INIT();</script><script src=\\"init.js\\" async=\\"\\"></script><script type=\\"module\\" src=\\"init.mjs\\" async=\\"\\"></script>"`,
-=======
       `"<link rel="preload" as="script" fetchPriority="low" href="init.js"/><link rel="modulepreload" fetchPriority="low" href="init.mjs"/><div>hello world</div><script>INIT();</script><script src="init.js" async=""></script><script type="module" src="init.mjs" async=""></script>"`,
->>>>>>> remotes/upstream/main
     );
   });
 
@@ -229,13 +211,7 @@ describe('ReactDOMFizzServerBrowser', () => {
     const result = await readResult(stream);
     expect(result).toContain('Loading');
 
-<<<<<<< HEAD
-    expect(errors).toEqual([
-      'The render was aborted by the server without a reason.',
-    ]);
-=======
     expect(errors).toEqual(['The operation was aborted.']);
->>>>>>> remotes/upstream/main
   });
 
   it('should reject if aborting before the shell is complete', async () => {
@@ -256,13 +232,6 @@ describe('ReactDOMFizzServerBrowser', () => {
     await jest.runAllTimers();
 
     const theReason = new Error('aborted for reasons');
-<<<<<<< HEAD
-    // @TODO this is a hack to work around lack of support for abortSignal.reason in node
-    // The abort call itself should set this property but since we are testing in node we
-    // set it here manually
-    controller.signal.reason = theReason;
-=======
->>>>>>> remotes/upstream/main
     controller.abort(theReason);
 
     let caughtError = null;
@@ -304,30 +273,14 @@ describe('ReactDOMFizzServerBrowser', () => {
     } catch (error) {
       caughtError = error;
     }
-<<<<<<< HEAD
-    expect(caughtError.message).toBe(
-      'The render was aborted by the server without a reason.',
-    );
-    expect(errors).toEqual([
-      'The render was aborted by the server without a reason.',
-    ]);
-=======
     expect(caughtError.message).toBe('The operation was aborted.');
     expect(errors).toEqual(['The operation was aborted.']);
->>>>>>> remotes/upstream/main
   });
 
   it('should reject if passing an already aborted signal', async () => {
     const errors = [];
     const controller = new AbortController();
     const theReason = new Error('aborted for reasons');
-<<<<<<< HEAD
-    // @TODO this is a hack to work around lack of support for abortSignal.reason in node
-    // The abort call itself should set this property but since we are testing in node we
-    // set it here manually
-    controller.signal.reason = theReason;
-=======
->>>>>>> remotes/upstream/main
     controller.abort(theReason);
 
     const promise = ReactDOMFizzServer.renderToReadableStream(
@@ -389,12 +342,8 @@ describe('ReactDOMFizzServerBrowser', () => {
     expect(isComplete).toBe(false);
 
     const reader = stream.getReader();
-<<<<<<< HEAD
-    reader.cancel();
-=======
     await reader.read();
     await reader.cancel();
->>>>>>> remotes/upstream/main
 
     expect(errors).toEqual([
       'The render was aborted by the server without a reason.',
@@ -407,13 +356,10 @@ describe('ReactDOMFizzServerBrowser', () => {
 
     expect(rendered).toBe(false);
     expect(isComplete).toBe(true);
-<<<<<<< HEAD
-=======
 
     expect(errors).toEqual([
       'The render was aborted by the server without a reason.',
     ]);
->>>>>>> remotes/upstream/main
   });
 
   it('should stream large contents that might overlow individual buffers', async () => {
@@ -487,13 +433,6 @@ describe('ReactDOMFizzServerBrowser', () => {
       },
     });
 
-<<<<<<< HEAD
-    // @TODO this is a hack to work around lack of support for abortSignal.reason in node
-    // The abort call itself should set this property but since we are testing in node we
-    // set it here manually
-    controller.signal.reason = 'foobar';
-=======
->>>>>>> remotes/upstream/main
     controller.abort('foobar');
 
     expect(errors).toEqual(['foobar', 'foobar']);
@@ -531,19 +470,10 @@ describe('ReactDOMFizzServerBrowser', () => {
       },
     });
 
-<<<<<<< HEAD
-    // @TODO this is a hack to work around lack of support for abortSignal.reason in node
-    // The abort call itself should set this property but since we are testing in node we
-    // set it here manually
-    controller.signal.reason = new Error('uh oh');
-=======
->>>>>>> remotes/upstream/main
     controller.abort(new Error('uh oh'));
 
     expect(errors).toEqual(['uh oh', 'uh oh']);
   });
-<<<<<<< HEAD
-=======
 
   // https://github.com/facebook/react/pull/25534/files - fix transposed escape functions
   it('should encode title properly', async () => {
@@ -617,5 +547,4 @@ describe('ReactDOMFizzServerBrowser', () => {
     // However, it does error the shell.
     expect(caughtError.message).toEqual('testing postpone');
   });
->>>>>>> remotes/upstream/main
 });

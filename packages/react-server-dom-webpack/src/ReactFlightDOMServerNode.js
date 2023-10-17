@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,13 +7,6 @@
  * @flow
  */
 
-<<<<<<< HEAD
-import type {ReactModel} from 'react-server/src/ReactFlightServer';
-import type {Destination} from 'react-server/src/ReactServerStreamConfigNode';
-import type {BundlerConfig} from './ReactFlightServerWebpackBundlerConfig';
-import type {Writable} from 'stream';
-import type {ServerContextJSONValue} from 'shared/ReactTypes';
-=======
 import type {
   Request,
   ReactClientValue,
@@ -28,23 +17,11 @@ import type {ServerManifest} from 'react-client/src/ReactFlightClientConfig';
 import type {Busboy} from 'busboy';
 import type {Writable} from 'stream';
 import type {ServerContextJSONValue, Thenable} from 'shared/ReactTypes';
->>>>>>> remotes/upstream/main
 
 import {
   createRequest,
   startWork,
   startFlowing,
-<<<<<<< HEAD
-  abort,
-} from 'react-server/src/ReactFlightServer';
-
-function createDrainHandler(destination: Destination, request) {
-  return () => startFlowing(request, destination);
-}
-
-type Options = {
-  onError?: (error: mixed) => void,
-=======
   stopFlowing,
   abort,
 } from 'react-server/src/ReactFlightServer';
@@ -86,7 +63,6 @@ function createCancelHandler(request: Request, reason: string) {
 type Options = {
   onError?: (error: mixed) => void,
   onPostpone?: (reason: string) => void,
->>>>>>> remotes/upstream/main
   context?: Array<[string, ServerContextJSONValue]>,
   identifierPrefix?: string,
 };
@@ -97,13 +73,8 @@ type PipeableStream = {
 };
 
 function renderToPipeableStream(
-<<<<<<< HEAD
-  model: ReactModel,
-  webpackMap: BundlerConfig,
-=======
   model: ReactClientValue,
   webpackMap: ClientManifest,
->>>>>>> remotes/upstream/main
   options?: Options,
 ): PipeableStream {
   const request = createRequest(
@@ -112,10 +83,7 @@ function renderToPipeableStream(
     options ? options.onError : undefined,
     options ? options.context : undefined,
     options ? options.identifierPrefix : undefined,
-<<<<<<< HEAD
-=======
     options ? options.onPostpone : undefined,
->>>>>>> remotes/upstream/main
   );
   let hasStartedFlowing = false;
   startWork(request);
@@ -129,8 +97,6 @@ function renderToPipeableStream(
       hasStartedFlowing = true;
       startFlowing(request, destination);
       destination.on('drain', createDrainHandler(destination, request));
-<<<<<<< HEAD
-=======
       destination.on(
         'error',
         createCancelHandler(
@@ -142,7 +108,6 @@ function renderToPipeableStream(
         'close',
         createCancelHandler(request, 'The destination stream closed early.'),
       );
->>>>>>> remotes/upstream/main
       return destination;
     },
     abort(reason: mixed) {
@@ -151,9 +116,6 @@ function renderToPipeableStream(
   };
 }
 
-<<<<<<< HEAD
-export {renderToPipeableStream};
-=======
 function decodeReplyFromBusboy<T>(
   busboyStream: Busboy,
   webpackMap: ServerManifest,
@@ -230,4 +192,3 @@ export {
   decodeAction,
   decodeFormState,
 };
->>>>>>> remotes/upstream/main

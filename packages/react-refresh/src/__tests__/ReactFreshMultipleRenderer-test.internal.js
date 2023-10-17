@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -47,20 +43,12 @@ describe('ReactFresh', () => {
 
   it('can update components managed by different renderers independently', () => {
     if (__DEV__) {
-<<<<<<< HEAD
-      const InnerV1 = function() {
-=======
       const InnerV1 = function () {
->>>>>>> remotes/upstream/main
         return <ReactART.Shape fill="blue" />;
       };
       ReactFreshRuntime.register(InnerV1, 'Inner');
 
-<<<<<<< HEAD
-      const OuterV1 = function() {
-=======
       const OuterV1 = function () {
->>>>>>> remotes/upstream/main
         return (
           <div style={{color: 'blue'}}>
             <ReactART.Surface>
@@ -78,11 +66,7 @@ describe('ReactFresh', () => {
       expect(pathEl.getAttributeNS(null, 'fill')).toBe('rgb(0, 0, 255)');
 
       // Perform a hot update to the ART-rendered component.
-<<<<<<< HEAD
-      const InnerV2 = function() {
-=======
       const InnerV2 = function () {
->>>>>>> remotes/upstream/main
         return <ReactART.Shape fill="red" />;
       };
       ReactFreshRuntime.register(InnerV2, 'Inner');
@@ -94,11 +78,7 @@ describe('ReactFresh', () => {
       expect(pathEl.getAttributeNS(null, 'fill')).toBe('rgb(255, 0, 0)');
 
       // Perform a hot update to the DOM-rendered component.
-<<<<<<< HEAD
-      const OuterV2 = function() {
-=======
       const OuterV2 = function () {
->>>>>>> remotes/upstream/main
         return (
           <div style={{color: 'red'}}>
             <ReactART.Surface>

@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,10 +7,7 @@
  * @flow
  */
 
-<<<<<<< HEAD
-=======
 import type {ReactContext} from 'shared/ReactTypes';
->>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -63,20 +56,11 @@ type ModalDialogContextType = {
   dispatch: Dispatch,
 };
 
-<<<<<<< HEAD
-const ModalDialogContext = createContext<ModalDialogContextType>(
-  ((null: any): ModalDialogContextType),
-);
-ModalDialogContext.displayName = 'ModalDialogContext';
-
-function dialogReducer(state, action) {
-=======
 const ModalDialogContext: ReactContext<ModalDialogContextType> =
   createContext<ModalDialogContextType>(((null: any): ModalDialogContextType));
 ModalDialogContext.displayName = 'ModalDialogContext';
 
 function dialogReducer(state: State, action: Action) {
->>>>>>> remotes/upstream/main
   switch (action.type) {
     case 'HIDE':
       return {

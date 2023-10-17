@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,11 +17,7 @@ import Icon from '../Icon';
 import {ModalDialogContext} from '../ModalDialog';
 import ViewElementSourceContext from './ViewElementSourceContext';
 import Toggle from '../Toggle';
-<<<<<<< HEAD
-import {ElementTypeSuspense} from 'react-devtools-shared/src/types';
-=======
 import {ElementTypeSuspense} from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 import CannotSuspendWarningMessage from './CannotSuspendWarningMessage';
 import InspectedElementView from './InspectedElementView';
 import {InspectedElementContext} from './InspectedElementContext';
@@ -34,11 +26,7 @@ import {LOCAL_STORAGE_OPEN_IN_EDITOR_URL} from '../../../constants';
 
 import styles from './InspectedElement.css';
 
-<<<<<<< HEAD
-import type {InspectedElement} from './types';
-=======
 import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 
 export type Props = {};
 
@@ -60,17 +48,8 @@ export default function InspectedElementWrapper(_: Props): React.Node {
   } = useContext(OptionsContext);
   const {dispatch: modalDialogDispatch} = useContext(ModalDialogContext);
 
-<<<<<<< HEAD
-  const {
-    hookNames,
-    inspectedElement,
-    parseHookNames,
-    toggleParseHookNames,
-  } = useContext(InspectedElementContext);
-=======
   const {hookNames, inspectedElement, parseHookNames, toggleParseHookNames} =
     useContext(InspectedElementContext);
->>>>>>> remotes/upstream/main
 
   const element =
     inspectedElementID !== null
@@ -240,16 +219,11 @@ export default function InspectedElementWrapper(_: Props): React.Node {
     }
 
     const url = new URL(editorURL);
-<<<<<<< HEAD
-    url.href = url.href.replace('{path}', source.fileName);
-    url.href = url.href.replace('{line}', String(source.lineNumber));
-=======
     url.href = url.href
       .replace('{path}', source.fileName)
       .replace('{line}', String(source.lineNumber))
       .replace('%7Bpath%7D', source.fileName)
       .replace('%7Bline%7D', String(source.lineNumber));
->>>>>>> remotes/upstream/main
     window.open(url);
   }, [inspectedElement, editorURL]);
 
@@ -266,11 +240,7 @@ export default function InspectedElementWrapper(_: Props): React.Node {
     strictModeBadge = (
       <a
         className={styles.StrictModeNonCompliant}
-<<<<<<< HEAD
-        href="https://fb.me/devtools-strict-mode"
-=======
         href="https://react.dev/reference/react/StrictMode"
->>>>>>> remotes/upstream/main
         rel="noopener noreferrer"
         target="_blank"
         title="This component is not running in StrictMode. Click to learn more.">
@@ -297,11 +267,7 @@ export default function InspectedElementWrapper(_: Props): React.Node {
           <div
             className={
               element.isStrictModeNonCompliant
-<<<<<<< HEAD
-                ? styles.StrictModeNonCompliantComponent
-=======
                 ? styles.StrictModeNonCompliant
->>>>>>> remotes/upstream/main
                 : styles.Component
             }
             title={element.displayName}>
@@ -309,23 +275,12 @@ export default function InspectedElementWrapper(_: Props): React.Node {
           </div>
         </div>
         {canOpenInEditor && (
-<<<<<<< HEAD
-          <Button
-            className={styles.IconButton}
-            onClick={onOpenInEditor}
-            title="Open in editor">
-=======
           <Button onClick={onOpenInEditor} title="Open in editor">
->>>>>>> remotes/upstream/main
             <ButtonIcon type="editor" />
           </Button>
         )}
         {canToggleError && (
           <Toggle
-<<<<<<< HEAD
-            className={styles.IconButton}
-=======
->>>>>>> remotes/upstream/main
             isChecked={isErrored}
             onChange={toggleErrored}
             title={
@@ -338,10 +293,6 @@ export default function InspectedElementWrapper(_: Props): React.Node {
         )}
         {canToggleSuspense && (
           <Toggle
-<<<<<<< HEAD
-            className={styles.IconButton}
-=======
->>>>>>> remotes/upstream/main
             isChecked={isSuspended}
             onChange={toggleSuspended}
             title={
@@ -354,10 +305,6 @@ export default function InspectedElementWrapper(_: Props): React.Node {
         )}
         {store.supportsNativeInspection && (
           <Button
-<<<<<<< HEAD
-            className={styles.IconButton}
-=======
->>>>>>> remotes/upstream/main
             onClick={highlightElement}
             title="Inspect the matching DOM element">
             <ButtonIcon type="view-dom" />
@@ -365,10 +312,6 @@ export default function InspectedElementWrapper(_: Props): React.Node {
         )}
         {!hideLogAction && (
           <Button
-<<<<<<< HEAD
-            className={styles.IconButton}
-=======
->>>>>>> remotes/upstream/main
             onClick={logElement}
             title="Log this component data to the console">
             <ButtonIcon type="log-data" />
@@ -376,10 +319,6 @@ export default function InspectedElementWrapper(_: Props): React.Node {
         )}
         {!hideViewSourceAction && (
           <Button
-<<<<<<< HEAD
-            className={styles.IconButton}
-=======
->>>>>>> remotes/upstream/main
             disabled={!canViewSource}
             onClick={viewSource}
             title="View source for this element">

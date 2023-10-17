@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -30,12 +26,8 @@ export default function TimelineSearchInput(props: Props): React.Node {
     return null;
   }
 
-<<<<<<< HEAD
-  const search = text => dispatch({type: 'SET_SEARCH_TEXT', payload: text});
-=======
   const search = (text: string) =>
     dispatch({type: 'SET_SEARCH_TEXT', payload: text});
->>>>>>> remotes/upstream/main
   const goToNextResult = () => dispatch({type: 'GO_TO_NEXT_SEARCH_RESULT'});
   const goToPreviousResult = () =>
     dispatch({type: 'GO_TO_PREVIOUS_SEARCH_RESULT'});

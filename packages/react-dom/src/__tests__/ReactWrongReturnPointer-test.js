@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,22 +16,12 @@ let SuspenseList;
 let getCacheForType;
 let caches;
 let seededCache;
-<<<<<<< HEAD
-=======
 let assertLog;
->>>>>>> remotes/upstream/main
 
 beforeEach(() => {
   React = require('react');
   ReactNoop = require('react-noop-renderer');
   Scheduler = require('scheduler');
-<<<<<<< HEAD
-  act = require('jest-react').act;
-
-  Suspense = React.Suspense;
-  if (gate(flags => flags.enableSuspenseList)) {
-    SuspenseList = React.SuspenseList;
-=======
   act = require('internal-test-utils').act;
 
   const InternalTestUtils = require('internal-test-utils');
@@ -44,7 +30,6 @@ beforeEach(() => {
   Suspense = React.Suspense;
   if (gate(flags => flags.enableSuspenseList)) {
     SuspenseList = React.unstable_SuspenseList;
->>>>>>> remotes/upstream/main
   }
 
   getCacheForType = React.unstable_getCacheForType;
@@ -109,27 +94,16 @@ function readText(text) {
   if (record !== undefined) {
     switch (record.status) {
       case 'pending':
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
-        throw record.value;
-      case 'rejected':
-        Scheduler.unstable_yieldValue(`Error! [${text}]`);
-=======
         Scheduler.log(`Suspend! [${text}]`);
         throw record.value;
       case 'rejected':
         Scheduler.log(`Error! [${text}]`);
->>>>>>> remotes/upstream/main
         throw record.value;
       case 'resolved':
         return textCache.version;
     }
   } else {
-<<<<<<< HEAD
-    Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
-=======
     Scheduler.log(`Suspend! [${text}]`);
->>>>>>> remotes/upstream/main
 
     const thenable = {
       pings: [],
@@ -153,22 +127,14 @@ function readText(text) {
 }
 
 function Text({text}) {
-<<<<<<< HEAD
-  Scheduler.unstable_yieldValue(text);
-=======
   Scheduler.log(text);
->>>>>>> remotes/upstream/main
   return <span prop={text} />;
 }
 
 function AsyncText({text, showVersion}) {
   const version = readText(text);
   const fullText = showVersion ? `${text} [v${version}]` : text;
-<<<<<<< HEAD
-  Scheduler.unstable_yieldValue(fullText);
-=======
   Scheduler.log(fullText);
->>>>>>> remotes/upstream/main
   return <span prop={fullText} />;
 }
 
@@ -191,11 +157,7 @@ function resolveMostRecentTextCache(text) {
 
 const resolveText = resolveMostRecentTextCache;
 
-<<<<<<< HEAD
-// @gate enableCache
-=======
 // @gate enableLegacyCache
->>>>>>> remotes/upstream/main
 // @gate enableSuspenseList
 test('regression (#20932): return pointer is correct before entering deleted tree', async () => {
   // Based on a production bug. Designed to trigger a very specific
@@ -227,24 +189,6 @@ test('regression (#20932): return pointer is correct before entering deleted tre
   }
 
   const root = ReactNoop.createRoot();
-<<<<<<< HEAD
-  await act(async () => {
-    root.render(<App />);
-  });
-  expect(Scheduler).toHaveYielded([
-    'Suspend! [0]',
-    'Loading Async...',
-    'Loading Tail...',
-  ]);
-  await act(async () => {
-    resolveText(0);
-  });
-  expect(Scheduler).toHaveYielded([0, 'Tail']);
-  await act(async () => {
-    setAsyncText(x => x + 1);
-  });
-  expect(Scheduler).toHaveYielded([
-=======
   await act(() => {
     root.render(<App />);
   });
@@ -257,7 +201,6 @@ test('regression (#20932): return pointer is correct before entering deleted tre
     setAsyncText(x => x + 1);
   });
   assertLog([
->>>>>>> remotes/upstream/main
     'Suspend! [1]',
     'Loading Async...',
     'Suspend! [1]',

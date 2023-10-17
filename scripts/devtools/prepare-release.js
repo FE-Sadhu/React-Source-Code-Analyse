@@ -99,14 +99,6 @@ async function getCommitLog(sha) {
   let shortLog = '';
   let formattedLog = '';
 
-<<<<<<< HEAD
-  const rawLog = await execRead(`
-    git log --topo-order --pretty=format:'%s' ${sha}...HEAD -- packages/react-devtools*
-  `);
-  rawLog.split('\n').forEach(line => {
-    line = line.replace('[DevTools] ', '');
-
-=======
   const hasGh = await hasGithubCLI();
   const rawLog = await execRead(`
     git log --topo-order --pretty=format:'%s' ${sha}...HEAD -- packages/react-devtools*
@@ -114,15 +106,10 @@ async function getCommitLog(sha) {
   const lines = rawLog.split('\n');
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].replace(/^\[devtools\] */i, '');
->>>>>>> remotes/upstream/main
     const match = line.match(/(.+) \(#([0-9]+)\)/);
     if (match !== null) {
       const title = match[1];
       const pr = match[2];
-<<<<<<< HEAD
-
-      formattedLog += `\n* ${title} ([USERNAME](https://github.com/USERNAME) in [#${pr}](${PULL_REQUEST_BASE_URL}${pr}))`;
-=======
       let username;
       if (hasGh) {
         const response = await execRead(
@@ -134,23 +121,16 @@ async function getCommitLog(sha) {
         username = '[USERNAME](https://github.com/USERNAME)';
       }
       formattedLog += `\n* ${title} (${username} in [#${pr}](${PULL_REQUEST_BASE_URL}${pr}))`;
->>>>>>> remotes/upstream/main
       shortLog += `\n* ${title}`;
     } else {
       formattedLog += `\n* ${line}`;
       shortLog += `\n* ${line}`;
     }
-<<<<<<< HEAD
-  });
-=======
   }
->>>>>>> remotes/upstream/main
 
   return [shortLog, formattedLog];
 }
 
-<<<<<<< HEAD
-=======
 async function hasGithubCLI() {
   try {
     await exec('which gh');
@@ -159,7 +139,6 @@ async function hasGithubCLI() {
   return false;
 }
 
->>>>>>> remotes/upstream/main
 async function getPreviousCommitSha() {
   const choices = [];
 
@@ -230,19 +209,11 @@ async function reviewChangelogPrompt() {
   console.log(`  ${chalk.bold(CHANGELOG_PATH)}`);
   console.log('');
   console.log('Please review the new changelog text for the following:');
-<<<<<<< HEAD
-  console.log('  1. Organize the list into Features vs Bugfixes');
-  console.log('  1. Filter out any non-user-visible changes (e.g. typo fixes)');
-  console.log('  1. Combine related PRs into a single bullet list.');
-  console.log(
-    '  1. Replacing the "USERNAME" placeholder text with the GitHub username(s)'
-=======
   console.log('  1. Filter out any non-user-visible changes (e.g. typo fixes)');
   console.log('  2. Organize the list into Features vs Bugfixes');
   console.log('  3. Combine related PRs into a single bullet list');
   console.log(
     '  4. Replacing the "USERNAME" placeholder text with the GitHub username(s)'
->>>>>>> remotes/upstream/main
   );
   console.log('');
   console.log(`  ${chalk.bold.green(`open ${CHANGELOG_PATH}`)}`);

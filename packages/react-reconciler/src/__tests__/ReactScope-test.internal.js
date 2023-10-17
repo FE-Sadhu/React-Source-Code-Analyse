@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,11 +12,7 @@
 let React;
 let ReactFeatureFlags;
 let ReactDOMServer;
-<<<<<<< HEAD
-let Scheduler;
-=======
 let act;
->>>>>>> remotes/upstream/main
 
 describe('ReactScope', () => {
   beforeEach(() => {
@@ -28,13 +20,9 @@ describe('ReactScope', () => {
     ReactFeatureFlags = require('shared/ReactFeatureFlags');
     ReactFeatureFlags.enableScopeAPI = true;
     React = require('react');
-<<<<<<< HEAD
-    Scheduler = require('scheduler');
-=======
 
     const InternalTestUtils = require('internal-test-utils');
     act = InternalTestUtils.act;
->>>>>>> remotes/upstream/main
   });
 
   describe('ReactDOM', () => {
@@ -328,13 +316,7 @@ describe('ReactScope', () => {
       // On the client we don't have all data yet but we want to start
       // hydrating anyway.
       suspend = true;
-<<<<<<< HEAD
-      ReactDOMClient.hydrateRoot(container2, <App />);
-      Scheduler.unstable_flushAll();
-      jest.runAllTimers();
-=======
       await act(() => ReactDOMClient.hydrateRoot(container2, <App />));
->>>>>>> remotes/upstream/main
 
       // This should not cause a runtime exception, see:
       // https://github.com/facebook/react/pull/18184
@@ -343,17 +325,10 @@ describe('ReactScope', () => {
 
       // Resolving the promise should continue hydration
       suspend = false;
-<<<<<<< HEAD
-      resolve();
-      await promise;
-      Scheduler.unstable_flushAll();
-      jest.runAllTimers();
-=======
       await act(async () => {
         resolve();
         await promise;
       });
->>>>>>> remotes/upstream/main
 
       // We should now have hydrated with a ref on the existing span.
       expect(ref.current).toBe(span);

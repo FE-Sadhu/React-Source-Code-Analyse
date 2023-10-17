@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,19 +14,13 @@ let useSyncExternalStoreWithSelector;
 let React;
 let ReactDOM;
 let ReactDOMClient;
-<<<<<<< HEAD
-=======
 let ReactFeatureFlags;
->>>>>>> remotes/upstream/main
 let Scheduler;
 let act;
 let useState;
 let useEffect;
 let useLayoutEffect;
-<<<<<<< HEAD
-=======
 let assertLog;
->>>>>>> remotes/upstream/main
 
 // This tests shared behavior between the built-in and shim implementations of
 // of useSyncExternalStore.
@@ -60,23 +50,16 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
-<<<<<<< HEAD
-=======
     ReactFeatureFlags = require('shared/ReactFeatureFlags');
->>>>>>> remotes/upstream/main
     Scheduler = require('scheduler');
     useState = React.useState;
     useEffect = React.useEffect;
     useLayoutEffect = React.useLayoutEffect;
 
-<<<<<<< HEAD
-    const internalAct = require('jest-react').act;
-=======
     const InternalTestUtils = require('internal-test-utils');
     assertLog = InternalTestUtils.assertLog;
 
     const internalAct = require('internal-test-utils').act;
->>>>>>> remotes/upstream/main
 
     // The internal act implementation doesn't batch updates by default, since
     // it's mostly used to test concurrent mode. But since these tests run
@@ -94,16 +77,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
         jest.requireActual('use-sync-external-store/shim'),
       );
     }
-<<<<<<< HEAD
-    useSyncExternalStore = require('use-sync-external-store/shim')
-      .useSyncExternalStore;
-    useSyncExternalStoreWithSelector = require('use-sync-external-store/shim/with-selector')
-      .useSyncExternalStoreWithSelector;
-  });
-
-  function Text({text}) {
-    Scheduler.unstable_yieldValue(text);
-=======
     useSyncExternalStore =
       require('use-sync-external-store/shim').useSyncExternalStore;
     useSyncExternalStoreWithSelector =
@@ -112,7 +85,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
   function Text({text}) {
     Scheduler.log(text);
->>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -172,29 +144,17 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     const root = createRoot(container);
     await act(() => root.render(<App />));
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Initial']);
-=======
     assertLog(['Initial']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('Initial');
 
     await act(() => {
       store.set('Updated');
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['Updated']);
-    expect(container.textContent).toEqual('Updated');
-  });
-
-  test('skips re-rendering if nothing changes', () => {
-=======
     assertLog(['Updated']);
     expect(container.textContent).toEqual('Updated');
   });
 
   test('skips re-rendering if nothing changes', async () => {
->>>>>>> remotes/upstream/main
     const store = createExternalStore('Initial');
 
     function App() {
@@ -204,19 +164,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-
-    expect(Scheduler).toHaveYielded(['Initial']);
-    expect(container.textContent).toEqual('Initial');
-
-    // Update to the same value
-    act(() => {
-      store.set('Initial');
-    });
-    // Should not re-render
-    expect(Scheduler).toHaveYielded([]);
-=======
     await act(() => root.render(<App />));
 
     assertLog(['Initial']);
@@ -228,7 +175,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     });
     // Should not re-render
     assertLog([]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('Initial');
   });
 
@@ -248,29 +194,17 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     const root = createRoot(container);
     await act(() => root.render(<App />));
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0]);
-=======
     assertLog([0]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('0');
 
     await act(() => {
       storeA.set(1);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([1]);
-    expect(container.textContent).toEqual('1');
-
-    // Switch stores and update in the same batch
-    act(() => {
-=======
     assertLog([1]);
     expect(container.textContent).toEqual('1');
 
     // Switch stores and update in the same batch
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactDOM.flushSync(() => {
         // This update will be disregarded
         storeA.set(2);
@@ -278,11 +212,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       });
     });
     // Now reading from B instead of A
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0]);
-=======
     assertLog([0]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('0');
 
     // Update A
@@ -290,22 +220,14 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       storeA.set(3);
     });
     // Nothing happened, because we're no longer subscribed to A
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([]);
-=======
     assertLog([]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('0');
 
     // Update B
     await act(() => {
       storeB.set(1);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([1]);
-=======
     assertLog([1]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('1');
   });
 
@@ -332,15 +254,9 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-
-    expect(Scheduler).toHaveYielded(['A0', 'B0']);
-=======
     await act(() => root.render(<App />));
 
     assertLog(['A0', 'B0']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('A0B0');
 
     // Update b but not a
@@ -348,11 +264,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       store.set({a: 0, b: 1});
     });
     // Only b re-renders
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['B1']);
-=======
     assertLog(['B1']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('A0B1');
 
     // Update a but not b
@@ -360,11 +272,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       store.set({a: 1, b: 1});
     });
     // Only a re-renders
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['A1']);
-=======
     assertLog(['A1']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('A1B1');
   });
 
@@ -380,34 +288,21 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       function App() {
         const value = useSyncExternalStore(store.subscribe, store.getState);
         useEffect(() => {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Passive effect: ' + value);
-=======
           Scheduler.log('Passive effect: ' + value);
->>>>>>> remotes/upstream/main
         }, [value]);
         return <Text text={value} />;
       }
 
       const container = document.createElement('div');
       const root = createRoot(container);
-<<<<<<< HEAD
-      act(() => root.render(<App />));
-      expect(Scheduler).toHaveYielded([0, 'Passive effect: 0']);
-=======
       await act(() => root.render(<App />));
       assertLog([0, 'Passive effect: 0']);
->>>>>>> remotes/upstream/main
 
       // Schedule an update. We'll intentionally not use `act` so that we can
       // insert a mutation before React subscribes to the store in a
       // passive effect.
       store.set(1);
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-=======
       assertLog([
->>>>>>> remotes/upstream/main
         1,
         // Passive effect hasn't fired yet
       ]);
@@ -415,11 +310,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
       // Flip the store state back to the previous value.
       store.set(0);
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-=======
       assertLog([
->>>>>>> remotes/upstream/main
         'Passive effect: 1',
         // Re-render. If the current state were tracked by updating a ref in a
         // passive effect, then this would break because the previous render's
@@ -432,11 +323,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     },
   );
 
-<<<<<<< HEAD
-  test('mutating the store in between render and commit when getSnapshot has changed', () => {
-=======
   test('mutating the store in between render and commit when getSnapshot has changed', async () => {
->>>>>>> remotes/upstream/main
     const store = createExternalStore({a: 1, b: 1});
 
     const getSnapshotA = () => store.getState().a;
@@ -450,11 +337,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
           // that changed the getSnapshot in Child2. Child2's effects haven't
           // fired yet, so it doesn't have access to the latest getSnapshot. So
           // it can't use the getSnapshot to bail out.
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Update B in commit phase');
-=======
           Scheduler.log('Update B in commit phase');
->>>>>>> remotes/upstream/main
           store.set({a: value.a, b: 2});
         }
       }, [step]);
@@ -482,17 +365,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-    expect(Scheduler).toHaveYielded(['A1']);
-    expect(container.textContent).toEqual('A1');
-
-    act(() => {
-      // Change getSnapshot and update the store in the same batch
-      setStep(1);
-    });
-    expect(Scheduler).toHaveYielded([
-=======
     await act(() => root.render(<App />));
     assertLog(['A1']);
     expect(container.textContent).toEqual('A1');
@@ -502,7 +374,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       setStep(1);
     });
     assertLog([
->>>>>>> remotes/upstream/main
       'B1',
       'Update B in commit phase',
       // If Child2 had used the old getSnapshot to bail out, then it would have
@@ -512,11 +383,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     expect(container.textContent).toEqual('B2');
   });
 
-<<<<<<< HEAD
-  test('mutating the store in between render and commit when getSnapshot has _not_ changed', () => {
-=======
   test('mutating the store in between render and commit when getSnapshot has _not_ changed', async () => {
->>>>>>> remotes/upstream/main
     // Same as previous test, but `getSnapshot` does not change
     const store = createExternalStore({a: 1, b: 1});
 
@@ -530,11 +397,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
           // that changed the getSnapshot in Child2. Child2's effects haven't
           // fired yet, so it doesn't have access to the latest getSnapshot. So
           // it can't use the getSnapshot to bail out.
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Update B in commit phase');
-=======
           Scheduler.log('Update B in commit phase');
->>>>>>> remotes/upstream/main
           store.set({a: value.a, b: 2});
         }
       }, [step]);
@@ -560,28 +423,16 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-    expect(Scheduler).toHaveYielded(['A1']);
-=======
     await act(() => root.render(<App />));
     assertLog(['A1']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('A1');
 
     // This will cause a layout effect, and in the layout effect we'll update
     // the store
-<<<<<<< HEAD
-    act(() => {
-      setStep(1);
-    });
-    expect(Scheduler).toHaveYielded([
-=======
     await act(() => {
       setStep(1);
     });
     assertLog([
->>>>>>> remotes/upstream/main
       'A1',
       // This updates B, but since Child2 doesn't subscribe to B, it doesn't
       // need to re-render.
@@ -598,11 +449,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       const value = useSyncExternalStore(store.subscribe, store.getState);
       useLayoutEffect(() => {
         if (value === 1) {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Reset back to 0');
-=======
           Scheduler.log('Reset back to 0');
->>>>>>> remotes/upstream/main
           store.set(0);
         }
       }, [value]);
@@ -616,11 +463,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() =>
-=======
     await act(() =>
->>>>>>> remotes/upstream/main
       root.render(
         <>
           <Child1 />
@@ -628,29 +471,17 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
         </>,
       ),
     );
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0, 0]);
-=======
     assertLog([0, 0]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('00');
 
     await act(() => {
       store.set(1);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([1, 1, 'Reset back to 0', 0, 0]);
-    expect(container.textContent).toEqual('00');
-  });
-
-  test('uses the latest getSnapshot, even if it changed in the same batch as a store update', () => {
-=======
     assertLog([1, 1, 'Reset back to 0', 0, 0]);
     expect(container.textContent).toEqual('00');
   });
 
   test('uses the latest getSnapshot, even if it changed in the same batch as a store update', async () => {
->>>>>>> remotes/upstream/main
     const store = createExternalStore({a: 0, b: 0});
 
     const getSnapshotA = () => store.getState().a;
@@ -666,30 +497,18 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() => root.render(<App />));
-    expect(Scheduler).toHaveYielded([0]);
-
-    // Update the store and getSnapshot at the same time
-    act(() => {
-=======
     await act(() => root.render(<App />));
     assertLog([0]);
 
     // Update the store and getSnapshot at the same time
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactDOM.flushSync(() => {
         setGetSnapshot(() => getSnapshotB);
         store.set({a: 1, b: 2});
       });
     });
     // It should read from B instead of A
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([2]);
-=======
     assertLog([2]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('2');
   });
 
@@ -727,22 +546,14 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     const errorBoundary = React.createRef(null);
     const container = document.createElement('div');
     const root = createRoot(container);
-<<<<<<< HEAD
-    act(() =>
-=======
     await act(() =>
->>>>>>> remotes/upstream/main
       root.render(
         <ErrorBoundary ref={errorBoundary}>
           <App />
         </ErrorBoundary>,
       ),
     );
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([0]);
-=======
     assertLog([0]);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('0');
 
     // Update that throws in a getSnapshot. We can catch it with an error boundary.
@@ -750,31 +561,19 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       store.set({value: 1, throwInGetSnapshot: true, throwInIsEqual: false});
     });
     if (gate(flags => !flags.enableUseSyncExternalStoreShim)) {
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-=======
       assertLog([
->>>>>>> remotes/upstream/main
         'Error in getSnapshot',
         // In a concurrent root, React renders a second time to attempt to
         // recover from the error.
         'Error in getSnapshot',
       ]);
     } else {
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['Error in getSnapshot']);
-=======
       assertLog(['Error in getSnapshot']);
->>>>>>> remotes/upstream/main
     }
     expect(container.textContent).toEqual('Error in getSnapshot');
   });
 
-<<<<<<< HEAD
-  test('Infinite loop if getSnapshot keeps returning new reference', () => {
-=======
   test('Infinite loop if getSnapshot keeps returning new reference', async () => {
->>>>>>> remotes/upstream/main
     const store = createExternalStore({});
 
     function App() {
@@ -785,15 +584,10 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     const container = document.createElement('div');
     const root = createRoot(container);
 
-<<<<<<< HEAD
-    expect(() => {
-      expect(() => act(() => root.render(<App />))).toThrow(
-=======
     await expect(async () => {
       expect(() =>
         ReactDOM.flushSync(async () => root.render(<App />)),
       ).toThrow(
->>>>>>> remotes/upstream/main
         'Maximum update depth exceeded. This can happen when a component repeatedly ' +
           'calls setState inside componentWillUpdate or componentDidUpdate. React limits ' +
           'the number of nested updates to prevent infinite loops.',
@@ -837,20 +631,12 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       const store = createExternalStore({a: 0, b: 0});
 
       function selector(state) {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Selector');
-=======
         Scheduler.log('Selector');
->>>>>>> remotes/upstream/main
         return state.a;
       }
 
       function App() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('App');
-=======
         Scheduler.log('App');
->>>>>>> remotes/upstream/main
         const a = useSyncExternalStoreWithSelector(
           store.subscribe,
           store.getState,
@@ -862,26 +648,16 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
       const container = document.createElement('div');
       const root = createRoot(container);
-<<<<<<< HEAD
-      act(() => root.render(<App />));
-
-      expect(Scheduler).toHaveYielded(['App', 'Selector', 'A0']);
-=======
       await act(() => root.render(<App />));
 
       assertLog(['App', 'Selector', 'A0']);
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('A0');
 
       // Update the store
       await act(() => {
         store.set({a: 1, b: 0});
       });
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded([
-=======
       assertLog([
->>>>>>> remotes/upstream/main
         // The selector runs before React starts rendering
         'Selector',
         'App',
@@ -931,15 +707,9 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
       const container = document.createElement('div');
       const root = createRoot(container);
-<<<<<<< HEAD
-      act(() => root.render(<App />));
-
-      expect(Scheduler).toHaveYielded(['A0', 'B0']);
-=======
       await act(() => root.render(<App />));
 
       assertLog(['A0', 'B0']);
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('A0B0');
 
       // Update b but not a
@@ -947,11 +717,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
         store.set({a: 0, b: 1});
       });
       // Only b re-renders
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['B1']);
-=======
       assertLog(['B1']);
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('A0B1');
 
       // Update a but not b
@@ -959,11 +725,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
         store.set({a: 1, b: 1});
       });
       // Only a re-renders
-<<<<<<< HEAD
-      expect(Scheduler).toHaveYielded(['A1']);
-=======
       assertLog(['A1']);
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('A1B1');
     });
 
@@ -978,11 +740,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
           () => 'server',
         );
         useEffect(() => {
-<<<<<<< HEAD
-          Scheduler.unstable_yieldValue('Passive effect: ' + text);
-=======
           Scheduler.log('Passive effect: ' + text);
->>>>>>> remotes/upstream/main
         }, [text]);
         return (
           <div ref={ref}>
@@ -996,17 +754,10 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
       const serverRenderedDiv = container.getElementsByTagName('div')[0];
 
       if (gate(flags => !flags.enableUseSyncExternalStoreShim)) {
-<<<<<<< HEAD
-        act(() => {
-          ReactDOMClient.hydrateRoot(container, <App />);
-        });
-        expect(Scheduler).toHaveYielded([
-=======
         await act(() => {
           ReactDOMClient.hydrateRoot(container, <App />);
         });
         assertLog([
->>>>>>> remotes/upstream/main
           // First it hydrates the server rendered HTML
           'server',
           'Passive effect: server',
@@ -1019,20 +770,12 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
         // currently hydrating, so `getServerSnapshot` is not called on the
         // client. To avoid this server mismatch warning, user must account for
         // this themselves and return the correct value inside `getSnapshot`.
-<<<<<<< HEAD
-        act(() => {
-=======
         await act(() => {
->>>>>>> remotes/upstream/main
           expect(() => ReactDOM.hydrate(<App />, container)).toErrorDev(
             'Text content did not match',
           );
         });
-<<<<<<< HEAD
-        expect(Scheduler).toHaveYielded(['client', 'Passive effect: client']);
-=======
         assertLog(['client', 'Passive effect: client']);
->>>>>>> remotes/upstream/main
       }
       expect(container.textContent).toEqual('client');
       expect(ref.current).toEqual(serverRenderedDiv);
@@ -1056,21 +799,13 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     const root = createRoot(container);
     await act(() => root.render(<App />));
 
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['INITIAL']);
-=======
     assertLog(['INITIAL']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('INITIAL');
 
     await act(() => {
       store.set('Updated');
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded(['UPDATED']);
-=======
     assertLog(['UPDATED']);
->>>>>>> remotes/upstream/main
     expect(container.textContent).toEqual('UPDATED');
   });
 
@@ -1105,11 +840,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
     function App({step}) {
       const inlineSelector = state => {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Inline selector');
-=======
         Scheduler.log('Inline selector');
->>>>>>> remotes/upstream/main
         return [...state.items, 'C'];
       };
       const items = useSyncExternalStoreWithSelector(
@@ -1132,26 +863,12 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
     await act(() => {
       root.render(<App step={0} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-      'Inline selector',
-      'A',
-      'B',
-      'C',
-      'Sibling: 0',
-    ]);
-=======
     assertLog(['Inline selector', 'A', 'B', 'C', 'Sibling: 0']);
->>>>>>> remotes/upstream/main
 
     await act(() => {
       root.render(<App step={1} />);
     });
-<<<<<<< HEAD
-    expect(Scheduler).toHaveYielded([
-=======
     assertLog([
->>>>>>> remotes/upstream/main
       // We had to call the selector again because it's not memoized
       'Inline selector',
 
@@ -1167,12 +884,7 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
   describe('selector and isEqual error handling in extra', () => {
     let ErrorBoundary;
-<<<<<<< HEAD
-    beforeAll(() => {
-      spyOnDev(console, 'warn');
-=======
     beforeEach(() => {
->>>>>>> remotes/upstream/main
       ErrorBoundary = class extends React.Component {
         state = {error: null};
         static getDerivedStateFromError(error) {
@@ -1218,11 +930,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
       expect(container.textContent).toEqual('A');
 
-<<<<<<< HEAD
-      await act(() => {
-        store.set({});
-      });
-=======
       await expect(async () => {
         await act(() => {
           store.set({});
@@ -1232,7 +939,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
           ? ['Warning: App: Unsafe read of a mutable value during render.']
           : [],
       );
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('Malformed state');
     });
 
@@ -1269,11 +975,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
 
       expect(container.textContent).toEqual('A');
 
-<<<<<<< HEAD
-      await act(() => {
-        store.set({});
-      });
-=======
       await expect(async () => {
         await act(() => {
           store.set({});
@@ -1283,7 +984,6 @@ describe('Shared useSyncExternalStore behavior (shim and built-in)', () => {
           ? ['Warning: App: Unsafe read of a mutable value during render.']
           : [],
       );
->>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('Malformed state');
     });
   });

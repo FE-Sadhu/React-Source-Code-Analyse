@@ -8,17 +8,8 @@
 .*/rollup/shims/facebook-www/.*
 .*/rollup/shims/react-native/.*
 
-<<<<<<< HEAD
-.*/node_modules/@snyk/.*
-.*/node_modules/y18n/.*
-.*/node_modules/chrome-devtools-frontend/.*
-.*/node_modules/devtools-timeline-model/.*
-.*/node_modules/create-react-class/.*
-.*/node_modules/react-native-web/.*
-=======
 .*/node_modules/fbjs/lib/keyMirrorRecursive.js.flow
 .*/node_modules/resolve/test/.*
->>>>>>> remotes/upstream/main
 .*/__mocks__/.*
 .*/__tests__/.*
 
@@ -27,48 +18,22 @@
 
 %REACT_RENDERER_FLOW_IGNORES%
 
-<<<<<<< HEAD
-[include]
-./node_modules/
-./packages/
-./scripts/
-
-=======
->>>>>>> remotes/upstream/main
 [libs]
 ./node_modules/fbjs/flow/lib/dev.js
 ./scripts/flow/environment.js
 ./scripts/flow/react-devtools.js
 ./scripts/flow/react-native-host-hooks.js
-<<<<<<< HEAD
-./scripts/flow/react-relay-hooks.js
-=======
->>>>>>> remotes/upstream/main
 ./scripts/flow/xplat.js
 
 [lints]
 untyped-type-import=error
 
 [options]
-<<<<<<< HEAD
-server.max_workers=4
-esproposal.class_static_fields=enable
-esproposal.class_instance_fields=enable
-esproposal.optional_chaining=enable
-exact_by_default=true
-munge_underscores=false
-types_first=false
-=======
 %CI_MAX_WORKERS%
 munge_underscores=false
->>>>>>> remotes/upstream/main
 
 # Substituted by createFlowConfig.js:
 %REACT_RENDERER_FLOW_OPTIONS%
 
 [version]
-<<<<<<< HEAD
-^0.142.0
-=======
 ^0.217.0
->>>>>>> remotes/upstream/main

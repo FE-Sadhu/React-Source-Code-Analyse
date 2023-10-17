@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -9,7 +7,6 @@
  * @noflow
  */
 
->>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {createRoot} from 'react-dom/client';
 import {

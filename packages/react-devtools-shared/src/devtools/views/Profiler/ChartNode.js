@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,17 +16,10 @@ type Props = {
   height: number,
   isDimmed?: boolean,
   label: string,
-<<<<<<< HEAD
-  onClick: (event: SyntheticMouseEvent<*>) => mixed,
-  onDoubleClick?: (event: SyntheticMouseEvent<*>) => mixed,
-  onMouseEnter: (event: SyntheticMouseEvent<*>) => mixed,
-  onMouseLeave: (event: SyntheticMouseEvent<*>) => mixed,
-=======
   onClick: (event: SyntheticMouseEvent<any>) => mixed,
   onDoubleClick?: (event: SyntheticMouseEvent<any>) => mixed,
   onMouseEnter: (event: SyntheticMouseEvent<any>) => mixed,
   onMouseLeave: (event: SyntheticMouseEvent<any>) => mixed,
->>>>>>> remotes/upstream/main
   placeLabelAboveNode?: boolean,
   textStyle?: Object,
   width: number,

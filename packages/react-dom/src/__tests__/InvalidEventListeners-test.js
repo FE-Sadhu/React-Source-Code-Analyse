@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,11 +9,7 @@
 
 'use strict';
 
-<<<<<<< HEAD
-jest.mock('../events/isEventSupported');
-=======
 jest.mock('react-dom-bindings/src/events/isEventSupported');
->>>>>>> remotes/upstream/main
 
 describe('InvalidEventListeners', () => {
   let React;
@@ -73,11 +65,6 @@ describe('InvalidEventListeners', () => {
 
     if (!__DEV__) {
       expect(console.error).toHaveBeenCalledTimes(1);
-<<<<<<< HEAD
-      expect(console.error.calls.argsFor(0)[0]).toMatch(
-        'Expected `onClick` listener to be a function, ' +
-          'instead got a value of `string` type.',
-=======
       expect(console.error.mock.calls[0][0]).toEqual(
         expect.objectContaining({
           detail: expect.objectContaining({
@@ -86,7 +73,6 @@ describe('InvalidEventListeners', () => {
           }),
           type: 'unhandled exception',
         }),
->>>>>>> remotes/upstream/main
       );
     }
   });

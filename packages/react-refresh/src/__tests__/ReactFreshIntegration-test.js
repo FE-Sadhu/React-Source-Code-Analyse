@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -35,11 +31,7 @@ describe('ReactFreshIntegration', () => {
       ReactFreshRuntime = require('react-refresh/runtime');
       ReactFreshRuntime.injectIntoGlobalHook(global);
       ReactDOM = require('react-dom');
-<<<<<<< HEAD
-      act = require('jest-react').act;
-=======
       act = require('react-dom/test-utils').act;
->>>>>>> remotes/upstream/main
       container = document.createElement('div');
       document.body.appendChild(container);
       exportsObj = undefined;
@@ -103,11 +95,7 @@ describe('ReactFreshIntegration', () => {
   });
 
   describe('with typescript syntax', () => {
-<<<<<<< HEAD
-    runTests(function(source) {
-=======
     runTests(function (source) {
->>>>>>> remotes/upstream/main
       const typescriptSource = babel.transform(source, {
         babelrc: false,
         configFile: false,

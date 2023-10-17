@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,11 +39,8 @@ function accumulate<T>(
   }
 
   if (isArray(next)) {
-<<<<<<< HEAD
-=======
     /* $FlowFixMe[incompatible-return] unsound if `next` is `T` and `T` an array,
      * `isArray` might refine to the array element type of `T` */
->>>>>>> remotes/upstream/main
     return [current].concat(next);
   }
 

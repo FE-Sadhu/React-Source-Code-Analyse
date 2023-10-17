@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -25,26 +21,16 @@ let SuspenseList;
 
 function initModules() {
   // Reset warning cache.
-<<<<<<< HEAD
-  jest.resetModuleRegistry();
-=======
   jest.resetModules();
->>>>>>> remotes/upstream/main
 
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMClient = require('react-dom/client');
   ReactDOMServer = require('react-dom/server');
   ReactTestUtils = require('react-dom/test-utils');
-<<<<<<< HEAD
-  act = require('jest-react').act;
-  if (gate(flags => flags.enableSuspenseList)) {
-    SuspenseList = React.SuspenseList;
-=======
   act = require('internal-test-utils').act;
   if (gate(flags => flags.enableSuspenseList)) {
     SuspenseList = React.unstable_SuspenseList;
->>>>>>> remotes/upstream/main
   }
 
   // Make them available to the helpers.
@@ -55,16 +41,8 @@ function initModules() {
   };
 }
 
-<<<<<<< HEAD
-const {
-  itThrowsWhenRendering,
-  resetModules,
-  serverRender,
-} = ReactDOMServerIntegrationUtils(initModules);
-=======
 const {itThrowsWhenRendering, resetModules, serverRender} =
   ReactDOMServerIntegrationUtils(initModules);
->>>>>>> remotes/upstream/main
 
 describe('ReactDOMServerSuspense', () => {
   beforeEach(() => {
@@ -183,11 +161,7 @@ describe('ReactDOMServerSuspense', () => {
     expect(divB.tagName).toBe('DIV');
     expect(divB.textContent).toBe('B');
 
-<<<<<<< HEAD
-    act(() => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       ReactDOMClient.hydrateRoot(parent, example);
     });
 

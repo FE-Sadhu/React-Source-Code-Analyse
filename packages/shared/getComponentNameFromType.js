@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -93,11 +89,7 @@ export default function getComponentNameFromType(type: mixed): string | null {
       if (enableCache) {
         return 'Cache';
       }
-<<<<<<< HEAD
-    // eslint-disable-next-line no-fallthrough
-=======
     // Fall through
->>>>>>> remotes/upstream/main
     case REACT_TRACING_MARKER_TYPE:
       if (enableTransitionTracing) {
         return 'TracingMarker';
@@ -134,10 +126,6 @@ export default function getComponentNameFromType(type: mixed): string | null {
           const context2 = ((type: any): ReactContext<any>);
           return (context2.displayName || context2._globalName) + '.Provider';
         }
-<<<<<<< HEAD
-      // eslint-disable-next-line no-fallthrough
-=======
->>>>>>> remotes/upstream/main
     }
   }
   return null;

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -7,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
->>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {useLayoutEffect, useRef, useState} from 'react';
 import {render} from 'react-dom';

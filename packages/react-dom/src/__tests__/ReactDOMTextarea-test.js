@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -33,11 +29,7 @@ describe('ReactDOMTextarea', () => {
     ReactDOMServer = require('react-dom/server');
     ReactTestUtils = require('react-dom/test-utils');
 
-<<<<<<< HEAD
-    renderTextarea = function(component, container) {
-=======
     renderTextarea = function (component, container) {
->>>>>>> remotes/upstream/main
       if (!container) {
         container = document.createElement('div');
       }
@@ -50,13 +42,10 @@ describe('ReactDOMTextarea', () => {
     };
   });
 
-<<<<<<< HEAD
-=======
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
->>>>>>> remotes/upstream/main
   it('should allow setting `defaultValue`', () => {
     const container = document.createElement('div');
     const node = renderTextarea(<textarea defaultValue="giraffe" />, container);
@@ -89,11 +78,7 @@ describe('ReactDOMTextarea', () => {
 
   it('should display "foobar" for `defaultValue` of `objToString`', () => {
     const objToString = {
-<<<<<<< HEAD
-      toString: function() {
-=======
       toString: function () {
->>>>>>> remotes/upstream/main
         return 'foobar';
       },
     };
@@ -152,28 +137,17 @@ describe('ReactDOMTextarea', () => {
 
     let counter = 0;
     const originalCreateElement = document.createElement;
-<<<<<<< HEAD
-    spyOnDevAndProd(document, 'createElement').and.callFake(function(type) {
-=======
     spyOnDevAndProd(document, 'createElement').mockImplementation(function (
       type,
     ) {
->>>>>>> remotes/upstream/main
       const el = originalCreateElement.apply(this, arguments);
       let value = '';
       if (type === 'textarea') {
         Object.defineProperty(el, 'value', {
-<<<<<<< HEAD
-          get: function() {
-            return value;
-          },
-          set: function(val) {
-=======
           get: function () {
             return value;
           },
           set: function (val) {
->>>>>>> remotes/upstream/main
             value = String(val);
             counter++;
           },
@@ -196,11 +170,7 @@ describe('ReactDOMTextarea', () => {
   });
 
   it('should render value for SSR', () => {
-<<<<<<< HEAD
-    const element = <textarea value="1" onChange={function() {}} />;
-=======
     const element = <textarea value="1" onChange={function () {}} />;
->>>>>>> remotes/upstream/main
     const markup = ReactDOMServer.renderToString(element);
     const div = document.createElement('div');
     div.innerHTML = markup;
@@ -244,11 +214,7 @@ describe('ReactDOMTextarea', () => {
     expect(node.value).toBe('giraffe');
 
     const objToString = {
-<<<<<<< HEAD
-      toString: function() {
-=======
       toString: function () {
->>>>>>> remotes/upstream/main
         return 'foo';
       },
     };
@@ -285,11 +251,7 @@ describe('ReactDOMTextarea', () => {
       expect(test).toThrowError(new TypeError('prod message')),
     ).toErrorDev(
       'Form field values (value, checked, defaultValue, or defaultChecked props) must be ' +
-<<<<<<< HEAD
-        'strings, not TemporalLike. This value must be coerced to a string before before using it here.',
-=======
         'strings, not TemporalLike. This value must be coerced to a string before using it here.',
->>>>>>> remotes/upstream/main
     );
   });
 
@@ -325,17 +287,10 @@ describe('ReactDOMTextarea', () => {
     let nodeValue = 'a';
     const nodeValueSetter = jest.fn();
     Object.defineProperty(node, 'value', {
-<<<<<<< HEAD
-      get: function() {
-        return nodeValue;
-      },
-      set: nodeValueSetter.mockImplementation(function(newValue) {
-=======
       get: function () {
         return nodeValue;
       },
       set: nodeValueSetter.mockImplementation(function (newValue) {
->>>>>>> remotes/upstream/main
         nodeValue = newValue;
       }),
     });
@@ -511,11 +466,7 @@ describe('ReactDOMTextarea', () => {
   if (ReactFeatureFlags.disableTextareaChildren) {
     it('should ignore objects as children', () => {
       const obj = {
-<<<<<<< HEAD
-        toString: function() {
-=======
         toString: function () {
->>>>>>> remotes/upstream/main
           return 'sharkswithlasers';
         },
       };
@@ -532,11 +483,7 @@ describe('ReactDOMTextarea', () => {
   if (!ReactFeatureFlags.disableTextareaChildren) {
     it('should allow objects as children', () => {
       const obj = {
-<<<<<<< HEAD
-        toString: function() {
-=======
         toString: function () {
->>>>>>> remotes/upstream/main
           return 'sharkswithlasers';
         },
       };
@@ -656,10 +603,7 @@ describe('ReactDOMTextarea', () => {
               ref={n => (node = n)}
               value="foo"
               onChange={emptyFunction}
-<<<<<<< HEAD
-=======
               data-count={this.state.count}
->>>>>>> remotes/upstream/main
             />
           </div>
         );
@@ -793,8 +737,6 @@ describe('ReactDOMTextarea', () => {
       expect(node.value).toBe('foo');
     });
   });
-<<<<<<< HEAD
-=======
 
   it('should remove previous `defaultValue`', () => {
     const container = document.createElement('div');
@@ -817,5 +759,4 @@ describe('ReactDOMTextarea', () => {
     ReactDOM.render(<textarea defaultValue={null} />, container);
     expect(node.defaultValue).toBe('');
   });
->>>>>>> remotes/upstream/main
 });

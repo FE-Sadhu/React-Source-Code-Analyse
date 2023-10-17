@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,11 +12,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-<<<<<<< HEAD
-const stripEmptyValues = function(obj) {
-=======
 const stripEmptyValues = function (obj) {
->>>>>>> remotes/upstream/main
   const ret = {};
   for (const name in obj) {
     if (!obj.hasOwnProperty(name)) {
@@ -68,11 +60,8 @@ class StatusDisplay extends React.Component {
  * Displays friends statuses.
  */
 class FriendsStatusDisplay extends React.Component {
-<<<<<<< HEAD
-=======
   displays = {};
 
->>>>>>> remotes/upstream/main
   /**
    * Gets the order directly from each rendered child's `index` field.
    * Refs are not maintained in the rendered order, and neither is
@@ -97,11 +86,7 @@ class FriendsStatusDisplay extends React.Component {
     const originalKeys = this.getOriginalKeys();
     for (let i = 0; i < originalKeys.length; i++) {
       const key = originalKeys[i];
-<<<<<<< HEAD
-      res[key] = this.refs[key];
-=======
       res[key] = this.displays[key];
->>>>>>> remotes/upstream/main
     }
     return res;
   }
@@ -121,11 +106,7 @@ class FriendsStatusDisplay extends React.Component {
         // We are only interested in children up to the current key.
         return;
       }
-<<<<<<< HEAD
-      expect(this.refs[key]).toBeTruthy();
-=======
       expect(this.displays[key]).toBeTruthy();
->>>>>>> remotes/upstream/main
     }
   }
 
@@ -137,13 +118,9 @@ class FriendsStatusDisplay extends React.Component {
         !status ? null : (
           <StatusDisplay
             key={key}
-<<<<<<< HEAD
-            ref={key}
-=======
             ref={current => {
               this.displays[key] = current;
             }}
->>>>>>> remotes/upstream/main
             contentKey={key}
             onFlush={this.verifyPreviousRefsResolved.bind(this, key)}
             status={status}
@@ -277,11 +254,7 @@ function prepareChildrenArray(childrenArray) {
 
 function prepareChildrenLegacyIterable(childrenArray) {
   return {
-<<<<<<< HEAD
-    '@@iterator': function*() {
-=======
     '@@iterator': function* () {
->>>>>>> remotes/upstream/main
       // eslint-disable-next-line no-for-of-loops/no-for-of-loops
       for (const child of childrenArray) {
         yield child;
@@ -292,11 +265,7 @@ function prepareChildrenLegacyIterable(childrenArray) {
 
 function prepareChildrenModernIterable(childrenArray) {
   return {
-<<<<<<< HEAD
-    [Symbol.iterator]: function*() {
-=======
     [Symbol.iterator]: function* () {
->>>>>>> remotes/upstream/main
       // eslint-disable-next-line no-for-of-loops/no-for-of-loops
       for (const child of childrenArray) {
         yield child;

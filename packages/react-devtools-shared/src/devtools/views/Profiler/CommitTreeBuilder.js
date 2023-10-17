@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,28 +18,17 @@ import {
   TREE_OPERATION_UPDATE_ERRORS_OR_WARNINGS,
 } from 'react-devtools-shared/src/constants';
 import {utfDecodeString} from 'react-devtools-shared/src/utils';
-<<<<<<< HEAD
-import {ElementTypeRoot} from 'react-devtools-shared/src/types';
-import ProfilerStore from 'react-devtools-shared/src/devtools/ProfilerStore';
-
-import type {ElementType} from 'react-devtools-shared/src/types';
-=======
 import {ElementTypeRoot} from 'react-devtools-shared/src/frontend/types';
 import ProfilerStore from 'react-devtools-shared/src/devtools/ProfilerStore';
 
 import type {ElementType} from 'react-devtools-shared/src/frontend/types';
->>>>>>> remotes/upstream/main
 import type {
   CommitTree,
   CommitTreeNode,
   ProfilingDataForRootFrontend,
 } from 'react-devtools-shared/src/devtools/views/Profiler/types';
 
-<<<<<<< HEAD
-const debug = (methodName, ...args) => {
-=======
 const debug = (methodName: string, ...args: Array<string>) => {
->>>>>>> remotes/upstream/main
   if (__DEBUG__) {
     console.log(
       `%cCommitTreeBuilder %c${methodName}`,
@@ -99,11 +84,7 @@ export function getCommitTree({
     // If this is the very first commit, start with the cached snapshot and apply the first mutation.
     // Otherwise load (or generate) the previous commit and append a mutation to it.
     if (index === 0) {
-<<<<<<< HEAD
-      const nodes = new Map();
-=======
       const nodes = new Map<number, CommitTreeNode>();
->>>>>>> remotes/upstream/main
 
       // Construct the initial tree.
       recursivelyInitializeTree(rootID, 0, nodes, dataForRoot);
@@ -169,10 +150,7 @@ function updateTree(
 
   // Clone nodes before mutating them so edits don't affect them.
   const getClonedNode = (id: number): CommitTreeNode => {
-<<<<<<< HEAD
-=======
     // $FlowFixMe[prop-missing] - recommended fix is to use object spread operator
->>>>>>> remotes/upstream/main
     const clonedNode = ((Object.assign(
       {},
       nodes.get(id),
@@ -185,11 +163,7 @@ function updateTree(
   let id: number = ((null: any): number);
 
   // Reassemble the string table.
-<<<<<<< HEAD
-  const stringTable = [
-=======
   const stringTable: Array<null | string> = [
->>>>>>> remotes/upstream/main
     null, // ID = 0 corresponds to the null string.
   ];
   const stringTableSize = operations[i++];

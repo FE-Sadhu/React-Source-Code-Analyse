@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,11 +20,7 @@ function FunctionComponent(props) {
 
 describe('ReactFunctionComponent', () => {
   beforeEach(() => {
-<<<<<<< HEAD
-    jest.resetModuleRegistry();
-=======
     jest.resetModules();
->>>>>>> remotes/upstream/main
     PropTypes = require('prop-types');
     React = require('react');
     ReactDOM = require('react-dom');
@@ -67,10 +59,7 @@ describe('ReactFunctionComponent', () => {
     expect(container.textContent).toBe('');
   });
 
-<<<<<<< HEAD
-=======
   // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
   it('should pass context thru stateless component', () => {
     class Child extends React.Component {
       static contextTypes = {
@@ -114,11 +103,7 @@ describe('ReactFunctionComponent', () => {
     function FunctionComponentWithChildContext() {
       return null;
     }
-<<<<<<< HEAD
-    FunctionComponentWithChildContext.getDerivedStateFromProps = function() {};
-=======
     FunctionComponentWithChildContext.getDerivedStateFromProps = function () {};
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
 
@@ -154,11 +139,7 @@ describe('ReactFunctionComponent', () => {
 
   it('should not throw when stateless component returns undefined', () => {
     function NotAComponent() {}
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div>
           <NotAComponent />
@@ -172,11 +153,7 @@ describe('ReactFunctionComponent', () => {
       return <div ref="me" />;
     }
 
-<<<<<<< HEAD
-    expect(function() {
-=======
     expect(function () {
->>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<Child test="test" />);
     }).toThrowError(
       __DEV__
@@ -329,10 +306,7 @@ describe('ReactFunctionComponent', () => {
 
   // This guards against a regression caused by clearing the current debug fiber.
   // https://github.com/facebook/react/issues/10831
-<<<<<<< HEAD
-=======
   // @gate !disableLegacyContext || !__DEV__
->>>>>>> remotes/upstream/main
   it('should warn when giving a function ref with context', () => {
     function Child() {
       return null;
@@ -351,11 +325,7 @@ describe('ReactFunctionComponent', () => {
         };
       }
       render() {
-<<<<<<< HEAD
-        return <Child ref={function() {}} />;
-=======
         return <Child ref={function () {}} />;
->>>>>>> remotes/upstream/main
       }
     }
 
@@ -399,15 +369,6 @@ describe('ReactFunctionComponent', () => {
     Child.defaultProps = {test: 2};
     Child.propTypes = {test: PropTypes.string};
 
-<<<<<<< HEAD
-    expect(() => ReactTestUtils.renderIntoDocument(<Child />)).toErrorDev(
-      'Warning: Failed prop type: Invalid prop `test` of type `number` ' +
-        'supplied to `Child`, expected `string`.\n' +
-        '    in Child (at **)',
-    );
-  });
-
-=======
     expect(() => ReactTestUtils.renderIntoDocument(<Child />)).toErrorDev([
       'Warning: Child: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.',
       'Warning: Failed prop type: Invalid prop `test` of type `number` ' +
@@ -417,7 +378,6 @@ describe('ReactFunctionComponent', () => {
   });
 
   // @gate !disableLegacyContext
->>>>>>> remotes/upstream/main
   it('should receive context', () => {
     class Parent extends React.Component {
       static childContextTypes = {
@@ -444,11 +404,7 @@ describe('ReactFunctionComponent', () => {
   });
 
   it('should work with arrow functions', () => {
-<<<<<<< HEAD
-    let Child = function() {
-=======
     let Child = function () {
->>>>>>> remotes/upstream/main
       return <div />;
     };
     // Will create a new bound function without a prototype, much like a native
@@ -459,11 +415,7 @@ describe('ReactFunctionComponent', () => {
   });
 
   it('should allow simple functions to return null', () => {
-<<<<<<< HEAD
-    const Child = function() {
-=======
     const Child = function () {
->>>>>>> remotes/upstream/main
       return null;
     };
     expect(() => ReactTestUtils.renderIntoDocument(<Child />)).not.toThrow();

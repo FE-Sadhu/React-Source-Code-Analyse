@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -44,11 +40,7 @@ describe('SelectEventPlugin', () => {
 
     // Pass `onMouseDown` so React registers a top-level listener.
     const node = ReactDOM.render(
-<<<<<<< HEAD
-      <input type="text" onMouseDown={function() {}} />,
-=======
       <input type="text" onMouseDown={function () {}} />,
->>>>>>> remotes/upstream/main
       container,
     );
 
@@ -185,11 +177,7 @@ describe('SelectEventPlugin', () => {
     expect(select).toHaveBeenCalledTimes(1);
   });
 
-<<<<<<< HEAD
-  it('should handle selectionchange events', function() {
-=======
   it('should handle selectionchange events', function () {
->>>>>>> remotes/upstream/main
     const onSelect = jest.fn();
     const node = ReactDOM.render(
       <input type="text" onSelect={onSelect} />,

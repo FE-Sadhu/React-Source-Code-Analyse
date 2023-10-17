@@ -23,8 +23,6 @@ module.exports = function shouldIgnoreConsoleError(format, args) {
         // We haven't finished migrating our tests to use createRoot.
         return true;
       }
-<<<<<<< HEAD
-=======
     } else if (
       format != null &&
       typeof format.message === 'string' &&
@@ -36,7 +34,6 @@ module.exports = function shouldIgnoreConsoleError(format, args) {
         // in development that is reported by jest-environment-jsdom. Ignore because it's noisy.
         return true;
       }
->>>>>>> remotes/upstream/main
     }
   } else {
     if (

@@ -1,18 +1,11 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
-<<<<<<< HEAD
-=======
  * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
->>>>>>> remotes/upstream/main
  */
 
 'use strict';
@@ -27,11 +20,7 @@ let ReactDOMServer;
 
 function initModules() {
   // Reset warning cache.
-<<<<<<< HEAD
-  jest.resetModuleRegistry();
-=======
   jest.resetModules();
->>>>>>> remotes/upstream/main
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMServer = require('react-dom/server');
@@ -45,30 +34,16 @@ function initModules() {
   };
 }
 
-<<<<<<< HEAD
-const {
-  resetModules,
-  itRenders,
-  clientCleanRender,
-  clientRenderOnServerString,
-} = ReactDOMServerIntegrationUtils(initModules);
-=======
 const {resetModules, itRenders, clientCleanRender} =
   ReactDOMServerIntegrationUtils(initModules);
->>>>>>> remotes/upstream/main
 
 describe('ReactDOMServerIntegration', () => {
   beforeEach(() => {
     resetModules();
   });
 
-<<<<<<< HEAD
-  describe('property to attribute mapping', function() {
-    describe('string properties', function() {
-=======
   describe('property to attribute mapping', function () {
     describe('string properties', function () {
->>>>>>> remotes/upstream/main
       itRenders('simple numbers', async render => {
         const e = await render(<div width={30} />);
         expect(e.getAttribute('width')).toBe('30');
@@ -95,11 +70,7 @@ describe('ReactDOMServerIntegration', () => {
       });
 
       itRenders('no string prop with function value', async render => {
-<<<<<<< HEAD
-        const e = await render(<div width={function() {}} />, 1);
-=======
         const e = await render(<div width={function () {}} />, 1);
->>>>>>> remotes/upstream/main
         expect(e.hasAttribute('width')).toBe(false);
       });
 
@@ -109,11 +80,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('boolean properties', function() {
-=======
     describe('boolean properties', function () {
->>>>>>> remotes/upstream/main
       itRenders('boolean prop with true value', async render => {
         const e = await render(<div hidden={true} />);
         expect(e.getAttribute('hidden')).toBe('');
@@ -173,11 +140,7 @@ describe('ReactDOMServerIntegration', () => {
       });
 
       itRenders('no boolean prop with function value', async render => {
-<<<<<<< HEAD
-        const e = await render(<div hidden={function() {}} />, 1);
-=======
         const e = await render(<div hidden={function () {}} />, 1);
->>>>>>> remotes/upstream/main
         expect(e.hasAttribute('hidden')).toBe(false);
       });
 
@@ -187,11 +150,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('download property (combined boolean/string attribute)', function() {
-=======
     describe('download property (combined boolean/string attribute)', function () {
->>>>>>> remotes/upstream/main
       itRenders('download prop with true value', async render => {
         const e = await render(<a download={true} />);
         expect(e.getAttribute('download')).toBe('');
@@ -233,11 +192,7 @@ describe('ReactDOMServerIntegration', () => {
       });
 
       itRenders('no download prop with function value', async render => {
-<<<<<<< HEAD
-        const e = await render(<div download={function() {}} />, 1);
-=======
         const e = await render(<div download={function () {}} />, 1);
->>>>>>> remotes/upstream/main
         expect(e.hasAttribute('download')).toBe(false);
       });
 
@@ -247,11 +202,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('className property', function() {
-=======
     describe('className property', function () {
->>>>>>> remotes/upstream/main
       itRenders('className prop with string value', async render => {
         const e = await render(<div className="myClassName" />);
         expect(e.getAttribute('class')).toBe('myClassName');
@@ -300,11 +251,7 @@ describe('ReactDOMServerIntegration', () => {
       );
     });
 
-<<<<<<< HEAD
-    describe('htmlFor property', function() {
-=======
     describe('htmlFor property', function () {
->>>>>>> remotes/upstream/main
       itRenders('htmlFor with string value', async render => {
         const e = await render(<div htmlFor="myFor" />);
         expect(e.getAttribute('for')).toBe('myFor');
@@ -337,11 +284,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('numeric properties', function() {
-=======
     describe('numeric properties', function () {
->>>>>>> remotes/upstream/main
       itRenders(
         'positive numeric property with positive value',
         async render => {
@@ -364,11 +307,7 @@ describe('ReactDOMServerIntegration', () => {
       );
 
       itRenders('no numeric prop with function value', async render => {
-<<<<<<< HEAD
-        const e = await render(<ol start={function() {}} />, 1);
-=======
         const e = await render(<ol start={function () {}} />, 1);
->>>>>>> remotes/upstream/main
         expect(e.hasAttribute('start')).toBe(false);
       });
 
@@ -380,11 +319,7 @@ describe('ReactDOMServerIntegration', () => {
       itRenders(
         'no positive numeric prop with function value',
         async render => {
-<<<<<<< HEAD
-          const e = await render(<input size={function() {}} />, 1);
-=======
           const e = await render(<input size={function () {}} />, 1);
->>>>>>> remotes/upstream/main
           expect(e.hasAttribute('size')).toBe(false);
         },
       );
@@ -395,19 +330,11 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('props with special meaning in React', function() {
-      itRenders('no ref attribute', async render => {
-        class RefComponent extends React.Component {
-          render() {
-            return <div ref="foo" />;
-=======
     describe('props with special meaning in React', function () {
       itRenders('no ref attribute', async render => {
         class RefComponent extends React.Component {
           render() {
             return <div ref={React.createRef()} />;
->>>>>>> remotes/upstream/main
           }
         }
         const e = await render(<RefComponent />);
@@ -442,11 +369,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('inline styles', function() {
-=======
     describe('inline styles', function () {
->>>>>>> remotes/upstream/main
       itRenders('simple styles', async render => {
         const e = await render(<div style={{color: 'red', width: '30px'}} />);
         expect(e.style.color).toBe('red');
@@ -543,11 +466,7 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('aria attributes', function() {
-=======
     describe('aria attributes', function () {
->>>>>>> remotes/upstream/main
       itRenders('simple strings', async render => {
         const e = await render(<div aria-label="hello" />);
         expect(e.getAttribute('aria-label')).toBe('hello');
@@ -571,15 +490,6 @@ describe('ReactDOMServerIntegration', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('cased attributes', function() {
-      itRenders(
-        'badly cased aliased HTML attribute with a warning',
-        async render => {
-          const e = await render(<meta httpequiv="refresh" />, 1);
-          expect(e.hasAttribute('http-equiv')).toBe(false);
-          expect(e.getAttribute('httpequiv')).toBe('refresh');
-=======
     describe('cased attributes', function () {
       itRenders(
         'badly cased aliased HTML attribute with a warning',
@@ -587,7 +497,6 @@ describe('ReactDOMServerIntegration', () => {
           const e = await render(<form acceptcharset="utf-8" />, 1);
           expect(e.hasAttribute('accept-charset')).toBe(false);
           expect(e.getAttribute('acceptcharset')).toBe('utf-8');
->>>>>>> remotes/upstream/main
         },
       );
 
@@ -639,11 +548,7 @@ describe('ReactDOMServerIntegration', () => {
       );
     });
 
-<<<<<<< HEAD
-    describe('unknown attributes', function() {
-=======
     describe('unknown attributes', function () {
->>>>>>> remotes/upstream/main
       itRenders('unknown attributes', async render => {
         const e = await render(<div foo="bar" />);
         expect(e.getAttribute('foo')).toBe('bar');
@@ -750,24 +655,6 @@ describe('ReactDOMServerIntegration', () => {
       expect(e.getAttribute('class')).toBe('test');
     });
 
-<<<<<<< HEAD
-    itRenders('className for custom elements', async render => {
-      if (ReactFeatureFlags.enableCustomElementPropertySupport) {
-        const e = await render(
-          <div is="custom-element" className="test" />,
-          render === clientRenderOnServerString ? 1 : 0,
-        );
-        expect(e.getAttribute('className')).toBe(null);
-        expect(e.getAttribute('class')).toBe('test');
-      } else {
-        const e = await render(<div is="custom-element" className="test" />, 0);
-        expect(e.getAttribute('className')).toBe('test');
-      }
-    });
-
-    itRenders('htmlFor attribute on custom elements', async render => {
-      const e = await render(<div is="custom-element" htmlFor="test" />);
-=======
     itRenders('className for is elements', async render => {
       const e = await render(<div is="custom-element" className="test" />, 0);
       expect(e.getAttribute('className')).toBe(null);
@@ -793,7 +680,6 @@ describe('ReactDOMServerIntegration', () => {
 
     itRenders('htmlFor attribute on custom elements', async render => {
       const e = await render(<custom-element htmlFor="test" />);
->>>>>>> remotes/upstream/main
       expect(e.getAttribute('htmlFor')).toBe('test');
       expect(e.getAttribute('for')).toBe(null);
     });

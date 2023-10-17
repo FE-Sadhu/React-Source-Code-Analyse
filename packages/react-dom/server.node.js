@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -41,9 +37,6 @@ export function renderToStaticNodeStream() {
 }
 
 export function renderToPipeableStream() {
-<<<<<<< HEAD
-  return require('./src/server/ReactDOMFizzServerNode').renderToPipeableStream.apply(
-=======
   return require('./src/server/react-dom-server.node').renderToPipeableStream.apply(
     this,
     arguments,
@@ -52,7 +45,6 @@ export function renderToPipeableStream() {
 
 export function resumeToPipeableStream() {
   return require('./src/server/react-dom-server.node').resumeToPipeableStream.apply(
->>>>>>> remotes/upstream/main
     this,
     arguments,
   );

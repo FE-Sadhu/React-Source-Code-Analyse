@@ -338,11 +338,7 @@
   "348": "ensureListeningTo(): received a container that was not an element node. This is likely a bug in React.",
   "349": "Expected a work-in-progress root. This is a bug in React. Please file an issue.",
   "350": "Cannot read from mutable source during the current render without tearing. This may be a bug in React. Please file an issue.",
-<<<<<<< HEAD
-  "351": "Unsupported server component type: %s",
-=======
   "351": "Unsupported Server Component type: %s",
->>>>>>> remotes/upstream/main
   "352": "React Lazy Components are not yet supported on the server.",
   "353": "A server block should never encode any other slots. This is a bug in React.",
   "354": "getInspectorDataForViewAtPoint() is not available in production.",
@@ -364,21 +360,12 @@
   "371": "Text string must be rendered within a <Text> component.\n\nText: %s",
   "372": "Cannot call unstable_createEventHandle with \"%s\", as it is not an event known to React.",
   "373": "This Hook is not supported in Server Components.",
-<<<<<<< HEAD
-  "374": "Event handlers cannot be passed to client component props. Remove %s from these props if possible: %s\nIf you need interactivity, consider converting part of this to a client component.",
-  "375": "Functions cannot be passed directly to client components because they're not serializable. Remove %s (%s) from this object, or avoid the entire object: %s",
-  "376": "Only global symbols received from Symbol.for(...) can be passed to client components. The symbol Symbol.for(%s) cannot be found among global symbols. Remove %s from this object, or avoid the entire object: %s",
-  "377": "BigInt (%s) is not yet supported in client component props. Remove %s from this object or use a plain number instead: %s",
-  "378": "Type %s is not supported in client component props. Remove %s from this object, or avoid the entire object: %s",
-  "379": "Refs cannot be used in server components, nor passed to client components.",
-=======
   "374": "Event handlers cannot be passed to Client Component props.%s\nIf you need interactivity, consider converting part of this to a Client Component.",
   "375": "Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with \"use server\".%s",
   "376": "Only global symbols received from Symbol.for(...) can be passed to Client Components. The symbol Symbol.for(%s) cannot be found among global symbols.%s",
   "377": "BigInt (%s) is not yet supported in Client Component props.%s",
   "378": "Type %s is not supported in Client Component props.%s",
   "379": "Refs cannot be used in Server Components, nor passed to Client Components.",
->>>>>>> remotes/upstream/main
   "380": "Reading the cache is only supported while rendering.",
   "381": "This feature is not supported by ReactSuspenseTestUtils.",
   "382": "This query has received more parameters than the last time the same query was used. Always pass the exact number of parameters that the query needs.",
@@ -438,10 +425,6 @@
   "437": "the \"precedence\" prop for links to stylesheets expects to receive a string but received something of type \"%s\" instead.",
   "438": "An unsupported type was passed to use(): %s",
   "439": "We didn't expect to see a forward reference. This is a bug in the React Server.",
-<<<<<<< HEAD
-  "440": "An event from useEvent was called during render."
-}
-=======
   "440": "A function wrapped in useEffectEvent can't be called during rendering.",
   "441": "An error occurred in the Server Components render. The specific message is omitted in production builds to avoid leaking sensitive details. A digest property is included on this error instance which may provide additional details about the nature of the error.",
   "442": "The current renderer does not support Resources. This error is likely caused by a bug in React. Please file an issue.",
@@ -503,4 +486,3 @@
   "498": "Only plain objects, and a few built-ins, can be passed to Client Components from Server Components. Classes or null prototypes are not supported.",
   "499": "Only plain objects, and a few built-ins, can be passed to Server Actions. Classes or null prototypes are not supported."
 }
->>>>>>> remotes/upstream/main

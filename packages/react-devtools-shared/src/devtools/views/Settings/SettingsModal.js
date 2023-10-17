@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -63,16 +59,10 @@ export default function SettingsModal(_: {}): React.Node {
 
 function SettingsModalImpl(_: {}) {
   const {setIsModalShowing} = useContext(SettingsModalContext);
-<<<<<<< HEAD
-  const dismissModal = useCallback(() => setIsModalShowing(false), [
-    setIsModalShowing,
-  ]);
-=======
   const dismissModal = useCallback(
     () => setIsModalShowing(false),
     [setIsModalShowing],
   );
->>>>>>> remotes/upstream/main
 
   const [selectedTabID, selectTab] = useLocalStorage<TabID>(
     'React::DevTools::selectedSettingsTabID',
@@ -93,10 +83,7 @@ function SettingsModalImpl(_: {}) {
     case 'components':
       view = <ComponentsSettings />;
       break;
-<<<<<<< HEAD
-=======
     // $FlowFixMe[incompatible-type] is this missing in TabID?
->>>>>>> remotes/upstream/main
     case 'debugging':
       view = <DebuggingSettings />;
       break;

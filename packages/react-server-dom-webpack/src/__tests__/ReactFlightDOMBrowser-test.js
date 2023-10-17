@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,28 +10,12 @@
 'use strict';
 
 // Polyfills for test environment
-<<<<<<< HEAD
-global.ReadableStream = require('web-streams-polyfill/ponyfill/es6').ReadableStream;
-=======
 global.ReadableStream =
   require('web-streams-polyfill/ponyfill/es6').ReadableStream;
->>>>>>> remotes/upstream/main
 global.TextEncoder = require('util').TextEncoder;
 global.TextDecoder = require('util').TextDecoder;
 
 let clientExports;
-<<<<<<< HEAD
-let webpackMap;
-let webpackModules;
-let act;
-let React;
-let ReactDOMClient;
-let ReactDOMServer;
-let ReactServerDOMWriter;
-let ReactServerDOMReader;
-let Suspense;
-let use;
-=======
 let serverExports;
 let webpackMap;
 let webpackServerMap;
@@ -50,38 +30,10 @@ let Suspense;
 let use;
 let ReactServer;
 let ReactServerDOM;
->>>>>>> remotes/upstream/main
 
 describe('ReactFlightDOMBrowser', () => {
   beforeEach(() => {
     jest.resetModules();
-<<<<<<< HEAD
-    act = require('jest-react').act;
-    const WebpackMock = require('./utils/WebpackMock');
-    clientExports = WebpackMock.clientExports;
-    webpackMap = WebpackMock.webpackMap;
-    webpackModules = WebpackMock.webpackModules;
-    React = require('react');
-    ReactDOMClient = require('react-dom/client');
-    ReactDOMServer = require('react-dom/server.browser');
-    ReactServerDOMWriter = require('react-server-dom-webpack/writer.browser.server');
-    ReactServerDOMReader = require('react-server-dom-webpack');
-    Suspense = React.Suspense;
-    use = React.experimental_use;
-  });
-
-  async function readResult(stream) {
-    const reader = stream.getReader();
-    let result = '';
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) {
-        return result;
-      }
-      result += Buffer.from(value).toString('utf8');
-    }
-  }
-=======
 
     // Simulate the condition resolution
     jest.mock('react', () => require('react/react.shared-subset'));
@@ -111,7 +63,6 @@ describe('ReactFlightDOMBrowser', () => {
     Suspense = React.Suspense;
     use = React.use;
   });
->>>>>>> remotes/upstream/main
 
   function makeDelayedText(Model) {
     let error, _resolve, _reject;
@@ -143,8 +94,6 @@ describe('ReactFlightDOMBrowser', () => {
     throw theInfinitePromise;
   }
 
-<<<<<<< HEAD
-=======
   function requireServerRef(ref) {
     let name = '';
     let resolvedModuleData = webpackServerMap[ref];
@@ -183,7 +132,6 @@ describe('ReactFlightDOMBrowser', () => {
     return fn.apply(null, args);
   }
 
->>>>>>> remotes/upstream/main
   it('should resolve HTML using W3C streams', async () => {
     function Text({children}) {
       return <span>{children}</span>;
@@ -204,13 +152,8 @@ describe('ReactFlightDOMBrowser', () => {
       return model;
     }
 
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(<App />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(<App />);
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
     const model = await response;
     expect(model).toEqual({
       html: (
@@ -242,13 +185,8 @@ describe('ReactFlightDOMBrowser', () => {
       return model;
     }
 
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(<App />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(<App />);
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
     const model = await response;
     expect(model).toEqual({
       html: (
@@ -260,10 +198,6 @@ describe('ReactFlightDOMBrowser', () => {
     });
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should progressively reveal server components', async () => {
     let reportedErrors = [];
 
@@ -285,13 +219,6 @@ describe('ReactFlightDOMBrowser', () => {
       }
     }
 
-<<<<<<< HEAD
-    function MyErrorBoundary({children}) {
-      return (
-        <ErrorBoundary fallback={e => <p>{e.message}</p>}>
-          {children}
-        </ErrorBoundary>
-=======
     let errorBoundaryFn;
     if (__DEV__) {
       errorBoundaryFn = e => (
@@ -313,7 +240,6 @@ describe('ReactFlightDOMBrowser', () => {
     function MyErrorBoundary({children}) {
       return (
         <ErrorBoundary fallback={errorBoundaryFn}>{children}</ErrorBoundary>
->>>>>>> remotes/upstream/main
       );
     }
 
@@ -381,26 +307,12 @@ describe('ReactFlightDOMBrowser', () => {
       return use(response).rootContent;
     }
 
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(
->>>>>>> remotes/upstream/main
       model,
       webpackMap,
       {
         onError(x) {
           reportedErrors.push(x);
-<<<<<<< HEAD
-        },
-      },
-    );
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
           return __DEV__ ? `a dev digest` : `digest("${x.message}")`;
         },
       },
@@ -410,7 +322,6 @@ describe('ReactFlightDOMBrowser', () => {
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback={<p>(loading)</p>}>
           <ProfilePage response={response} />
@@ -420,21 +331,13 @@ describe('ReactFlightDOMBrowser', () => {
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
     // This isn't enough to show anything.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolveFriends();
     });
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
     // We can now show the details. Sidebar and posts are still loading.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolveName();
     });
     // Advance time enough to trigger a nested fallback.
@@ -450,11 +353,6 @@ describe('ReactFlightDOMBrowser', () => {
 
     const theError = new Error('Game over');
     // Let's *fail* loading games.
-<<<<<<< HEAD
-    await act(async () => {
-      rejectGames(theError);
-    });
-=======
     await act(() => {
       rejectGames(theError);
     });
@@ -463,57 +361,36 @@ describe('ReactFlightDOMBrowser', () => {
       ? '<p>Game over + a dev digest</p>'
       : '<p>digest("Game over")</p>';
 
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<p>(loading sidebar)</p>' +
         '<p>(loading posts)</p>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-=======
         gamesExpectedValue,
->>>>>>> remotes/upstream/main
     );
 
     expect(reportedErrors).toEqual([theError]);
     reportedErrors = [];
 
     // We can now show the sidebar.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolvePhotos();
     });
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<div>:photos::friends:</div>' +
         '<p>(loading posts)</p>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-    );
-
-    // Show everything.
-    await act(async () => {
-=======
         gamesExpectedValue,
     );
 
     // Show everything.
     await act(() => {
->>>>>>> remotes/upstream/main
       resolvePosts();
     });
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<div>:photos::friends:</div>' +
         '<div>:posts:</div>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-=======
         gamesExpectedValue,
->>>>>>> remotes/upstream/main
     );
 
     expect(reportedErrors).toEqual([]);
@@ -569,11 +446,7 @@ describe('ReactFlightDOMBrowser', () => {
       rootContent: <ProfileContent />,
     };
 
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(
->>>>>>> remotes/upstream/main
       model,
       webpackMap,
     );
@@ -598,11 +471,7 @@ describe('ReactFlightDOMBrowser', () => {
     // Advance time enough to trigger a nested fallback.
     jest.advanceTimersByTime(500);
 
-<<<<<<< HEAD
-    await act(async () => {});
-=======
     await act(() => {});
->>>>>>> remotes/upstream/main
 
     expect(flightResponse).toContain('(loading everything)');
     expect(flightResponse).toContain('(loading sidebar)');
@@ -610,41 +479,25 @@ describe('ReactFlightDOMBrowser', () => {
     expect(flightResponse).not.toContain(':friends:');
     expect(flightResponse).not.toContain(':name:');
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolveFriends();
     });
 
     expect(flightResponse).toContain(':friends:');
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolveName();
     });
 
     expect(flightResponse).toContain(':name:');
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolvePhotos();
     });
 
     expect(flightResponse).toContain(':photos:');
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolvePosts();
     });
 
@@ -654,58 +507,6 @@ describe('ReactFlightDOMBrowser', () => {
     expect(isDone).toBeTruthy();
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('should allow an alternative module mapping to be used for SSR', async () => {
-    function ClientComponent() {
-      return <span>Client Component</span>;
-    }
-    // The Client build may not have the same IDs as the Server bundles for the same
-    // component.
-    const ClientComponentOnTheClient = clientExports(ClientComponent);
-    const ClientComponentOnTheServer = clientExports(ClientComponent);
-
-    // In the SSR bundle this module won't exist. We simulate this by deleting it.
-    const clientId = webpackMap[ClientComponentOnTheClient.filepath]['*'].id;
-    delete webpackModules[clientId];
-
-    // Instead, we have to provide a translation from the client meta data to the SSR
-    // meta data.
-    const ssrMetaData = webpackMap[ClientComponentOnTheServer.filepath]['*'];
-    const translationMap = {
-      [clientId]: {
-        '*': ssrMetaData,
-      },
-    };
-
-    function App() {
-      return <ClientComponentOnTheClient />;
-    }
-
-    const stream = ReactServerDOMWriter.renderToReadableStream(
-      <App />,
-      webpackMap,
-    );
-    const response = ReactServerDOMReader.createFromReadableStream(stream, {
-      moduleMap: translationMap,
-    });
-
-    function ClientRoot() {
-      return use(response);
-    }
-
-    const ssrStream = await ReactDOMServer.renderToReadableStream(
-      <ClientRoot />,
-    );
-    const result = await readResult(ssrStream);
-    expect(result).toEqual('<span>Client Component</span>');
-  });
-
-  // @gate enableUseHook
-  it('should be able to complete after aborting and throw the reason client-side', async () => {
-    const reportedErrors = [];
-
-=======
   it('should be able to complete after aborting and throw the reason client-side', async () => {
     const reportedErrors = [];
 
@@ -727,7 +528,6 @@ describe('ReactFlightDOMBrowser', () => {
       };
     }
 
->>>>>>> remotes/upstream/main
     class ErrorBoundary extends React.Component {
       state = {hasError: false, error: null};
       static getDerivedStateFromError(error) {
@@ -745,11 +545,7 @@ describe('ReactFlightDOMBrowser', () => {
     }
 
     const controller = new AbortController();
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(
->>>>>>> remotes/upstream/main
       <div>
         <InfiniteSuspend />
       </div>,
@@ -757,13 +553,6 @@ describe('ReactFlightDOMBrowser', () => {
       {
         signal: controller.signal,
         onError(x) {
-<<<<<<< HEAD
-          reportedErrors.push(x);
-        },
-      },
-    );
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
           const message = typeof x === 'string' ? x : x.message;
           reportedErrors.push(x);
           return __DEV__ ? 'a dev digest' : `digest("${message}")`;
@@ -771,7 +560,6 @@ describe('ReactFlightDOMBrowser', () => {
       },
     );
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
@@ -780,15 +568,9 @@ describe('ReactFlightDOMBrowser', () => {
       return use(res);
     }
 
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(
-        <ErrorBoundary fallback={e => <p>{e.message}</p>}>
-=======
     await act(() => {
       root.render(
         <ErrorBoundary fallback={errorBoundaryFn}>
->>>>>>> remotes/upstream/main
           <Suspense fallback={<p>(loading)</p>}>
             <App res={response} />
           </Suspense>
@@ -797,16 +579,6 @@ describe('ReactFlightDOMBrowser', () => {
     });
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
-<<<<<<< HEAD
-    await act(async () => {
-      // @TODO this is a hack to work around lack of support for abortSignal.reason in node
-      // The abort call itself should set this property but since we are testing in node we
-      // set it here manually
-      controller.signal.reason = 'for reasons';
-      controller.abort('for reasons');
-    });
-    expect(container.innerHTML).toBe('<p>Error: for reasons</p>');
-=======
     await act(() => {
       controller.abort('for reasons');
     });
@@ -814,25 +586,10 @@ describe('ReactFlightDOMBrowser', () => {
       ? '<p>Error: for reasons + a dev digest</p>'
       : '<p>digest("for reasons")</p>';
     expect(container.innerHTML).toBe(expectedValue);
->>>>>>> remotes/upstream/main
 
     expect(reportedErrors).toEqual(['for reasons']);
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('basic use(promise)', async () => {
-    function Server() {
-      return (
-        use(Promise.resolve('A')) +
-        use(Promise.resolve('B')) +
-        use(Promise.resolve('C'))
-      );
-    }
-
-    const stream = ReactServerDOMWriter.renderToReadableStream(<Server />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
   it('basic use(promise)', async () => {
     function Server() {
       return (
@@ -844,7 +601,6 @@ describe('ReactFlightDOMBrowser', () => {
 
     const stream = ReactServerDOMServer.renderToReadableStream(<Server />);
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     function Client() {
       return use(response);
@@ -852,11 +608,7 @@ describe('ReactFlightDOMBrowser', () => {
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback="Loading...">
           <Client />
@@ -866,15 +618,6 @@ describe('ReactFlightDOMBrowser', () => {
     expect(container.innerHTML).toBe('ABC');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('basic use(context)', async () => {
-    const ContextA = React.createServerContext('ContextA', '');
-    const ContextB = React.createServerContext('ContextB', 'B');
-
-    function ServerComponent() {
-      return use(ContextA) + use(ContextB);
-=======
   // @gate enableServerContext
   it('basic use(context)', async () => {
     let ContextA;
@@ -896,7 +639,6 @@ describe('ReactFlightDOMBrowser', () => {
 
     function ServerComponent() {
       return ReactServer.use(ContextA) + ReactServer.use(ContextB);
->>>>>>> remotes/upstream/main
     }
     function Server() {
       return (
@@ -905,13 +647,8 @@ describe('ReactFlightDOMBrowser', () => {
         </ContextA.Provider>
       );
     }
-<<<<<<< HEAD
-    const stream = ReactServerDOMWriter.renderToReadableStream(<Server />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
     const stream = ReactServerDOMServer.renderToReadableStream(<Server />);
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     function Client() {
       return use(response);
@@ -919,11 +656,7 @@ describe('ReactFlightDOMBrowser', () => {
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       // Client uses a different renderer.
       // We reset _currentRenderer here to not trigger a warning about multiple
       // renderers concurrently using this context
@@ -933,12 +666,6 @@ describe('ReactFlightDOMBrowser', () => {
     expect(container.innerHTML).toBe('AB');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('use(promise) in multiple components', async () => {
-    function Child({prefix}) {
-      return prefix + use(Promise.resolve('C')) + use(Promise.resolve('D'));
-=======
   it('use(promise) in multiple components', async () => {
     function Child({prefix}) {
       return (
@@ -946,19 +673,10 @@ describe('ReactFlightDOMBrowser', () => {
         ReactServer.use(Promise.resolve('C')) +
         ReactServer.use(Promise.resolve('D'))
       );
->>>>>>> remotes/upstream/main
     }
 
     function Parent() {
       return (
-<<<<<<< HEAD
-        <Child prefix={use(Promise.resolve('A')) + use(Promise.resolve('B'))} />
-      );
-    }
-
-    const stream = ReactServerDOMWriter.renderToReadableStream(<Parent />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
         <Child
           prefix={
             ReactServer.use(Promise.resolve('A')) +
@@ -970,7 +688,6 @@ describe('ReactFlightDOMBrowser', () => {
 
     const stream = ReactServerDOMServer.renderToReadableStream(<Parent />);
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     function Client() {
       return use(response);
@@ -978,11 +695,7 @@ describe('ReactFlightDOMBrowser', () => {
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback="Loading...">
           <Client />
@@ -992,10 +705,6 @@ describe('ReactFlightDOMBrowser', () => {
     expect(container.innerHTML).toBe('ABCD');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('using a rejected promise will throw', async () => {
     const promiseA = Promise.resolve('A');
     const promiseB = Promise.reject(new Error('Oops!'));
@@ -1006,13 +715,6 @@ describe('ReactFlightDOMBrowser', () => {
     await expect(promiseB).rejects.toThrow('Oops!');
 
     function Server() {
-<<<<<<< HEAD
-      return use(promiseA) + use(promiseB) + use(promiseC);
-    }
-
-    const reportedErrors = [];
-    const stream = ReactServerDOMWriter.renderToReadableStream(
-=======
       return (
         ReactServer.use(promiseA) +
         ReactServer.use(promiseB) +
@@ -1022,24 +724,16 @@ describe('ReactFlightDOMBrowser', () => {
 
     const reportedErrors = [];
     const stream = ReactServerDOMServer.renderToReadableStream(
->>>>>>> remotes/upstream/main
       <Server />,
       webpackMap,
       {
         onError(x) {
           reportedErrors.push(x);
-<<<<<<< HEAD
-        },
-      },
-    );
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
           return __DEV__ ? 'a dev digest' : `digest("${x.message}")`;
         },
       },
     );
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     class ErrorBoundary extends React.Component {
       state = {error: null};
@@ -1048,13 +742,9 @@ describe('ReactFlightDOMBrowser', () => {
       }
       render() {
         if (this.state.error) {
-<<<<<<< HEAD
-          return this.state.error.message;
-=======
           return __DEV__
             ? this.state.error.message + ' + ' + this.state.error.digest
             : this.state.error.digest;
->>>>>>> remotes/upstream/main
         }
         return this.props.children;
       }
@@ -1066,32 +756,20 @@ describe('ReactFlightDOMBrowser', () => {
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <ErrorBoundary>
           <Client />
         </ErrorBoundary>,
       );
     });
-<<<<<<< HEAD
-    expect(container.innerHTML).toBe('Oops!');
-=======
     expect(container.innerHTML).toBe(
       __DEV__ ? 'Oops! + a dev digest' : 'digest("Oops!")',
     );
->>>>>>> remotes/upstream/main
     expect(reportedErrors.length).toBe(1);
     expect(reportedErrors[0].message).toBe('Oops!');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it("use a promise that's already been instrumented and resolved", async () => {
     const thenable = {
       status: 'fulfilled',
@@ -1101,13 +779,6 @@ describe('ReactFlightDOMBrowser', () => {
 
     // This will never suspend because the thenable already resolved
     function Server() {
-<<<<<<< HEAD
-      return use(thenable);
-    }
-
-    const stream = ReactServerDOMWriter.renderToReadableStream(<Server />);
-    const response = ReactServerDOMReader.createFromReadableStream(stream);
-=======
       return ReactServer.use(thenable);
     }
 
@@ -1567,7 +1238,6 @@ describe('ReactFlightDOMBrowser', () => {
       },
     );
     const response = ReactServerDOMClient.createFromReadableStream(stream);
->>>>>>> remotes/upstream/main
 
     function Client() {
       return use(response);
@@ -1576,11 +1246,6 @@ describe('ReactFlightDOMBrowser', () => {
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(async () => {
-<<<<<<< HEAD
-      root.render(<Client />);
-    });
-    expect(container.innerHTML).toBe('Hi');
-=======
       root.render(
         <div>
           Shell: <Client />
@@ -1643,6 +1308,5 @@ describe('ReactFlightDOMBrowser', () => {
     expect(errors).toEqual([
       'The render was aborted by the server without a reason.',
     ]);
->>>>>>> remotes/upstream/main
   });
 });

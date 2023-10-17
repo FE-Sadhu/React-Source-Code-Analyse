@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,13 +10,9 @@
 'use strict';
 
 // Polyfills for test environment
-<<<<<<< HEAD
-global.ReadableStream = require('web-streams-polyfill/ponyfill/es6').ReadableStream;
-=======
 global.ReadableStream =
   require('web-streams-polyfill/ponyfill/es6').ReadableStream;
 global.TextEncoder = require('util').TextEncoder;
->>>>>>> remotes/upstream/main
 global.TextDecoder = require('util').TextDecoder;
 
 // Don't wait before processing work on the server.
@@ -33,19 +25,6 @@ let clientExports;
 let clientModuleError;
 let webpackMap;
 let Stream;
-<<<<<<< HEAD
-let React;
-let ReactDOMClient;
-let ReactServerDOMWriter;
-let ReactServerDOMReader;
-let Suspense;
-let ErrorBoundary;
-
-describe('ReactFlightDOM', () => {
-  beforeEach(() => {
-    jest.resetModules();
-    act = require('jest-react').act;
-=======
 let FlightReact;
 let React;
 let FlightReactDOM;
@@ -72,21 +51,11 @@ describe('ReactFlightDOM', () => {
     );
     jest.mock('react', () => require('react/react.shared-subset'));
 
->>>>>>> remotes/upstream/main
     const WebpackMock = require('./utils/WebpackMock');
     clientExports = WebpackMock.clientExports;
     clientModuleError = WebpackMock.clientModuleError;
     webpackMap = WebpackMock.webpackMap;
 
-<<<<<<< HEAD
-    Stream = require('stream');
-    React = require('react');
-    use = React.experimental_use;
-    Suspense = React.Suspense;
-    ReactDOMClient = require('react-dom/client');
-    ReactServerDOMWriter = require('react-server-dom-webpack/writer.node.server');
-    ReactServerDOMReader = require('react-server-dom-webpack');
-=======
     ReactServerDOMServer = require('react-server-dom-webpack/server');
     FlightReact = require('react');
     FlightReactDOM = require('react-dom');
@@ -103,7 +72,6 @@ describe('ReactFlightDOM', () => {
     ReactDOMClient = require('react-dom/client');
     ReactDOMFizzServer = require('react-dom/server.node');
     ReactServerDOMClient = require('react-server-dom-webpack/client');
->>>>>>> remotes/upstream/main
 
     ErrorBoundary = class extends React.Component {
       state = {hasError: false, error: null};
@@ -145,8 +113,6 @@ describe('ReactFlightDOM', () => {
     throw theInfinitePromise;
   }
 
-<<<<<<< HEAD
-=======
   function getMeaningfulChildren(element) {
     const children = [];
     let node = element.firstChild;
@@ -192,7 +158,6 @@ describe('ReactFlightDOM', () => {
       : children;
   }
 
->>>>>>> remotes/upstream/main
   it('should resolve HTML using Node streams', async () => {
     function Text({children}) {
       return <span>{children}</span>;
@@ -214,20 +179,12 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <App />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
->>>>>>> remotes/upstream/main
     const model = await response;
     expect(model).toEqual({
       html: (
@@ -239,10 +196,6 @@ describe('ReactFlightDOM', () => {
     });
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should resolve the root', async () => {
     // Model
     function Text({children}) {
@@ -275,28 +228,16 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <RootModel />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App response={response} />);
     });
     expect(container.innerHTML).toBe(
@@ -304,10 +245,6 @@ describe('ReactFlightDOM', () => {
     );
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should not get confused by $', async () => {
     // Model
     function RootModel() {
@@ -327,37 +264,21 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <RootModel />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App response={response} />);
     });
     expect(container.innerHTML).toBe('<p>$1</p>');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should not get confused by @', async () => {
     // Model
     function RootModel() {
@@ -377,36 +298,21 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <RootModel />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App response={response} />);
     });
     expect(container.innerHTML).toBe('<p>@div</p>');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
   it('should be able to esm compat test module references', async () => {
     const ESMCompatModule = {
       __esModule: true,
@@ -531,7 +437,6 @@ describe('ReactFlightDOM', () => {
     expect(container.innerHTML).toBe('<p>Hello World</p>');
   });
 
->>>>>>> remotes/upstream/main
   it('should unwrap async module references', async () => {
     const AsyncModule = Promise.resolve(function AsyncModule({text}) {
       return 'Async: ' + text;
@@ -557,36 +462,21 @@ describe('ReactFlightDOM', () => {
     const AsyncModuleRef2 = await clientExports(AsyncModule2);
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <AsyncModuleRef text={AsyncModuleRef2.exportName} />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App response={response} />);
     });
     expect(container.innerHTML).toBe('<p>Async: Module</p>');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
   it('should unwrap async module references using use', async () => {
     const AsyncModule = Promise.resolve('Async Text');
 
@@ -625,7 +515,6 @@ describe('ReactFlightDOM', () => {
     expect(container.innerHTML).toBe('<p>Async Text</p>');
   });
 
->>>>>>> remotes/upstream/main
   it('should be able to import a name called "then"', async () => {
     const thenExports = {
       then: function then() {
@@ -648,36 +537,21 @@ describe('ReactFlightDOM', () => {
     const ThenRef = clientExports(thenExports).then;
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <ThenRef />,
       webpackMap,
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(<App response={response} />);
     });
     expect(container.innerHTML).toBe('<p>and then</p>');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
   it('throws when accessing a member below the client exports', () => {
     const ClientModule = clientExports({
       Component: {deep: 'thing'},
@@ -714,7 +588,6 @@ describe('ReactFlightDOM', () => {
     );
   });
 
->>>>>>> remotes/upstream/main
   it('should progressively reveal server components', async () => {
     let reportedErrors = [];
 
@@ -722,9 +595,6 @@ describe('ReactFlightDOM', () => {
 
     function MyErrorBoundary({children}) {
       return (
-<<<<<<< HEAD
-        <ErrorBoundary fallback={e => <p>{e.message}</p>}>
-=======
         <ErrorBoundary
           fallback={e => (
             <p>
@@ -732,7 +602,6 @@ describe('ReactFlightDOM', () => {
               {e.digest}
             </p>
           )}>
->>>>>>> remotes/upstream/main
           {children}
         </ErrorBoundary>
       );
@@ -744,37 +613,19 @@ describe('ReactFlightDOM', () => {
     }
 
     function makeDelayedText() {
-<<<<<<< HEAD
-      let error, _resolve, _reject;
-=======
       let _resolve, _reject;
->>>>>>> remotes/upstream/main
       let promise = new Promise((resolve, reject) => {
         _resolve = () => {
           promise = null;
           resolve();
         };
         _reject = e => {
-<<<<<<< HEAD
-          error = e;
-=======
->>>>>>> remotes/upstream/main
           promise = null;
           reject(e);
         };
       });
-<<<<<<< HEAD
-      function DelayedText({children}, data) {
-        if (promise) {
-          throw promise;
-        }
-        if (error) {
-          throw error;
-        }
-=======
       async function DelayedText({children}) {
         await promise;
->>>>>>> remotes/upstream/main
         return <Text>{children}</Text>;
       }
       return [DelayedText, _resolve, _reject];
@@ -840,37 +691,22 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       model,
       webpackMap,
       {
         onError(x) {
           reportedErrors.push(x);
-<<<<<<< HEAD
-=======
           return __DEV__ ? 'a dev digest' : `digest("${x.message}")`;
->>>>>>> remotes/upstream/main
         },
       },
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-
-    const container = document.createElement('div');
-    const root = ReactDOMClient.createRoot(container);
-    await act(async () => {
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback={<p>(loading)</p>}>
           <ProfilePage response={response} />
@@ -880,23 +716,12 @@ describe('ReactFlightDOM', () => {
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
     // This isn't enough to show anything.
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       resolveFriends();
     });
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
     // We can now show the details. Sidebar and posts are still loading.
-<<<<<<< HEAD
-    await act(async () => {
-      resolveName();
-    });
-    // Advance time enough to trigger a nested fallback.
-    jest.advanceTimersByTime(500);
-=======
     await act(() => {
       resolveName();
     });
@@ -904,7 +729,6 @@ describe('ReactFlightDOM', () => {
     await act(() => {
       jest.advanceTimersByTime(500);
     });
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<p>(loading sidebar)</p>' +
@@ -917,26 +741,17 @@ describe('ReactFlightDOM', () => {
     const theError = new Error('Game over');
     // Let's *fail* loading games.
     await act(async () => {
-<<<<<<< HEAD
-      rejectGames(theError);
-    });
-=======
       await rejectGames(theError);
       await 'the inner async function';
     });
     const expectedGamesValue = __DEV__
       ? '<p>Game over + a dev digest</p>'
       : '<p>digest("Game over")</p>';
->>>>>>> remotes/upstream/main
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<p>(loading sidebar)</p>' +
         '<p>(loading posts)</p>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-=======
         expectedGamesValue,
->>>>>>> remotes/upstream/main
     );
 
     expect(reportedErrors).toEqual([theError]);
@@ -944,51 +759,31 @@ describe('ReactFlightDOM', () => {
 
     // We can now show the sidebar.
     await act(async () => {
-<<<<<<< HEAD
-      resolvePhotos();
-=======
       await resolvePhotos();
       await 'the inner async function';
->>>>>>> remotes/upstream/main
     });
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<div>:photos::friends:</div>' +
         '<p>(loading posts)</p>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-=======
         expectedGamesValue,
->>>>>>> remotes/upstream/main
     );
 
     // Show everything.
     await act(async () => {
-<<<<<<< HEAD
-      resolvePosts();
-=======
       await resolvePosts();
       await 'the inner async function';
->>>>>>> remotes/upstream/main
     });
     expect(container.innerHTML).toBe(
       '<div>:name::avatar:</div>' +
         '<div>:photos::friends:</div>' +
         '<div>:posts:</div>' +
-<<<<<<< HEAD
-        '<p>Game over</p>', // TODO: should not have message in prod.
-=======
         expectedGamesValue,
->>>>>>> remotes/upstream/main
     );
 
     expect(reportedErrors).toEqual([]);
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should preserve state of client components on refetch', async () => {
     // Client
 
@@ -1018,26 +813,15 @@ describe('ReactFlightDOM', () => {
     const root = ReactDOMClient.createRoot(container);
 
     const stream1 = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <App color="red" />,
       webpackMap,
     );
     pipe(stream1.writable);
-<<<<<<< HEAD
-    const response1 = ReactServerDOMReader.createFromReadableStream(
-      stream1.readable,
-    );
-    await act(async () => {
-=======
     const response1 = ReactServerDOMClient.createFromReadableStream(
       stream1.readable,
     );
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback={<p>(loading)</p>}>
           <Page response={response1} />
@@ -1057,26 +841,15 @@ describe('ReactFlightDOM', () => {
     inputB.value = 'goodbye';
 
     const stream2 = getTestStream();
-<<<<<<< HEAD
-    const {pipe: pipe2} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe: pipe2} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <App color="blue" />,
       webpackMap,
     );
     pipe2(stream2.writable);
-<<<<<<< HEAD
-    const response2 = ReactServerDOMReader.createFromReadableStream(
-      stream2.readable,
-    );
-    await act(async () => {
-=======
     const response2 = ReactServerDOMClient.createFromReadableStream(
       stream2.readable,
     );
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <Suspense fallback={<p>(loading)</p>}>
           <Page response={response2} />
@@ -1096,19 +869,11 @@ describe('ReactFlightDOM', () => {
     expect(inputB.value).toBe('goodbye');
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-=======
->>>>>>> remotes/upstream/main
   it('should be able to complete after aborting and throw the reason client-side', async () => {
     const reportedErrors = [];
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe, abort} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe, abort} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <div>
         <InfiniteSuspend />
       </div>,
@@ -1116,20 +881,13 @@ describe('ReactFlightDOM', () => {
       {
         onError(x) {
           reportedErrors.push(x);
-<<<<<<< HEAD
-=======
           const message = typeof x === 'string' ? x : x.message;
           return __DEV__ ? 'a dev digest' : `digest("${message}")`;
->>>>>>> remotes/upstream/main
         },
       },
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
@@ -1138,11 +896,6 @@ describe('ReactFlightDOM', () => {
       return use(res);
     }
 
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(
-        <ErrorBoundary fallback={e => <p>{e.message}</p>}>
-=======
     await act(() => {
       root.render(
         <ErrorBoundary
@@ -1152,7 +905,6 @@ describe('ReactFlightDOM', () => {
               {e.digest}
             </p>
           )}>
->>>>>>> remotes/upstream/main
           <Suspense fallback={<p>(loading)</p>}>
             <App res={response} />
           </Suspense>
@@ -1161,12 +913,6 @@ describe('ReactFlightDOM', () => {
     });
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
-<<<<<<< HEAD
-    await act(async () => {
-      abort('for reasons');
-    });
-    expect(container.innerHTML).toBe('<p>Error: for reasons</p>');
-=======
     await act(() => {
       abort('for reasons');
     });
@@ -1177,34 +923,21 @@ describe('ReactFlightDOM', () => {
     } else {
       expect(container.innerHTML).toBe('<p>digest("for reasons")</p>');
     }
->>>>>>> remotes/upstream/main
 
     expect(reportedErrors).toEqual(['for reasons']);
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('should be able to recover from a direct reference erroring client-side', async () => {
-    const reportedErrors = [];
-
-    const ClientComponent = clientExports(function({prop}) {
-=======
   it('should be able to recover from a direct reference erroring client-side', async () => {
     const reportedErrors = [];
 
     const ClientComponent = clientExports(function ({prop}) {
->>>>>>> remotes/upstream/main
       return 'This should never render';
     });
 
     const ClientReference = clientModuleError(new Error('module init error'));
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <div>
         <ClientComponent prop={ClientReference} />
       </div>,
@@ -1216,11 +949,7 @@ describe('ReactFlightDOM', () => {
       },
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
@@ -1229,11 +958,7 @@ describe('ReactFlightDOM', () => {
       return use(res);
     }
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <ErrorBoundary fallback={e => <p>{e.message}</p>}>
           <Suspense fallback={<p>(loading)</p>}>
@@ -1247,18 +972,10 @@ describe('ReactFlightDOM', () => {
     expect(reportedErrors).toEqual([]);
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('should be able to recover from a direct reference erroring client-side async', async () => {
-    const reportedErrors = [];
-
-    const ClientComponent = clientExports(function({prop}) {
-=======
   it('should be able to recover from a direct reference erroring client-side async', async () => {
     const reportedErrors = [];
 
     const ClientComponent = clientExports(function ({prop}) {
->>>>>>> remotes/upstream/main
       return 'This should never render';
     });
 
@@ -1270,11 +987,7 @@ describe('ReactFlightDOM', () => {
     );
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <div>
         <ClientComponent prop={ClientReference} />
       </div>,
@@ -1286,11 +999,7 @@ describe('ReactFlightDOM', () => {
       },
     );
     pipe(writable);
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
@@ -1299,11 +1008,7 @@ describe('ReactFlightDOM', () => {
       return use(res);
     }
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       root.render(
         <ErrorBoundary fallback={e => <p>{e.message}</p>}>
           <Suspense fallback={<p>(loading)</p>}>
@@ -1315,11 +1020,7 @@ describe('ReactFlightDOM', () => {
 
     expect(container.innerHTML).toBe('<p>(loading)</p>');
 
-<<<<<<< HEAD
-    await act(async () => {
-=======
     await act(() => {
->>>>>>> remotes/upstream/main
       rejectPromise(new Error('async module init error'));
     });
 
@@ -1328,18 +1029,10 @@ describe('ReactFlightDOM', () => {
     expect(reportedErrors).toEqual([]);
   });
 
-<<<<<<< HEAD
-  // @gate enableUseHook
-  it('should be able to recover from a direct reference erroring server-side', async () => {
-    const reportedErrors = [];
-
-    const ClientComponent = clientExports(function({prop}) {
-=======
   it('should be able to recover from a direct reference erroring server-side', async () => {
     const reportedErrors = [];
 
     const ClientComponent = clientExports(function ({prop}) {
->>>>>>> remotes/upstream/main
       return 'This should never render';
     });
 
@@ -1353,33 +1046,21 @@ describe('ReactFlightDOM', () => {
     }
 
     const {writable, readable} = getTestStream();
-<<<<<<< HEAD
-    const {pipe} = ReactServerDOMWriter.renderToPipeableStream(
-=======
     const {pipe} = ReactServerDOMServer.renderToPipeableStream(
->>>>>>> remotes/upstream/main
       <div>
         <ClientComponent />
       </div>,
       webpackMap,
       {
         onError(x) {
-<<<<<<< HEAD
-          reportedErrors.push(x);
-=======
           reportedErrors.push(x.message);
           return __DEV__ ? 'a dev digest' : `digest("${x.message}")`;
->>>>>>> remotes/upstream/main
         },
       },
     );
     pipe(writable);
 
-<<<<<<< HEAD
-    const response = ReactServerDOMReader.createFromReadableStream(readable);
-=======
     const response = ReactServerDOMClient.createFromReadableStream(readable);
->>>>>>> remotes/upstream/main
 
     const container = document.createElement('div');
     const root = ReactDOMClient.createRoot(container);
@@ -1388,11 +1069,6 @@ describe('ReactFlightDOM', () => {
       return use(res);
     }
 
-<<<<<<< HEAD
-    await act(async () => {
-      root.render(
-        <ErrorBoundary fallback={e => <p>{e.message}</p>}>
-=======
     await act(() => {
       root.render(
         <ErrorBoundary
@@ -1402,18 +1078,12 @@ describe('ReactFlightDOM', () => {
               {e.digest}
             </p>
           )}>
->>>>>>> remotes/upstream/main
           <Suspense fallback={<p>(loading)</p>}>
             <App res={response} />
           </Suspense>
         </ErrorBoundary>,
       );
     });
-<<<<<<< HEAD
-    expect(container.innerHTML).toBe('<p>bug in the bundler</p>');
-
-    expect(reportedErrors).toEqual([]);
-=======
     if (__DEV__) {
       expect(container.innerHTML).toBe(
         '<p>bug in the bundler + a dev digest</p>',
@@ -1899,6 +1569,5 @@ describe('ReactFlightDOM', () => {
 
     await collectHints(readable);
     expect(hintRows.length).toEqual(6);
->>>>>>> remotes/upstream/main
   });
 });

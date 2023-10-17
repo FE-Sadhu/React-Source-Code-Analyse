@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Copyright (c) Facebook, Inc. and its affiliates.
-=======
  * Copyright (c) Meta Platforms, Inc. and affiliates.
->>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,12 +13,9 @@
 let React;
 let ReactNoop;
 let Scheduler;
-<<<<<<< HEAD
-=======
 let waitForAll;
 let waitFor;
 let waitForPaint;
->>>>>>> remotes/upstream/main
 
 describe('ReactIncrementalSideEffects', () => {
   beforeEach(() => {
@@ -31,25 +24,6 @@ describe('ReactIncrementalSideEffects', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
-<<<<<<< HEAD
-  });
-
-  function div(...children) {
-    children = children.map(c =>
-      typeof c === 'string' ? {text: c, hidden: false} : c,
-    );
-    return {type: 'div', children, prop: undefined, hidden: false};
-  }
-
-  function span(prop) {
-    return {type: 'span', children: [], prop, hidden: false};
-  }
-
-  function text(t) {
-    return {text: t, hidden: false};
-  }
-
-=======
 
     const InternalTestUtils = require('internal-test-utils');
     waitForAll = InternalTestUtils.waitForAll;
@@ -57,7 +31,6 @@ describe('ReactIncrementalSideEffects', () => {
     waitForPaint = InternalTestUtils.waitForPaint;
   });
 
->>>>>>> remotes/upstream/main
   // Note: This is based on a similar component we use in www. We can delete
   // once the extra div wrapper is no longer necessary.
   function LegacyHiddenDiv({children, mode}) {
@@ -71,11 +44,7 @@ describe('ReactIncrementalSideEffects', () => {
     );
   }
 
-<<<<<<< HEAD
-  it('can update child nodes of a host instance', () => {
-=======
   it('can update child nodes of a host instance', async () => {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return <span>{props.text}</span>;
     }
@@ -90,17 +59,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo text="Hello" />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span())]);
-
-    ReactNoop.render(<Foo text="World" />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span(), span())]);
-  });
-
-  it('can update child nodes of a fragment', function() {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -119,7 +77,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can update child nodes of a fragment', async function () {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return <span>{props.text}</span>;
     }
@@ -139,25 +96,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo text="Hello" />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span(), span('test'))]);
-
-    ReactNoop.render(<Foo text="World" />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(span(), span(), div(), span('test')),
-    ]);
-
-    ReactNoop.render(<Foo text="Hi" />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(span(), div(), span(), span('test')),
-    ]);
-  });
-
-  it('can update child nodes rendering into text nodes', function() {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -190,7 +128,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can update child nodes rendering into text nodes', async function () {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return props.text;
     }
@@ -207,17 +144,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo text="Hello" />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div('Hello')]);
-
-    ReactNoop.render(<Foo text="World" />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div('World', 'World', '!')]);
-  });
-
-  it('can deletes children either components, host or text', function() {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
 
@@ -227,7 +153,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can deletes children either components, host or text', async function () {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return <span prop={props.children} />;
     }
@@ -243,19 +168,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo show={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(div(), span('Hello'), 'World'),
-    ]);
-
-    ReactNoop.render(<Foo show={false} />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div()]);
-  });
-
-  it('can delete a child that changes type - implicit keys', function() {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -271,7 +183,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can delete a child that changes type - implicit keys', async function () {
->>>>>>> remotes/upstream/main
     let unmounted = false;
 
     class ClassComponent extends React.Component {
@@ -303,10 +214,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo useClass={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span('Class'), 'Trail')]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -314,15 +221,10 @@ describe('ReactIncrementalSideEffects', () => {
         Trail
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(unmounted).toBe(false);
 
     ReactNoop.render(<Foo useFunction={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span('Function'), 'Trail')]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -330,22 +232,10 @@ describe('ReactIncrementalSideEffects', () => {
         Trail
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(unmounted).toBe(true);
 
     ReactNoop.render(<Foo useText={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div('Text', 'Trail')]);
-
-    ReactNoop.render(<Foo />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div('Trail')]);
-  });
-
-  it('can delete a child that changes type - explicit keys', function() {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div>TextTrail</div>);
 
@@ -355,7 +245,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can delete a child that changes type - explicit keys', async function () {
->>>>>>> remotes/upstream/main
     let unmounted = false;
 
     class ClassComponent extends React.Component {
@@ -385,10 +274,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo useClass={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span('Class'), 'Trail')]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -396,15 +281,10 @@ describe('ReactIncrementalSideEffects', () => {
         Trail
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(unmounted).toBe(false);
 
     ReactNoop.render(<Foo useFunction={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div(span('Function'), 'Trail')]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -412,36 +292,21 @@ describe('ReactIncrementalSideEffects', () => {
         Trail
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(unmounted).toBe(true);
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div('Trail')]);
-  });
-
-  it('can delete a child when it unmounts inside a portal', () => {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div>Trail</div>);
   });
 
   it('can delete a child when it unmounts inside a portal', async () => {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return <span prop={props.children} />;
     }
 
-<<<<<<< HEAD
-    const portalContainer = ReactNoop.getOrCreateRootContainer(
-      'portalContainer',
-    );
-=======
     const portalContainer =
       ReactNoop.getOrCreateRootContainer('portalContainer');
->>>>>>> remotes/upstream/main
     function Foo(props) {
       return ReactNoop.createPortal(
         props.show ? [<div key="a" />, <Bar key="b">Hello</Bar>, 'World'] : [],
@@ -455,15 +320,6 @@ describe('ReactIncrementalSideEffects', () => {
         <Foo show={true} />
       </div>,
     );
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div()]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([
-      div(),
-      span('Hello'),
-      text('World'),
-    ]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div />);
     expect(ReactNoop.getChildrenAsJSX('portalContainer')).toEqual(
@@ -473,64 +329,21 @@ describe('ReactIncrementalSideEffects', () => {
         World
       </>,
     );
->>>>>>> remotes/upstream/main
 
     ReactNoop.render(
       <div>
         <Foo show={false} />
       </div>,
     );
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div()]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div />);
     expect(ReactNoop.getChildrenAsJSX('portalContainer')).toEqual(null);
->>>>>>> remotes/upstream/main
 
     ReactNoop.render(
       <div>
         <Foo show={true} />
       </div>,
     );
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div()]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([
-      div(),
-      span('Hello'),
-      text('World'),
-    ]);
-
-    ReactNoop.render(null);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-
-    ReactNoop.render(<Foo show={false} />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-
-    ReactNoop.render(<Foo show={true} />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([
-      div(),
-      span('Hello'),
-      text('World'),
-    ]);
-
-    ReactNoop.render(null);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-  });
-
-  it('can delete a child when it unmounts with a portal', () => {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div />);
     expect(ReactNoop.getChildrenAsJSX('portalContainer')).toEqual(
@@ -569,19 +382,12 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('can delete a child when it unmounts with a portal', async () => {
->>>>>>> remotes/upstream/main
     function Bar(props) {
       return <span prop={props.children} />;
     }
 
-<<<<<<< HEAD
-    const portalContainer = ReactNoop.getOrCreateRootContainer(
-      'portalContainer',
-    );
-=======
     const portalContainer =
       ReactNoop.getOrCreateRootContainer('portalContainer');
->>>>>>> remotes/upstream/main
     function Foo(props) {
       return ReactNoop.createPortal(
         [<div key="a" />, <Bar key="b">Hello</Bar>, 'World'],
@@ -595,39 +401,6 @@ describe('ReactIncrementalSideEffects', () => {
         <Foo />
       </div>,
     );
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([div()]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([
-      div(),
-      span('Hello'),
-      text('World'),
-    ]);
-
-    ReactNoop.render(null);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-
-    ReactNoop.render(<Foo />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([
-      div(),
-      span('Hello'),
-      text('World'),
-    ]);
-
-    ReactNoop.render(null);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([]);
-    expect(ReactNoop.getChildren('portalContainer')).toEqual([]);
-  });
-
-  it('does not update child nodes if a flush is aborted', () => {
-    function Bar(props) {
-      Scheduler.unstable_yieldValue('Bar');
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<div />);
     expect(ReactNoop.getChildrenAsJSX('portalContainer')).toEqual(
@@ -663,16 +436,11 @@ describe('ReactIncrementalSideEffects', () => {
   it('does not update child nodes if a flush is aborted', async () => {
     function Bar(props) {
       Scheduler.log('Bar');
->>>>>>> remotes/upstream/main
       return <span prop={props.text} />;
     }
 
     function Foo(props) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Foo');
-=======
       Scheduler.log('Foo');
->>>>>>> remotes/upstream/main
       return (
         <div>
           <div>
@@ -685,32 +453,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo text="Hello" />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Bar', 'Bar', 'Bar']);
-    expect(ReactNoop.getChildren()).toEqual([
-      div(div(span('Hello'), span('Hello')), span('Yo')),
-    ]);
-
-    if (gate(flags => flags.enableSyncDefaultUpdates)) {
-      React.startTransition(() => {
-        ReactNoop.render(<Foo text="World" />);
-      });
-    } else {
-      ReactNoop.render(<Foo text="World" />);
-    }
-
-    // Flush some of the work without committing
-    expect(Scheduler).toFlushAndYieldThrough(['Foo', 'Bar']);
-    expect(ReactNoop.getChildren()).toEqual([
-      div(div(span('Hello'), span('Hello')), span('Yo')),
-    ]);
-  });
-
-  // @gate www
-  it('preserves a previously rendered node when deprioritized', () => {
-    function Middle(props) {
-      Scheduler.unstable_yieldValue('Middle');
-=======
     await waitForAll(['Foo', 'Bar', 'Bar', 'Bar']);
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
@@ -743,16 +485,11 @@ describe('ReactIncrementalSideEffects', () => {
   it('preserves a previously rendered node when deprioritized', async () => {
     function Middle(props) {
       Scheduler.log('Middle');
->>>>>>> remotes/upstream/main
       return <span prop={props.children} />;
     }
 
     function Foo(props) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Foo');
-=======
       Scheduler.log('Foo');
->>>>>>> remotes/upstream/main
       return (
         <div>
           <LegacyHiddenDiv mode="hidden">
@@ -763,11 +500,7 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo text="foo" />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Middle']);
-=======
     await waitForAll(['Foo', 'Middle']);
->>>>>>> remotes/upstream/main
 
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
@@ -777,15 +510,8 @@ describe('ReactIncrementalSideEffects', () => {
       </div>,
     );
 
-<<<<<<< HEAD
-    ReactNoop.render(<Foo text="bar" />, () =>
-      Scheduler.unstable_yieldValue('commit'),
-    );
-    expect(Scheduler).toFlushAndYieldThrough(['Foo', 'commit']);
-=======
     ReactNoop.render(<Foo text="bar" />, () => Scheduler.log('commit'));
     await waitFor(['Foo', 'commit']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         <div hidden={true}>
@@ -794,11 +520,7 @@ describe('ReactIncrementalSideEffects', () => {
       </div>,
     );
 
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Middle']);
-=======
     await waitForAll(['Middle']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         <div hidden={true}>
@@ -809,15 +531,9 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   // @gate www
-<<<<<<< HEAD
-  it('can reuse side-effects after being preempted', () => {
-    function Bar(props) {
-      Scheduler.unstable_yieldValue('Bar');
-=======
   it('can reuse side-effects after being preempted', async () => {
     function Bar(props) {
       Scheduler.log('Bar');
->>>>>>> remotes/upstream/main
       return <span prop={props.children} />;
     }
 
@@ -829,11 +545,7 @@ describe('ReactIncrementalSideEffects', () => {
     );
 
     function Foo(props) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Foo');
-=======
       Scheduler.log('Foo');
->>>>>>> remotes/upstream/main
       return (
         <LegacyHiddenDiv mode="hidden">
           {props.step === 0 ? (
@@ -850,11 +562,7 @@ describe('ReactIncrementalSideEffects', () => {
 
     // Init
     ReactNoop.render(<Foo text="foo" step={0} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Bar', 'Bar']);
-=======
     await waitForAll(['Foo', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
 
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div hidden={true}>
@@ -868,15 +576,9 @@ describe('ReactIncrementalSideEffects', () => {
     // Make a quick update which will schedule low priority work to
     // update the middle content.
     ReactNoop.render(<Foo text="bar" step={1} />, () =>
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('commit'),
-    );
-    expect(Scheduler).toFlushAndYieldThrough(['Foo', 'commit', 'Bar']);
-=======
       Scheduler.log('commit'),
     );
     await waitFor(['Foo', 'commit', 'Bar']);
->>>>>>> remotes/upstream/main
 
     // The tree remains unchanged.
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
@@ -892,11 +594,7 @@ describe('ReactIncrementalSideEffects', () => {
     // render some higher priority work. The middle content will bailout so
     // it remains untouched which means that it should reuse it next time.
     ReactNoop.render(<Foo text="foo" step={1} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Bar', 'Bar']);
-=======
     await waitForAll(['Foo', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
 
     // Since we did nothing to the middle subtree during the interruption,
     // we should be able to reuse the reconciliation work that we already did
@@ -913,21 +611,13 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   // @gate www
-<<<<<<< HEAD
-  it('can reuse side-effects after being preempted, if shouldComponentUpdate is false', () => {
-=======
   it('can reuse side-effects after being preempted, if shouldComponentUpdate is false', async () => {
->>>>>>> remotes/upstream/main
     class Bar extends React.Component {
       shouldComponentUpdate(nextProps) {
         return this.props.children !== nextProps.children;
       }
       render() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Bar');
-=======
         Scheduler.log('Bar');
->>>>>>> remotes/upstream/main
         return <span prop={this.props.children} />;
       }
     }
@@ -937,11 +627,7 @@ describe('ReactIncrementalSideEffects', () => {
         return this.props.step !== nextProps.step;
       }
       render() {
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Content');
-=======
         Scheduler.log('Content');
->>>>>>> remotes/upstream/main
         return (
           <div>
             <Bar>{this.props.step === 0 ? 'Hi' : 'Hello'}</Bar>
@@ -952,11 +638,7 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     function Foo(props) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Foo');
-=======
       Scheduler.log('Foo');
->>>>>>> remotes/upstream/main
       return (
         <LegacyHiddenDiv mode="hidden">
           <Content step={props.step} text={props.text} />
@@ -966,11 +648,7 @@ describe('ReactIncrementalSideEffects', () => {
 
     // Init
     ReactNoop.render(<Foo text="foo" step={0} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Content', 'Bar', 'Bar']);
-=======
     await waitForAll(['Foo', 'Content', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
 
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div hidden={true}>
@@ -984,11 +662,7 @@ describe('ReactIncrementalSideEffects', () => {
     // Make a quick update which will schedule low priority work to
     // update the middle content.
     ReactNoop.render(<Foo text="bar" step={1} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYieldThrough(['Foo', 'Content', 'Bar']);
-=======
     await waitFor(['Foo', 'Content', 'Bar']);
->>>>>>> remotes/upstream/main
 
     // The tree remains unchanged.
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
@@ -1004,11 +678,7 @@ describe('ReactIncrementalSideEffects', () => {
     // render some higher priority work. The middle content will bailout so
     // it remains untouched which means that it should reuse it next time.
     ReactNoop.render(<Foo text="foo" step={1} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Content', 'Bar', 'Bar']);
-=======
     await waitForAll(['Foo', 'Content', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
 
     // Since we did nothing to the middle subtree during the interruption,
     // we should be able to reuse the reconciliation work that we already did
@@ -1024,37 +694,6 @@ describe('ReactIncrementalSideEffects', () => {
     );
   });
 
-<<<<<<< HEAD
-  it('can update a completed tree before it has a chance to commit', () => {
-    function Foo(props) {
-      Scheduler.unstable_yieldValue('Foo');
-      return <span prop={props.step} />;
-    }
-    if (gate(flags => flags.enableSyncDefaultUpdates)) {
-      React.startTransition(() => {
-        ReactNoop.render(<Foo step={1} />);
-      });
-    } else {
-      ReactNoop.render(<Foo step={1} />);
-    }
-    // This should be just enough to complete the tree without committing it
-    expect(Scheduler).toFlushAndYieldThrough(['Foo']);
-    expect(ReactNoop.getChildrenAsJSX()).toEqual(null);
-    // To confirm, perform one more unit of work. The tree should now
-    // be flushed.
-    ReactNoop.flushNextYield();
-    expect(ReactNoop.getChildrenAsJSX()).toEqual(<span prop={1} />);
-
-    if (gate(flags => flags.enableSyncDefaultUpdates)) {
-      React.startTransition(() => {
-        ReactNoop.render(<Foo step={2} />);
-      });
-    } else {
-      ReactNoop.render(<Foo step={2} />);
-    }
-    // This should be just enough to complete the tree without committing it
-    expect(Scheduler).toFlushAndYieldThrough(['Foo']);
-=======
   it('can update a completed tree before it has a chance to commit', async () => {
     function Foo(props) {
       Scheduler.log('Foo ' + props.step);
@@ -1076,28 +715,10 @@ describe('ReactIncrementalSideEffects', () => {
     });
     // This should be just enough to complete the tree without committing it
     await waitFor(['Foo 2']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(<span prop={1} />);
     // This time, before we commit the tree, we update the root component with
     // new props
 
-<<<<<<< HEAD
-    if (gate(flags => flags.enableSyncDefaultUpdates)) {
-      React.startTransition(() => {
-        ReactNoop.render(<Foo step={3} />);
-      });
-    } else {
-      ReactNoop.render(<Foo step={3} />);
-    }
-    expect(ReactNoop.getChildrenAsJSX()).toEqual(<span prop={1} />);
-    // Now let's commit. We already had a commit that was pending, which will
-    // render 2.
-    ReactNoop.flushNextYield();
-    expect(ReactNoop.getChildrenAsJSX()).toEqual(<span prop={2} />);
-    // If we flush the rest of the work, we should get another commit that
-    // renders 3. If it renders 2 again, that means an update was dropped.
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     React.startTransition(() => {
       ReactNoop.render(<Foo step={3} />);
     });
@@ -1109,16 +730,11 @@ describe('ReactIncrementalSideEffects', () => {
     // If we flush the rest of the work, we should get another commit that
     // renders 3. If it renders 2 again, that means an update was dropped.
     await waitForAll(['Foo 3']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(<span prop={3} />);
   });
 
   // @gate www
-<<<<<<< HEAD
-  it('updates a child even though the old props is empty', () => {
-=======
   it('updates a child even though the old props is empty', async () => {
->>>>>>> remotes/upstream/main
     function Foo(props) {
       return (
         <LegacyHiddenDiv mode="hidden">
@@ -1128,11 +744,7 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div hidden={true}>
         <span prop={1} />
@@ -1140,11 +752,7 @@ describe('ReactIncrementalSideEffects', () => {
     );
   });
 
-<<<<<<< HEAD
-  xit('can defer side-effects and resume them later on', () => {
-=======
   xit('can defer side-effects and resume them later on', async () => {
->>>>>>> remotes/upstream/main
     class Bar extends React.Component {
       shouldComponentUpdate(nextProps) {
         return this.props.idx !== nextProps.idx;
@@ -1166,57 +774,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
     ReactNoop.render(<Foo tick={0} idx={0} />);
     ReactNoop.flushDeferredPri(40 + 25);
-<<<<<<< HEAD
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(0),
-        div(/*the spans are down-prioritized and not rendered yet*/),
-      ),
-    ]);
-    ReactNoop.render(<Foo tick={1} idx={0} />);
-    ReactNoop.flushDeferredPri(35 + 25);
-    expect(ReactNoop.getChildren()).toEqual([
-      div(span(1), div(/*still not rendered yet*/)),
-    ]);
-    ReactNoop.flushDeferredPri(30 + 25);
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(1),
-        div(
-          // Now we had enough time to finish the spans.
-          span(0),
-          span(1),
-        ),
-      ),
-    ]);
-    const innerSpanA = ReactNoop.getChildren()[0].children[1].children[1];
-    ReactNoop.render(<Foo tick={2} idx={1} />);
-    ReactNoop.flushDeferredPri(30 + 25);
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(2),
-        div(
-          // Still same old numbers.
-          span(0),
-          span(1),
-        ),
-      ),
-    ]);
-    ReactNoop.render(<Foo tick={3} idx={1} />);
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(3),
-        div(
-          // New numbers.
-          span(1),
-          span(2),
-        ),
-      ),
-    ]);
-
-    const innerSpanB = ReactNoop.getChildren()[0].children[1].children[1];
-=======
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
         <span prop={0} />
@@ -1272,18 +829,13 @@ describe('ReactIncrementalSideEffects', () => {
 
     const innerSpanB =
       ReactNoop.dangerouslyGetChildren()[0].children[1].children[1];
->>>>>>> remotes/upstream/main
     // This should have been an update to an existing instance, not recreation.
     // We verify that by ensuring that the child instance was the same as
     // before.
     expect(innerSpanA).toBe(innerSpanB);
   });
 
-<<<<<<< HEAD
-  xit('can defer side-effects and reuse them later - complex', function() {
-=======
   xit('can defer side-effects and reuse them later - complex', async function () {
->>>>>>> remotes/upstream/main
     let ops = [];
 
     class Bar extends React.Component {
@@ -1322,14 +874,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
     ReactNoop.render(<Foo tick={0} idx={0} />);
     ReactNoop.flushDeferredPri(65 + 5);
-<<<<<<< HEAD
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(0),
-        div(/*the spans are down-prioritized and not rendered yet*/),
-      ),
-    ]);
-=======
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
         <span prop={0} />
@@ -1337,18 +881,12 @@ describe('ReactIncrementalSideEffects', () => {
         <div />
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(ops).toEqual(['Foo', 'Baz', 'Bar']);
     ops = [];
 
     ReactNoop.render(<Foo tick={1} idx={0} />);
     ReactNoop.flushDeferredPri(70);
-<<<<<<< HEAD
-    expect(ReactNoop.getChildren()).toEqual([
-      div(span(1), div(/*still not rendered yet*/)),
-    ]);
-=======
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
         <span prop={1} />
@@ -1356,27 +894,10 @@ describe('ReactIncrementalSideEffects', () => {
         <div />
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(ops).toEqual(['Foo']);
     ops = [];
 
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(1),
-        div(
-          // Now we had enough time to finish the spans.
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-        ),
-      ),
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput([
       <div>
@@ -1391,7 +912,6 @@ describe('ReactIncrementalSideEffects', () => {
           <span prop={0} />,
         </div>
       </div>,
->>>>>>> remotes/upstream/main
     ]);
 
     expect(ops).toEqual(['Bar', 'Baz', 'Bar', 'Bar', 'Baz', 'Bar', 'Bar']);
@@ -1401,22 +921,6 @@ describe('ReactIncrementalSideEffects', () => {
     // way through.
     ReactNoop.render(<Foo tick={2} idx={1} />);
     ReactNoop.flushDeferredPri(95);
-<<<<<<< HEAD
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(2),
-        div(
-          // Still same old numbers.
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-        ),
-      ),
-    ]);
-=======
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
         <span prop={2} />,
@@ -1431,7 +935,6 @@ describe('ReactIncrementalSideEffects', () => {
         </div>
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     // We let it finish half way through. That means we'll have one fully
     // completed Baz, one half-way completed Baz and one fully incomplete Baz.
@@ -1442,22 +945,6 @@ describe('ReactIncrementalSideEffects', () => {
     // way through.
     ReactNoop.render(<Foo tick={3} idx={1} />);
     ReactNoop.flushDeferredPri(50);
-<<<<<<< HEAD
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(3),
-        div(
-          // Old numbers.
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-          span(0),
-        ),
-      ),
-    ]);
-=======
     expect(ReactNoop).toMatchRenderedOutput(
       <div>
         <span prop={3} />
@@ -1472,29 +959,12 @@ describe('ReactIncrementalSideEffects', () => {
         </div>
       </div>,
     );
->>>>>>> remotes/upstream/main
 
     expect(ops).toEqual(['Foo']);
     ops = [];
 
     // We should now be able to reuse some of the work we've already done
     // and replay those side-effects.
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([
-      div(
-        span(3),
-        div(
-          // New numbers.
-          span(1),
-          span(1),
-          span(1),
-          span(1),
-          span(1),
-          span(1),
-        ),
-      ),
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput([
       <div>
@@ -1509,18 +979,13 @@ describe('ReactIncrementalSideEffects', () => {
           <span prop={1} />
         </div>
       </div>,
->>>>>>> remotes/upstream/main
     ]);
 
     expect(ops).toEqual(['Bar', 'Baz', 'Bar', 'Bar']);
   });
 
   // @gate www
-<<<<<<< HEAD
-  it('deprioritizes setStates that happens within a deprioritized tree', () => {
-=======
   it('deprioritizes setStates that happens within a deprioritized tree', async () => {
->>>>>>> remotes/upstream/main
     const barInstances = [];
 
     class Bar extends React.Component {
@@ -1533,20 +998,12 @@ describe('ReactIncrementalSideEffects', () => {
       }
       render() {
         barInstances.push(this);
-<<<<<<< HEAD
-        Scheduler.unstable_yieldValue('Bar');
-=======
         Scheduler.log('Bar');
->>>>>>> remotes/upstream/main
         return <span prop={this.state.active ? 'X' : this.props.idx} />;
       }
     }
     function Foo(props) {
-<<<<<<< HEAD
-      Scheduler.unstable_yieldValue('Foo');
-=======
       Scheduler.log('Foo');
->>>>>>> remotes/upstream/main
       return (
         <div>
           <span prop={props.tick} />
@@ -1559,11 +1016,7 @@ describe('ReactIncrementalSideEffects', () => {
       );
     }
     ReactNoop.render(<Foo tick={0} idx={0} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Foo', 'Bar', 'Bar', 'Bar']);
-=======
     await waitForAll(['Foo', 'Bar', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         <span prop={0} />
@@ -1576,11 +1029,7 @@ describe('ReactIncrementalSideEffects', () => {
     );
 
     ReactNoop.render(<Foo tick={1} idx={1} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYieldThrough(['Foo', 'Bar', 'Bar']);
-=======
     await waitFor(['Foo', 'Bar', 'Bar']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         {/* Updated */}
@@ -1598,11 +1047,7 @@ describe('ReactIncrementalSideEffects', () => {
     // This should not be enough time to render the content of all the hidden
     // items. Including the set state since that is deprioritized.
     // ReactNoop.flushDeferredPri(35);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYieldThrough(['Bar']);
-=======
     await waitFor(['Bar']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         {/* Updated */}
@@ -1618,11 +1063,7 @@ describe('ReactIncrementalSideEffects', () => {
 
     // However, once we render fully, we will have enough time to finish it all
     // at once.
-<<<<<<< HEAD
-    expect(Scheduler).toFlushAndYield(['Bar', 'Bar']);
-=======
     await waitForAll(['Bar', 'Bar']);
->>>>>>> remotes/upstream/main
     expect(ReactNoop.getChildrenAsJSX()).toEqual(
       <div>
         <span prop={1} />
@@ -1639,11 +1080,7 @@ describe('ReactIncrementalSideEffects', () => {
   // moves to "current" without flushing due to having lower priority. Does this
   // even happen? Maybe a child doesn't get processed because it is lower prio?
 
-<<<<<<< HEAD
-  it('calls callback after update is flushed', () => {
-=======
   it('calls callback after update is flushed', async () => {
->>>>>>> remotes/upstream/main
     let instance;
     class Foo extends React.Component {
       constructor() {
@@ -1657,20 +1094,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([span('foo')]);
-    let called = false;
-    instance.setState({text: 'bar'}, () => {
-      expect(ReactNoop.getChildren()).toEqual([span('bar')]);
-      called = true;
-    });
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(called).toBe(true);
-  });
-
-  it('calls setState callback even if component bails out', () => {
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<span prop="foo" />);
     let called = false;
@@ -1683,7 +1106,6 @@ describe('ReactIncrementalSideEffects', () => {
   });
 
   it('calls setState callback even if component bails out', async () => {
->>>>>>> remotes/upstream/main
     let instance;
     class Foo extends React.Component {
       constructor() {
@@ -1700,32 +1122,19 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ReactNoop.getChildren()).toEqual([span('foo')]);
-=======
     await waitForAll([]);
     expect(ReactNoop).toMatchRenderedOutput(<span prop="foo" />);
->>>>>>> remotes/upstream/main
     let called = false;
     instance.setState({}, () => {
       called = true;
     });
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(called).toBe(true);
   });
 
   // TODO: Test that callbacks are not lost if an update is preempted.
 
-<<<<<<< HEAD
-  it('calls componentWillUnmount after a deletion, even if nested', () => {
-=======
   it('calls componentWillUnmount after a deletion, even if nested', async () => {
->>>>>>> remotes/upstream/main
     const ops = [];
 
     class Bar extends React.Component {
@@ -1767,19 +1176,11 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo show={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-    expect(ops).toEqual([]);
-
-    ReactNoop.render(<Foo show={false} />);
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
     expect(ops).toEqual([]);
 
     ReactNoop.render(<Foo show={false} />);
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ops).toEqual([
       'A',
       'Wrapper',
@@ -1793,11 +1194,7 @@ describe('ReactIncrementalSideEffects', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  it('calls componentDidMount/Update after insertion/update', () => {
-=======
   it('calls componentDidMount/Update after insertion/update', async () => {
->>>>>>> remotes/upstream/main
     let ops = [];
 
     class Bar extends React.Component {
@@ -1842,11 +1239,7 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ops).toEqual([
       'mount:A',
       'mount:B',
@@ -1862,11 +1255,7 @@ describe('ReactIncrementalSideEffects', () => {
     ops = [];
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ops).toEqual([
       'update:A',
       'update:B',
@@ -1880,11 +1269,7 @@ describe('ReactIncrementalSideEffects', () => {
     ]);
   });
 
-<<<<<<< HEAD
-  it('invokes ref callbacks after insertion/update/unmount', () => {
-=======
   it('invokes ref callbacks after insertion/update/unmount', async () => {
->>>>>>> remotes/upstream/main
     let classInstance = null;
 
     let ops = [];
@@ -1911,11 +1296,7 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo show={true} />);
-<<<<<<< HEAD
-    expect(() => expect(Scheduler).toFlushWithoutYielding()).toErrorDev(
-=======
     await expect(async () => await waitForAll([])).toErrorDev(
->>>>>>> remotes/upstream/main
       'Warning: Function components cannot be given refs. ' +
         'Attempts to access this ref will fail. ' +
         'Did you mean to use React.forwardRef()?\n\n' +
@@ -1928,43 +1309,27 @@ describe('ReactIncrementalSideEffects', () => {
     expect(ops).toEqual([
       classInstance,
       // no call for function components
-<<<<<<< HEAD
-      div(),
-=======
       {type: 'div', children: [], prop: undefined, hidden: false},
->>>>>>> remotes/upstream/main
     ]);
 
     ops = [];
 
     // Refs that switch function instances get reinvoked
     ReactNoop.render(<Foo show={true} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ops).toEqual([
       // detach all refs that switched handlers first.
       null,
       null,
       // reattach as a separate phase
       classInstance,
-<<<<<<< HEAD
-      div(),
-=======
       {type: 'div', children: [], prop: undefined, hidden: false},
->>>>>>> remotes/upstream/main
     ]);
 
     ops = [];
 
     ReactNoop.render(<Foo show={false} />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-=======
     await waitForAll([]);
->>>>>>> remotes/upstream/main
     expect(ops).toEqual([
       // unmount
       null,
@@ -1975,11 +1340,7 @@ describe('ReactIncrementalSideEffects', () => {
   // TODO: Test that mounts, updates, refs, unmounts and deletions happen in the
   // expected way for aborted and resumed render life-cycles.
 
-<<<<<<< HEAD
-  it('supports string refs', () => {
-=======
   it('supports string refs', async () => {
->>>>>>> remotes/upstream/main
     let fooInstance = null;
 
     class Bar extends React.Component {
@@ -1999,10 +1360,6 @@ describe('ReactIncrementalSideEffects', () => {
     }
 
     ReactNoop.render(<Foo />);
-<<<<<<< HEAD
-    expect(Scheduler).toFlushWithoutYielding();
-
-=======
     await expect(async () => {
       await waitForAll([]);
     }).toErrorDev([
@@ -2012,7 +1369,6 @@ describe('ReactIncrementalSideEffects', () => {
         'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
         '    in Foo (at **)',
     ]);
->>>>>>> remotes/upstream/main
     expect(fooInstance.refs.bar.test).toEqual('test');
   });
 });
