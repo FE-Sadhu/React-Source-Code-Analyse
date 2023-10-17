@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,9 +32,17 @@ function expectWarnings(tags, warnings = [], withoutStack = 0) {
     element = <Tag>{element}</Tag>;
   }
 
+<<<<<<< HEAD
   expect(() => ReactDOM.render(element, container)).toErrorDev(warnings, {
     withoutStack,
   });
+=======
+  if (warnings.length) {
+    expect(() => ReactDOM.render(element, container)).toErrorDev(warnings, {
+      withoutStack,
+    });
+  }
+>>>>>>> remotes/upstream/main
 }
 
 describe('validateDOMNesting', () => {
@@ -39,8 +51,15 @@ describe('validateDOMNesting', () => {
     expectWarnings(
       ['body', 'datalist', 'option'],
       [
+<<<<<<< HEAD
         'render(): Rendering components directly into document.body is discouraged',
       ],
+=======
+        gate(flags => !flags.enableHostSingletons)
+          ? 'render(): Rendering components directly into document.body is discouraged'
+          : null,
+      ].filter(Boolean),
+>>>>>>> remotes/upstream/main
       1,
     );
     expectWarnings(['div', 'a', 'object', 'a']);
@@ -102,6 +121,7 @@ describe('validateDOMNesting', () => {
           '    in html (at **)',
       ],
     );
+<<<<<<< HEAD
     expectWarnings(
       ['body', 'body'],
       [
@@ -119,5 +139,47 @@ describe('validateDOMNesting', () => {
           '    in foreignObject (at **)',
       ],
     );
+=======
+    if (gate(flags => flags.enableHostSingletons)) {
+      expectWarnings(
+        ['body', 'body'],
+        [
+          'validateDOMNesting(...): <body> cannot appear as a child of <body>.\n' +
+            '    in body (at **)',
+        ],
+      );
+    } else {
+      expectWarnings(
+        ['body', 'body'],
+        [
+          'render(): Rendering components directly into document.body is discouraged',
+          'validateDOMNesting(...): <body> cannot appear as a child of <body>.\n' +
+            '    in body (at **)',
+        ],
+        1,
+      );
+    }
+    if (gate(flags => flags.enableHostSingletons)) {
+      expectWarnings(
+        ['svg', 'foreignObject', 'body', 'p'],
+        [
+          'validateDOMNesting(...): <body> cannot appear as a child of <foreignObject>.\n' +
+            '    in body (at **)\n' +
+            '    in foreignObject (at **)',
+          'Warning: You are mounting a new body component when a previous one has not first unmounted. It is an error to render more than one body component at a time and attributes and children of these components will likely fail in unpredictable ways. Please only render a single instance of <body> and if you need to mount a new one, ensure any previous ones have unmounted first.\n' +
+            '    in body (at **)',
+        ],
+      );
+    } else {
+      expectWarnings(
+        ['svg', 'foreignObject', 'body', 'p'],
+        [
+          'validateDOMNesting(...): <body> cannot appear as a child of <foreignObject>.\n' +
+            '    in body (at **)\n' +
+            '    in foreignObject (at **)',
+        ],
+      );
+    }
+>>>>>>> remotes/upstream/main
   });
 });

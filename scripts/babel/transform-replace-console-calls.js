@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,7 +47,11 @@ module.exports = function replaceConsoleCalls(babel) {
 
   return {
     visitor: {
+<<<<<<< HEAD
       CallExpression: function(path, pass) {
+=======
+      CallExpression: function (path, pass) {
+>>>>>>> remotes/upstream/main
         if (path.node.callee.type !== 'MemberExpression') {
           return;
         }

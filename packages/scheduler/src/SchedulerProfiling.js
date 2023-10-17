@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -31,7 +35,11 @@ const TaskYieldEvent = 6;
 const SchedulerSuspendEvent = 7;
 const SchedulerResumeEvent = 8;
 
+<<<<<<< HEAD
 function logEvent(entries) {
+=======
+function logEvent(entries: Array<number | PriorityLevel>) {
+>>>>>>> remotes/upstream/main
   if (eventLog !== null) {
     const offset = eventLogIndex;
     eventLogIndex += entries.length;
@@ -47,6 +55,10 @@ function logEvent(entries) {
         return;
       }
       const newEventLog = new Int32Array(eventLogSize * 4);
+<<<<<<< HEAD
+=======
+      // $FlowFixMe[incompatible-call] found when upgrading Flow
+>>>>>>> remotes/upstream/main
       newEventLog.set(eventLog);
       eventLogBuffer = newEventLog.buffer;
       eventLog = newEventLog;

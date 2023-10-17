@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -30,7 +34,11 @@ const emptyObject = {};
 type NestedNode = Array<NestedNode> | Object;
 
 // Tracks removed keys
+<<<<<<< HEAD
 let removedKeys = null;
+=======
+let removedKeys: {[string]: boolean} | null = null;
+>>>>>>> remotes/upstream/main
 let removedKeyCount = 0;
 
 const deepDifferOptions = {
@@ -64,6 +72,10 @@ function restoreDeletedValuesInNestedArray(
   } else if (node && removedKeyCount > 0) {
     const obj = node;
     for (const propKey in removedKeys) {
+<<<<<<< HEAD
+=======
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
+>>>>>>> remotes/upstream/main
       if (!removedKeys[propKey]) {
         continue;
       }
@@ -78,9 +90,17 @@ function restoreDeletedValuesInNestedArray(
       }
 
       if (typeof nextProp === 'function') {
+<<<<<<< HEAD
         nextProp = true;
       }
       if (typeof nextProp === 'undefined') {
+=======
+        // $FlowFixMe[incompatible-type] found when upgrading Flow
+        nextProp = true;
+      }
+      if (typeof nextProp === 'undefined') {
+        // $FlowFixMe[incompatible-type] found when upgrading Flow
+>>>>>>> remotes/upstream/main
         nextProp = null;
       }
 
@@ -98,6 +118,10 @@ function restoreDeletedValuesInNestedArray(
             : nextProp;
         updatePayload[propKey] = nextValue;
       }
+<<<<<<< HEAD
+=======
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
+>>>>>>> remotes/upstream/main
       removedKeys[propKey] = false;
       removedKeyCount--;
     }
@@ -182,9 +206,13 @@ function diffNestedProperty(
   if (isArray(prevProp)) {
     return diffProperties(
       updatePayload,
+<<<<<<< HEAD
       // $FlowFixMe - We know that this is always an object when the input is.
       flattenStyle(prevProp),
       // $FlowFixMe - We know that this isn't an array because of above flow.
+=======
+      flattenStyle(prevProp),
+>>>>>>> remotes/upstream/main
       nextProp,
       validAttributes,
     );
@@ -193,7 +221,10 @@ function diffNestedProperty(
   return diffProperties(
     updatePayload,
     prevProp,
+<<<<<<< HEAD
     // $FlowFixMe - We know that this is always an object when the input is.
+=======
+>>>>>>> remotes/upstream/main
     flattenStyle(nextProp),
     validAttributes,
   );
@@ -208,7 +239,11 @@ function addNestedProperty(
   updatePayload: null | Object,
   nextProp: NestedNode,
   validAttributes: AttributeConfiguration,
+<<<<<<< HEAD
 ) {
+=======
+): $FlowFixMe {
+>>>>>>> remotes/upstream/main
   if (!nextProp) {
     return updatePayload;
   }
@@ -341,7 +376,13 @@ function diffProperties(
       // case: !Object is the default case
       if (defaultDiffer(prevProp, nextProp)) {
         // a normal leaf has changed
+<<<<<<< HEAD
         (updatePayload || (updatePayload = {}))[propKey] = nextProp;
+=======
+        (updatePayload || (updatePayload = ({}: {[string]: $FlowFixMe})))[
+          propKey
+        ] = nextProp;
+>>>>>>> remotes/upstream/main
       }
     } else if (
       typeof attributeConfig.diff === 'function' ||
@@ -356,9 +397,18 @@ function diffProperties(
       if (shouldUpdate) {
         const nextValue =
           typeof attributeConfig.process === 'function'
+<<<<<<< HEAD
             ? attributeConfig.process(nextProp)
             : nextProp;
         (updatePayload || (updatePayload = {}))[propKey] = nextValue;
+=======
+            ? // $FlowFixMe[incompatible-use] found when upgrading Flow
+              attributeConfig.process(nextProp)
+            : nextProp;
+        (updatePayload || (updatePayload = ({}: {[string]: $FlowFixMe})))[
+          propKey
+        ] = nextValue;
+>>>>>>> remotes/upstream/main
       }
     } else {
       // default: fallthrough case when nested properties are defined
@@ -412,9 +462,17 @@ function diffProperties(
     ) {
       // case: CustomAttributeConfiguration | !Object
       // Flag the leaf property for removal by sending a sentinel.
+<<<<<<< HEAD
       (updatePayload || (updatePayload = {}))[propKey] = null;
       if (!removedKeys) {
         removedKeys = {};
+=======
+      (updatePayload || (updatePayload = ({}: {[string]: $FlowFixMe})))[
+        propKey
+      ] = null;
+      if (!removedKeys) {
+        removedKeys = ({}: {[string]: boolean});
+>>>>>>> remotes/upstream/main
       }
       if (!removedKeys[propKey]) {
         removedKeys[propKey] = true;

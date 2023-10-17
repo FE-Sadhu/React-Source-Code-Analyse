@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,10 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {Stack} from '../../utils';
+>>>>>>> remotes/upstream/main
 import type {SchedulingEvent} from 'react-devtools-timeline/src/types';
 
 import * as React from 'react';
@@ -35,7 +43,11 @@ function SchedulingEventInfo({eventInfo}: SchedulingEventProps) {
   const {componentName, timestamp} = eventInfo;
   const componentStack = eventInfo.componentStack || null;
 
+<<<<<<< HEAD
   const viewSource = source => {
+=======
+  const viewSource = (source: ?Stack) => {
+>>>>>>> remotes/upstream/main
     if (viewUrlSourceFunction != null && source != null) {
       viewUrlSourceFunction(...source);
     }

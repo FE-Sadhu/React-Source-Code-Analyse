@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,14 +15,22 @@
 
 let React;
 let ReactNoop;
+<<<<<<< HEAD
 let Scheduler;
 
 describe('ReactFragment', () => {
   beforeEach(function() {
+=======
+let waitForAll;
+
+describe('ReactFragment', () => {
+  beforeEach(function () {
+>>>>>>> remotes/upstream/main
     jest.resetModules();
 
     React = require('react');
     ReactNoop = require('react-noop-renderer');
+<<<<<<< HEAD
     Scheduler = require('scheduler');
   });
 
@@ -38,6 +50,14 @@ describe('ReactFragment', () => {
   }
 
   it('should render a single child via noop renderer', () => {
+=======
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+  });
+
+  it('should render a single child via noop renderer', async () => {
+>>>>>>> remotes/upstream/main
     const element = (
       <>
         <span>foo</span>
@@ -45,6 +65,7 @@ describe('ReactFragment', () => {
     );
 
     ReactNoop.render(element);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     expect(ReactNoop.getChildren()).toEqual([span()]);
@@ -60,6 +81,23 @@ describe('ReactFragment', () => {
   });
 
   it('should render multiple children via noop renderer', () => {
+=======
+    await waitForAll([]);
+
+    expect(ReactNoop).toMatchRenderedOutput(<span>foo</span>);
+  });
+
+  it('should render zero children via noop renderer', async () => {
+    const element = <React.Fragment />;
+
+    ReactNoop.render(element);
+    await waitForAll([]);
+
+    expect(ReactNoop).toMatchRenderedOutput(null);
+  });
+
+  it('should render multiple children via noop renderer', async () => {
+>>>>>>> remotes/upstream/main
     const element = (
       <>
         hello <span>world</span>
@@ -67,23 +105,50 @@ describe('ReactFragment', () => {
     );
 
     ReactNoop.render(element);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     expect(ReactNoop.getChildren()).toEqual([text('hello '), span()]);
   });
 
   it('should render an iterable via noop renderer', () => {
+=======
+    await waitForAll([]);
+
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        hello <span>world</span>
+      </>,
+    );
+  });
+
+  it('should render an iterable via noop renderer', async () => {
+>>>>>>> remotes/upstream/main
     const element = (
       <>{new Set([<span key="a">hi</span>, <span key="b">bye</span>])}</>
     );
 
     ReactNoop.render(element);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     expect(ReactNoop.getChildren()).toEqual([span(), span()]);
   });
 
   it('should preserve state of children with 1 level nesting', function() {
+=======
+    await waitForAll([]);
+
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <span>hi</span>
+        <span>bye</span>
+      </>,
+    );
+  });
+
+  it('should preserve state of children with 1 level nesting', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -108,6 +173,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -124,6 +190,29 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state between top-level fragments', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <div>Hello</div>
+        <div>World</div>
+      </>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state between top-level fragments', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -149,6 +238,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -165,6 +255,24 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state of children nested at same level', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state of children nested at same level', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -199,6 +307,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -215,6 +324,29 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state in non-top-level fragment nesting', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <div />
+        <div>Hello</div>
+      </>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state in non-top-level fragment nesting', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -242,6 +374,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -258,6 +391,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state of children if nested 2 levels without siblings', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state of children if nested 2 levels without siblings', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -283,6 +434,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -299,6 +451,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state of children if nested 2 levels with siblings', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state of children if nested 2 levels with siblings', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -325,6 +495,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -341,6 +512,29 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state between array nested in fragment and fragment', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <div>Hello</div>
+        <div />
+      </>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state between array nested in fragment and fragment', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -364,6 +558,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -380,6 +575,24 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state between top level fragment and array', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state between top level fragment and array', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -403,6 +616,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -419,6 +633,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state between array nested in fragment and double nested fragment', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state between array nested in fragment and double nested fragment', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -444,6 +676,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -460,6 +693,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state between array nested in fragment and double nested array', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state between array nested in fragment and double nested array', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -481,6 +732,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -497,6 +749,24 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state between double nested fragment and double nested array', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state between double nested fragment and double nested array', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -522,6 +792,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -538,6 +809,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state of children when the keys are different', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state of children when the keys are different', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -564,6 +853,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -580,6 +870,29 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state between unkeyed and keyed fragment', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <div>Hello</div>
+        <span>World</span>
+      </>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state between unkeyed and keyed fragment', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -605,6 +918,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -621,6 +935,24 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state with reordering in multiple levels', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state with reordering in multiple levels', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -658,6 +990,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -674,6 +1007,40 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state when switching to a keyed fragment to an array', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <div>
+        <span>beep</span>
+        <div>
+          <div>Hello</div>
+        </div>
+        <span>bar</span>
+      </div>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <div>
+        <span>foo</span>
+        <div>
+          <div>Hello</div>
+        </div>
+        <span>boop</span>
+      </div>,
+    );
+  });
+
+  it('should not preserve state when switching to a keyed fragment to an array', async () => {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -705,14 +1072,22 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
     expect(() => expect(Scheduler).toFlushWithoutYielding()).toErrorDev(
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await expect(async () => await waitForAll([])).toErrorDev(
+>>>>>>> remotes/upstream/main
       'Each child in a list should have a unique "key" prop.',
     );
 
     expect(ops).toEqual([]);
+<<<<<<< HEAD
     expect(ReactNoop.getChildren()).toEqual([div(div(), span())]);
 
     ReactNoop.render(<Foo condition={true} />);
@@ -723,6 +1098,28 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state when switching a nested unkeyed fragment to a passthrough component', function() {
+=======
+    expect(ReactNoop).toMatchRenderedOutput(
+      <div>
+        <div>Hello</div>
+        <span />
+      </div>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <div>
+        <div>Hello</div>
+        <span />
+      </div>,
+    );
+  });
+
+  it('should not preserve state when switching a nested unkeyed fragment to a passthrough component', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     function Passthrough({children}) {
@@ -756,6 +1153,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -772,6 +1170,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state when switching a nested keyed fragment to a passthrough component', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state when switching a nested keyed fragment to a passthrough component', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     function Passthrough({children}) {
@@ -805,6 +1221,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -821,6 +1238,24 @@ describe('ReactFragment', () => {
   });
 
   it('should not preserve state when switching a nested keyed array to a passthrough component', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should not preserve state when switching a nested keyed array to a passthrough component', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     function Passthrough({children}) {
@@ -850,6 +1285,7 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     ReactNoop.render(<Foo condition={false} />);
@@ -866,6 +1302,24 @@ describe('ReactFragment', () => {
   });
 
   it('should preserve state when it does not change positions', function() {
+=======
+    await waitForAll([]);
+
+    ReactNoop.render(<Foo condition={false} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+
+    ReactNoop.render(<Foo condition={true} />);
+    await waitForAll([]);
+
+    expect(ops).toEqual([]);
+    expect(ReactNoop).toMatchRenderedOutput(<div>Hello</div>);
+  });
+
+  it('should preserve state when it does not change positions', async function () {
+>>>>>>> remotes/upstream/main
     const ops = [];
 
     class Stateful extends React.Component {
@@ -895,12 +1349,17 @@ describe('ReactFragment', () => {
     }
 
     ReactNoop.render(<Foo condition={true} />);
+<<<<<<< HEAD
     expect(() => expect(Scheduler).toFlushWithoutYielding()).toErrorDev(
+=======
+    await expect(async () => await waitForAll([])).toErrorDev(
+>>>>>>> remotes/upstream/main
       'Each child in a list should have a unique "key" prop.',
     );
 
     ReactNoop.render(<Foo condition={false} />);
     // The key warning gets deduped because it's in the same component.
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
 
     expect(ops).toEqual(['Update Stateful']);
@@ -912,5 +1371,28 @@ describe('ReactFragment', () => {
 
     expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
     expect(ReactNoop.getChildren()).toEqual([span(), div()]);
+=======
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <span />
+        <div>Hello</div>
+      </>,
+    );
+
+    ReactNoop.render(<Foo condition={true} />);
+    // The key warning gets deduped because it's in the same component.
+    await waitForAll([]);
+
+    expect(ops).toEqual(['Update Stateful', 'Update Stateful']);
+    expect(ReactNoop).toMatchRenderedOutput(
+      <>
+        <span />
+        <div>Hello</div>
+      </>,
+    );
+>>>>>>> remotes/upstream/main
   });
 });

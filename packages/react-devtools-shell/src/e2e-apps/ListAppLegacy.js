@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,7 +18,11 @@ export default function App(): React.Node {
 }
 
 class List extends React.Component {
+<<<<<<< HEAD
   constructor(props) {
+=======
+  constructor(props: any) {
+>>>>>>> remotes/upstream/main
     super(props);
     this.state = {
       items: ['one', 'two', 'three'],
@@ -28,7 +36,11 @@ class List extends React.Component {
     }
   };
 
+<<<<<<< HEAD
   render() {
+=======
+  render(): any {
+>>>>>>> remotes/upstream/main
     return (
       <div>
         <input
@@ -50,6 +62,10 @@ class List extends React.Component {
   }
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function ListItem({label}) {
   return <li data-testname="ListItem">{label}</li>;
 }

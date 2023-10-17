@@ -38,9 +38,12 @@
   height: 0.5rem;
 }
 
+<<<<<<< HEAD
 .Select {
 }
 
+=======
+>>>>>>> remotes/upstream/main
 .CheckboxOption {
   display: block;
   padding: 0 0 0.5rem;
@@ -91,6 +94,10 @@
   border: 1px solid var(--color-border);
   border-radius: 0.125rem;
   padding: 0.125rem;
+<<<<<<< HEAD
+=======
+  margin-left: .5rem;
+>>>>>>> remotes/upstream/main
 }
 
 .InvalidRegExp,

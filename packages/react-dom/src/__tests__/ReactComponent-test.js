@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -27,18 +31,32 @@ describe('ReactComponent', () => {
   it('should throw on invalid render targets', () => {
     const container = document.createElement('div');
     // jQuery objects are basically arrays; people often pass them in by mistake
+<<<<<<< HEAD
     expect(function() {
       ReactDOM.render(<div />, [container]);
     }).toThrowError(/Target container is not a DOM element./);
 
     expect(function() {
+=======
+    expect(function () {
+      ReactDOM.render(<div />, [container]);
+    }).toThrowError(/Target container is not a DOM element./);
+
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<div />, null);
     }).toThrowError(/Target container is not a DOM element./);
   });
 
+<<<<<<< HEAD
   it('should throw when supplying a ref outside of render method', () => {
     let instance = <div ref="badDiv" />;
     expect(function() {
+=======
+  it('should throw when supplying a string ref outside of render method', () => {
+    let instance = <div ref="badDiv" />;
+    expect(function () {
+>>>>>>> remotes/upstream/main
       instance = ReactTestUtils.renderIntoDocument(instance);
     }).toThrow();
   });
@@ -102,7 +120,11 @@ describe('ReactComponent', () => {
     }
   });
 
+<<<<<<< HEAD
   it('should support refs on owned components', () => {
+=======
+  it('should support string refs on owned components', () => {
+>>>>>>> remotes/upstream/main
     const innerObj = {};
     const outerObj = {};
 
@@ -133,10 +155,32 @@ describe('ReactComponent', () => {
       }
     }
 
+<<<<<<< HEAD
     ReactTestUtils.renderIntoDocument(<Component />);
   });
 
   it('should not have refs on unmounted components', () => {
+=======
+    expect(() => {
+      ReactTestUtils.renderIntoDocument(<Component />);
+    }).toErrorDev([
+      'Warning: Component "div" contains the string ref "inner". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in div (at **)\n' +
+        '    in Wrapper (at **)\n' +
+        '    in Component (at **)',
+      'Warning: Component "Component" contains the string ref "outer". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in Component (at **)',
+    ]);
+  });
+
+  it('should not have string refs on unmounted components', () => {
+>>>>>>> remotes/upstream/main
     class Parent extends React.Component {
       render() {
         return (

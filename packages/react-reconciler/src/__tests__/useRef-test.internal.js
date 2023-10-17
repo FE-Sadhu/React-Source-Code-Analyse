@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,6 +26,11 @@ describe('useRef', () => {
   let useLayoutEffect;
   let useRef;
   let useState;
+<<<<<<< HEAD
+=======
+  let waitForAll;
+  let assertLog;
+>>>>>>> remotes/upstream/main
 
   beforeEach(() => {
     React = require('react');
@@ -31,12 +40,17 @@ describe('useRef', () => {
     const ReactFeatureFlags = require('shared/ReactFeatureFlags');
     ReactFeatureFlags.debugRenderPhaseSideEffectsForStrictMode = false;
 
+<<<<<<< HEAD
     act = require('jest-react').act;
+=======
+    act = require('internal-test-utils').act;
+>>>>>>> remotes/upstream/main
     useCallback = React.useCallback;
     useEffect = React.useEffect;
     useLayoutEffect = React.useLayoutEffect;
     useRef = React.useRef;
     useState = React.useState;
+<<<<<<< HEAD
   });
 
   function Text(props) {
@@ -45,6 +59,20 @@ describe('useRef', () => {
   }
 
   it('creates a ref object initialized with the provided value', () => {
+=======
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    assertLog = InternalTestUtils.assertLog;
+  });
+
+  function Text(props) {
+    Scheduler.log(props.text);
+    return <span prop={props.text} />;
+  }
+
+  it('creates a ref object initialized with the provided value', async () => {
+>>>>>>> remotes/upstream/main
     jest.useFakeTimers();
 
     function useDebouncedCallback(callback, ms, inputs) {
@@ -68,7 +96,11 @@ describe('useRef', () => {
     function App() {
       ping = useDebouncedCallback(
         value => {
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue('ping: ' + value);
+=======
+          Scheduler.log('ping: ' + value);
+>>>>>>> remotes/upstream/main
         },
         100,
         [],
@@ -76,20 +108,35 @@ describe('useRef', () => {
       return null;
     }
 
+<<<<<<< HEAD
     act(() => {
       ReactNoop.render(<App />);
     });
     expect(Scheduler).toHaveYielded([]);
+=======
+    await act(() => {
+      ReactNoop.render(<App />);
+    });
+    assertLog([]);
+>>>>>>> remotes/upstream/main
 
     ping(1);
     ping(2);
     ping(3);
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([]);
 
     jest.advanceTimersByTime(100);
 
     expect(Scheduler).toHaveYielded(['ping: 3']);
+=======
+    assertLog([]);
+
+    jest.advanceTimersByTime(100);
+
+    assertLog(['ping: 3']);
+>>>>>>> remotes/upstream/main
 
     ping(4);
     jest.advanceTimersByTime(20);
@@ -97,6 +144,7 @@ describe('useRef', () => {
     ping(6);
     jest.advanceTimersByTime(80);
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([]);
 
     jest.advanceTimersByTime(20);
@@ -104,6 +152,15 @@ describe('useRef', () => {
   });
 
   it('should return the same ref during re-renders', () => {
+=======
+    assertLog([]);
+
+    jest.advanceTimersByTime(20);
+    assertLog(['ping: 6']);
+  });
+
+  it('should return the same ref during re-renders', async () => {
+>>>>>>> remotes/upstream/main
     function Counter() {
       const ref = useRef('val');
       const [count, setCount] = useState(0);
@@ -121,6 +178,7 @@ describe('useRef', () => {
     }
 
     ReactNoop.render(<Counter />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield([3]);
 
     ReactNoop.render(<Counter />);
@@ -129,6 +187,16 @@ describe('useRef', () => {
 
   if (__DEV__) {
     it('should never warn when attaching to children', () => {
+=======
+    await waitForAll([3]);
+
+    ReactNoop.render(<Counter />);
+    await waitForAll([3]);
+  });
+
+  if (__DEV__) {
+    it('should never warn when attaching to children', async () => {
+>>>>>>> remotes/upstream/main
       class Component extends React.Component {
         render() {
           return null;
@@ -146,16 +214,27 @@ describe('useRef', () => {
         );
       }
 
+<<<<<<< HEAD
       act(() => {
         ReactNoop.render(<Example phase="mount" />);
       });
       act(() => {
+=======
+      await act(() => {
+        ReactNoop.render(<Example phase="mount" />);
+      });
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example phase="update" />);
       });
     });
 
     // @gate enableUseRefAccessWarning
+<<<<<<< HEAD
     it('should warn about reads during render', () => {
+=======
+    it('should warn about reads during render', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref = useRef(123);
         let value;
@@ -167,12 +246,20 @@ describe('useRef', () => {
         return value;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
+<<<<<<< HEAD
     it('should not warn about lazy init during render', () => {
+=======
+    it('should not warn about lazy init during render', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref1 = useRef(null);
         const ref2 = useRef(undefined);
@@ -186,17 +273,29 @@ describe('useRef', () => {
         return null;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
 
       // Should not warn after an update either.
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
+<<<<<<< HEAD
     it('should not warn about lazy init outside of render', () => {
+=======
+    it('should not warn about lazy init outside of render', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         // eslint-disable-next-line no-unused-vars
         const [didMount, setDidMount] = useState(false);
@@ -210,13 +309,21 @@ describe('useRef', () => {
         return null;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
     // @gate enableUseRefAccessWarning
+<<<<<<< HEAD
     it('should warn about unconditional lazy init during render', () => {
+=======
+    it('should warn about unconditional lazy init during render', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref1 = useRef(null);
         const ref2 = useRef(undefined);
@@ -245,19 +352,31 @@ describe('useRef', () => {
       }
 
       let shouldExpectWarning = true;
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
 
       // Should not warn again on update.
       shouldExpectWarning = false;
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
     // @gate enableUseRefAccessWarning
+<<<<<<< HEAD
     it('should warn about reads to ref after lazy init pattern', () => {
+=======
+    it('should warn about reads to ref after lazy init pattern', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref1 = useRef(null);
         const ref2 = useRef(undefined);
@@ -285,13 +404,21 @@ describe('useRef', () => {
         return value;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
     // @gate enableUseRefAccessWarning
+<<<<<<< HEAD
     it('should warn about writes to ref after lazy init pattern', () => {
+=======
+    it('should warn about writes to ref after lazy init pattern', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref1 = useRef(null);
         const ref2 = useRef(undefined);
@@ -317,12 +444,20 @@ describe('useRef', () => {
         return null;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
     });
 
+<<<<<<< HEAD
     it('should not warn about reads or writes within effect', () => {
+=======
+    it('should not warn about reads or writes within effect', async () => {
+>>>>>>> remotes/upstream/main
       function Example() {
         const ref = useRef(123);
         useLayoutEffect(() => {
@@ -338,21 +473,33 @@ describe('useRef', () => {
         return null;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
 
       ReactNoop.flushPassiveEffects();
     });
 
+<<<<<<< HEAD
     it('should not warn about reads or writes outside of render phase (e.g. event handler)', () => {
+=======
+    it('should not warn about reads or writes outside of render phase (e.g. event handler)', async () => {
+>>>>>>> remotes/upstream/main
       let ref;
       function Example() {
         ref = useRef(123);
         return null;
       }
 
+<<<<<<< HEAD
       act(() => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         ReactNoop.render(<Example />);
       });
 

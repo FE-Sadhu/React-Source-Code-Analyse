@@ -8,6 +8,10 @@ let getCacheForType;
 
 let caches;
 let seededCache;
+<<<<<<< HEAD
+=======
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 describe('ReactSuspenseWithNoopRenderer', () => {
   beforeEach(() => {
@@ -16,12 +20,22 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
+<<<<<<< HEAD
     act = require('jest-react').act;
+=======
+    act = require('internal-test-utils').act;
+>>>>>>> remotes/upstream/main
     Suspense = React.Suspense;
     useEffect = React.useEffect;
 
     getCacheForType = React.unstable_getCacheForType;
 
+<<<<<<< HEAD
+=======
+    const InternalTestUtils = require('internal-test-utils');
+    assertLog = InternalTestUtils.assertLog;
+
+>>>>>>> remotes/upstream/main
     caches = [];
     seededCache = null;
   });
@@ -82,16 +96,27 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     if (record !== undefined) {
       switch (record.status) {
         case 'pending':
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
           throw record.value;
         case 'rejected':
           Scheduler.unstable_yieldValue(`Error! [${text}]`);
+=======
+          Scheduler.log(`Suspend! [${text}]`);
+          throw record.value;
+        case 'rejected':
+          Scheduler.log(`Error! [${text}]`);
+>>>>>>> remotes/upstream/main
           throw record.value;
         case 'resolved':
           return textCache.version;
       }
     } else {
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
+=======
+      Scheduler.log(`Suspend! [${text}]`);
+>>>>>>> remotes/upstream/main
 
       const thenable = {
         pings: [],
@@ -138,10 +163,17 @@ describe('ReactSuspenseWithNoopRenderer', () => {
       readText(text);
 
       useEffect(() => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue('Effect');
       }, []);
 
       Scheduler.unstable_yieldValue(text);
+=======
+        Scheduler.log('Effect');
+      }, []);
+
+      Scheduler.log(text);
+>>>>>>> remotes/upstream/main
       return text;
     });
 
@@ -157,19 +189,33 @@ describe('ReactSuspenseWithNoopRenderer', () => {
 
     // On initial mount, the suspended component is committed in an incomplete
     // state, without a passive static effect flag.
+<<<<<<< HEAD
     await act(async () => {
       root.render(<App />);
     });
     expect(Scheduler).toHaveYielded(['Suspend! [Async]']);
+=======
+    await act(() => {
+      root.render(<App />);
+    });
+    assertLog(['Suspend! [Async]']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('Loading...');
 
     // When the promise resolves, a passive static effect flag is added. In the
     // regression, the "missing expected static flag" would fire, because the
     // previous fiber did not have one.
+<<<<<<< HEAD
     await act(async () => {
       resolveText('Async');
     });
     expect(Scheduler).toHaveYielded(['Async', 'Effect']);
+=======
+    await act(() => {
+      resolveText('Async');
+    });
+    assertLog(['Async', 'Effect']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('Async');
   });
 });

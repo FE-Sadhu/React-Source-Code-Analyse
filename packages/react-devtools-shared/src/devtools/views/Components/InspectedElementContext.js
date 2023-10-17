@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -22,8 +31,13 @@ import {
 import {TreeStateContext} from './TreeContext';
 import {BridgeContext, StoreContext} from '../context';
 import {
+<<<<<<< HEAD
   checkForUpdate,
   inspectElement,
+=======
+  inspectElement,
+  startElementUpdatesPolling,
+>>>>>>> remotes/upstream/main
 } from 'react-devtools-shared/src/inspectedElementCache';
 import {
   clearHookNamesCache,
@@ -34,14 +48,23 @@ import {loadModule} from 'react-devtools-shared/src/dynamicImportCache';
 import FetchFileWithCachingContext from 'react-devtools-shared/src/devtools/views/Components/FetchFileWithCachingContext';
 import HookNamesModuleLoaderContext from 'react-devtools-shared/src/devtools/views/Components/HookNamesModuleLoaderContext';
 import {SettingsContext} from '../Settings/SettingsContext';
+<<<<<<< HEAD
 import {enableNamedHooksFeature} from 'react-devtools-feature-flags';
 
 import type {HookNames} from 'react-devtools-shared/src/types';
+=======
+
+import type {HookNames} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {ReactNodeList} from 'shared/ReactTypes';
 import type {
   Element,
   InspectedElement,
+<<<<<<< HEAD
 } from 'react-devtools-shared/src/devtools/views/Components/types';
+=======
+} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 type Path = Array<string | number>;
 type InspectPathFunction = (path: Path) => void;
@@ -55,17 +78,28 @@ type Context = {
   toggleParseHookNames: ToggleParseHookNames,
 };
 
+<<<<<<< HEAD
 export const InspectedElementContext = createContext<Context>(
   ((null: any): Context),
 );
 
 const POLL_INTERVAL = 1000;
+=======
+export const InspectedElementContext: ReactContext<Context> =
+  createContext<Context>(((null: any): Context));
+>>>>>>> remotes/upstream/main
 
 export type Props = {
   children: ReactNodeList,
 };
 
+<<<<<<< HEAD
 export function InspectedElementContextController({children}: Props) {
+=======
+export function InspectedElementContextController({
+  children,
+}: Props): React.Node {
+>>>>>>> remotes/upstream/main
   const {selectedElementID} = useContext(TreeStateContext);
   const fetchFileWithCaching = useContext(FetchFileWithCachingContext);
   const bridge = useContext(BridgeContext);
@@ -105,6 +139,11 @@ export function InspectedElementContextController({children}: Props) {
     parseHookNamesByDefault || alreadyLoadedHookNames,
   );
 
+<<<<<<< HEAD
+=======
+  const [bridgeIsAlive, setBridgeIsAliveStatus] = useState<boolean>(true);
+
+>>>>>>> remotes/upstream/main
   const elementHasChanged = element !== null && element !== state.element;
 
   // Reset the cached inspected paths when a new element is selected.
@@ -125,6 +164,7 @@ export function InspectedElementContextController({children}: Props) {
   if (!elementHasChanged && element !== null) {
     inspectedElement = inspectElement(element, state.path, store, bridge);
 
+<<<<<<< HEAD
     if (enableNamedHooksFeature) {
       if (typeof hookNamesModuleLoader === 'function') {
         if (parseHookNames || alreadyLoadedHookNames) {
@@ -149,18 +189,50 @@ export function InspectedElementContextController({children}: Props) {
                 fetchFileWithCaching,
               );
             }
+=======
+    if (typeof hookNamesModuleLoader === 'function') {
+      if (parseHookNames || alreadyLoadedHookNames) {
+        const hookNamesModule = loadModule(hookNamesModuleLoader);
+        if (hookNamesModule !== null) {
+          const {parseHookNames: loadHookNamesFunction, purgeCachedMetadata} =
+            hookNamesModule;
+
+          purgeCachedMetadataRef.current = purgeCachedMetadata;
+
+          if (
+            inspectedElement !== null &&
+            inspectedElement.hooks !== null &&
+            loadHookNamesFunction !== null
+          ) {
+            hookNames = loadHookNames(
+              element,
+              inspectedElement.hooks,
+              loadHookNamesFunction,
+              fetchFileWithCaching,
+            );
+>>>>>>> remotes/upstream/main
           }
         }
       }
     }
   }
 
+<<<<<<< HEAD
   const toggleParseHookNames: ToggleParseHookNames = useCallback<ToggleParseHookNames>(() => {
     startTransition(() => {
       setParseHookNames(value => !value);
       refresh();
     });
   }, [setParseHookNames]);
+=======
+  const toggleParseHookNames: ToggleParseHookNames =
+    useCallback<ToggleParseHookNames>(() => {
+      startTransition(() => {
+        setParseHookNames(value => !value);
+        refresh();
+      });
+    }, [setParseHookNames]);
+>>>>>>> remotes/upstream/main
 
   const inspectPaths: InspectPathFunction = useCallback<InspectPathFunction>(
     (path: Path) => {
@@ -175,7 +247,11 @@ export function InspectedElementContextController({children}: Props) {
     [setState, state],
   );
 
+<<<<<<< HEAD
   const inspectedElementRef = useRef(null);
+=======
+  const inspectedElementRef = useRef<null | InspectedElement>(null);
+>>>>>>> remotes/upstream/main
   useEffect(() => {
     if (
       inspectedElement !== null &&
@@ -214,6 +290,7 @@ export function InspectedElementContextController({children}: Props) {
     }
   }, [state]);
 
+<<<<<<< HEAD
   // Periodically poll the selected element for updates.
   useEffect(() => {
     if (element !== null) {
@@ -224,6 +301,36 @@ export function InspectedElementContextController({children}: Props) {
       let timeoutID = setTimeout(checkForUpdateWrapper, POLL_INTERVAL);
       return () => {
         clearTimeout(timeoutID);
+=======
+  useEffect(() => {
+    // Assuming that new bridge is always alive at this moment
+    setBridgeIsAliveStatus(true);
+
+    const listener = () => setBridgeIsAliveStatus(false);
+    bridge.addListener('shutdown', listener);
+
+    return () => bridge.removeListener('shutdown', listener);
+  }, [bridge]);
+
+  // Periodically poll the selected element for updates.
+  useEffect(() => {
+    if (element !== null && bridgeIsAlive) {
+      const {abort, pause, resume} = startElementUpdatesPolling({
+        bridge,
+        element,
+        refresh,
+        store,
+      });
+
+      bridge.addListener('resumeElementPolling', resume);
+      bridge.addListener('pauseElementPolling', pause);
+
+      return () => {
+        bridge.removeListener('resumeElementPolling', resume);
+        bridge.removeListener('pauseElementPolling', pause);
+
+        abort();
+>>>>>>> remotes/upstream/main
       };
     }
   }, [
@@ -233,6 +340,10 @@ export function InspectedElementContextController({children}: Props) {
     // No sense to ping right away after e.g. inspecting/hydrating a path.
     inspectedElement,
     state,
+<<<<<<< HEAD
+=======
+    bridgeIsAlive,
+>>>>>>> remotes/upstream/main
   ]);
 
   const value = useMemo<Context>(

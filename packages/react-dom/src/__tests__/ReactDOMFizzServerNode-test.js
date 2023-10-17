@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -73,9 +77,22 @@ describe('ReactDOMFizzServerNode', () => {
     );
     pipe(writable);
     jest.runAllTimers();
+<<<<<<< HEAD
     expect(output.result).toMatchInlineSnapshot(
       `"<!DOCTYPE html><html><body>hello world</body></html>"`,
     );
+=======
+    if (gate(flags => flags.enableFloat)) {
+      // with Float, we emit empty heads if they are elided when rendering <html>
+      expect(output.result).toMatchInlineSnapshot(
+        `"<!DOCTYPE html><html><head></head><body>hello world</body></html>"`,
+      );
+    } else {
+      expect(output.result).toMatchInlineSnapshot(
+        `"<!DOCTYPE html><html><body>hello world</body></html>"`,
+      );
+    }
+>>>>>>> remotes/upstream/main
   });
 
   it('should emit bootstrap script src at the end', () => {
@@ -91,7 +108,11 @@ describe('ReactDOMFizzServerNode', () => {
     pipe(writable);
     jest.runAllTimers();
     expect(output.result).toMatchInlineSnapshot(
+<<<<<<< HEAD
       `"<div>hello world</div><script>INIT();</script><script src=\\"init.js\\" async=\\"\\"></script><script type=\\"module\\" src=\\"init.mjs\\" async=\\"\\"></script>"`,
+=======
+      `"<link rel="preload" as="script" fetchPriority="low" href="init.js"/><link rel="modulepreload" fetchPriority="low" href="init.mjs"/><div>hello world</div><script>INIT();</script><script src="init.js" async=""></script><script type="module" src="init.mjs" async=""></script>"`,
+>>>>>>> remotes/upstream/main
     );
   });
 
@@ -628,4 +649,20 @@ describe('ReactDOMFizzServerNode', () => {
     expect(rendered).toBe(false);
     expect(isComplete).toBe(true);
   });
+<<<<<<< HEAD
+=======
+
+  it('should encode multibyte characters correctly without nulls (#24985)', () => {
+    const {writable, output} = getTestWritable();
+    const {pipe} = ReactDOMFizzServer.renderToPipeableStream(
+      <div>{Array(700).fill('ののの')}</div>,
+    );
+    pipe(writable);
+    jest.runAllTimers();
+    expect(output.result.indexOf('\u0000')).toBe(-1);
+    expect(output.result).toEqual(
+      '<div>' + Array(700).fill('ののの').join('<!-- -->') + '</div>',
+    );
+  });
+>>>>>>> remotes/upstream/main
 });

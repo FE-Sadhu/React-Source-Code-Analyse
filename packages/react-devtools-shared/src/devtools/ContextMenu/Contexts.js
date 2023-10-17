@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import {createContext} from 'react';
 
 export type ShowFn = ({data: Object, pageX: number, pageY: number}) => void;
@@ -81,8 +90,17 @@ export type RegistryContextType = {
   registerMenu: typeof registerMenu,
 };
 
+<<<<<<< HEAD
 export const RegistryContext = createContext<RegistryContextType>({
   hideMenu,
   showMenu,
   registerMenu,
 });
+=======
+export const RegistryContext: ReactContext<RegistryContextType> =
+  createContext<RegistryContextType>({
+    hideMenu,
+    showMenu,
+    registerMenu,
+  });
+>>>>>>> remotes/upstream/main

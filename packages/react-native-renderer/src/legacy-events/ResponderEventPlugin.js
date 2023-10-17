@@ -1,8 +1,17 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+>>>>>>> remotes/upstream/main
  */
 
 import {
@@ -42,7 +51,11 @@ let responderInst = null;
  */
 let trackedTouchCount = 0;
 
+<<<<<<< HEAD
 const changeResponder = function(nextResponderInst, blockHostResponder) {
+=======
+function changeResponder(nextResponderInst, blockHostResponder) {
+>>>>>>> remotes/upstream/main
   const oldResponderInst = responderInst;
   responderInst = nextResponderInst;
   if (ResponderEventPlugin.GlobalResponderHandler !== null) {
@@ -52,7 +65,11 @@ const changeResponder = function(nextResponderInst, blockHostResponder) {
       blockHostResponder,
     );
   }
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> remotes/upstream/main
 
 const eventTypes = {
   /**
@@ -681,7 +698,11 @@ function noResponderTouches(nativeEvent) {
 
 const ResponderEventPlugin = {
   /* For unit testing only */
+<<<<<<< HEAD
   _getResponder: function() {
+=======
+  _getResponder: function () {
+>>>>>>> remotes/upstream/main
     return responderInst;
   },
 
@@ -692,7 +713,11 @@ const ResponderEventPlugin = {
    * `touchEnd`. On certain platforms, this means that a native scroll has
    * assumed control and the original touch targets are destroyed.
    */
+<<<<<<< HEAD
   extractEvents: function(
+=======
+  extractEvents: function (
+>>>>>>> remotes/upstream/main
     topLevelType,
     targetInst,
     nativeEvent,

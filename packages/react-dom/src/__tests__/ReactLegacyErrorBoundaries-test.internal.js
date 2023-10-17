@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -584,6 +588,13 @@ describe('ReactLegacyErrorBoundaries', () => {
     };
   });
 
+<<<<<<< HEAD
+=======
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+>>>>>>> remotes/upstream/main
   it('does not swallow exceptions on mounting without boundaries', () => {
     let container = document.createElement('div');
     expect(() => {
@@ -677,10 +688,17 @@ describe('ReactLegacyErrorBoundaries', () => {
     );
     if (__DEV__) {
       expect(console.error).toHaveBeenCalledTimes(2);
+<<<<<<< HEAD
       expect(console.error.calls.argsFor(0)[0]).toContain(
         'ReactDOM.render is no longer supported',
       );
       expect(console.error.calls.argsFor(1)[0]).toContain(
+=======
+      expect(console.error.mock.calls[0][0]).toContain(
+        'ReactDOM.render is no longer supported',
+      );
+      expect(console.error.mock.calls[1][0]).toContain(
+>>>>>>> remotes/upstream/main
         'The above error occurred in the <BrokenRender> component:',
       );
     }
@@ -796,6 +814,10 @@ describe('ReactLegacyErrorBoundaries', () => {
     expect(log).toEqual(['ErrorBoundary componentWillUnmount']);
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableLegacyContext || !__DEV__
+>>>>>>> remotes/upstream/main
   it('renders an error state if context provider throws in componentWillMount', () => {
     class BrokenComponentWillMountWithContext extends React.Component {
       static childContextTypes = {foo: PropTypes.number};
@@ -1035,10 +1057,14 @@ describe('ReactLegacyErrorBoundaries', () => {
       'BrokenRender constructor',
       'BrokenRender componentWillMount',
       'BrokenRender render [!]',
+<<<<<<< HEAD
       // Render third child, even though an earlier sibling threw.
       'Normal constructor',
       'Normal componentWillMount',
       'Normal render',
+=======
+      // Skip the remaining siblings
+>>>>>>> remotes/upstream/main
       // Finish mounting with null children
       'ErrorBoundary componentDidMount',
       // Handle the error

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -44,7 +48,11 @@ module.exports = {
     }
 
     return {
+<<<<<<< HEAD
       CallExpression: function(node) {
+=======
+      CallExpression: function (node) {
+>>>>>>> remotes/upstream/main
         // This could be a little smarter by checking context.getScope() to see
         // how warning/invariant was defined.
         const isWarning =

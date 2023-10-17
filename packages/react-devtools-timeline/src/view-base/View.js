@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -55,7 +59,11 @@ export class View {
    * @see setNeedsDisplay
    * @private
    */
+<<<<<<< HEAD
   _needsDisplay = true;
+=======
+  _needsDisplay: boolean = true;
+>>>>>>> remotes/upstream/main
 
   /**
    * Whether the hierarchy below this view has subviews that need display.
@@ -65,7 +73,11 @@ export class View {
    * @see setSubviewsNeedDisplay
    * @private
    */
+<<<<<<< HEAD
   _subviewsNeedDisplay = false;
+=======
+  _subviewsNeedDisplay: boolean = false;
+>>>>>>> remotes/upstream/main
 
   constructor(
     surface: Surface,

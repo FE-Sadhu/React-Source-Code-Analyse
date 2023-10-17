@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +15,18 @@
 
 const rule = require('../safe-string-coercion');
 const {RuleTester} = require('eslint');
+<<<<<<< HEAD
+=======
+
+RuleTester.setDefaultConfig({
+  parser: require.resolve('babel-eslint'),
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module',
+  },
+});
+
+>>>>>>> remotes/upstream/main
 const ruleTester = new RuleTester();
 
 const missingDevCheckMessage =
@@ -57,7 +73,11 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
       }
     `,
     `
+<<<<<<< HEAD
       if (__DEV__) { checkFormFieldValueStringCoercion (obj) } 
+=======
+      if (__DEV__) { checkFormFieldValueStringCoercion (obj) }
+>>>>>>> remotes/upstream/main
       '' + obj;
     `,
     `
@@ -87,6 +107,12 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
     // doesn't violate this rule.
     "if (typeof obj === 'string') { if (typeof obj === 'string' && obj.length) {} else {'' + obj} }",
     "if (typeof obj === 'string') if (typeof obj === 'string' && obj.length) {} else {'' + obj}",
+<<<<<<< HEAD
+=======
+    "'' + ''",
+    "'' + '' + ''",
+    "`test${foo}` + ''",
+>>>>>>> remotes/upstream/main
   ],
   invalid: [
     {
@@ -127,8 +153,12 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
       ],
     },
     {
+<<<<<<< HEAD
       code:
         "if (typeof obj === 'string') { } else if (typeof obj === 'object') {'' + obj}",
+=======
+      code: "if (typeof obj === 'string') { } else if (typeof obj === 'object') {'' + obj}",
+>>>>>>> remotes/upstream/main
       errors: [
         {
           message: missingDevCheckMessage + '\n' + message,
@@ -145,7 +175,11 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
     },
     {
       code: `
+<<<<<<< HEAD
           if (__D__) { checkFormFieldValueStringCoercion (obj) } 
+=======
+          if (__D__) { checkFormFieldValueStringCoercion (obj) }
+>>>>>>> remotes/upstream/main
           '' + obj;
         `,
       errors: [
@@ -156,7 +190,11 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
     },
     {
       code: `
+<<<<<<< HEAD
           if (__DEV__) { checkFormFieldValueStringCoercion (obj) } 
+=======
+          if (__DEV__) { checkFormFieldValueStringCoercion (obj) }
+>>>>>>> remotes/upstream/main
           '' + notobjj;
         `,
       errors: [
@@ -172,7 +210,11 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
       code: `
           if (__DEV__) { checkFormFieldValueStringCoercion (obj) }
           // must be right before the check call
+<<<<<<< HEAD
           someOtherCode(); 
+=======
+          someOtherCode();
+>>>>>>> remotes/upstream/main
           '' + objj;
         `,
       errors: [
@@ -261,5 +303,19 @@ ruleTester.run('eslint-rules/safe-string-coercion', rule, {
         },
       ],
     },
+<<<<<<< HEAD
+=======
+    {
+      code: `'' + obj + ''`,
+      errors: [
+        {message: missingDevCheckMessage + '\n' + message},
+        {message: missingDevCheckMessage + '\n' + message},
+      ],
+    },
+    {
+      code: `foo\`text\` + ""`,
+      errors: [{message: missingDevCheckMessage + '\n' + message}],
+    },
+>>>>>>> remotes/upstream/main
   ],
 });

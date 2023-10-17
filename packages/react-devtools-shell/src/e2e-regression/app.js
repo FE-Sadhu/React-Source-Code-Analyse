@@ -7,7 +7,11 @@ import * as ReactDOM from 'react-dom';
 import {createRoot} from 'react-dom/client';
 import ListApp from '../e2e-apps/ListApp';
 
+<<<<<<< HEAD
 function mountApp(App) {
+=======
+function mountApp(App: () => React$Node) {
+>>>>>>> remotes/upstream/main
   const container = document.createElement('div');
 
   ((document.body: any): HTMLBodyElement).appendChild(container);

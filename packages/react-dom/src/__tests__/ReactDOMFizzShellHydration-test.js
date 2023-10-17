@@ -1,10 +1,18 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+<<<<<<< HEAD
+=======
+ * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
+>>>>>>> remotes/upstream/main
  */
 
 let JSDOM;
@@ -22,6 +30,10 @@ let buffer = '';
 let hasErrored = false;
 let fatalError = undefined;
 let textCache;
+<<<<<<< HEAD
+=======
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 describe('ReactDOMFizzShellHydration', () => {
   beforeEach(() => {
@@ -30,10 +42,20 @@ describe('ReactDOMFizzShellHydration', () => {
     React = require('react');
     ReactDOMClient = require('react-dom/client');
     Scheduler = require('scheduler');
+<<<<<<< HEAD
     clientAct = require('jest-react').act;
     ReactDOMFizzServer = require('react-dom/server');
     Stream = require('stream');
 
+=======
+    clientAct = require('internal-test-utils').act;
+    ReactDOMFizzServer = require('react-dom/server');
+    Stream = require('stream');
+
+    const InternalTestUtils = require('internal-test-utils');
+    assertLog = InternalTestUtils.assertLog;
+
+>>>>>>> remotes/upstream/main
     startTransition = React.startTransition;
 
     textCache = new Map();
@@ -62,6 +84,13 @@ describe('ReactDOMFizzShellHydration', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+>>>>>>> remotes/upstream/main
   async function serverAct(callback) {
     await callback();
     // Await one turn around the event loop.
@@ -120,7 +149,11 @@ describe('ReactDOMFizzShellHydration', () => {
           return record.value;
       }
     } else {
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
+=======
+      Scheduler.log(`Suspend! [${text}]`);
+>>>>>>> remotes/upstream/main
 
       const thenable = {
         pings: [],
@@ -144,13 +177,21 @@ describe('ReactDOMFizzShellHydration', () => {
   }
 
   function Text({text}) {
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(text);
+=======
+    Scheduler.log(text);
+>>>>>>> remotes/upstream/main
     return text;
   }
 
   function AsyncText({text}) {
     readText(text);
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(text);
+=======
+    Scheduler.log(text);
+>>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -175,7 +216,11 @@ describe('ReactDOMFizzShellHydration', () => {
       const {pipe} = ReactDOMFizzServer.renderToPipeableStream(<App />);
       pipe(writable);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Shell']);
+=======
+    assertLog(['Shell']);
+>>>>>>> remotes/upstream/main
     const dehydratedDiv = container.getElementsByTagName('div')[0];
 
     // Clear the cache and start rendering on the client
@@ -185,7 +230,11 @@ describe('ReactDOMFizzShellHydration', () => {
     await clientAct(async () => {
       ReactDOMClient.hydrateRoot(container, <App />);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Suspend! [Shell]']);
+=======
+    assertLog(['Suspend! [Shell]']);
+>>>>>>> remotes/upstream/main
     expect(div.current).toBe(null);
     expect(container.textContent).toBe('Shell');
 
@@ -193,7 +242,11 @@ describe('ReactDOMFizzShellHydration', () => {
     await clientAct(async () => {
       await resolveText('Shell');
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Shell']);
+=======
+    assertLog(['Shell']);
+>>>>>>> remotes/upstream/main
     expect(div.current).toBe(dehydratedDiv);
     expect(container.textContent).toBe('Shell');
   });
@@ -208,12 +261,20 @@ describe('ReactDOMFizzShellHydration', () => {
     await clientAct(async () => {
       root.render(<App />);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Suspend! [Shell]']);
+=======
+    assertLog(['Suspend! [Shell]']);
+>>>>>>> remotes/upstream/main
 
     await clientAct(async () => {
       await resolveText('Shell');
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Shell']);
+=======
+    assertLog(['Shell']);
+>>>>>>> remotes/upstream/main
     expect(container.textContent).toBe('Shell');
   });
 
@@ -231,7 +292,11 @@ describe('ReactDOMFizzShellHydration', () => {
         const {pipe} = ReactDOMFizzServer.renderToPipeableStream(<App />);
         pipe(writable);
       });
+<<<<<<< HEAD
       expect(Scheduler).toHaveYielded(['Initial']);
+=======
+      assertLog(['Initial']);
+>>>>>>> remotes/upstream/main
 
       await clientAct(async () => {
         const root = ReactDOMClient.hydrateRoot(container, <App />);
@@ -241,7 +306,11 @@ describe('ReactDOMFizzShellHydration', () => {
           root.render(<Text text="Updated" />);
         });
       });
+<<<<<<< HEAD
       expect(Scheduler).toHaveYielded(['Initial', 'Updated']);
+=======
+      assertLog(['Initial', 'Updated']);
+>>>>>>> remotes/upstream/main
       expect(container.textContent).toBe('Updated');
     },
   );
@@ -257,7 +326,11 @@ describe('ReactDOMFizzShellHydration', () => {
       const {pipe} = ReactDOMFizzServer.renderToPipeableStream(<App />);
       pipe(writable);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Shell']);
+=======
+    assertLog(['Shell']);
+>>>>>>> remotes/upstream/main
 
     // Clear the cache and start rendering on the client
     resetTextCache();
@@ -266,21 +339,58 @@ describe('ReactDOMFizzShellHydration', () => {
     const root = await clientAct(async () => {
       return ReactDOMClient.hydrateRoot(container, <App />, {
         onRecoverableError(error) {
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(error.message);
         },
       });
     });
     expect(Scheduler).toHaveYielded(['Suspend! [Shell]']);
+=======
+          Scheduler.log(error.message);
+        },
+      });
+    });
+    assertLog(['Suspend! [Shell]']);
+>>>>>>> remotes/upstream/main
     expect(container.textContent).toBe('Shell');
 
     await clientAct(async () => {
       root.render(<Text text="New screen" />);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'New screen',
       'This root received an early update, before anything was able ' +
         'hydrate. Switched the entire root to client rendering.',
     ]);
     expect(container.textContent).toBe('New screen');
   });
+<<<<<<< HEAD
+=======
+
+  test('TODO: A large component stack causes SSR to stack overflow', async () => {
+    spyOnDevAndProd(console, 'error').mockImplementation(() => {});
+
+    function NestedComponent({depth}: {depth: number}) {
+      if (depth <= 0) {
+        return <AsyncText text="Shell" />;
+      }
+      return <NestedComponent depth={depth - 1} />;
+    }
+
+    // Server render
+    await serverAct(async () => {
+      ReactDOMFizzServer.renderToPipeableStream(
+        <NestedComponent depth={3000} />,
+      );
+    });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error.mock.calls[0][0].toString()).toBe(
+      'RangeError: Maximum call stack size exceeded',
+    );
+  });
+>>>>>>> remotes/upstream/main
 });

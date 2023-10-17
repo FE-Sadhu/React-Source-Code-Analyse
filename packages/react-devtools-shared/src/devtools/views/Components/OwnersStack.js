@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -32,7 +36,11 @@ import {
   MenuItem,
 } from '../Components/reach-ui/menu-button';
 
+<<<<<<< HEAD
 import type {SerializedElement} from './types';
+=======
+import type {SerializedElement} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 import styles from './OwnersStack.css';
 
@@ -56,7 +64,11 @@ type State = {
   selectedIndex: number,
 };
 
+<<<<<<< HEAD
 function dialogReducer(state, action) {
+=======
+function dialogReducer(state: State, action: Action) {
+>>>>>>> remotes/upstream/main
   switch (action.type) {
     case 'UPDATE_OWNER_ID':
       const selectedIndex = action.owners.findIndex(
@@ -191,10 +203,14 @@ export default function OwnerStack(): React.Node {
           ))}
       </div>
       <div className={styles.VRule} />
+<<<<<<< HEAD
       <Button
         className={styles.IconButton}
         onClick={() => selectOwner(null)}
         title="Back to tree view">
+=======
+      <Button onClick={() => selectOwner(null)} title="Back to tree view">
+>>>>>>> remotes/upstream/main
         <ButtonIcon type="close" />
       </Button>
     </div>

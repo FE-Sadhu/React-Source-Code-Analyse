@@ -10,6 +10,7 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
   // require that instead.
   require('./spec-equivalence-reporter/setupTests.js');
 } else {
+<<<<<<< HEAD
   const env = jasmine.getEnv();
   const errorMap = require('../error-codes/codes.json');
 
@@ -20,13 +21,24 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
 
   const spyOn = global.spyOn;
   const noop = function() {};
+=======
+  const errorMap = require('../error-codes/codes.json');
+
+  // By default, jest.spyOn also calls the spied method.
+  const spyOn = jest.spyOn;
+  const noop = jest.fn;
+>>>>>>> remotes/upstream/main
 
   // Spying on console methods in production builds can mask errors.
   // This is why we added an explicit spyOnDev() helper.
   // It's too easy to accidentally use the more familiar spyOn() helper though,
   // So we disable it entirely.
   // Spying on both dev and prod will require using both spyOnDev() and spyOnProd().
+<<<<<<< HEAD
   global.spyOn = function() {
+=======
+  global.spyOn = function () {
+>>>>>>> remotes/upstream/main
     throw new Error(
       'Do not use spyOn(). ' +
         'It can accidentally hide unexpected errors in production builds. ' +
@@ -55,10 +67,17 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
   // global variable. The global lets us detect an infinite loop even if
   // the actual error object ends up being caught and ignored. An infinite
   // loop must always fail the test!
+<<<<<<< HEAD
   env.beforeEach(() => {
     global.infiniteLoopError = null;
   });
   env.afterEach(() => {
+=======
+  beforeEach(() => {
+    global.infiniteLoopError = null;
+  });
+  afterEach(() => {
+>>>>>>> remotes/upstream/main
     const error = global.infiniteLoopError;
     global.infiniteLoopError = null;
     if (error) {
@@ -69,7 +88,11 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
   // TODO: Consider consolidating this with `yieldValue`. In both cases, tests
   // should not be allowed to exit without asserting on the entire log.
   const patchConsoleMethod = (methodName, unexpectedConsoleCallStacks) => {
+<<<<<<< HEAD
     const newMethod = function(format, ...args) {
+=======
+    const newMethod = function (format, ...args) {
+>>>>>>> remotes/upstream/main
       // Ignore uncaught errors reported by jsdom
       // and React addendums because they're too noisy.
       if (methodName === 'error' && shouldIgnoreConsoleError(format, args)) {
@@ -81,7 +104,11 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
       // Don't throw yet though b'c it might be accidentally caught and suppressed.
       const stack = new Error().stack;
       unexpectedConsoleCallStacks.push([
+<<<<<<< HEAD
         stack.substr(stack.indexOf('\n') + 1),
+=======
+        stack.slice(stack.indexOf('\n') + 1),
+>>>>>>> remotes/upstream/main
         util.format(format, ...args),
       ]);
     };
@@ -97,7 +124,14 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
     expectedMatcher,
     unexpectedConsoleCallStacks
   ) => {
+<<<<<<< HEAD
     if (console[methodName] !== mockMethod && !isSpy(console[methodName])) {
+=======
+    if (
+      console[methodName] !== mockMethod &&
+      !jest.isMockFunction(console[methodName])
+    ) {
+>>>>>>> remotes/upstream/main
       throw new Error(
         `Test did not tear down console.${methodName} mock properly.`
       );
@@ -157,8 +191,13 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
     unexpectedWarnCallStacks.length = 0;
   };
 
+<<<<<<< HEAD
   env.beforeEach(resetAllUnexpectedConsoleCalls);
   env.afterEach(flushAllUnexpectedConsoleCalls);
+=======
+  beforeEach(resetAllUnexpectedConsoleCalls);
+  afterEach(flushAllUnexpectedConsoleCalls);
+>>>>>>> remotes/upstream/main
 
   if (process.env.NODE_ENV === 'production') {
     // In production, we strip error messages and turn them into codes.
@@ -167,7 +206,11 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
     //    also proxies error instances with `proxyErrorInstance`.
     // 2. `proxyErrorInstance` decodes error messages when the `message`
     //    property is changed.
+<<<<<<< HEAD
     const decodeErrorMessage = function(message) {
+=======
+    const decodeErrorMessage = function (message) {
+>>>>>>> remotes/upstream/main
       if (!message) {
         return message;
       }
@@ -180,7 +223,11 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
       const args = matches[2]
         .split('&')
         .filter(s => s.startsWith('args[]='))
+<<<<<<< HEAD
         .map(s => s.substr('args[]='.length))
+=======
+        .map(s => s.slice('args[]='.length))
+>>>>>>> remotes/upstream/main
         .map(decodeURIComponent);
       const format = errorMap[code];
       let argIndex = 0;
@@ -190,7 +237,11 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
     // V8's Error.captureStackTrace (used in Jest) fails if the error object is
     // a Proxy, so we need to pass it the unproxied instance.
     const originalErrorInstances = new WeakMap();
+<<<<<<< HEAD
     const captureStackTrace = function(error, ...args) {
+=======
+    const captureStackTrace = function (error, ...args) {
+>>>>>>> remotes/upstream/main
       return OriginalError.captureStackTrace.call(
         this,
         originalErrorInstances.get(error) ||
@@ -309,6 +360,9 @@ if (process.env.REACT_CLASS_EQUIVALENCE_TEST) {
     const flags = getTestFlags();
     return fn(flags);
   };
+<<<<<<< HEAD
 
   require('jasmine-check').install();
+=======
+>>>>>>> remotes/upstream/main
 }

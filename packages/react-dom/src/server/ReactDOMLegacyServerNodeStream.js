@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,9 +23,16 @@ import {
 } from 'react-server/src/ReactFizzServer';
 
 import {
+<<<<<<< HEAD
   createResponseState,
   createRootFormatContext,
 } from './ReactDOMServerLegacyFormatConfig';
+=======
+  createResumableState,
+  createRenderState,
+  createRootFormatContext,
+} from 'react-dom-bindings/src/server/ReactFizzConfigDOMLegacy';
+>>>>>>> remotes/upstream/main
 
 import {Readable} from 'stream';
 
@@ -40,12 +51,22 @@ class ReactMarkupReadableStream extends Readable {
     this.startedFlowing = false;
   }
 
+<<<<<<< HEAD
   _destroy(err, callback) {
     abort(this.request);
     // $FlowFixMe: The type definition for the callback should allow undefined and null.
     callback(err);
   }
 
+=======
+  // $FlowFixMe[missing-local-annot]
+  _destroy(err, callback) {
+    abort(this.request);
+    callback(err);
+  }
+
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   _read(size) {
     if (this.startedFlowing) {
       startFlowing(this.request, this);
@@ -69,15 +90,30 @@ function renderToNodeStreamImpl(
     startFlowing(request, destination);
   }
   const destination = new ReactMarkupReadableStream();
+<<<<<<< HEAD
   const request = createRequest(
     children,
     createResponseState(false, options ? options.identifierPrefix : undefined),
+=======
+  const resumableState = createResumableState(
+    options ? options.identifierPrefix : undefined,
+    undefined,
+  );
+  const request = createRequest(
+    children,
+    resumableState,
+    createRenderState(resumableState, false),
+>>>>>>> remotes/upstream/main
     createRootFormatContext(),
     Infinity,
     onError,
     onAllReady,
     undefined,
     undefined,
+<<<<<<< HEAD
+=======
+    undefined,
+>>>>>>> remotes/upstream/main
   );
   destination.request = request;
   startWork(request);

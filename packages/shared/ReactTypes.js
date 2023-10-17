@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,8 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {Fiber} from 'react-reconciler/src/ReactInternalTypes';
 
+=======
+>>>>>>> remotes/upstream/main
 export type ReactNode =
   | React$Element<any>
   | ReactPortal
@@ -117,6 +124,7 @@ export type ReactScopeInstance = {
   getChildContextValues: <T>(context: ReactContext<T>) => Array<T>,
 };
 
+<<<<<<< HEAD
 // Mutable source version can be anything (e.g. number, string, immutable data structure)
 // so long as it changes every time any part of the source changes.
 export type MutableSourceVersion = $NonMaybeType<mixed>;
@@ -167,6 +175,8 @@ export type MutableSource<Source: $NonMaybeType<mixed>> = {
   _initialVersionAsOfFirstRender?: MutableSourceVersion | null,
 };
 
+=======
+>>>>>>> remotes/upstream/main
 // The subset of a Thenable required by things thrown by Suspense.
 // This doesn't require a value to be passed to either handler.
 export interface Wakeable {
@@ -209,10 +219,37 @@ export type Thenable<T> =
 export type OffscreenMode =
   | 'hidden'
   | 'unstable-defer-without-hiding'
+<<<<<<< HEAD
   | 'visible';
+=======
+  | 'visible'
+  | 'manual';
+>>>>>>> remotes/upstream/main
 
 export type StartTransitionOptions = {
   name?: string,
 };
 
 export type Usable<T> = Thenable<T> | ReactContext<T>;
+<<<<<<< HEAD
+=======
+
+export type ReactCustomFormAction = {
+  name?: string,
+  action?: string,
+  encType?: string,
+  method?: string,
+  target?: string,
+  data?: null | FormData,
+};
+
+// This is an opaque type returned by decodeFormState on the server, but it's
+// defined in this shared file because the same type is used by React on
+// the client.
+export type ReactFormState<S, ReferenceId> = [
+  S /* actual state value */,
+  string /* key path */,
+  ReferenceId /* Server Reference ID */,
+  number /* number of bound arguments */,
+];
+>>>>>>> remotes/upstream/main

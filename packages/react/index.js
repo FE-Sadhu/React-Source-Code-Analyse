@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,9 +8,8 @@
  */
 
 // Keep in sync with https://github.com/facebook/flow/blob/main/lib/react.js
-export type StatelessFunctionalComponent<
-  P,
-> = React$StatelessFunctionalComponent<P>;
+export type StatelessFunctionalComponent<P> =
+  React$StatelessFunctionalComponent<P>;
 export type ComponentType<-P> = React$ComponentType<P>;
 export type AbstractComponent<
   -Config,
@@ -41,25 +40,25 @@ export {
   PureComponent,
   StrictMode,
   Suspense,
-  SuspenseList,
   cloneElement,
   createContext,
   createElement,
   createFactory,
-  createMutableSource,
   createRef,
   createServerContext,
-  experimental_use,
+  use,
   forwardRef,
   isValidElement,
   lazy,
   memo,
+  cache,
   startTransition,
   unstable_Cache,
   unstable_DebugTracingMode,
   unstable_LegacyHidden,
   unstable_Offscreen,
   unstable_Scope,
+  unstable_SuspenseList,
   unstable_TracingMarker,
   unstable_getCacheSignal,
   unstable_getCacheForType,
@@ -71,12 +70,12 @@ export {
   useDebugValue,
   useDeferredValue,
   useEffect,
-  experimental_useEvent,
+  experimental_useEffectEvent,
   useImperativeHandle,
   useInsertionEffect,
   useLayoutEffect,
   useMemo,
-  useMutableSource,
+  useOptimistic,
   useSyncExternalStore,
   useReducer,
   useRef,

@@ -28,8 +28,12 @@
   white-space: pre;
 }
 
+<<<<<<< HEAD
 .LeftVRule,
 .RightVRule {
+=======
+.LeftVRule{
+>>>>>>> remotes/upstream/main
   height: 20px;
   width: 1px;
   background-color: var(--color-border);
@@ -37,6 +41,9 @@
 .LeftVRule {
   margin: 0 0.25rem 0 0.5rem;
 }
+<<<<<<< HEAD
 .RightVRule {
   margin: 0 0.5rem 0 0.25rem;
 }
+=======
+>>>>>>> remotes/upstream/main

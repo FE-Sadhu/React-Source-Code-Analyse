@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -71,6 +75,7 @@ export function normalizeWheel(event: WheelEvent): NormalizedWheelDelta {
   let deltaX = event.deltaX;
   let deltaY = event.deltaY;
 
+<<<<<<< HEAD
   if (
     // $FlowFixMe DOM_DELTA_LINE missing from WheelEvent
     event.deltaMode === WheelEvent.DOM_DELTA_LINE
@@ -82,6 +87,13 @@ export function normalizeWheel(event: WheelEvent): NormalizedWheelDelta {
     // $FlowFixMe DOM_DELTA_PAGE missing from WheelEvent
     event.deltaMode === WheelEvent.DOM_DELTA_PAGE
   ) {
+=======
+  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    // delta in LINE units
+    deltaX *= LINE_HEIGHT;
+    deltaY *= LINE_HEIGHT;
+  } else if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+>>>>>>> remotes/upstream/main
     // delta in PAGE units
     deltaX *= PAGE_HEIGHT;
     deltaY *= PAGE_HEIGHT;

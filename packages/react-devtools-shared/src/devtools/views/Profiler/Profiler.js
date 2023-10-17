@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,7 +38,10 @@ import {SettingsModalContextController} from 'react-devtools-shared/src/devtools
 import portaledContent from '../portaledContent';
 import {StoreContext} from '../context';
 import {TimelineContext} from 'react-devtools-timeline/src/TimelineContext';
+<<<<<<< HEAD
 import {enableProfilerComponentTree} from 'react-devtools-feature-flags';
+=======
+>>>>>>> remotes/upstream/main
 
 import styles from './Profiler.css';
 
@@ -50,15 +57,23 @@ function Profiler(_: {}) {
     supportsProfiling,
   } = useContext(ProfilerContext);
 
+<<<<<<< HEAD
   const {file: timelineTraceEventData, searchInputContainerRef} = useContext(
     TimelineContext,
   );
+=======
+  const {file: timelineTraceEventData, searchInputContainerRef} =
+    useContext(TimelineContext);
+>>>>>>> remotes/upstream/main
 
   const {supportsTimeline} = useContext(StoreContext);
 
   const isLegacyProfilerSelected = selectedTabID !== 'timeline';
+<<<<<<< HEAD
   const isRightColumnVisible =
     isLegacyProfilerSelected || enableProfilerComponentTree;
+=======
+>>>>>>> remotes/upstream/main
 
   let view = null;
   if (didRecordCommits || selectedTabID === 'timeline') {
@@ -152,9 +167,13 @@ function Profiler(_: {}) {
             <ModalDialog />
           </div>
         </div>
+<<<<<<< HEAD
         {isRightColumnVisible && (
           <div className={styles.RightColumn}>{sidebar}</div>
         )}
+=======
+        <div className={styles.RightColumn}>{sidebar}</div>
+>>>>>>> remotes/upstream/main
         <SettingsModal />
       </div>
     </SettingsModalContextController>
@@ -196,4 +215,8 @@ const tabsWithTimeline = [
   },
 ];
 
+<<<<<<< HEAD
 export default portaledContent(Profiler);
+=======
+export default (portaledContent(Profiler): React.ComponentType<{}>);
+>>>>>>> remotes/upstream/main

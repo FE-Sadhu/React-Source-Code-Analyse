@@ -1,10 +1,18 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+<<<<<<< HEAD
+=======
+ * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
+>>>>>>> remotes/upstream/main
  */
 
 'use strict';
@@ -18,12 +26,21 @@ let ReactTestUtils;
 let forwardRef;
 let memo;
 let yieldedValues;
+<<<<<<< HEAD
 let unstable_yieldValue;
 let clearYields;
 
 function initModules() {
   // Reset warning cache.
   jest.resetModuleRegistry();
+=======
+let log;
+let clearLog;
+
+function initModules() {
+  // Reset warning cache.
+  jest.resetModules();
+>>>>>>> remotes/upstream/main
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMServer = require('react-dom/server');
@@ -32,10 +49,17 @@ function initModules() {
   memo = React.memo;
 
   yieldedValues = [];
+<<<<<<< HEAD
   unstable_yieldValue = value => {
     yieldedValues.push(value);
   };
   clearYields = () => {
+=======
+  log = value => {
+    yieldedValues.push(value);
+  };
+  clearLog = () => {
+>>>>>>> remotes/upstream/main
     const ret = yieldedValues;
     yieldedValues = [];
     return ret;
@@ -92,7 +116,11 @@ describe('ReactDOMServerIntegration', () => {
     });
 
     function Text({text}) {
+<<<<<<< HEAD
       unstable_yieldValue(text);
+=======
+      log(text);
+>>>>>>> remotes/upstream/main
       return <span>{text}</span>;
     }
 
@@ -114,27 +142,43 @@ describe('ReactDOMServerIntegration', () => {
       ref.current = 0;
       await render(<MemoRefCounter ref={ref} />);
 
+<<<<<<< HEAD
       expect(clearYields()).toEqual(['Count: 0']);
+=======
+      expect(clearLog()).toEqual(['Count: 0']);
+>>>>>>> remotes/upstream/main
     });
 
     itRenders('with comparator', async render => {
       const MemoCounter = memo(Counter, (oldProps, newProps) => false);
       await render(<MemoCounter count={0} />);
+<<<<<<< HEAD
       expect(clearYields()).toEqual(['Count: 0']);
+=======
+      expect(clearLog()).toEqual(['Count: 0']);
+>>>>>>> remotes/upstream/main
     });
 
     itRenders(
       'comparator functions are not invoked on the server',
       async render => {
         const MemoCounter = React.memo(Counter, (oldProps, newProps) => {
+<<<<<<< HEAD
           unstable_yieldValue(
             `Old count: ${oldProps.count}, New count: ${newProps.count}`,
           );
+=======
+          log(`Old count: ${oldProps.count}, New count: ${newProps.count}`);
+>>>>>>> remotes/upstream/main
           return oldProps.count === newProps.count;
         });
 
         await render(<MemoCounter count={0} />);
+<<<<<<< HEAD
         expect(clearYields()).toEqual(['Count: 0']);
+=======
+        expect(clearLog()).toEqual(['Count: 0']);
+>>>>>>> remotes/upstream/main
       },
     );
   });

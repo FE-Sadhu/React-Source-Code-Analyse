@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,7 +28,11 @@ import {
   clearWarningsForElement as clearWarningsForElementAPI,
 } from 'react-devtools-shared/src/backendAPI';
 
+<<<<<<< HEAD
 import type {InspectedElement} from './types';
+=======
+import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 
 type Props = {
@@ -40,10 +48,15 @@ export default function InspectedElementErrorsAndWarningsTree({
 }: Props): React.Node {
   const refresh = useCacheRefresh();
 
+<<<<<<< HEAD
   const [
     isErrorsTransitionPending,
     startClearErrorsTransition,
   ] = useTransition();
+=======
+  const [isErrorsTransitionPending, startClearErrorsTransition] =
+    useTransition();
+>>>>>>> remotes/upstream/main
   const clearErrorsForInspectedElement = () => {
     const {id} = inspectedElement;
     const rendererID = store.getRendererIDForElement(id);
@@ -59,10 +72,15 @@ export default function InspectedElementErrorsAndWarningsTree({
     }
   };
 
+<<<<<<< HEAD
   const [
     isWarningsTransitionPending,
     startClearWarningsTransition,
   ] = useTransition();
+=======
+  const [isWarningsTransitionPending, startClearWarningsTransition] =
+    useTransition();
+>>>>>>> remotes/upstream/main
   const clearWarningsForInspectedElement = () => {
     const {id} = inspectedElement;
     const rendererID = store.getRendererIDForElement(id);

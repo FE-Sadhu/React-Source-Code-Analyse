@@ -2,9 +2,18 @@ let React;
 let ReactFeatureFlags;
 let ReactNoop;
 let Scheduler;
+<<<<<<< HEAD
 let ReactCache;
 let Suspense;
 let TextResource;
+=======
+let waitForAll;
+let assertLog;
+let ReactCache;
+let Suspense;
+let TextResource;
+let act;
+>>>>>>> remotes/upstream/main
 
 describe('ReactBlockingMode', () => {
   beforeEach(() => {
@@ -18,11 +27,23 @@ describe('ReactBlockingMode', () => {
     ReactCache = require('react-cache');
     Suspense = React.Suspense;
 
+<<<<<<< HEAD
+=======
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    assertLog = InternalTestUtils.assertLog;
+    act = InternalTestUtils.act;
+
+>>>>>>> remotes/upstream/main
     TextResource = ReactCache.unstable_createResource(
       ([text, ms = 0]) => {
         return new Promise((resolve, reject) =>
           setTimeout(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(`Promise resolved [${text}]`);
+=======
+            Scheduler.log(`Promise resolved [${text}]`);
+>>>>>>> remotes/upstream/main
             resolve(text);
           }, ms),
         );
@@ -32,7 +53,11 @@ describe('ReactBlockingMode', () => {
   });
 
   function Text(props) {
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(props.text);
+=======
+    Scheduler.log(props.text);
+>>>>>>> remotes/upstream/main
     return props.text;
   }
 
@@ -40,6 +65,7 @@ describe('ReactBlockingMode', () => {
     const text = props.text;
     try {
       TextResource.read([props.text, props.ms]);
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(text);
       return props.text;
     } catch (promise) {
@@ -47,12 +73,25 @@ describe('ReactBlockingMode', () => {
         Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
       } else {
         Scheduler.unstable_yieldValue(`Error! [${text}]`);
+=======
+      Scheduler.log(text);
+      return props.text;
+    } catch (promise) {
+      if (typeof promise.then === 'function') {
+        Scheduler.log(`Suspend! [${text}]`);
+      } else {
+        Scheduler.log(`Error! [${text}]`);
+>>>>>>> remotes/upstream/main
       }
       throw promise;
     }
   }
 
+<<<<<<< HEAD
   it('updates flush without yielding in the next event', () => {
+=======
+  it('updates flush without yielding in the next event', async () => {
+>>>>>>> remotes/upstream/main
     const root = ReactNoop.createRoot();
 
     root.render(
@@ -66,17 +105,29 @@ describe('ReactBlockingMode', () => {
     // Nothing should have rendered yet
     expect(root).toMatchRenderedOutput(null);
 
+<<<<<<< HEAD
     // Everything should render immediately in the next event
     expect(Scheduler).toFlushAndYield(['A', 'B', 'C']);
     expect(root).toMatchRenderedOutput('ABC');
   });
 
   it('layout updates flush synchronously in same event', () => {
+=======
+    await waitForAll(['A', 'B', 'C']);
+    expect(root).toMatchRenderedOutput('ABC');
+  });
+
+  it('layout updates flush synchronously in same event', async () => {
+>>>>>>> remotes/upstream/main
     const {useLayoutEffect} = React;
 
     function App() {
       useLayoutEffect(() => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue('Layout effect');
+=======
+        Scheduler.log('Layout effect');
+>>>>>>> remotes/upstream/main
       });
       return <Text text="Hi" />;
     }
@@ -84,9 +135,15 @@ describe('ReactBlockingMode', () => {
     const root = ReactNoop.createRoot();
     root.render(<App />);
     expect(root).toMatchRenderedOutput(null);
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([]);
 
     expect(Scheduler).toFlushAndYield(['Hi', 'Layout effect']);
+=======
+    assertLog([]);
+
+    await waitForAll(['Hi', 'Layout effect']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('Hi');
   });
 
@@ -106,15 +163,24 @@ describe('ReactBlockingMode', () => {
       </Suspense>,
     );
 
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield(['A', 'Suspend! [B]', 'C', 'Loading...']);
+=======
+    await waitForAll(['A', 'Suspend! [B]', 'Loading...']);
+>>>>>>> remotes/upstream/main
     // In Legacy Mode, A and B would mount in a hidden primary tree. In
     // Concurrent Mode, nothing in the primary tree should mount. But the
     // fallback should mount immediately.
     expect(root).toMatchRenderedOutput('Loading...');
 
+<<<<<<< HEAD
     await jest.advanceTimersByTime(1000);
     expect(Scheduler).toHaveYielded(['Promise resolved [B]']);
     expect(Scheduler).toFlushAndYield(['A', 'B', 'C']);
+=======
+    await act(() => jest.advanceTimersByTime(1000));
+    assertLog(['Promise resolved [B]', 'A', 'B', 'C']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         <span>A</span>
@@ -124,7 +190,11 @@ describe('ReactBlockingMode', () => {
     );
   });
 
+<<<<<<< HEAD
   it('flushSync does not flush batched work', () => {
+=======
+  it('flushSync does not flush batched work', async () => {
+>>>>>>> remotes/upstream/main
     const {useState, forwardRef, useImperativeHandle} = React;
     const root = ReactNoop.createRoot();
 
@@ -143,8 +213,12 @@ describe('ReactBlockingMode', () => {
       </>,
     );
 
+<<<<<<< HEAD
     // Mount
     expect(Scheduler).toFlushAndYield(['A0', 'B0']);
+=======
+    await waitForAll(['A0', 'B0']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput('A0B0');
 
     // Schedule a batched update to the first sibling
@@ -157,6 +231,7 @@ describe('ReactBlockingMode', () => {
       }),
     );
 
+<<<<<<< HEAD
     // Only the second update should have flushed synchronously
     expect(Scheduler).toHaveYielded(['B1']);
     expect(root).toMatchRenderedOutput('A0B1');
@@ -164,5 +239,20 @@ describe('ReactBlockingMode', () => {
     // Now flush the first update
     expect(Scheduler).toFlushAndYield(['A1']);
     expect(root).toMatchRenderedOutput('A1B1');
+=======
+    // Now flush the first update
+    if (gate(flags => flags.enableUnifiedSyncLane)) {
+      assertLog(['A1', 'B1']);
+      expect(root).toMatchRenderedOutput('A1B1');
+    } else {
+      // Only the second update should have flushed synchronously
+      assertLog(['B1']);
+      expect(root).toMatchRenderedOutput('A0B1');
+
+      // Now flush the first update
+      await waitForAll(['A1']);
+      expect(root).toMatchRenderedOutput('A1B1');
+    }
+>>>>>>> remotes/upstream/main
   });
 });

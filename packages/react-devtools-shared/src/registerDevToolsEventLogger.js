@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,7 +13,7 @@ import {registerEventLogger} from 'react-devtools-shared/src/Logger';
 import {enableLogger} from 'react-devtools-feature-flags';
 
 let loggingIFrame = null;
-let missedEvents = [];
+let missedEvents: Array<LoggerEvent> = [];
 
 type LoggerContext = {
   page_url: ?string,
@@ -31,7 +31,8 @@ export function registerDevToolsEventLogger(
         let metadata = null;
         if (event.metadata != null) {
           metadata = event.metadata;
-          // $FlowFixMe: metadata is not writable and nullable
+          // $FlowFixMe[cannot-write]: metadata is not writable and nullable
+          // $FlowFixMe[prop-missing]
           delete event.metadata;
         }
         loggingIFrame.contentWindow.postMessage(
@@ -43,7 +44,7 @@ export function registerDevToolsEventLogger(
               version: process.env.DEVTOOLS_VERSION,
               metadata: metadata !== null ? JSON.stringify(metadata) : '',
               ...(fetchAdditionalContext != null
-                ? // $FlowFixMe
+                ? // $FlowFixMe[not-an-object]
                   await fetchAdditionalContext()
                 : {}),
             },
@@ -56,7 +57,7 @@ export function registerDevToolsEventLogger(
     }
   }
 
-  function handleLoggingIFrameLoaded(iframe) {
+  function handleLoggingIFrameLoaded(iframe: HTMLIFrameElement) {
     if (loggingIFrame != null) {
       return;
     }
@@ -82,7 +83,7 @@ export function registerDevToolsEventLogger(
 
       const iframe = document.createElement('iframe');
       iframe.src = loggingUrl;
-      iframe.onload = function(...args) {
+      iframe.onload = function (...args) {
         handleLoggingIFrameLoaded(iframe);
       };
       body.appendChild(iframe);

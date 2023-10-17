@@ -1,12 +1,15 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow
  */
 
 /* eslint-disable no-var */
+
+import type {PriorityLevel} from '../SchedulerPriorities';
 
 import {
   enableSchedulerDebugging,
@@ -41,18 +44,29 @@ import {
   startLoggingProfilingEvents,
 } from '../SchedulerProfiling';
 
-let getCurrentTime;
+export type Callback = boolean => ?Callback;
+
+export opaque type Task = {
+  id: number,
+  callback: Callback | null,
+  priorityLevel: PriorityLevel,
+  startTime: number,
+  expirationTime: number,
+  sortIndex: number,
+  isQueued?: boolean,
+};
+
+let getCurrentTime: () => number | DOMHighResTimeStamp;
 const hasPerformanceNow =
+  // $FlowFixMe[method-unbinding]
   typeof performance === 'object' && typeof performance.now === 'function';
 
 if (hasPerformanceNow) {
-  // performance.now() 也是返回时间戳（当前时间 - 首个浏览器上下文创建时间），可以精确到微秒
   const localPerformance = performance;
   getCurrentTime = () => localPerformance.now();
 } else {
   const localDate = Date;
   const initialTime = localDate.now();
-  // Date.now() 精确到毫秒
   getCurrentTime = () => localDate.now() - initialTime;
 }
 
@@ -71,8 +85,8 @@ var LOW_PRIORITY_TIMEOUT = 10000;
 var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt;
 
 // Tasks are stored on a min heap
-var taskQueue = [];
-var timerQueue = [];
+var taskQueue: Array<Task> = [];
+var timerQueue: Array<Task> = [];
 
 // Incrementing id counter. Used to maintain insertion order.
 var taskIdCounter = 1;
@@ -84,9 +98,8 @@ var currentTask = null;
 var currentPriorityLevel = NormalPriority;
 
 // This is set while performing work, to prevent re-entrance.
-// 正在执行 workLoop 时为 true
 var isPerformingWork = false;
-// 是否有正在执行的 requestHostCallback，它会在 requestHostCallback 调用前设为 true，workLoop 执行前改为 false
+
 var isHostCallbackScheduled = false;
 var isHostTimeoutScheduled = false;
 
@@ -99,18 +112,19 @@ const localSetImmediate =
 
 const isInputPending =
   typeof navigator !== 'undefined' &&
+  // $FlowFixMe[prop-missing]
   navigator.scheduling !== undefined &&
+  // $FlowFixMe[incompatible-type]
   navigator.scheduling.isInputPending !== undefined
     ? navigator.scheduling.isInputPending.bind(navigator.scheduling)
     : null;
 
 const continuousOptions = {includeContinuous: enableIsInputPendingContinuous};
 
-function advanceTimers(currentTime) {
+function advanceTimers(currentTime: number) {
   // Check for tasks that are no longer delayed and add them to the queue.
   let timer = peek(timerQueue);
   while (timer !== null) {
-    // 取消执行 timer 会把 callback 赋 null
     if (timer.callback === null) {
       // Timer was cancelled.
       pop(timerQueue);
@@ -131,17 +145,15 @@ function advanceTimers(currentTime) {
   }
 }
 
-// handleTimeout 被 invoke 时，会传入当前时间 now() 作为参数。
-function handleTimeout(currentTime) {
+function handleTimeout(currentTime: number) {
   isHostTimeoutScheduled = false;
   advanceTimers(currentTime);
 
   if (!isHostCallbackScheduled) {
     if (peek(taskQueue) !== null) {
       isHostCallbackScheduled = true;
-      requestHostCallback(flushWork);
+      requestHostCallback();
     } else {
-      // 似乎没有什么 case 能走进该分支？
       const firstTimer = peek(timerQueue);
       if (firstTimer !== null) {
         requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
@@ -150,7 +162,7 @@ function handleTimeout(currentTime) {
   }
 }
 
-function flushWork(hasTimeRemaining, initialTime) {
+function flushWork(initialTime: number) {
   if (enableProfiling) {
     markSchedulerUnsuspended(initialTime);
   }
@@ -164,24 +176,24 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 
   isPerformingWork = true;
-  // 之前的优先级
   const previousPriorityLevel = currentPriorityLevel;
   try {
     if (enableProfiling) {
       try {
-        return workLoop(hasTimeRemaining, initialTime);
+        return workLoop(initialTime);
       } catch (error) {
         if (currentTask !== null) {
           const currentTime = getCurrentTime();
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
           markTaskErrored(currentTask, currentTime);
+          // $FlowFixMe[incompatible-use] found when upgrading Flow
           currentTask.isQueued = false;
         }
         throw error;
       }
     } else {
       // No catch in prod code path.
-      // initialTime 时调度开始时间，performWorkUntilDeadline 里定义的
-      return workLoop(hasTimeRemaining, initialTime);
+      return workLoop(initialTime);
     }
   } finally {
     currentTask = null;
@@ -194,29 +206,29 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 }
 
-function workLoop(hasTimeRemaining, initialTime) {
+function workLoop(initialTime: number) {
   let currentTime = initialTime;
-  // 检查有无延时任务满足延时时间了，有的话从 timerQueue 移到 taskQueue
   advanceTimers(currentTime);
   currentTask = peek(taskQueue);
-  // 最近的任务
   while (
     currentTask !== null &&
     !(enableSchedulerDebugging && isSchedulerPaused)
   ) {
-    if (
-      currentTask.expirationTime > currentTime && // task 未过期
-      (!hasTimeRemaining || shouldYieldToHost()) // 没有剩余时间，立刻中断代码执行，交出执行权
-    ) {
+    if (currentTask.expirationTime > currentTime && shouldYieldToHost()) {
       // This currentTask hasn't expired, and we've reached the deadline.
       break;
     }
+    // $FlowFixMe[incompatible-use] found when upgrading Flow
     const callback = currentTask.callback;
     if (typeof callback === 'function') {
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
       currentTask.callback = null;
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
       currentPriorityLevel = currentTask.priorityLevel;
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
       const didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
       if (enableProfiling) {
+        // $FlowFixMe[incompatible-call] found when upgrading Flow
         markTaskRun(currentTask, currentTime);
       }
       const continuationCallback = callback(didUserCallbackTimeout);
@@ -224,15 +236,19 @@ function workLoop(hasTimeRemaining, initialTime) {
       if (typeof continuationCallback === 'function') {
         // If a continuation is returned, immediately yield to the main thread
         // regardless of how much time is left in the current time slice.
+        // $FlowFixMe[incompatible-use] found when upgrading Flow
         currentTask.callback = continuationCallback;
         if (enableProfiling) {
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
           markTaskYield(currentTask, currentTime);
         }
         advanceTimers(currentTime);
         return true;
       } else {
         if (enableProfiling) {
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
           markTaskCompleted(currentTask, currentTime);
+          // $FlowFixMe[incompatible-use] found when upgrading Flow
           currentTask.isQueued = false;
         }
         if (currentTask === peek(taskQueue)) {
@@ -249,7 +265,6 @@ function workLoop(hasTimeRemaining, initialTime) {
   if (currentTask !== null) {
     return true;
   } else {
-    // 协调最近的未过期任务
     const firstTimer = peek(timerQueue);
     if (firstTimer !== null) {
       requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
@@ -258,7 +273,10 @@ function workLoop(hasTimeRemaining, initialTime) {
   }
 }
 
-function unstable_runWithPriority(priorityLevel, eventHandler) {
+function unstable_runWithPriority<T>(
+  priorityLevel: PriorityLevel,
+  eventHandler: () => T,
+): T {
   switch (priorityLevel) {
     case ImmediatePriority:
     case UserBlockingPriority:
@@ -280,7 +298,7 @@ function unstable_runWithPriority(priorityLevel, eventHandler) {
   }
 }
 
-function unstable_next(eventHandler) {
+function unstable_next<T>(eventHandler: () => T): T {
   var priorityLevel;
   switch (currentPriorityLevel) {
     case ImmediatePriority:
@@ -305,9 +323,11 @@ function unstable_next(eventHandler) {
   }
 }
 
-function unstable_wrapCallback(callback) {
+function unstable_wrapCallback<T: (...Array<mixed>) => mixed>(callback: T): T {
   var parentPriorityLevel = currentPriorityLevel;
-  return function() {
+  // $FlowFixMe[incompatible-return]
+  // $FlowFixMe[missing-this-annot]
+  return function () {
     // This is a fork of runWithPriority, inlined for performance.
     var previousPriorityLevel = currentPriorityLevel;
     currentPriorityLevel = parentPriorityLevel;
@@ -320,11 +340,13 @@ function unstable_wrapCallback(callback) {
   };
 }
 
-function unstable_scheduleCallback(priorityLevel, callback, options) {
-  // 获取当前时刻
+function unstable_scheduleCallback(
+  priorityLevel: PriorityLevel,
+  callback: Callback,
+  options?: {delay: number},
+): Task {
   var currentTime = getCurrentTime();
 
-  // 开始调度的时刻
   var startTime;
   if (typeof options === 'object' && options !== null) {
     var delay = options.delay;
@@ -337,7 +359,6 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     startTime = currentTime;
   }
 
-  // 调度过期的时间
   var timeout;
   switch (priorityLevel) {
     case ImmediatePriority:
@@ -358,10 +379,9 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       break;
   }
 
-  // 过期的时刻
   var expirationTime = startTime + timeout;
 
-  var newTask = {
+  var newTask: Task = {
     id: taskIdCounter++,
     callback,
     priorityLevel,
@@ -373,13 +393,10 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     newTask.isQueued = false;
   }
 
-  // 如果 startTime > currentTime，说明是延时任务，将其放到 timerQueue
   if (startTime > currentTime) {
     // This is a delayed task.
     newTask.sortIndex = startTime;
     push(timerQueue, newTask);
-    // 这个逻辑是在 taskQueue 为空的情况下才会调用，这是因为 taskQueue 不为空的情况下，它会在每个任务执行的时候都会遍历一下 timerQueue，将到期的任务移到 taskQueue
-    // newTask === peek(timerQueue) 表示新创建的任务就是最早的要安排调度的延时任务
     if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
       // All tasks are delayed, and this is the task with the earliest delay.
       if (isHostTimeoutScheduled) {
@@ -392,7 +409,6 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
       requestHostTimeout(handleTimeout, startTime - currentTime);
     }
   } else {
-    // 如果是正常任务，将其放到 taskQueue
     newTask.sortIndex = expirationTime;
     push(taskQueue, newTask);
     if (enableProfiling) {
@@ -403,7 +419,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     // wait until the next time we yield.
     if (!isHostCallbackScheduled && !isPerformingWork) {
       isHostCallbackScheduled = true;
-      requestHostCallback(flushWork);
+      requestHostCallback();
     }
   }
 
@@ -418,15 +434,15 @@ function unstable_continueExecution() {
   isSchedulerPaused = false;
   if (!isHostCallbackScheduled && !isPerformingWork) {
     isHostCallbackScheduled = true;
-    requestHostCallback(flushWork);
+    requestHostCallback();
   }
 }
 
-function unstable_getFirstCallbackNode() {
+function unstable_getFirstCallbackNode(): Task | null {
   return peek(taskQueue);
 }
 
-function unstable_cancelCallback(task) {
+function unstable_cancelCallback(task: Task) {
   if (enableProfiling) {
     if (task.isQueued) {
       const currentTime = getCurrentTime();
@@ -441,14 +457,12 @@ function unstable_cancelCallback(task) {
   task.callback = null;
 }
 
-function unstable_getCurrentPriorityLevel() {
+function unstable_getCurrentPriorityLevel(): PriorityLevel {
   return currentPriorityLevel;
 }
 
-// performWorkUntilDeadline 正在执行时为 true
 let isMessageLoopRunning = false;
-let scheduledHostCallback = null;
-let taskTimeoutID = -1;
+let taskTimeoutID: TimeoutID = (-1: any);
 
 // Scheduler periodically yields in case there is other work on the main
 // thread, like user events. By default, it yields multiple times per frame.
@@ -461,11 +475,9 @@ let startTime = -1;
 
 let needsPaint = false;
 
-function shouldYieldToHost() {
+function shouldYieldToHost(): boolean {
   const timeElapsed = getCurrentTime() - startTime;
-  // 从调度工作开始截止，是否已经过了 5 ms，若还没到 5ms ，则可以继续阻塞浏览器主线程
   if (timeElapsed < frameInterval) {
-    // 主线程被阻塞的时间少于 1 帧，还可以继续被阻塞。
     // The main thread has only been blocked for a really short amount of time;
     // smaller than a single frame. Don't yield yet.
     return false;
@@ -479,8 +491,6 @@ function shouldYieldToHost() {
   // eventually yield regardless, since there could be a pending paint that
   // wasn't accompanied by a call to `requestPaint`, or other main thread tasks
   // like network events.
-  // 当有绘制任务，则不能阻塞浏览器，立即交出执行权
-  // 当有用户输入事件（isInputPending() 为 true）时，立即交出执行权
   if (enableIsInputPending) {
     if (needsPaint) {
       // There's a pending paint (signaled by `requestPaint`). Yield now.
@@ -499,7 +509,6 @@ function shouldYieldToHost() {
         return isInputPending(continuousOptions);
       }
     } else {
-      // 已经阻塞线程很长时间了，立即交出执行权
       // We've blocked the thread for a long time. Even if there's no pending
       // input, there may be some other scheduled work that we don't know about,
       // like a network event. Yield now.
@@ -508,7 +517,6 @@ function shouldYieldToHost() {
   }
 
   // `isInputPending` isn't available. Yield now.
-  // 没有用户输入事件，那么工作了 5ms 后，立即交出执行权
   return true;
 }
 
@@ -516,7 +524,9 @@ function requestPaint() {
   if (
     enableIsInputPending &&
     navigator !== undefined &&
+    // $FlowFixMe[prop-missing]
     navigator.scheduling !== undefined &&
+    // $FlowFixMe[incompatible-type]
     navigator.scheduling.isInputPending !== undefined
   ) {
     needsPaint = true;
@@ -525,7 +535,7 @@ function requestPaint() {
   // Since we yield every frame regardless, `requestPaint` has no effect.
 }
 
-function forceFrameRate(fps) {
+function forceFrameRate(fps: number) {
   if (fps < 0 || fps > 125) {
     // Using console['error'] to evade Babel and ESLint
     console['error'](
@@ -542,38 +552,31 @@ function forceFrameRate(fps) {
   }
 }
 
-// 开始调度工作（批量执行任务）
 const performWorkUntilDeadline = () => {
-  if (scheduledHostCallback !== null) {
+  if (isMessageLoopRunning) {
     const currentTime = getCurrentTime();
     // Keep track of the start time so we can measure how long the main thread
     // has been blocked.
-    // 记录调度工作的开始时间，以便测量主线程被阻塞的时间
     startTime = currentTime;
-    const hasTimeRemaining = true;
 
     // If a scheduler task throws, exit the current browser task so the
     // error can be observed.
     //
     // Intentionally not using a try-catch, since that makes some debugging
-    // techniques harder. Instead, if `scheduledHostCallback` errors, then
-    // `hasMoreWork` will remain true, and we'll continue the work loop.
+    // techniques harder. Instead, if `flushWork` errors, then `hasMoreWork` will
+    // remain true, and we'll continue the work loop.
     let hasMoreWork = true;
     try {
-      hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
+      hasMoreWork = flushWork(currentTime);
     } finally {
-      // PS: scheduledHostCallback 崩了的话，hasMoreWork 也为 true
       if (hasMoreWork) {
         // If there's more work, schedule the next message event at the end
         // of the preceding one.
         schedulePerformWorkUntilDeadline();
       } else {
         isMessageLoopRunning = false;
-        scheduledHostCallback = null;
       }
     }
-  } else {
-    isMessageLoopRunning = false;
   }
   // Yielding to the browser will give it a chance to paint, so we can
   // reset this.
@@ -608,27 +611,32 @@ if (typeof localSetImmediate === 'function') {
 } else {
   // We should only fallback here in non-browser environments.
   schedulePerformWorkUntilDeadline = () => {
+    // $FlowFixMe[not-a-function] nullable value
     localSetTimeout(performWorkUntilDeadline, 0);
   };
 }
-// callback 是 flushWork
-function requestHostCallback(callback) {
-  scheduledHostCallback = callback;
+
+function requestHostCallback() {
   if (!isMessageLoopRunning) {
     isMessageLoopRunning = true;
     schedulePerformWorkUntilDeadline();
   }
 }
 
-function requestHostTimeout(callback, ms) {
+function requestHostTimeout(
+  callback: (currentTime: number) => void,
+  ms: number,
+) {
+  // $FlowFixMe[not-a-function] nullable value
   taskTimeoutID = localSetTimeout(() => {
     callback(getCurrentTime());
   }, ms);
 }
 
 function cancelHostTimeout() {
+  // $FlowFixMe[not-a-function] nullable value
   localClearTimeout(taskTimeoutID);
-  taskTimeoutID = -1;
+  taskTimeoutID = ((-1: any): TimeoutID);
 }
 
 export {
@@ -652,7 +660,10 @@ export {
   forceFrameRate as unstable_forceFrameRate,
 };
 
-export const unstable_Profiling = enableProfiling
+export const unstable_Profiling: {
+  startLoggingProfilingEvents(): void,
+  stopLoggingProfilingEvents(): ArrayBuffer | null,
+} | null = enableProfiling
   ? {
       startLoggingProfilingEvents,
       stopLoggingProfilingEvents,

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -40,11 +44,16 @@ import WarnIfLegacyBackendDetected from './WarnIfLegacyBackendDetected';
 import {useLocalStorage} from './hooks';
 import ThemeProvider from './ThemeProvider';
 import {LOCAL_STORAGE_DEFAULT_TAB_KEY} from '../../constants';
+<<<<<<< HEAD
+=======
+import {logEvent} from '../../Logger';
+>>>>>>> remotes/upstream/main
 
 import styles from './DevTools.css';
 
 import './root.css';
 
+<<<<<<< HEAD
 import type {InspectedElement} from 'react-devtools-shared/src/devtools/views/Components/types';
 import type {FetchFileWithCaching} from './Components/FetchFileWithCachingContext';
 import type {HookNamesModuleLoaderFunction} from 'react-devtools-shared/src/devtools/views/Components/HookNamesModuleLoaderContext';
@@ -52,6 +61,14 @@ import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 import {logEvent} from '../../Logger';
 
 export type BrowserTheme = 'dark' | 'light';
+=======
+import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
+import type {FetchFileWithCaching} from './Components/FetchFileWithCachingContext';
+import type {HookNamesModuleLoaderFunction} from 'react-devtools-shared/src/devtools/views/Components/HookNamesModuleLoaderContext';
+import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
+import type {BrowserTheme} from 'react-devtools-shared/src/frontend/types';
+
+>>>>>>> remotes/upstream/main
 export type TabID = 'components' | 'profiler';
 
 export type ViewElementSource = (
@@ -269,6 +286,10 @@ export default function DevTools({
   useEffect(() => {
     logEvent({event_name: 'loaded-dev-tools'});
   }, []);
+<<<<<<< HEAD
+=======
+
+>>>>>>> remotes/upstream/main
   return (
     <BridgeContext.Provider value={bridge}>
       <StoreContext.Provider value={store}>

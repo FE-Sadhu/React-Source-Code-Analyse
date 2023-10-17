@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -238,7 +242,11 @@ describe('ReactMultiChild', () => {
 
       function createIterable(array) {
         return {
+<<<<<<< HEAD
           '@@iterator': function() {
+=======
+          '@@iterator': function () {
+>>>>>>> remotes/upstream/main
             let i = 0;
             return {
               next() {
@@ -304,8 +312,13 @@ describe('ReactMultiChild', () => {
 
   it('should warn for using generators as children', () => {
     function* Foo() {
+<<<<<<< HEAD
       yield (<h1 key="1">Hello</h1>);
       yield (<h1 key="2">World</h1>);
+=======
+      yield <h1 key="1">Hello</h1>;
+      yield <h1 key="2">World</h1>;
+>>>>>>> remotes/upstream/main
     }
 
     const div = document.createElement('div');
@@ -325,9 +338,15 @@ describe('ReactMultiChild', () => {
 
   it('should not warn for using generators in legacy iterables', () => {
     const fooIterable = {
+<<<<<<< HEAD
       '@@iterator': function*() {
         yield (<h1 key="1">Hello</h1>);
         yield (<h1 key="2">World</h1>);
+=======
+      '@@iterator': function* () {
+        yield <h1 key="1">Hello</h1>;
+        yield <h1 key="2">World</h1>;
+>>>>>>> remotes/upstream/main
       },
     };
 
@@ -345,9 +364,15 @@ describe('ReactMultiChild', () => {
 
   it('should not warn for using generators in modern iterables', () => {
     const fooIterable = {
+<<<<<<< HEAD
       [Symbol.iterator]: function*() {
         yield (<h1 key="1">Hello</h1>);
         yield (<h1 key="2">World</h1>);
+=======
+      [Symbol.iterator]: function* () {
+        yield <h1 key="1">Hello</h1>;
+        yield <h1 key="2">World</h1>;
+>>>>>>> remotes/upstream/main
       },
     };
 

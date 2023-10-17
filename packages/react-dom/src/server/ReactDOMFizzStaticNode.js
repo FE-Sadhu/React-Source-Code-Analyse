@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,13 +12,20 @@
  */
 
 import type {ReactNodeList} from 'shared/ReactTypes';
+<<<<<<< HEAD
 import type {BootstrapScriptDescriptor} from './ReactDOMServerFormatConfig';
+=======
+import type {BootstrapScriptDescriptor} from 'react-dom-bindings/src/server/ReactFizzConfigDOM';
+import type {PostponedState} from 'react-server/src/ReactFizzServer';
+import type {ImportMap} from '../shared/ReactDOMTypes';
+>>>>>>> remotes/upstream/main
 
 import {Writable, Readable} from 'stream';
 
 import ReactVersion from 'shared/ReactVersion';
 
 import {
+<<<<<<< HEAD
   createRequest,
   startWork,
   startFlowing,
@@ -25,6 +36,20 @@ import {
   createResponseState,
   createRootFormatContext,
 } from './ReactDOMServerFormatConfig';
+=======
+  createPrerenderRequest,
+  startWork,
+  startFlowing,
+  abort,
+  getPostponedState,
+} from 'react-server/src/ReactFizzServer';
+
+import {
+  createResumableState,
+  createRenderState,
+  createRootFormatContext,
+} from 'react-dom-bindings/src/server/ReactFizzConfigDOM';
+>>>>>>> remotes/upstream/main
 
 type Options = {
   identifierPrefix?: string,
@@ -35,6 +60,7 @@ type Options = {
   progressiveChunkSize?: number,
   signal?: AbortSignal,
   onError?: (error: mixed) => ?string,
+<<<<<<< HEAD
 };
 
 type StaticResult = {
@@ -42,6 +68,19 @@ type StaticResult = {
 };
 
 function createFakeWritable(readable): Writable {
+=======
+  onPostpone?: (reason: string) => void,
+  unstable_externalRuntimeSrc?: string | BootstrapScriptDescriptor,
+  importMap?: ImportMap,
+};
+
+type StaticResult = {
+  postponed: null | PostponedState,
+  prelude: Readable,
+};
+
+function createFakeWritable(readable: any): Writable {
+>>>>>>> remotes/upstream/main
   // The current host config expects a Writable so we create
   // a fake writable for now to push into the Readable.
   return ({
@@ -57,7 +96,11 @@ function createFakeWritable(readable): Writable {
   }: any);
 }
 
+<<<<<<< HEAD
 function prerenderToNodeStreams(
+=======
+function prerenderToNodeStream(
+>>>>>>> remotes/upstream/main
   children: ReactNodeList,
   options?: Options,
 ): Promise<StaticResult> {
@@ -65,7 +108,11 @@ function prerenderToNodeStreams(
     const onFatalError = reject;
 
     function onAllReady() {
+<<<<<<< HEAD
       const readable = new Readable({
+=======
+      const readable: Readable = new Readable({
+>>>>>>> remotes/upstream/main
         read() {
           startFlowing(request, writable);
         },
@@ -73,10 +120,15 @@ function prerenderToNodeStreams(
       const writable = createFakeWritable(readable);
 
       const result = {
+<<<<<<< HEAD
+=======
+        postponed: getPostponedState(request),
+>>>>>>> remotes/upstream/main
         prelude: readable,
       };
       resolve(result);
     }
+<<<<<<< HEAD
 
     const request = createRequest(
       children,
@@ -86,6 +138,23 @@ function prerenderToNodeStreams(
         options ? options.bootstrapScriptContent : undefined,
         options ? options.bootstrapScripts : undefined,
         options ? options.bootstrapModules : undefined,
+=======
+    const resumableState = createResumableState(
+      options ? options.identifierPrefix : undefined,
+      options ? options.unstable_externalRuntimeSrc : undefined,
+    );
+    const request = createPrerenderRequest(
+      children,
+      resumableState,
+      createRenderState(
+        resumableState,
+        undefined, // nonce is not compatible with prerendered bootstrap scripts
+        options ? options.bootstrapScriptContent : undefined,
+        options ? options.bootstrapScripts : undefined,
+        options ? options.bootstrapModules : undefined,
+        options ? options.unstable_externalRuntimeSrc : undefined,
+        options ? options.importMap : undefined,
+>>>>>>> remotes/upstream/main
       ),
       createRootFormatContext(options ? options.namespaceURI : undefined),
       options ? options.progressiveChunkSize : undefined,
@@ -94,6 +163,10 @@ function prerenderToNodeStreams(
       undefined,
       undefined,
       onFatalError,
+<<<<<<< HEAD
+=======
+      options ? options.onPostpone : undefined,
+>>>>>>> remotes/upstream/main
     );
     if (options && options.signal) {
       const signal = options.signal;
@@ -111,4 +184,8 @@ function prerenderToNodeStreams(
   });
 }
 
+<<<<<<< HEAD
 export {prerenderToNodeStreams, ReactVersion as version};
+=======
+export {prerenderToNodeStream, ReactVersion as version};
+>>>>>>> remotes/upstream/main

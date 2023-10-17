@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,7 +13,10 @@
 
 import * as React from 'react';
 import {useContext} from 'react';
+<<<<<<< HEAD
 import {enableProfilerChangedHookIndices} from 'react-devtools-feature-flags';
+=======
+>>>>>>> remotes/upstream/main
 import {ProfilerContext} from '../Profiler/ProfilerContext';
 import {StoreContext} from '../context';
 
@@ -63,6 +70,7 @@ export default function WhatChanged({fiberID}: Props): React.Node {
     return null;
   }
 
+<<<<<<< HEAD
   const {
     context,
     didHooksChange,
@@ -71,6 +79,10 @@ export default function WhatChanged({fiberID}: Props): React.Node {
     props,
     state,
   } = changeDescription;
+=======
+  const {context, didHooksChange, hooks, isFirstMount, props, state} =
+    changeDescription;
+>>>>>>> remotes/upstream/main
 
   if (isFirstMount) {
     return (
@@ -109,7 +121,11 @@ export default function WhatChanged({fiberID}: Props): React.Node {
   }
 
   if (didHooksChange) {
+<<<<<<< HEAD
     if (enableProfilerChangedHookIndices && Array.isArray(hooks)) {
+=======
+    if (Array.isArray(hooks)) {
+>>>>>>> remotes/upstream/main
       changes.push(
         <div key="hooks" className={styles.Item}>
           • {hookIndicesToString(hooks)}

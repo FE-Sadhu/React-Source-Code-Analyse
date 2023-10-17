@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -103,12 +107,22 @@ function FunctionWithHooks(props: any, ref: React$Ref<any>) {
 const MemoWithHooks = memo(FunctionWithHooks);
 const ForwardRefWithHooks = forwardRef(FunctionWithHooks);
 
+<<<<<<< HEAD
 function wrapWithHoc(Component) {
   function Hoc() {
     return <Component />;
   }
   // $FlowFixMe
   const displayName = Component.displayName || Component.name;
+=======
+function wrapWithHoc(Component: (props: any, ref: React$Ref<any>) => any) {
+  function Hoc() {
+    return <Component />;
+  }
+  // $FlowFixMe[prop-missing]
+  const displayName = Component.displayName || Component.name;
+  // $FlowFixMe[incompatible-type] found when upgrading Flow
+>>>>>>> remotes/upstream/main
   Hoc.displayName = `withHoc(${displayName})`;
   return Hoc;
 }
@@ -126,7 +140,11 @@ export default function CustomHooks(): React.Node {
 }
 
 // Below copied from https://usehooks.com/
+<<<<<<< HEAD
 function useDebounce(value, delay) {
+=======
+function useDebounce(value: number, delay: number) {
+>>>>>>> remotes/upstream/main
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
 

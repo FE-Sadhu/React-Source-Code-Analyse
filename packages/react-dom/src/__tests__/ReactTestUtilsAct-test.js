@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,6 +18,10 @@ let ReactTestUtils;
 let Scheduler;
 let act;
 let container;
+<<<<<<< HEAD
+=======
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 jest.useRealTimers();
 
@@ -28,6 +36,13 @@ function sleep(period) {
 }
 
 describe('ReactTestUtils.act()', () => {
+<<<<<<< HEAD
+=======
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+>>>>>>> remotes/upstream/main
   // first we run all the tests with concurrent mode
   if (__EXPERIMENTAL__) {
     let concurrentRoot = null;
@@ -103,7 +118,10 @@ describe('ReactTestUtils.act()', () => {
     it('does not warn in concurrent mode', () => {
       const root = ReactDOMClient.createRoot(document.createElement('div'));
       act(() => root.render(<App />));
+<<<<<<< HEAD
       Scheduler.unstable_flushAll();
+=======
+>>>>>>> remotes/upstream/main
     });
   });
 });
@@ -118,6 +136,13 @@ function runActTests(label, render, unmount, rerender) {
       ReactTestUtils = require('react-dom/test-utils');
       Scheduler = require('scheduler');
       act = ReactTestUtils.act;
+<<<<<<< HEAD
+=======
+
+      const InternalTestUtils = require('internal-test-utils');
+      assertLog = InternalTestUtils.assertLog;
+
+>>>>>>> remotes/upstream/main
       container = document.createElement('div');
       document.body.appendChild(container);
     });
@@ -132,7 +157,11 @@ function runActTests(label, render, unmount, rerender) {
       it('can use act to flush effects', () => {
         function App() {
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(100);
+=======
+            Scheduler.log(100);
+>>>>>>> remotes/upstream/main
           });
           return null;
         }
@@ -141,7 +170,11 @@ function runActTests(label, render, unmount, rerender) {
           render(<App />, container);
         });
 
+<<<<<<< HEAD
         expect(Scheduler).toHaveYielded([100]);
+=======
+        assertLog([100]);
+>>>>>>> remotes/upstream/main
       });
 
       // @gate __DEV__
@@ -149,7 +182,11 @@ function runActTests(label, render, unmount, rerender) {
         function App() {
           const [ctr, setCtr] = React.useState(0);
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(ctr);
+=======
+            Scheduler.log(ctr);
+>>>>>>> remotes/upstream/main
           });
           return (
             <button id="button" onClick={() => setCtr(x => x + 1)}>
@@ -161,7 +198,11 @@ function runActTests(label, render, unmount, rerender) {
         act(() => {
           render(<App />, container);
         });
+<<<<<<< HEAD
         expect(Scheduler).toHaveYielded([0]);
+=======
+        assertLog([0]);
+>>>>>>> remotes/upstream/main
         const button = container.querySelector('#button');
         function click() {
           button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
@@ -173,11 +214,19 @@ function runActTests(label, render, unmount, rerender) {
           click();
         });
         // it consolidates the 3 updates, then fires the effect
+<<<<<<< HEAD
         expect(Scheduler).toHaveYielded([3]);
         await act(async () => click());
         expect(Scheduler).toHaveYielded([4]);
         await act(async () => click());
         expect(Scheduler).toHaveYielded([5]);
+=======
+        assertLog([3]);
+        await act(async () => click());
+        assertLog([4]);
+        await act(async () => click());
+        assertLog([5]);
+>>>>>>> remotes/upstream/main
         expect(button.innerHTML).toBe('5');
       });
 
@@ -204,7 +253,11 @@ function runActTests(label, render, unmount, rerender) {
       it('should flush effects only on exiting the outermost act', () => {
         function App() {
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(0);
+=======
+            Scheduler.log(0);
+>>>>>>> remotes/upstream/main
           });
           return null;
         }
@@ -215,10 +268,17 @@ function runActTests(label, render, unmount, rerender) {
           });
           // the effect wouldn't have yielded yet because
           // we're still inside an act() scope
+<<<<<<< HEAD
           expect(Scheduler).toHaveYielded([]);
         });
         // but after exiting the last one, effects get flushed
         expect(Scheduler).toHaveYielded([0]);
+=======
+          assertLog([]);
+        });
+        // but after exiting the last one, effects get flushed
+        assertLog([0]);
+>>>>>>> remotes/upstream/main
       });
 
       // @gate __DEV__
@@ -488,13 +548,22 @@ function runActTests(label, render, unmount, rerender) {
 
       // @gate __DEV__
       it('warns if you do not await an act call', async () => {
+<<<<<<< HEAD
         spyOnDevAndProd(console, 'error');
+=======
+        spyOnDevAndProd(console, 'error').mockImplementation(() => {});
+>>>>>>> remotes/upstream/main
         act(async () => {});
         // it's annoying that we have to wait a tick before this warning comes in
         await sleep(0);
         if (__DEV__) {
+<<<<<<< HEAD
           expect(console.error.calls.count()).toEqual(1);
           expect(console.error.calls.argsFor(0)[0]).toMatch(
+=======
+          expect(console.error).toHaveBeenCalledTimes(1);
+          expect(console.error.mock.calls[0][0]).toMatch(
+>>>>>>> remotes/upstream/main
             'You called act(async () => ...) without await.',
           );
         }
@@ -502,6 +571,7 @@ function runActTests(label, render, unmount, rerender) {
 
       // @gate __DEV__
       it('warns if you try to interleave multiple act calls', async () => {
+<<<<<<< HEAD
         spyOnDevAndProd(console, 'error');
         // let's try to cheat and spin off a 'thread' with an act call
         (async () => {
@@ -513,14 +583,33 @@ function runActTests(label, render, unmount, rerender) {
         await act(async () => {
           await sleep(100);
         });
+=======
+        spyOnDevAndProd(console, 'error').mockImplementation(() => {});
+
+        await Promise.all([
+          act(async () => {
+            await sleep(50);
+          }),
+          act(async () => {
+            await sleep(100);
+          }),
+        ]);
+>>>>>>> remotes/upstream/main
 
         await sleep(150);
         if (__DEV__) {
           expect(console.error).toHaveBeenCalledTimes(2);
+<<<<<<< HEAD
           expect(console.error.calls.argsFor(0)[0]).toMatch(
             'You seem to have overlapping act() calls',
           );
           expect(console.error.calls.argsFor(1)[0]).toMatch(
+=======
+          expect(console.error.mock.calls[0][0]).toMatch(
+            'You seem to have overlapping act() calls',
+          );
+          expect(console.error.mock.calls[1][0]).toMatch(
+>>>>>>> remotes/upstream/main
             'You seem to have overlapping act() calls',
           );
         }
@@ -538,7 +627,11 @@ function runActTests(label, render, unmount, rerender) {
             something();
           }, []);
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(state);
+=======
+            Scheduler.log(state);
+>>>>>>> remotes/upstream/main
           });
           return state;
         }
@@ -548,7 +641,11 @@ function runActTests(label, render, unmount, rerender) {
         });
         // exiting act() drains effects and microtasks
 
+<<<<<<< HEAD
         expect(Scheduler).toHaveYielded([0, 1]);
+=======
+        assertLog([0, 1]);
+>>>>>>> remotes/upstream/main
         expect(container.innerHTML).toBe('1');
       });
 
@@ -563,7 +660,11 @@ function runActTests(label, render, unmount, rerender) {
             setState(x => x + 1);
           }
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue(state);
+=======
+            Scheduler.log(state);
+>>>>>>> remotes/upstream/main
             ticker();
           }, [Math.min(state, 4)]);
           return state;
@@ -573,7 +674,11 @@ function runActTests(label, render, unmount, rerender) {
           render(<App />, container);
         });
         // all 5 ticks present and accounted for
+<<<<<<< HEAD
         expect(Scheduler).toHaveYielded([0, 1, 2, 3, 4]);
+=======
+        assertLog([0, 1, 2, 3, 4]);
+>>>>>>> remotes/upstream/main
         expect(container.innerHTML).toBe('5');
       });
     });
@@ -636,7 +741,11 @@ function runActTests(label, render, unmount, rerender) {
       it('should cleanup after errors - sync', () => {
         function App() {
           React.useEffect(() => {
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue('oh yes');
+=======
+            Scheduler.log('oh yes');
+>>>>>>> remotes/upstream/main
           });
           return null;
         }
@@ -654,7 +763,11 @@ function runActTests(label, render, unmount, rerender) {
           act(() => {
             render(<App />, container);
           });
+<<<<<<< HEAD
           expect(Scheduler).toHaveYielded(['oh yes']);
+=======
+          assertLog(['oh yes']);
+>>>>>>> remotes/upstream/main
         }
       });
 
@@ -663,7 +776,11 @@ function runActTests(label, render, unmount, rerender) {
         function App() {
           async function somethingAsync() {
             await null;
+<<<<<<< HEAD
             Scheduler.unstable_yieldValue('oh yes');
+=======
+            Scheduler.log('oh yes');
+>>>>>>> remotes/upstream/main
           }
           React.useEffect(() => {
             somethingAsync();
@@ -685,7 +802,11 @@ function runActTests(label, render, unmount, rerender) {
           await act(async () => {
             render(<App />, container);
           });
+<<<<<<< HEAD
           expect(Scheduler).toHaveYielded(['oh yes']);
+=======
+          assertLog(['oh yes']);
+>>>>>>> remotes/upstream/main
         }
       });
     });

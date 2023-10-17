@@ -11,6 +11,14 @@ const inlinePackagePath = join(ROOT_PATH, 'packages', 'react-devtools-inline');
 const shellPackagePath = join(ROOT_PATH, 'packages', 'react-devtools-shell');
 const screenshotPath = join(ROOT_PATH, 'tmp', 'screenshots');
 
+<<<<<<< HEAD
+=======
+const {SUCCESSFUL_COMPILATION_MESSAGE} = require(join(
+  shellPackagePath,
+  'constants.js'
+));
+
+>>>>>>> remotes/upstream/main
 let buildProcess = null;
 let serverProcess = null;
 let testProcess = null;
@@ -71,7 +79,11 @@ function runTestShell() {
     // Assume the test shell server failed to start.
     logError('Testing shell server failed to start');
     exitWithCode(1);
+<<<<<<< HEAD
   }, 30000);
+=======
+  }, 60 * 1000);
+>>>>>>> remotes/upstream/main
 
   logBright('Starting testing shell server');
 
@@ -85,7 +97,11 @@ function runTestShell() {
   }
 
   serverProcess.stdout.on('data', data => {
+<<<<<<< HEAD
     if (`${data}`.includes('Compiled successfully.')) {
+=======
+    if (`${data}`.includes(SUCCESSFUL_COMPILATION_MESSAGE)) {
+>>>>>>> remotes/upstream/main
       logBright('Testing shell server running');
 
       clearTimeout(timeoutID);
@@ -93,6 +109,10 @@ function runTestShell() {
       runEndToEndTests();
     }
   });
+<<<<<<< HEAD
+=======
+
+>>>>>>> remotes/upstream/main
   serverProcess.stderr.on('data', data => {
     if (`${data}`.includes('EADDRINUSE')) {
       // Something is occupying this port;

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,7 +17,11 @@ import type {
 } from 'shared/ReactTypes';
 
 import {REACT_SERVER_CONTEXT_DEFAULT_VALUE_NOT_LOADED} from 'shared/ReactSymbols';
+<<<<<<< HEAD
 import {isPrimaryRenderer} from './ReactServerFormatConfig';
+=======
+import {isPrimaryRenderer} from './ReactFlightServerConfig';
+>>>>>>> remotes/upstream/main
 
 let rendererSigil;
 if (__DEV__) {
@@ -165,7 +173,11 @@ export function switchContext(newSnapshot: ContextSnapshot): void {
   const next = newSnapshot;
   if (prev !== next) {
     if (prev === null) {
+<<<<<<< HEAD
       // $FlowFixMe: This has to be non-null since it's not equal to prev.
+=======
+      // $FlowFixMe[incompatible-call]: This has to be non-null since it's not equal to prev.
+>>>>>>> remotes/upstream/main
       pushAllNext(next);
     } else if (next === null) {
       popAllPrevious(prev);

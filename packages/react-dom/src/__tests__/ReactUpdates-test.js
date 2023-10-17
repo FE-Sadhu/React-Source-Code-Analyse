@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,6 +19,12 @@ let ReactDOMClient;
 let ReactTestUtils;
 let act;
 let Scheduler;
+<<<<<<< HEAD
+=======
+let waitForAll;
+let waitFor;
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 describe('ReactUpdates', () => {
   beforeEach(() => {
@@ -23,8 +33,18 @@ describe('ReactUpdates', () => {
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
     ReactTestUtils = require('react-dom/test-utils');
+<<<<<<< HEAD
     act = require('jest-react').act;
     Scheduler = require('scheduler');
+=======
+    act = require('internal-test-utils').act;
+    Scheduler = require('scheduler');
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    waitFor = InternalTestUtils.waitFor;
+    assertLog = InternalTestUtils.assertLog;
+>>>>>>> remotes/upstream/main
   });
 
   // Note: This is based on a similar component we use in www. We can delete
@@ -58,7 +78,11 @@ describe('ReactUpdates', () => {
     const instance = ReactTestUtils.renderIntoDocument(<Component />);
     expect(instance.state.x).toBe(0);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       instance.setState({x: 1});
       instance.setState({x: 2});
       expect(instance.state.x).toBe(0);
@@ -92,7 +116,11 @@ describe('ReactUpdates', () => {
     expect(instance.state.x).toBe(0);
     expect(instance.state.y).toBe(0);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       instance.setState({x: 1});
       instance.setState({y: 2});
       expect(instance.state.x).toBe(0);
@@ -129,7 +157,11 @@ describe('ReactUpdates', () => {
     expect(instance.props.x).toBe(0);
     expect(instance.state.y).toBe(0);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<Component x={1} />, container);
       instance.setState({y: 2});
       expect(instance.props.x).toBe(0);
@@ -147,6 +179,10 @@ describe('ReactUpdates', () => {
 
     class Parent extends React.Component {
       state = {x: 0};
+<<<<<<< HEAD
+=======
+      childRef = React.createRef();
+>>>>>>> remotes/upstream/main
 
       componentDidUpdate() {
         parentUpdateCount++;
@@ -155,7 +191,11 @@ describe('ReactUpdates', () => {
       render() {
         return (
           <div>
+<<<<<<< HEAD
             <Child ref="child" x={this.state.x} />
+=======
+            <Child ref={this.childRef} x={this.state.x} />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
@@ -176,11 +216,19 @@ describe('ReactUpdates', () => {
     }
 
     const instance = ReactTestUtils.renderIntoDocument(<Parent />);
+<<<<<<< HEAD
     const child = instance.refs.child;
     expect(instance.state.x).toBe(0);
     expect(child.state.y).toBe(0);
 
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    const child = instance.childRef.current;
+    expect(instance.state.x).toBe(0);
+    expect(child.state.y).toBe(0);
+
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       instance.setState({x: 1});
       child.setState({y: 2});
       expect(instance.state.x).toBe(0);
@@ -200,6 +248,10 @@ describe('ReactUpdates', () => {
 
     class Parent extends React.Component {
       state = {x: 0};
+<<<<<<< HEAD
+=======
+      childRef = React.createRef();
+>>>>>>> remotes/upstream/main
 
       componentDidUpdate() {
         parentUpdateCount++;
@@ -208,7 +260,11 @@ describe('ReactUpdates', () => {
       render() {
         return (
           <div>
+<<<<<<< HEAD
             <Child ref="child" x={this.state.x} />
+=======
+            <Child ref={this.childRef} x={this.state.x} />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
@@ -229,11 +285,19 @@ describe('ReactUpdates', () => {
     }
 
     const instance = ReactTestUtils.renderIntoDocument(<Parent />);
+<<<<<<< HEAD
     const child = instance.refs.child;
     expect(instance.state.x).toBe(0);
     expect(child.state.y).toBe(0);
 
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    const child = instance.childRef.current;
+    expect(instance.state.x).toBe(0);
+    expect(child.state.y).toBe(0);
+
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       child.setState({y: 2});
       instance.setState({x: 1});
       expect(instance.state.x).toBe(0);
@@ -269,9 +333,15 @@ describe('ReactUpdates', () => {
     expect(instance.state.x).toBe(0);
 
     let innerCallbackRun = false;
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
       instance.setState({x: 1}, function() {
         instance.setState({x: 2}, function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+      instance.setState({x: 1}, function () {
+        instance.setState({x: 2}, function () {
+>>>>>>> remotes/upstream/main
           expect(this).toBe(instance);
           innerCallbackRun = true;
           expect(instance.state.x).toBe(2);
@@ -313,11 +383,19 @@ describe('ReactUpdates', () => {
     expect(instance.state.x).toBe(0);
 
     let callbacksRun = 0;
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
       instance.setState({x: 1}, function() {
         callbacksRun++;
       });
       instance.forceUpdate(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+      instance.setState({x: 1}, function () {
+        callbacksRun++;
+      });
+      instance.forceUpdate(function () {
+>>>>>>> remotes/upstream/main
         callbacksRun++;
       });
       expect(instance.state.x).toBe(0);
@@ -336,13 +414,22 @@ describe('ReactUpdates', () => {
     let childRenderCount = 0;
 
     class Parent extends React.Component {
+<<<<<<< HEAD
+=======
+      childRef = React.createRef();
+
+>>>>>>> remotes/upstream/main
       shouldComponentUpdate() {
         return false;
       }
 
       render() {
         parentRenderCount++;
+<<<<<<< HEAD
         return <Child ref="child" />;
+=======
+        return <Child ref={this.childRef} />;
+>>>>>>> remotes/upstream/main
       }
     }
 
@@ -362,15 +449,24 @@ describe('ReactUpdates', () => {
     expect(parentRenderCount).toBe(1);
     expect(childRenderCount).toBe(1);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       instance.setState({x: 1});
     });
 
     expect(parentRenderCount).toBe(1);
     expect(childRenderCount).toBe(1);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
       instance.refs.child.setState({x: 1});
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+      instance.childRef.current.setState({x: 1});
+>>>>>>> remotes/upstream/main
     });
 
     expect(parentRenderCount).toBe(1);
@@ -419,37 +515,69 @@ describe('ReactUpdates', () => {
     let didUpdates = [];
 
     const UpdateLoggingMixin = {
+<<<<<<< HEAD
       UNSAFE_componentWillUpdate: function() {
         willUpdates.push(this.constructor.displayName);
       },
       componentDidUpdate: function() {
+=======
+      UNSAFE_componentWillUpdate: function () {
+        willUpdates.push(this.constructor.displayName);
+      },
+      componentDidUpdate: function () {
+>>>>>>> remotes/upstream/main
         didUpdates.push(this.constructor.displayName);
       },
     };
 
     class Box extends React.Component {
+<<<<<<< HEAD
       render() {
         return <div ref="boxDiv">{this.props.children}</div>;
+=======
+      boxDivRef = React.createRef();
+
+      render() {
+        return <div ref={this.boxDivRef}>{this.props.children}</div>;
+>>>>>>> remotes/upstream/main
       }
     }
     Object.assign(Box.prototype, UpdateLoggingMixin);
 
     class Child extends React.Component {
+<<<<<<< HEAD
       render() {
         return <span ref="span">child</span>;
+=======
+      spanRef = React.createRef();
+
+      render() {
+        return <span ref={this.spanRef}>child</span>;
+>>>>>>> remotes/upstream/main
       }
     }
     Object.assign(Child.prototype, UpdateLoggingMixin);
 
     class Switcher extends React.Component {
       state = {tabKey: 'hello'};
+<<<<<<< HEAD
+=======
+      boxRef = React.createRef();
+      switcherDivRef = React.createRef();
+>>>>>>> remotes/upstream/main
       render() {
         const child = this.props.children;
 
         return (
+<<<<<<< HEAD
           <Box ref="box">
             <div
               ref="switcherDiv"
+=======
+          <Box ref={this.boxRef}>
+            <div
+              ref={this.switcherDivRef}
+>>>>>>> remotes/upstream/main
               style={{
                 display: this.state.tabKey === child.key ? '' : 'none',
               }}>
@@ -462,10 +590,20 @@ describe('ReactUpdates', () => {
     Object.assign(Switcher.prototype, UpdateLoggingMixin);
 
     class App extends React.Component {
+<<<<<<< HEAD
       render() {
         return (
           <Switcher ref="switcher">
             <Child key="hello" ref="child" />
+=======
+      switcherRef = React.createRef();
+      childRef = React.createRef();
+
+      render() {
+        return (
+          <Switcher ref={this.switcherRef}>
+            <Child key="hello" ref={this.childRef} />
+>>>>>>> remotes/upstream/main
           </Switcher>
         );
       }
@@ -494,7 +632,11 @@ describe('ReactUpdates', () => {
     function testUpdates(components, desiredWillUpdates, desiredDidUpdates) {
       let i;
 
+<<<<<<< HEAD
       ReactDOM.unstable_batchedUpdates(function() {
+=======
+      ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
         for (i = 0; i < components.length; i++) {
           triggerUpdate(components[i]);
         }
@@ -504,7 +646,11 @@ describe('ReactUpdates', () => {
 
       // Try them in reverse order
 
+<<<<<<< HEAD
       ReactDOM.unstable_batchedUpdates(function() {
+=======
+      ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
         for (i = components.length - 1; i >= 0; i--) {
           triggerUpdate(components[i]);
         }
@@ -513,21 +659,33 @@ describe('ReactUpdates', () => {
       expectUpdates(desiredWillUpdates, desiredDidUpdates);
     }
     testUpdates(
+<<<<<<< HEAD
       [root.refs.switcher.refs.box, root.refs.switcher],
+=======
+      [root.switcherRef.current.boxRef.current, root.switcherRef.current],
+>>>>>>> remotes/upstream/main
       // Owner-child relationships have inverse will and did
       ['Switcher', 'Box'],
       ['Box', 'Switcher'],
     );
 
     testUpdates(
+<<<<<<< HEAD
       [root.refs.child, root.refs.switcher.refs.box],
+=======
+      [root.childRef.current, root.switcherRef.current.boxRef.current],
+>>>>>>> remotes/upstream/main
       // Not owner-child so reconcile independently
       ['Box', 'Child'],
       ['Box', 'Child'],
     );
 
     testUpdates(
+<<<<<<< HEAD
       [root.refs.child, root.refs.switcher],
+=======
+      [root.childRef.current, root.switcherRef.current],
+>>>>>>> remotes/upstream/main
       // Switcher owns Box and Child, Box does not own Child
       ['Switcher', 'Box', 'Child'],
       ['Box', 'Switcher', 'Child'],
@@ -575,7 +733,11 @@ describe('ReactUpdates', () => {
     }
 
     const a = ReactTestUtils.renderIntoDocument(<A />);
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       a.setState({x: 1});
       b.setState({x: 1});
     });
@@ -588,12 +750,20 @@ describe('ReactUpdates', () => {
 
     class Outer extends React.Component {
       state = {x: 0};
+<<<<<<< HEAD
+=======
+      innerRef = React.createRef();
+>>>>>>> remotes/upstream/main
 
       render() {
         updates.push('Outer-render-' + this.state.x);
         return (
           <div>
+<<<<<<< HEAD
             <Inner x={this.state.x} ref="inner" />
+=======
+            <Inner x={this.state.x} ref={this.innerRef} />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
@@ -602,7 +772,11 @@ describe('ReactUpdates', () => {
         const x = this.state.x;
         updates.push('Outer-didUpdate-' + x);
         updates.push('Inner-setState-' + x);
+<<<<<<< HEAD
         this.refs.inner.setState({x: x}, function() {
+=======
+        this.innerRef.current.setState({x: x}, function () {
+>>>>>>> remotes/upstream/main
           updates.push('Inner-callback-' + x);
         });
       }
@@ -624,10 +798,17 @@ describe('ReactUpdates', () => {
     const instance = ReactTestUtils.renderIntoDocument(<Outer />);
 
     updates.push('Outer-setState-1');
+<<<<<<< HEAD
     instance.setState({x: 1}, function() {
       updates.push('Outer-callback-1');
       updates.push('Outer-setState-2');
       instance.setState({x: 2}, function() {
+=======
+    instance.setState({x: 1}, function () {
+      updates.push('Outer-callback-1');
+      updates.push('Outer-setState-2');
+      instance.setState({x: 2}, function () {
+>>>>>>> remotes/upstream/main
         updates.push('Outer-callback-2');
       });
     });
@@ -692,9 +873,15 @@ describe('ReactUpdates', () => {
 
     expect(updates).toEqual([0, 1, 2]);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
       // Simulate update on each component from top to bottom.
       instances.forEach(function(instance) {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+      // Simulate update on each component from top to bottom.
+      instances.forEach(function (instance) {
+>>>>>>> remotes/upstream/main
         instance.forceUpdate();
       });
     });
@@ -781,7 +968,11 @@ describe('ReactUpdates', () => {
       }
     }
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(
         <div>
           <A />
@@ -802,7 +993,11 @@ describe('ReactUpdates', () => {
 
       UNSAFE_componentWillReceiveProps(nextProps) {
         const newX = nextProps.x;
+<<<<<<< HEAD
         this.setState({x: newX}, function() {
+=======
+        this.setState({x: newX}, function () {
+>>>>>>> remotes/upstream/main
           // State should have updated by the time this callback gets called
           expect(this.state.x).toBe(newX);
           callbackCount++;
@@ -847,7 +1042,11 @@ describe('ReactUpdates', () => {
 
     const component = ReactTestUtils.renderIntoDocument(<A />);
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       // B will have scheduled an update but the batching should ensure that its
       // update never fires.
       componentB.setState({updates: 1});
@@ -945,12 +1144,23 @@ describe('ReactUpdates', () => {
 
   it('does not update one component twice in a batch (#2410)', () => {
     class Parent extends React.Component {
+<<<<<<< HEAD
       getChild = () => {
         return this.refs.child;
       };
 
       render() {
         return <Child ref="child" />;
+=======
+      childRef = React.createRef();
+
+      getChild = () => {
+        return this.childRef.current;
+      };
+
+      render() {
+        return <Child ref={this.childRef} />;
+>>>>>>> remotes/upstream/main
       }
     }
 
@@ -987,7 +1197,11 @@ describe('ReactUpdates', () => {
 
     const parent = ReactTestUtils.renderIntoDocument(<Parent />);
     const child = parent.getChild();
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       parent.forceUpdate();
       child.forceUpdate();
     });
@@ -1036,7 +1250,11 @@ describe('ReactUpdates', () => {
         callbacks = callbacks.filter(c => c !== this.onChange);
       }
       render() {
+<<<<<<< HEAD
         return <div key={Math.random()} onClick={function() {}} />;
+=======
+        return <div key={Math.random()} onClick={function () {}} />;
+>>>>>>> remotes/upstream/main
       }
     }
 
@@ -1044,7 +1262,11 @@ describe('ReactUpdates', () => {
   });
 
   it('unstable_batchedUpdates should return value from a callback', () => {
+<<<<<<< HEAD
     const result = ReactDOM.unstable_batchedUpdates(function() {
+=======
+    const result = ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       return 42;
     });
     expect(result).toEqual(42);
@@ -1053,7 +1275,11 @@ describe('ReactUpdates', () => {
   it('unmounts and remounts a root in the same batch', () => {
     const container = document.createElement('div');
     ReactDOM.render(<span>a</span>, container);
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       ReactDOM.unmountComponentAtNode(container);
       ReactDOM.render(<span>b</span>, container);
     });
@@ -1303,11 +1529,19 @@ describe('ReactUpdates', () => {
   });
 
   // @gate www
+<<<<<<< HEAD
   it('delays sync updates inside hidden subtrees in Concurrent Mode', () => {
     const container = document.createElement('div');
 
     function Baz() {
       Scheduler.unstable_yieldValue('Baz');
+=======
+  it('delays sync updates inside hidden subtrees in Concurrent Mode', async () => {
+    const container = document.createElement('div');
+
+    function Baz() {
+      Scheduler.log('Baz');
+>>>>>>> remotes/upstream/main
       return <p>baz</p>;
     }
 
@@ -1315,14 +1549,24 @@ describe('ReactUpdates', () => {
     function Bar() {
       const [counter, _setCounter] = React.useState(0);
       setCounter = _setCounter;
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue('Bar');
+=======
+      Scheduler.log('Bar');
+>>>>>>> remotes/upstream/main
       return <p>bar {counter}</p>;
     }
 
     function Foo() {
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue('Foo');
       React.useEffect(() => {
         Scheduler.unstable_yieldValue('Foo#effect');
+=======
+      Scheduler.log('Foo');
+      React.useEffect(() => {
+        Scheduler.log('Foo#effect');
+>>>>>>> remotes/upstream/main
       });
       return (
         <div>
@@ -1336,14 +1580,24 @@ describe('ReactUpdates', () => {
 
     const root = ReactDOMClient.createRoot(container);
     let hiddenDiv;
+<<<<<<< HEAD
     act(() => {
       root.render(<Foo />);
       expect(Scheduler).toFlushAndYieldThrough(['Foo', 'Baz', 'Foo#effect']);
+=======
+    await act(async () => {
+      root.render(<Foo />);
+      await waitFor(['Foo', 'Baz', 'Foo#effect']);
+>>>>>>> remotes/upstream/main
       hiddenDiv = container.firstChild.firstChild;
       expect(hiddenDiv.hidden).toBe(true);
       expect(hiddenDiv.innerHTML).toBe('');
       // Run offscreen update
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Bar']);
+=======
+      await waitForAll(['Bar']);
+>>>>>>> remotes/upstream/main
       expect(hiddenDiv.hidden).toBe(true);
       expect(hiddenDiv.innerHTML).toBe('<p>bar 0</p>');
     });
@@ -1355,7 +1609,11 @@ describe('ReactUpdates', () => {
     expect(hiddenDiv.innerHTML).toBe('<p>bar 0</p>');
 
     // Run offscreen update
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield(['Bar']);
+=======
+    await waitForAll(['Bar']);
+>>>>>>> remotes/upstream/main
     expect(hiddenDiv.innerHTML).toBe('<p>bar 1</p>');
   });
 
@@ -1598,12 +1856,19 @@ describe('ReactUpdates', () => {
 
   // TODO: Replace this branch with @gate pragmas
   if (__DEV__) {
+<<<<<<< HEAD
     it('warns about a deferred infinite update loop with useEffect', () => {
+=======
+    it('warns about a deferred infinite update loop with useEffect', async () => {
+>>>>>>> remotes/upstream/main
       function NonTerminating() {
         const [step, setStep] = React.useState(0);
         React.useEffect(() => {
           setStep(x => x + 1);
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(step);
+=======
+>>>>>>> remotes/upstream/main
         });
         return step;
       }
@@ -1618,6 +1883,7 @@ describe('ReactUpdates', () => {
       console.error = (e, s) => {
         error = e;
         stack = s;
+<<<<<<< HEAD
       };
       try {
         const container = document.createElement('div');
@@ -1640,6 +1906,24 @@ describe('ReactUpdates', () => {
     });
 
     it('can have nested updates if they do not cross the limit', () => {
+=======
+        Scheduler.log('stop');
+      };
+      try {
+        const container = document.createElement('div');
+        const root = ReactDOMClient.createRoot(container);
+        root.render(<App />);
+        await waitFor(['stop']);
+      } finally {
+        console.error = originalConsoleError;
+      }
+
+      expect(error).toContain('Maximum update depth exceeded');
+      expect(stack).toContain('at NonTerminating');
+    });
+
+    it('can have nested updates if they do not cross the limit', async () => {
+>>>>>>> remotes/upstream/main
       let _setStep;
       const LIMIT = 50;
 
@@ -1651,46 +1935,78 @@ describe('ReactUpdates', () => {
             setStep(x => x + 1);
           }
         });
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(step);
+=======
+        Scheduler.log(step);
+>>>>>>> remotes/upstream/main
         return step;
       }
 
       const container = document.createElement('div');
+<<<<<<< HEAD
       act(() => {
         ReactDOM.render(<Terminating />, container);
       });
       expect(container.textContent).toBe('50');
       act(() => {
+=======
+      await act(() => {
+        ReactDOM.render(<Terminating />, container);
+      });
+      expect(container.textContent).toBe('50');
+      await act(() => {
+>>>>>>> remotes/upstream/main
         _setStep(0);
       });
       expect(container.textContent).toBe('50');
     });
 
+<<<<<<< HEAD
     it('can have many updates inside useEffect without triggering a warning', () => {
+=======
+    it('can have many updates inside useEffect without triggering a warning', async () => {
+>>>>>>> remotes/upstream/main
       function Terminating() {
         const [step, setStep] = React.useState(0);
         React.useEffect(() => {
           for (let i = 0; i < 1000; i++) {
             setStep(x => x + 1);
           }
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue('Done');
+=======
+          Scheduler.log('Done');
+>>>>>>> remotes/upstream/main
         }, []);
         return step;
       }
 
       const container = document.createElement('div');
+<<<<<<< HEAD
       act(() => {
         ReactDOM.render(<Terminating />, container);
       });
 
       expect(Scheduler).toHaveYielded(['Done']);
+=======
+      await act(() => {
+        ReactDOM.render(<Terminating />, container);
+      });
+
+      assertLog(['Done']);
+>>>>>>> remotes/upstream/main
       expect(container.textContent).toBe('1000');
     });
   }
 
   it('prevents infinite update loop triggered by synchronous updates in useEffect', () => {
     // Ignore flushSync warning
+<<<<<<< HEAD
     spyOnDev(console, 'error');
+=======
+    spyOnDev(console, 'error').mockImplementation(() => {});
+>>>>>>> remotes/upstream/main
 
     function NonTerminating() {
       const [step, setStep] = React.useState(0);

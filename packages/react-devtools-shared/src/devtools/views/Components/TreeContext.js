@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,6 +28,11 @@
 // For this reason, changes to the tree context are processed in sequence: tree -> search -> owners
 // This enables each section to potentially override (or mask) previous values.
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -40,7 +49,11 @@ import {createRegExp} from '../utils';
 import {BridgeContext, StoreContext} from '../context';
 import Store from '../../store';
 
+<<<<<<< HEAD
 import type {Element} from './types';
+=======
+import type {Element} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 export type StateContext = {
   // Tree
@@ -148,6 +161,7 @@ type Action =
 
 export type DispatcherContext = (action: Action) => void;
 
+<<<<<<< HEAD
 const TreeStateContext = createContext<StateContext>(
   ((null: any): StateContext),
 );
@@ -156,6 +170,14 @@ TreeStateContext.displayName = 'TreeStateContext';
 const TreeDispatcherContext = createContext<DispatcherContext>(
   ((null: any): DispatcherContext),
 );
+=======
+const TreeStateContext: ReactContext<StateContext> =
+  createContext<StateContext>(((null: any): StateContext));
+TreeStateContext.displayName = 'TreeStateContext';
+
+const TreeDispatcherContext: ReactContext<DispatcherContext> =
+  createContext<DispatcherContext>(((null: any): DispatcherContext));
+>>>>>>> remotes/upstream/main
 TreeDispatcherContext.displayName = 'TreeDispatcherContext';
 
 type State = {
@@ -292,7 +314,11 @@ function reduceTreeState(store: Store, state: State, action: Action): State {
           ) {
             const leafElement = store.getElementByID(ownerSubtreeLeafElementID);
             if (leafElement !== null) {
+<<<<<<< HEAD
               let currentElement = leafElement;
+=======
+              let currentElement: null | Element = leafElement;
+>>>>>>> remotes/upstream/main
               while (currentElement !== null) {
                 if (currentElement.ownerID === selectedElementID) {
                   selectedElementIndex = store.getIndexOfElementID(
@@ -377,7 +403,12 @@ function reduceTreeState(store: Store, state: State, action: Action): State {
         }
         break;
       case 'SELECT_PREVIOUS_ELEMENT_WITH_ERROR_OR_WARNING_IN_TREE': {
+<<<<<<< HEAD
         const elementIndicesWithErrorsOrWarnings = store.getElementsWithErrorsAndWarnings();
+=======
+        const elementIndicesWithErrorsOrWarnings =
+          store.getElementsWithErrorsAndWarnings();
+>>>>>>> remotes/upstream/main
         if (elementIndicesWithErrorsOrWarnings.length === 0) {
           return state;
         }
@@ -418,7 +449,12 @@ function reduceTreeState(store: Store, state: State, action: Action): State {
         break;
       }
       case 'SELECT_NEXT_ELEMENT_WITH_ERROR_OR_WARNING_IN_TREE': {
+<<<<<<< HEAD
         const elementIndicesWithErrorsOrWarnings = store.getElementsWithErrorsAndWarnings();
+=======
+        const elementIndicesWithErrorsOrWarnings =
+          store.getElementsWithErrorsAndWarnings();
+>>>>>>> remotes/upstream/main
         if (elementIndicesWithErrorsOrWarnings.length === 0) {
           return state;
         }
@@ -520,10 +556,15 @@ function reduceSearchState(store: Store, state: State, action: Action): State {
         break;
       case 'HANDLE_STORE_MUTATION':
         if (searchText !== '') {
+<<<<<<< HEAD
           const [
             addedElementIDs,
             removedElementIDs,
           ] = (action: ACTION_HANDLE_STORE_MUTATION).payload;
+=======
+          const [addedElementIDs, removedElementIDs] =
+            (action: ACTION_HANDLE_STORE_MUTATION).payload;
+>>>>>>> remotes/upstream/main
 
           removedElementIDs.forEach((parentID, id) => {
             // Prune this item from the search results.
@@ -835,7 +876,11 @@ function TreeContextController({
   defaultOwnerID,
   defaultSelectedElementID,
   defaultSelectedElementIndex,
+<<<<<<< HEAD
 }: Props) {
+=======
+}: Props): React.Node {
+>>>>>>> remotes/upstream/main
   const bridge = useContext(BridgeContext);
   const store = useContext(StoreContext);
 
@@ -845,6 +890,7 @@ function TreeContextController({
   // The store is mutable, but the Store itself is global and lives for the lifetime of the DevTools,
   // so it's okay for the reducer to have an empty dependencies array.
   const reducer = useMemo(
+<<<<<<< HEAD
     () => (state: State, action: Action): State => {
       const {type} = action;
       switch (type) {
@@ -890,6 +936,54 @@ function TreeContextController({
           throw new Error(`Unrecognized action "${type}"`);
       }
     },
+=======
+    () =>
+      (state: State, action: Action): State => {
+        const {type} = action;
+        switch (type) {
+          case 'GO_TO_NEXT_SEARCH_RESULT':
+          case 'GO_TO_PREVIOUS_SEARCH_RESULT':
+          case 'HANDLE_STORE_MUTATION':
+          case 'RESET_OWNER_STACK':
+          case 'SELECT_ELEMENT_AT_INDEX':
+          case 'SELECT_ELEMENT_BY_ID':
+          case 'SELECT_CHILD_ELEMENT_IN_TREE':
+          case 'SELECT_NEXT_ELEMENT_IN_TREE':
+          case 'SELECT_NEXT_ELEMENT_WITH_ERROR_OR_WARNING_IN_TREE':
+          case 'SELECT_NEXT_SIBLING_IN_TREE':
+          case 'SELECT_OWNER_LIST_NEXT_ELEMENT_IN_TREE':
+          case 'SELECT_OWNER_LIST_PREVIOUS_ELEMENT_IN_TREE':
+          case 'SELECT_PARENT_ELEMENT_IN_TREE':
+          case 'SELECT_PREVIOUS_ELEMENT_IN_TREE':
+          case 'SELECT_PREVIOUS_ELEMENT_WITH_ERROR_OR_WARNING_IN_TREE':
+          case 'SELECT_PREVIOUS_SIBLING_IN_TREE':
+          case 'SELECT_OWNER':
+          case 'UPDATE_INSPECTED_ELEMENT_ID':
+          case 'SET_SEARCH_TEXT':
+            state = reduceTreeState(store, state, action);
+            state = reduceSearchState(store, state, action);
+            state = reduceOwnersState(store, state, action);
+            state = reduceSuspenseState(store, state, action);
+
+            // If the selected ID is in a collapsed subtree, reset the selected index to null.
+            // We'll know the correct index after the layout effect will toggle the tree,
+            // and the store tree is mutated to account for that.
+            if (
+              state.selectedElementID !== null &&
+              store.isInsideCollapsedSubTree(state.selectedElementID)
+            ) {
+              return {
+                ...state,
+                selectedElementIndex: null,
+              };
+            }
+
+            return state;
+          default:
+            throw new Error(`Unrecognized action "${type}"`);
+        }
+      },
+>>>>>>> remotes/upstream/main
     [store],
   );
 

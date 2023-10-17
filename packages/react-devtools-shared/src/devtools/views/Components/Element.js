@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,7 +24,11 @@ import {useSubscription} from '../hooks';
 import {logEvent} from 'react-devtools-shared/src/Logger';
 
 import type {ItemData} from './Tree';
+<<<<<<< HEAD
 import type {Element as ElementType} from './types';
+=======
+import type {Element as ElementType} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 import styles from './Element.css';
 import Icon from '../Icon';
@@ -34,9 +42,14 @@ type Props = {
 
 export default function Element({data, index, style}: Props): React.Node {
   const store = useContext(StoreContext);
+<<<<<<< HEAD
   const {ownerFlatTree, ownerID, selectedElementID} = useContext(
     TreeStateContext,
   );
+=======
+  const {ownerFlatTree, ownerID, selectedElementID} =
+    useContext(TreeStateContext);
+>>>>>>> remotes/upstream/main
   const dispatch = useContext(TreeDispatcherContext);
   const {showInlineWarningsAndErrors} = React.useContext(SettingsContext);
 
@@ -75,6 +88,10 @@ export default function Element({data, index, style}: Props): React.Node {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const handleClick = ({metaKey}) => {
     if (id !== null) {
       logEvent({
@@ -99,6 +116,10 @@ export default function Element({data, index, style}: Props): React.Node {
     setIsHovered(false);
   };
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const handleKeyDoubleClick = event => {
     // Double clicks on key value are used for text selection (if the text has been truncated).
     // They should not enter the owners tree view.
@@ -220,6 +241,10 @@ export default function Element({data, index, style}: Props): React.Node {
 }
 
 // Prevent double clicks on toggle from drilling into the owner list.
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 const swallowDoubleClick = event => {
   event.preventDefault();
   event.stopPropagation();
@@ -233,6 +258,10 @@ type ExpandCollapseToggleProps = {
 function ExpandCollapseToggle({element, store}: ExpandCollapseToggleProps) {
   const {children, id, isCollapsed} = element;
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const toggleCollapsed = event => {
     event.preventDefault();
     event.stopPropagation();
@@ -240,6 +269,10 @@ function ExpandCollapseToggle({element, store}: ExpandCollapseToggleProps) {
     store.toggleIsCollapsed(id, !isCollapsed);
   };
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const stopPropagation = event => {
     // Prevent the row from selecting
     event.stopPropagation();

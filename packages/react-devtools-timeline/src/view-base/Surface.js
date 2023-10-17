@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,7 +26,15 @@ export type ViewRefs = {
 };
 
 // hidpi canvas: https://www.html5rocks.com/en/tutorials/canvas/hidpi/
+<<<<<<< HEAD
 function configureRetinaCanvas(canvas, height, width) {
+=======
+function configureRetinaCanvas(
+  canvas: HTMLCanvasElement,
+  height: number,
+  width: number,
+) {
+>>>>>>> remotes/upstream/main
   canvas.width = width * DPR;
   canvas.height = height * DPR;
   canvas.style.width = `${width}px`;

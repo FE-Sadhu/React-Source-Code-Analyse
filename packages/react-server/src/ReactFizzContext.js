@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,10 +18,16 @@ import checkPropTypes from 'shared/checkPropTypes';
 let warnedAboutMissingGetChildContext;
 
 if (__DEV__) {
+<<<<<<< HEAD
   warnedAboutMissingGetChildContext = {};
 }
 
 // $FlowFixMe[incompatible-exact]
+=======
+  warnedAboutMissingGetChildContext = ({}: {[string]: boolean});
+}
+
+>>>>>>> remotes/upstream/main
 export const emptyContextObject: {} = {};
 if (__DEV__) {
   Object.freeze(emptyContextObject);
@@ -32,7 +42,11 @@ export function getMaskedContext(type: any, unmaskedContext: Object): Object {
       return emptyContextObject;
     }
 
+<<<<<<< HEAD
     const context = {};
+=======
+    const context: {[string]: $FlowFixMe} = {};
+>>>>>>> remotes/upstream/main
     for (const key in contextTypes) {
       context[key] = unmaskedContext[key];
     }
@@ -79,8 +93,14 @@ export function processChildContext(
     for (const contextKey in childContext) {
       if (!(contextKey in childContextTypes)) {
         throw new Error(
+<<<<<<< HEAD
           `${getComponentNameFromType(type) ||
             'Unknown'}.getChildContext(): key "${contextKey}" is not defined in childContextTypes.`,
+=======
+          `${
+            getComponentNameFromType(type) || 'Unknown'
+          }.getChildContext(): key "${contextKey}" is not defined in childContextTypes.`,
+>>>>>>> remotes/upstream/main
         );
       }
     }

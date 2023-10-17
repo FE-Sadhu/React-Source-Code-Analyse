@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,7 +14,11 @@
 import * as React from 'react';
 import styles from './HocBadges.css';
 
+<<<<<<< HEAD
 import type {Element} from './types';
+=======
+import type {Element} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 type Props = {
   element: Element,

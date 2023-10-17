@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,15 +18,24 @@ describe('EventPluginRegistry', () => {
   let createPlugin;
 
   beforeEach(() => {
+<<<<<<< HEAD
     jest.resetModuleRegistry();
+=======
+    jest.resetModules();
+>>>>>>> remotes/upstream/main
     // These tests are intentionally testing the private injection interface.
     // The public API surface of this is covered by other tests so
     // if `EventPluginRegistry` is ever deleted, these tests should be
     // safe to remove too.
     EventPluginRegistry = require('react-native-renderer/src/legacy-events/EventPluginRegistry');
 
+<<<<<<< HEAD
     createPlugin = function(properties) {
       return Object.assign({extractEvents: function() {}}, properties);
+=======
+    createPlugin = function (properties) {
+      return Object.assign({extractEvents: function () {}}, properties);
+>>>>>>> remotes/upstream/main
     };
   });
 
@@ -92,7 +105,11 @@ describe('EventPluginRegistry', () => {
 
     EventPluginRegistry.injectEventPluginOrder(['bad']);
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginsByName({
         bad: BadPlugin,
       });
@@ -108,7 +125,11 @@ describe('EventPluginRegistry', () => {
 
     EventPluginRegistry.injectEventPluginOrder(['one']);
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginsByName({
         one: OnePlugin,
         random: RandomPlugin,
@@ -124,7 +145,11 @@ describe('EventPluginRegistry', () => {
 
     EventPluginRegistry.injectEventPluginOrder(pluginOrdering);
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginOrder(pluginOrdering);
     }).toThrowError(
       'EventPluginRegistry: Cannot inject event plugin ordering more than ' +
@@ -138,7 +163,11 @@ describe('EventPluginRegistry', () => {
 
     EventPluginRegistry.injectEventPluginsByName({same: OnePlugin});
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginsByName({same: TwoPlugin});
     }).toThrowError(
       'EventPluginRegistry: Cannot inject two different event plugins using ' +
@@ -208,7 +237,11 @@ describe('EventPluginRegistry', () => {
       two: TwoPlugin,
     });
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginOrder(['one', 'two']);
     }).toThrowError(
       'EventPluginRegistry: More than one plugin attempted to publish the same ' +
@@ -227,7 +260,11 @@ describe('EventPluginRegistry', () => {
 
     EventPluginRegistry.injectEventPluginsByName({one: OnePlugin});
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       EventPluginRegistry.injectEventPluginOrder(['one']);
     }).toThrowError(
       'EventPluginRegistry: Failed to publish event `badEvent` for plugin ' +

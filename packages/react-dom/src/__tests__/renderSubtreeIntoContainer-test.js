@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,10 +17,18 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const ReactDOM = require('react-dom');
 const ReactTestUtils = require('react-dom/test-utils');
+<<<<<<< HEAD
 const renderSubtreeIntoContainer = require('react-dom')
   .unstable_renderSubtreeIntoContainer;
 
 describe('renderSubtreeIntoContainer', () => {
+=======
+const renderSubtreeIntoContainer =
+  require('react-dom').unstable_renderSubtreeIntoContainer;
+
+describe('renderSubtreeIntoContainer', () => {
+  // @gate !disableLegacyContext
+>>>>>>> remotes/upstream/main
   it('should pass context when rendering subtree elsewhere', () => {
     const portal = document.createElement('div');
 
@@ -47,7 +59,11 @@ describe('renderSubtreeIntoContainer', () => {
 
       componentDidMount() {
         expect(
+<<<<<<< HEAD
           function() {
+=======
+          function () {
+>>>>>>> remotes/upstream/main
             renderSubtreeIntoContainer(this, <Component />, portal);
           }.bind(this),
         ).toErrorDev(
@@ -92,13 +108,21 @@ describe('renderSubtreeIntoContainer', () => {
       }
 
       componentDidMount() {
+<<<<<<< HEAD
         expect(function() {
+=======
+        expect(function () {
+>>>>>>> remotes/upstream/main
           renderSubtreeIntoContainer(<Parent />, <Component />, portal);
         }).toThrowError('parentComponentmust be a valid React Component');
       }
     }
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableLegacyContext
+>>>>>>> remotes/upstream/main
   it('should update context if it changes due to setState', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -159,6 +183,10 @@ describe('renderSubtreeIntoContainer', () => {
     expect(portal.firstChild.innerHTML).toBe('changed-changed');
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableLegacyContext
+>>>>>>> remotes/upstream/main
   it('should update context if it changes due to re-render', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -238,6 +266,10 @@ describe('renderSubtreeIntoContainer', () => {
     expect(portal.firstChild.innerHTML).toBe('hello');
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableLegacyContext
+>>>>>>> remotes/upstream/main
   it('should get context through non-context-provider parent', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -281,6 +313,10 @@ describe('renderSubtreeIntoContainer', () => {
     expect(portal.textContent).toBe('foo');
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableLegacyContext
+>>>>>>> remotes/upstream/main
   it('should get context through middle non-context-provider layer', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,6 +17,11 @@
 let React;
 let ReactNoop;
 let Scheduler;
+<<<<<<< HEAD
+=======
+let waitForAll;
+let waitForThrow;
+>>>>>>> remotes/upstream/main
 
 describe('ReactIncrementalErrorLogging', () => {
   beforeEach(() => {
@@ -20,6 +29,13 @@ describe('ReactIncrementalErrorLogging', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
+<<<<<<< HEAD
+=======
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    waitForThrow = InternalTestUtils.waitForThrow;
+>>>>>>> remotes/upstream/main
   });
 
   // Note: in this test file we won't be using toErrorDev() matchers
@@ -35,7 +51,11 @@ describe('ReactIncrementalErrorLogging', () => {
     oldConsoleError = null;
   });
 
+<<<<<<< HEAD
   it('should log errors that occur during the begin phase', () => {
+=======
+  it('should log errors that occur during the begin phase', async () => {
+>>>>>>> remotes/upstream/main
     class ErrorThrowingComponent extends React.Component {
       constructor(props) {
         super(props);
@@ -52,7 +72,11 @@ describe('ReactIncrementalErrorLogging', () => {
         </span>
       </div>,
     );
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndThrow('constructor error');
+=======
+    await waitForThrow('constructor error');
+>>>>>>> remotes/upstream/main
     expect(console.error).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledWith(
       __DEV__
@@ -72,7 +96,11 @@ describe('ReactIncrementalErrorLogging', () => {
     );
   });
 
+<<<<<<< HEAD
   it('should log errors that occur during the commit phase', () => {
+=======
+  it('should log errors that occur during the commit phase', async () => {
+>>>>>>> remotes/upstream/main
     class ErrorThrowingComponent extends React.Component {
       componentDidMount() {
         throw new Error('componentDidMount error');
@@ -88,7 +116,11 @@ describe('ReactIncrementalErrorLogging', () => {
         </span>
       </div>,
     );
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndThrow('componentDidMount error');
+=======
+    await waitForThrow('componentDidMount error');
+>>>>>>> remotes/upstream/main
     expect(console.error).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledWith(
       __DEV__
@@ -108,7 +140,11 @@ describe('ReactIncrementalErrorLogging', () => {
     );
   });
 
+<<<<<<< HEAD
   it('should ignore errors thrown in log method to prevent cycle', () => {
+=======
+  it('should ignore errors thrown in log method to prevent cycle', async () => {
+>>>>>>> remotes/upstream/main
     const logCapturedErrorCalls = [];
     console.error.mockImplementation(error => {
       // Test what happens when logging itself is buggy.
@@ -127,7 +163,11 @@ describe('ReactIncrementalErrorLogging', () => {
         </span>
       </div>,
     );
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndThrow('render error');
+=======
+    await waitForThrow('render error');
+>>>>>>> remotes/upstream/main
     expect(logCapturedErrorCalls.length).toBe(1);
     expect(logCapturedErrorCalls[0]).toEqual(
       __DEV__
@@ -151,7 +191,11 @@ describe('ReactIncrementalErrorLogging', () => {
     }).toThrow('logCapturedError error');
   });
 
+<<<<<<< HEAD
   it('resets instance variables before unmounting failed node', () => {
+=======
+  it('resets instance variables before unmounting failed node', async () => {
+>>>>>>> remotes/upstream/main
     class ErrorBoundary extends React.Component {
       state = {error: null};
       componentDidCatch(error) {
@@ -167,12 +211,19 @@ describe('ReactIncrementalErrorLogging', () => {
         this.setState({step: 1});
       }
       componentWillUnmount() {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           'componentWillUnmount: ' + this.state.step,
         );
       }
       render() {
         Scheduler.unstable_yieldValue('render: ' + this.state.step);
+=======
+        Scheduler.log('componentWillUnmount: ' + this.state.step);
+      }
+      render() {
+        Scheduler.log('render: ' + this.state.step);
+>>>>>>> remotes/upstream/main
         if (this.state.step > 0) {
           throw new Error('oops');
         }
@@ -185,7 +236,11 @@ describe('ReactIncrementalErrorLogging', () => {
         <Foo />
       </ErrorBoundary>,
     );
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield(
+=======
+    await waitForAll(
+>>>>>>> remotes/upstream/main
       [
         'render: 0',
 

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +15,7 @@ import type {Source} from 'shared/ReactElementType';
 import type {
   RefObject,
   ReactContext,
+<<<<<<< HEAD
   MutableSourceSubscribeFn,
   MutableSourceGetSnapshotFn,
   MutableSourceVersion,
@@ -34,6 +39,31 @@ import type {
   Transition,
 } from './ReactFiberTracingMarkerComponent.new';
 import type {ConcurrentUpdate} from './ReactFiberConcurrentUpdates.new';
+=======
+  StartTransitionOptions,
+  Wakeable,
+  Usable,
+  ReactFormState,
+} from 'shared/ReactTypes';
+import type {WorkTag} from './ReactWorkTags';
+import type {TypeOfMode} from './ReactTypeOfMode';
+import type {Flags} from './ReactFiberFlags';
+import type {Lane, Lanes, LaneMap} from './ReactFiberLane';
+import type {RootTag} from './ReactRootTags';
+import type {
+  Container,
+  TimeoutHandle,
+  NoTimeout,
+  SuspenseInstance,
+  TransitionStatus,
+} from './ReactFiberConfig';
+import type {Cache} from './ReactFiberCacheComponent';
+import type {
+  TracingMarkerInstance,
+  Transition,
+} from './ReactFiberTracingMarkerComponent';
+import type {ConcurrentUpdate} from './ReactFiberConcurrentUpdates';
+>>>>>>> remotes/upstream/main
 
 // Unwind Circular: moved from ReactFiberHooks.old
 export type HookType =
@@ -42,7 +72,11 @@ export type HookType =
   | 'useContext'
   | 'useRef'
   | 'useEffect'
+<<<<<<< HEAD
   | 'useEvent'
+=======
+  | 'useEffectEvent'
+>>>>>>> remotes/upstream/main
   | 'useInsertionEffect'
   | 'useLayoutEffect'
   | 'useCallback'
@@ -51,10 +85,18 @@ export type HookType =
   | 'useDebugValue'
   | 'useDeferredValue'
   | 'useTransition'
+<<<<<<< HEAD
   | 'useMutableSource'
   | 'useSyncExternalStore'
   | 'useId'
   | 'useCacheRefresh';
+=======
+  | 'useSyncExternalStore'
+  | 'useId'
+  | 'useCacheRefresh'
+  | 'useOptimistic'
+  | 'useFormState';
+>>>>>>> remotes/upstream/main
 
 export type ContextDependency<T> = {
   context: ReactContext<T>,
@@ -127,6 +169,11 @@ export type Fiber = {
     | (((handle: mixed) => void) & {_stringRef: ?string, ...})
     | RefObject,
 
+<<<<<<< HEAD
+=======
+  refCleanup: null | (() => void),
+
+>>>>>>> remotes/upstream/main
   // Input is the data coming into process this fiber. Arguments. Props.
   pendingProps: any, // This type will be more specific once we overload the tag.
   memoizedProps: any, // The props used to create the output.
@@ -210,7 +257,11 @@ type BaseFiberRootProperties = {
   tag: RootTag,
 
   // Any additional information from the host associated with this root.
+<<<<<<< HEAD
   containerInfo: any,
+=======
+  containerInfo: Container,
+>>>>>>> remotes/upstream/main
   // Used only by persistent updates.
   pendingChildren: any,
   // The currently active root fiber. This is the mutable root of the tree.
@@ -223,10 +274,18 @@ type BaseFiberRootProperties = {
   // Timeout handle returned by setTimeout. Used to cancel a pending timeout, if
   // it's superseded by a new one.
   timeoutHandle: TimeoutHandle | NoTimeout,
+<<<<<<< HEAD
+=======
+  // When a root has a pending commit scheduled, calling this function will
+  // cancel it.
+  // TODO: Can this be consolidated with timeoutHandle?
+  cancelPendingCommit: null | (() => void),
+>>>>>>> remotes/upstream/main
   // Top context object, used by renderSubtreeIntoContainer
   context: Object | null,
   pendingContext: Object | null,
 
+<<<<<<< HEAD
   // Used by useMutableSource hook to avoid tearing during hydration.
   mutableSourceEagerHydrationData?: Array<
     MutableSource<any> | MutableSourceVersion,
@@ -237,6 +296,16 @@ type BaseFiberRootProperties = {
   callbackNode: *,
   callbackPriority: Lane,
   eventTimes: LaneMap<number>,
+=======
+  // Used to create a linked list that represent all the roots that have
+  // pending work scheduled on them.
+  next: FiberRoot | null,
+
+  // Node returned by Scheduler.scheduleCallback. Represents the next rendering
+  // task that the root will work on.
+  callbackNode: any,
+  callbackPriority: Lane,
+>>>>>>> remotes/upstream/main
   expirationTimes: LaneMap<number>,
   hiddenUpdates: LaneMap<Array<ConcurrentUpdate> | null>,
 
@@ -244,8 +313,13 @@ type BaseFiberRootProperties = {
   suspendedLanes: Lanes,
   pingedLanes: Lanes,
   expiredLanes: Lanes,
+<<<<<<< HEAD
   mutableReadLanes: Lanes,
   errorRecoveryDisabledLanes: Lanes,
+=======
+  errorRecoveryDisabledLanes: Lanes,
+  shellSuspendCounter: number,
+>>>>>>> remotes/upstream/main
 
   finishedLanes: Lanes,
 
@@ -266,6 +340,11 @@ type BaseFiberRootProperties = {
     error: mixed,
     errorInfo: {digest?: ?string, componentStack?: ?string},
   ) => void,
+<<<<<<< HEAD
+=======
+
+  formState: ReactFormState<any, any> | null,
+>>>>>>> remotes/upstream/main
 };
 
 // The following attributes are only used by DevTools and are only present in DEV builds.
@@ -361,9 +440,13 @@ type BasicStateAction<S> = (S => S) | S;
 type Dispatch<A> = A => void;
 
 export type Dispatcher = {
+<<<<<<< HEAD
   use?: <T>(Usable<T>) => T,
   getCacheSignal?: () => AbortSignal,
   getCacheForType?: <T>(resourceType: () => T) => T,
+=======
+  use: <T>(Usable<T>) => T,
+>>>>>>> remotes/upstream/main
   readContext<T>(context: ReactContext<T>): T,
   useState<S>(initialState: (() => S) | S): [S, Dispatch<BasicStateAction<S>>],
   useReducer<S, I, A>(
@@ -377,7 +460,11 @@ export type Dispatcher = {
     create: () => (() => void) | void,
     deps: Array<mixed> | void | null,
   ): void,
+<<<<<<< HEAD
   useEvent?: <T>(callback: () => T) => () => T,
+=======
+  useEffectEvent?: <Args, F: (...Array<Args>) => mixed>(callback: F) => F,
+>>>>>>> remotes/upstream/main
   useInsertionEffect(
     create: () => (() => void) | void,
     deps: Array<mixed> | void | null,
@@ -394,16 +481,23 @@ export type Dispatcher = {
     deps: Array<mixed> | void | null,
   ): void,
   useDebugValue<T>(value: T, formatterFn: ?(value: T) => mixed): void,
+<<<<<<< HEAD
   useDeferredValue<T>(value: T): T,
+=======
+  useDeferredValue<T>(value: T, initialValue?: T): T,
+>>>>>>> remotes/upstream/main
   useTransition(): [
     boolean,
     (callback: () => void, options?: StartTransitionOptions) => void,
   ],
+<<<<<<< HEAD
   useMutableSource<Source, Snapshot>(
     source: MutableSource<Source>,
     getSnapshot: MutableSourceGetSnapshotFn<Source, Snapshot>,
     subscribe: MutableSourceSubscribeFn<Source, Snapshot>,
   ): Snapshot,
+=======
+>>>>>>> remotes/upstream/main
   useSyncExternalStore<T>(
     subscribe: (() => void) => () => void,
     getSnapshot: () => T,
@@ -412,6 +506,24 @@ export type Dispatcher = {
   useId(): string,
   useCacheRefresh?: () => <T>(?() => T, ?T) => void,
   useMemoCache?: (size: number) => Array<any>,
+<<<<<<< HEAD
 
   unstable_isNewReconciler?: boolean,
+=======
+  useHostTransitionStatus?: () => TransitionStatus,
+  useOptimistic?: <S, A>(
+    passthrough: S,
+    reducer: ?(S, A) => S,
+  ) => [S, (A) => void],
+  useFormState?: <S, P>(
+    action: (S, P) => Promise<S>,
+    initialState: S,
+    permalink?: string,
+  ) => [S, (P) => void],
+};
+
+export type CacheDispatcher = {
+  getCacheSignal: () => AbortSignal,
+  getCacheForType: <T>(resourceType: () => T) => T,
+>>>>>>> remotes/upstream/main
 };

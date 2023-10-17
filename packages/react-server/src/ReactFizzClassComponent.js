@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,23 +14,33 @@
 import {emptyContextObject} from './ReactFizzContext';
 import {readContext} from './ReactFizzNewContext';
 
+<<<<<<< HEAD
 import {
   disableLegacyContext,
   warnAboutDeprecatedLifecycles,
 } from 'shared/ReactFeatureFlags';
+=======
+import {disableLegacyContext} from 'shared/ReactFeatureFlags';
+>>>>>>> remotes/upstream/main
 import {get as getInstance, set as setInstance} from 'shared/ReactInstanceMap';
 import getComponentNameFromType from 'shared/getComponentNameFromType';
 import {REACT_CONTEXT_TYPE, REACT_PROVIDER_TYPE} from 'shared/ReactSymbols';
 import assign from 'shared/assign';
 import isArray from 'shared/isArray';
 
+<<<<<<< HEAD
 const didWarnAboutNoopUpdateForComponent = {};
 const didWarnAboutDeprecatedWillMount = {};
+=======
+const didWarnAboutNoopUpdateForComponent: {[string]: boolean} = {};
+const didWarnAboutDeprecatedWillMount: {[string]: boolean} = {};
+>>>>>>> remotes/upstream/main
 
 let didWarnAboutUninitializedState;
 let didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
 let didWarnAboutLegacyLifecyclesAndDerivedState;
 let didWarnAboutUndefinedDerivedState;
+<<<<<<< HEAD
 let warnOnUndefinedDerivedState;
 let warnOnInvalidCallback;
 let didWarnAboutDirectlyAssigningPropsToState;
@@ -45,6 +59,26 @@ if (__DEV__) {
   const didWarnOnInvalidCallback = new Set();
 
   warnOnInvalidCallback = function(callback: mixed, callerName: string) {
+=======
+let didWarnAboutDirectlyAssigningPropsToState;
+let didWarnAboutContextTypeAndContextTypes;
+let didWarnAboutInvalidateContextType;
+let didWarnOnInvalidCallback;
+
+if (__DEV__) {
+  didWarnAboutUninitializedState = new Set<string>();
+  didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate = new Set<mixed>();
+  didWarnAboutLegacyLifecyclesAndDerivedState = new Set<string>();
+  didWarnAboutDirectlyAssigningPropsToState = new Set<string>();
+  didWarnAboutUndefinedDerivedState = new Set<string>();
+  didWarnAboutContextTypeAndContextTypes = new Set<mixed>();
+  didWarnAboutInvalidateContextType = new Set<mixed>();
+  didWarnOnInvalidCallback = new Set<string>();
+}
+
+function warnOnInvalidCallback(callback: mixed, callerName: string) {
+  if (__DEV__) {
+>>>>>>> remotes/upstream/main
     if (callback === null || typeof callback === 'function') {
       return;
     }
@@ -58,9 +92,17 @@ if (__DEV__) {
         callback,
       );
     }
+<<<<<<< HEAD
   };
 
   warnOnUndefinedDerivedState = function(type, partialState) {
+=======
+  }
+}
+
+function warnOnUndefinedDerivedState(type: any, partialState: any) {
+  if (__DEV__) {
+>>>>>>> remotes/upstream/main
     if (partialState === undefined) {
       const componentName = getComponentNameFromType(type) || 'Component';
       if (!didWarnAboutUndefinedDerivedState.has(componentName)) {
@@ -72,7 +114,11 @@ if (__DEV__) {
         );
       }
     }
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> remotes/upstream/main
 }
 
 function warnNoop(
@@ -106,10 +152,18 @@ type InternalInstance = {
 };
 
 const classComponentUpdater = {
+<<<<<<< HEAD
   isMounted(inst) {
     return false;
   },
   enqueueSetState(inst, payload, callback) {
+=======
+  isMounted(inst: any) {
+    return false;
+  },
+  // $FlowFixMe[missing-local-annot]
+  enqueueSetState(inst: any, payload: any, callback) {
+>>>>>>> remotes/upstream/main
     const internals: InternalInstance = getInstance(inst);
     if (internals.queue === null) {
       warnNoop(inst, 'setState');
@@ -122,7 +176,11 @@ const classComponentUpdater = {
       }
     }
   },
+<<<<<<< HEAD
   enqueueReplaceState(inst, payload, callback) {
+=======
+  enqueueReplaceState(inst: any, payload: any, callback: null) {
+>>>>>>> remotes/upstream/main
     const internals: InternalInstance = getInstance(inst);
     internals.replace = true;
     internals.queue = [payload];
@@ -132,7 +190,12 @@ const classComponentUpdater = {
       }
     }
   },
+<<<<<<< HEAD
   enqueueForceUpdate(inst, callback) {
+=======
+  // $FlowFixMe[missing-local-annot]
+  enqueueForceUpdate(inst: any, callback) {
+>>>>>>> remotes/upstream/main
     const internals: InternalInstance = getInstance(inst);
     if (internals.queue === null) {
       warnNoop(inst, 'forceUpdate');
@@ -532,15 +595,23 @@ function checkClassInstance(instance: any, ctor: any, newProps: any) {
   }
 }
 
+<<<<<<< HEAD
 function callComponentWillMount(type, instance) {
+=======
+function callComponentWillMount(type: any, instance: any) {
+>>>>>>> remotes/upstream/main
   const oldState = instance.state;
 
   if (typeof instance.componentWillMount === 'function') {
     if (__DEV__) {
+<<<<<<< HEAD
       if (
         warnAboutDeprecatedLifecycles &&
         instance.componentWillMount.__suppressDeprecationWarning !== true
       ) {
+=======
+      if (instance.componentWillMount.__suppressDeprecationWarning !== true) {
+>>>>>>> remotes/upstream/main
         const componentName = getComponentNameFromType(type) || 'Unknown';
 
         if (!didWarnAboutDeprecatedWillMount[componentName]) {

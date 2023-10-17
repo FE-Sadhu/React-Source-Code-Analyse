@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -45,6 +49,15 @@ export const REACT_SERVER_CONTEXT_DEFAULT_VALUE_NOT_LOADED: symbol = Symbol.for(
   'react.default_value',
 );
 
+<<<<<<< HEAD
+=======
+export const REACT_MEMO_CACHE_SENTINEL: symbol = Symbol.for(
+  'react.memo_cache_sentinel',
+);
+
+export const REACT_POSTPONE_TYPE: symbol = Symbol.for('react.postpone');
+
+>>>>>>> remotes/upstream/main
 const MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
 const FAUX_ITERATOR_SYMBOL = '@@iterator';
 

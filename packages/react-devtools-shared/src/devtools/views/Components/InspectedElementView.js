@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -38,8 +42,20 @@ import {logEvent} from 'react-devtools-shared/src/Logger';
 import styles from './InspectedElementView.css';
 
 import type {ContextMenuContextType} from '../context';
+<<<<<<< HEAD
 import type {Element, InspectedElement, SerializedElement} from './types';
 import type {ElementType, HookNames} from 'react-devtools-shared/src/types';
+=======
+import type {
+  Element,
+  InspectedElement,
+  SerializedElement,
+} from 'react-devtools-shared/src/frontend/types';
+import type {
+  ElementType,
+  HookNames,
+} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {ToggleParseHookNames} from './InspectedElementContext';
 
 export type CopyPath = (path: Array<string | number>) => void;
@@ -61,6 +77,7 @@ export default function InspectedElementView({
   toggleParseHookNames,
 }: Props): React.Node {
   const {id} = element;
+<<<<<<< HEAD
   const {
     owners,
     rendererPackageName,
@@ -68,6 +85,10 @@ export default function InspectedElementView({
     rootType,
     source,
   } = inspectedElement;
+=======
+  const {owners, rendererPackageName, rendererVersion, rootType, source} =
+    inspectedElement;
+>>>>>>> remotes/upstream/main
 
   const bridge = useContext(BridgeContext);
   const store = useContext(StoreContext);
@@ -297,10 +318,15 @@ function OwnerView({
   type,
 }: OwnerViewProps) {
   const dispatch = useContext(TreeDispatcherContext);
+<<<<<<< HEAD
   const {
     highlightNativeElement,
     clearHighlightNativeElement,
   } = useHighlightNativeElement();
+=======
+  const {highlightNativeElement, clearHighlightNativeElement} =
+    useHighlightNativeElement();
+>>>>>>> remotes/upstream/main
 
   const handleClick = useCallback(() => {
     logEvent({

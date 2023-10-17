@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {createContext, useCallback, useContext, useMemo, useState} from 'react';
 import {unstable_batchedUpdates as batchedUpdates} from 'react-dom';
@@ -67,7 +76,13 @@ export type Context = {
   selectFiber: (id: number | null, name: string | null) => void,
 };
 
+<<<<<<< HEAD
 const ProfilerContext = createContext<Context>(((null: any): Context));
+=======
+const ProfilerContext: ReactContext<Context> = createContext<Context>(
+  ((null: any): Context),
+);
+>>>>>>> remotes/upstream/main
 ProfilerContext.displayName = 'ProfilerContext';
 
 type StoreProfilingState = {
@@ -121,10 +136,15 @@ function ProfilerContextController({children}: Props): React.Node {
     supportsProfiling,
   } = useSubscription<StoreProfilingState>(subscription);
 
+<<<<<<< HEAD
   const [
     prevProfilingData,
     setPrevProfilingData,
   ] = useState<ProfilingDataFrontend | null>(null);
+=======
+  const [prevProfilingData, setPrevProfilingData] =
+    useState<ProfilingDataFrontend | null>(null);
+>>>>>>> remotes/upstream/main
   const [rootID, setRootID] = useState<number | null>(null);
   const [selectedFiberID, selectFiberID] = useState<number | null>(null);
   const [selectedFiberName, selectFiberName] = useState<string | null>(null);
@@ -175,9 +195,14 @@ function ProfilerContextController({children}: Props): React.Node {
         if (rootID === null || !dataForRoots.has(rootID)) {
           let selectedElementRootID = null;
           if (selectedElementID !== null) {
+<<<<<<< HEAD
             selectedElementRootID = store.getRootIDForElement(
               selectedElementID,
             );
+=======
+            selectedElementRootID =
+              store.getRootIDForElement(selectedElementID);
+>>>>>>> remotes/upstream/main
           }
           if (
             selectedElementRootID !== null &&
@@ -192,10 +217,15 @@ function ProfilerContextController({children}: Props): React.Node {
     });
   }
 
+<<<<<<< HEAD
   const [
     isCommitFilterEnabled,
     setIsCommitFilterEnabled,
   ] = useLocalStorage<boolean>('React::DevTools::isCommitFilterEnabled', false);
+=======
+  const [isCommitFilterEnabled, setIsCommitFilterEnabled] =
+    useLocalStorage<boolean>('React::DevTools::isCommitFilterEnabled', false);
+>>>>>>> remotes/upstream/main
   const [minCommitDuration, setMinCommitDuration] = useLocalStorage<number>(
     'minCommitDuration',
     0,
@@ -224,9 +254,16 @@ function ProfilerContextController({children}: Props): React.Node {
     });
     store.profilerStore.startProfiling();
   }, [store, selectedTabID]);
+<<<<<<< HEAD
   const stopProfiling = useCallback(() => store.profilerStore.stopProfiling(), [
     store,
   ]);
+=======
+  const stopProfiling = useCallback(
+    () => store.profilerStore.stopProfiling(),
+    [store],
+  );
+>>>>>>> remotes/upstream/main
 
   if (isProfiling) {
     batchedUpdates(() => {

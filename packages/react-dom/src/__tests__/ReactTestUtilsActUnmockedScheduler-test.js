@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,7 +19,11 @@ let act;
 let container;
 let yields;
 
+<<<<<<< HEAD
 function clearYields() {
+=======
+function clearLog() {
+>>>>>>> remotes/upstream/main
   try {
     return yields;
   } finally {
@@ -60,7 +68,11 @@ it('can use act to flush effects', () => {
     render(<App />, container);
   });
 
+<<<<<<< HEAD
   expect(clearYields()).toEqual([100]);
+=======
+  expect(clearLog()).toEqual([100]);
+>>>>>>> remotes/upstream/main
 });
 
 // @gate __DEV__
@@ -81,7 +93,11 @@ it('flushes effects on every call', () => {
     render(<App />, container);
   });
 
+<<<<<<< HEAD
   expect(clearYields()).toEqual([0]);
+=======
+  expect(clearLog()).toEqual([0]);
+>>>>>>> remotes/upstream/main
 
   const button = container.querySelector('#button');
   function click() {
@@ -94,11 +110,19 @@ it('flushes effects on every call', () => {
     click();
   });
   // it consolidates the 3 updates, then fires the effect
+<<<<<<< HEAD
   expect(clearYields()).toEqual([3]);
   act(click);
   expect(clearYields()).toEqual([4]);
   act(click);
   expect(clearYields()).toEqual([5]);
+=======
+  expect(clearLog()).toEqual([3]);
+  act(click);
+  expect(clearLog()).toEqual([4]);
+  act(click);
+  expect(clearLog()).toEqual([5]);
+>>>>>>> remotes/upstream/main
   expect(button.innerHTML).toEqual('5');
 });
 
@@ -136,10 +160,17 @@ it('should flush effects only on exiting the outermost act', () => {
     });
     // the effect wouldn't have yielded yet because
     // we're still inside an act() scope
+<<<<<<< HEAD
     expect(clearYields()).toEqual([]);
   });
   // but after exiting the last one, effects get flushed
   expect(clearYields()).toEqual([0]);
+=======
+    expect(clearLog()).toEqual([]);
+  });
+  // but after exiting the last one, effects get flushed
+  expect(clearLog()).toEqual([0]);
+>>>>>>> remotes/upstream/main
 });
 
 // @gate __DEV__
@@ -163,6 +194,10 @@ it('can handle cascading promises', async () => {
     render(<App />, container);
   });
   // all 5 ticks present and accounted for
+<<<<<<< HEAD
   expect(clearYields()).toEqual([0, 1, 2, 3, 4]);
+=======
+  expect(clearLog()).toEqual([0, 1, 2, 3, 4]);
+>>>>>>> remotes/upstream/main
   expect(container.innerHTML).toBe('5');
 });

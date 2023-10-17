@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,7 +23,11 @@ describe('ReactDOMSelection', () => {
   beforeEach(() => {
     React = require('react');
     ReactDOM = require('react-dom');
+<<<<<<< HEAD
     ReactDOMSelection = require('../client/ReactDOMSelection');
+=======
+    ReactDOMSelection = require('react-dom-bindings/src/client/ReactDOMSelection');
+>>>>>>> remotes/upstream/main
 
     ({getModernOffsetsFromPoints} = ReactDOMSelection);
   });

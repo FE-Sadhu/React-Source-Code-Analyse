@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,7 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {Dispatcher as DispatcherType} from 'react-reconciler/src/ReactInternalTypes';
 import type {Request} from './ReactFlightServer';
 import type {ReactServerContext, Thenable, Usable} from 'shared/ReactTypes';
@@ -19,6 +24,19 @@ import {
   createThenableState,
   trackUsedThenable,
 } from './ReactFlightWakeable';
+=======
+import type {Dispatcher} from 'react-reconciler/src/ReactInternalTypes';
+import type {Request} from './ReactFlightServer';
+import type {ReactServerContext, Thenable, Usable} from 'shared/ReactTypes';
+import type {ThenableState} from './ReactFlightThenable';
+import {
+  REACT_SERVER_CONTEXT_TYPE,
+  REACT_MEMO_CACHE_SENTINEL,
+} from 'shared/ReactSymbols';
+import {readContext as readContextImpl} from './ReactFlightNewContext';
+import {createThenableState, trackUsedThenable} from './ReactFlightThenable';
+import {isClientReference} from './ReactFlightServerConfig';
+>>>>>>> remotes/upstream/main
 
 let currentRequest = null;
 let thenableIndexCounter = 0;
@@ -48,11 +66,23 @@ export function getThenableStateAfterSuspending(): null | ThenableState {
 function readContext<T>(context: ReactServerContext<T>): T {
   if (__DEV__) {
     if (context.$$typeof !== REACT_SERVER_CONTEXT_TYPE) {
+<<<<<<< HEAD
       console.error(
         'Only createServerContext is supported in Server Components.',
       );
     }
     if (currentCache === null) {
+=======
+      if (isClientReference(context)) {
+        console.error('Cannot read a Client Context from a Server Component.');
+      } else {
+        console.error(
+          'Only createServerContext is supported in Server Components.',
+        );
+      }
+    }
+    if (currentRequest === null) {
+>>>>>>> remotes/upstream/main
       console.error(
         'Context can only be read while React is rendering. ' +
           'In classes, you can read it in the render method or getDerivedStateFromProps. ' +
@@ -64,7 +94,11 @@ function readContext<T>(context: ReactServerContext<T>): T {
   return readContextImpl(context);
 }
 
+<<<<<<< HEAD
 export const Dispatcher: DispatcherType = {
+=======
+export const HooksDispatcher: Dispatcher = {
+>>>>>>> remotes/upstream/main
   useMemo<T>(nextCreate: () => T): T {
     return nextCreate();
   },
@@ -74,6 +108,7 @@ export const Dispatcher: DispatcherType = {
   useDebugValue(): void {},
   useDeferredValue: (unsupportedHook: any),
   useTransition: (unsupportedHook: any),
+<<<<<<< HEAD
   getCacheForType<T>(resourceType: () => T): T {
     if (!currentCache) {
       throw new Error('Reading the cache is only supported while rendering.');
@@ -87,6 +122,8 @@ export const Dispatcher: DispatcherType = {
     }
     return entry;
   },
+=======
+>>>>>>> remotes/upstream/main
   readContext,
   useContext: readContext,
   useReducer: (unsupportedHook: any),
@@ -97,15 +134,28 @@ export const Dispatcher: DispatcherType = {
   useImperativeHandle: (unsupportedHook: any),
   useEffect: (unsupportedHook: any),
   useId,
+<<<<<<< HEAD
   useMutableSource: (unsupportedHook: any),
+=======
+>>>>>>> remotes/upstream/main
   useSyncExternalStore: (unsupportedHook: any),
   useCacheRefresh(): <T>(?() => T, ?T) => void {
     return unsupportedRefresh;
   },
   useMemoCache(size: number): Array<any> {
+<<<<<<< HEAD
     return new Array(size);
   },
   use: enableUseHook ? use : (unsupportedHook: any),
+=======
+    const data = new Array<any>(size);
+    for (let i = 0; i < size; i++) {
+      data[i] = REACT_MEMO_CACHE_SENTINEL;
+    }
+    return data;
+  },
+  use,
+>>>>>>> remotes/upstream/main
 };
 
 function unsupportedHook(): void {
@@ -113,6 +163,7 @@ function unsupportedHook(): void {
 }
 
 function unsupportedRefresh(): void {
+<<<<<<< HEAD
   if (!currentCache) {
     throw new Error(
       'Refreshing the cache is not supported in Server Components.',
@@ -129,6 +180,11 @@ export function setCurrentCache(cache: Map<Function, mixed> | null) {
 
 export function getCurrentCache() {
   return currentCache;
+=======
+  throw new Error(
+    'Refreshing the cache is not supported in Server Components.',
+  );
+>>>>>>> remotes/upstream/main
 }
 
 function useId(): string {
@@ -141,7 +197,15 @@ function useId(): string {
 }
 
 function use<T>(usable: Usable<T>): T {
+<<<<<<< HEAD
   if (usable !== null && typeof usable === 'object') {
+=======
+  if (
+    (usable !== null && typeof usable === 'object') ||
+    typeof usable === 'function'
+  ) {
+    // $FlowFixMe[method-unbinding]
+>>>>>>> remotes/upstream/main
     if (typeof usable.then === 'function') {
       // This is a thenable.
       const thenable: Thenable<T> = (usable: any);
@@ -150,6 +214,7 @@ function use<T>(usable: Usable<T>): T {
       const index = thenableIndexCounter;
       thenableIndexCounter += 1;
 
+<<<<<<< HEAD
       switch (thenable.status) {
         case 'fulfilled': {
           const fulfilledValue: T = thenable.value;
@@ -200,12 +265,27 @@ function use<T>(usable: Usable<T>): T {
           }
         }
       }
+=======
+      if (thenableState === null) {
+        thenableState = createThenableState();
+      }
+      return trackUsedThenable(thenableState, thenable, index);
+>>>>>>> remotes/upstream/main
     } else if (usable.$$typeof === REACT_SERVER_CONTEXT_TYPE) {
       const context: ReactServerContext<T> = (usable: any);
       return readContext(context);
     }
   }
 
+<<<<<<< HEAD
+=======
+  if (__DEV__) {
+    if (isClientReference(usable)) {
+      console.error('Cannot use() an already resolved Client Reference.');
+    }
+  }
+
+>>>>>>> remotes/upstream/main
   // eslint-disable-next-line react-internal/safe-string-coercion
   throw new Error('An unsupported type was passed to use(): ' + String(usable));
 }

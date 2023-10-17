@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,7 +13,10 @@
 
 'use strict';
 
+<<<<<<< HEAD
 import ReactShallowRenderer from 'react-test-renderer/shallow';
+=======
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactDOMServer from 'react-dom/server';
@@ -41,9 +48,13 @@ describe('ReactTestUtils', () => {
     MockedComponent.prototype.render = jest.fn();
 
     // Patch it up so it returns its children.
+<<<<<<< HEAD
     expect(() =>
       ReactTestUtils.mockComponent(MockedComponent),
     ).toWarnDev(
+=======
+    expect(() => ReactTestUtils.mockComponent(MockedComponent)).toWarnDev(
+>>>>>>> remotes/upstream/main
       'ReactTestUtils.mockComponent() is deprecated. ' +
         'Use shallow rendering or jest.mock() instead.\n\n' +
         'See https://reactjs.org/link/test-utils-mock-component for more information.',
@@ -189,7 +200,11 @@ describe('ReactTestUtils', () => {
     );
 
     const log = [];
+<<<<<<< HEAD
     ReactTestUtils.findAllInRenderedTree(tree, function(child) {
+=======
+    ReactTestUtils.findAllInRenderedTree(tree, function (child) {
+>>>>>>> remotes/upstream/main
       if (ReactTestUtils.isDOMComponent(child)) {
         log.push(ReactDOM.findDOMNode(child).textContent);
       }
@@ -211,7 +226,11 @@ describe('ReactTestUtils', () => {
       'textarea',
     ];
 
+<<<<<<< HEAD
     injectedDOMComponents.forEach(function(type) {
+=======
+    injectedDOMComponents.forEach(function (type) {
+>>>>>>> remotes/upstream/main
       const testComponent = ReactTestUtils.renderIntoDocument(
         React.createElement(type),
       );
@@ -222,6 +241,7 @@ describe('ReactTestUtils', () => {
     // Full-page components (html, head, body) can't be rendered into a div
     // directly...
     class Root extends React.Component {
+<<<<<<< HEAD
       render() {
         return (
           <html ref="html">
@@ -229,6 +249,19 @@ describe('ReactTestUtils', () => {
               <title>hello</title>
             </head>
             <body ref="body">hello, world</body>
+=======
+      htmlRef = React.createRef();
+      headRef = React.createRef();
+      bodyRef = React.createRef();
+
+      render() {
+        return (
+          <html ref={this.htmlRef}>
+            <head ref={this.headRef}>
+              <title>hello</title>
+            </head>
+            <body ref={this.bodyRef}>hello, world</body>
+>>>>>>> remotes/upstream/main
           </html>
         );
       }
@@ -238,12 +271,21 @@ describe('ReactTestUtils', () => {
     const testDocument = getTestDocument(markup);
     const component = ReactDOM.hydrate(<Root />, testDocument);
 
+<<<<<<< HEAD
     expect(component.refs.html.tagName).toBe('HTML');
     expect(component.refs.head.tagName).toBe('HEAD');
     expect(component.refs.body.tagName).toBe('BODY');
     expect(ReactTestUtils.isDOMComponent(component.refs.html)).toBe(true);
     expect(ReactTestUtils.isDOMComponent(component.refs.head)).toBe(true);
     expect(ReactTestUtils.isDOMComponent(component.refs.body)).toBe(true);
+=======
+    expect(component.htmlRef.current.tagName).toBe('HTML');
+    expect(component.headRef.current.tagName).toBe('HEAD');
+    expect(component.bodyRef.current.tagName).toBe('BODY');
+    expect(ReactTestUtils.isDOMComponent(component.htmlRef.current)).toBe(true);
+    expect(ReactTestUtils.isDOMComponent(component.headRef.current)).toBe(true);
+    expect(ReactTestUtils.isDOMComponent(component.bodyRef.current)).toBe(true);
+>>>>>>> remotes/upstream/main
   });
 
   it('can scry with stateless components involved', () => {
@@ -328,11 +370,19 @@ describe('ReactTestUtils', () => {
   describe('Simulate', () => {
     it('should change the value of an input field', () => {
       const obj = {
+<<<<<<< HEAD
         handler: function(e) {
           e.persist();
         },
       };
       spyOnDevAndProd(obj, 'handler').and.callThrough();
+=======
+        handler: function (e) {
+          e.persist();
+        },
+      };
+      spyOnDevAndProd(obj, 'handler');
+>>>>>>> remotes/upstream/main
       const container = document.createElement('div');
       const node = ReactDOM.render(
         <input type="text" onChange={obj.handler} />,
@@ -349,12 +399,20 @@ describe('ReactTestUtils', () => {
 
     it('should change the value of an input field in a component', () => {
       class SomeComponent extends React.Component {
+<<<<<<< HEAD
+=======
+        inputRef = React.createRef();
+>>>>>>> remotes/upstream/main
         render() {
           return (
             <div>
               <input
                 type="text"
+<<<<<<< HEAD
                 ref="input"
+=======
+                ref={this.inputRef}
+>>>>>>> remotes/upstream/main
                 onChange={this.props.handleChange}
               />
             </div>
@@ -363,18 +421,30 @@ describe('ReactTestUtils', () => {
       }
 
       const obj = {
+<<<<<<< HEAD
         handler: function(e) {
           e.persist();
         },
       };
       spyOnDevAndProd(obj, 'handler').and.callThrough();
+=======
+        handler: function (e) {
+          e.persist();
+        },
+      };
+      spyOnDevAndProd(obj, 'handler');
+>>>>>>> remotes/upstream/main
       const container = document.createElement('div');
       const instance = ReactDOM.render(
         <SomeComponent handleChange={obj.handler} />,
         container,
       );
 
+<<<<<<< HEAD
       const node = instance.refs.input;
+=======
+      const node = instance.inputRef.current;
+>>>>>>> remotes/upstream/main
       node.value = 'zebra';
       ReactTestUtils.Simulate.change(node);
 
@@ -383,6 +453,7 @@ describe('ReactTestUtils', () => {
       );
     });
 
+<<<<<<< HEAD
     it('should throw when attempting to use a React element', () => {
       class SomeComponent extends React.Component {
         render() {
@@ -425,6 +496,8 @@ describe('ReactTestUtils', () => {
       expect(handler).not.toHaveBeenCalled();
     });
 
+=======
+>>>>>>> remotes/upstream/main
     it('should not warn when used with extra properties', () => {
       const CLIENT_X = 100;
 
@@ -503,4 +576,22 @@ describe('ReactTestUtils', () => {
     ReactTestUtils.renderIntoDocument(<Component />);
     expect(mockArgs.length).toEqual(0);
   });
+<<<<<<< HEAD
+=======
+  it('should find rendered component with type in document', () => {
+    class MyComponent extends React.Component {
+      render() {
+        return true;
+      }
+    }
+
+    const instance = ReactTestUtils.renderIntoDocument(<MyComponent />);
+    const renderedComponentType = ReactTestUtils.findRenderedComponentWithType(
+      instance,
+      MyComponent,
+    );
+
+    expect(renderedComponentType).toBe(instance);
+  });
+>>>>>>> remotes/upstream/main
 });

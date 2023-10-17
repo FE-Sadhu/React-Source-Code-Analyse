@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,6 +19,13 @@ let ReactDOM;
 let ReactDOMClient;
 let Scheduler;
 let act;
+<<<<<<< HEAD
+=======
+let waitForAll;
+let waitFor;
+let waitForMicrotasks;
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 const setUntrackedInputValue = Object.getOwnPropertyDescriptor(
   HTMLInputElement.prototype,
@@ -25,15 +36,32 @@ describe('ReactDOMFiberAsync', () => {
   let container;
 
   beforeEach(() => {
+<<<<<<< HEAD
     jest.resetModules();
+=======
+>>>>>>> remotes/upstream/main
     container = document.createElement('div');
     React = require('react');
     ReactDOM = require('react-dom');
     ReactDOMClient = require('react-dom/client');
+<<<<<<< HEAD
     act = require('jest-react').act;
     Scheduler = require('scheduler');
 
     document.body.appendChild(container);
+=======
+    act = require('internal-test-utils').act;
+    Scheduler = require('scheduler');
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    waitFor = InternalTestUtils.waitFor;
+    waitForMicrotasks = InternalTestUtils.waitForMicrotasks;
+    assertLog = InternalTestUtils.assertLog;
+
+    document.body.appendChild(container);
+    window.event = undefined;
+>>>>>>> remotes/upstream/main
   });
 
   afterEach(() => {
@@ -150,7 +178,11 @@ describe('ReactDOMFiberAsync', () => {
   });
 
   describe('concurrent mode', () => {
+<<<<<<< HEAD
     it('does not perform deferred updates synchronously', () => {
+=======
+    it('does not perform deferred updates synchronously', async () => {
+>>>>>>> remotes/upstream/main
       const inputRef = React.createRef();
       const asyncValueRef = React.createRef();
       const syncValueRef = React.createRef();
@@ -160,7 +192,11 @@ describe('ReactDOMFiberAsync', () => {
 
         handleChange = e => {
           const nextValue = e.target.value;
+<<<<<<< HEAD
           requestIdleCallback(() => {
+=======
+          React.startTransition(() => {
+>>>>>>> remotes/upstream/main
             this.setState({
               asyncValue: nextValue,
             });
@@ -187,6 +223,7 @@ describe('ReactDOMFiberAsync', () => {
         }
       }
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       root.render(<Counter />);
       Scheduler.unstable_flushAll();
       expect(asyncValueRef.current.textContent).toBe('');
@@ -201,10 +238,28 @@ describe('ReactDOMFiberAsync', () => {
       // Should flush both updates now.
       jest.runAllTimers();
       Scheduler.unstable_flushAll();
+=======
+      await act(() => root.render(<Counter />));
+      expect(asyncValueRef.current.textContent).toBe('');
+      expect(syncValueRef.current.textContent).toBe('');
+
+      await act(() => {
+        setUntrackedInputValue.call(inputRef.current, 'hello');
+        inputRef.current.dispatchEvent(
+          new MouseEvent('input', {bubbles: true}),
+        );
+        // Should only flush non-deferred update.
+        expect(asyncValueRef.current.textContent).toBe('');
+        expect(syncValueRef.current.textContent).toBe('hello');
+      });
+
+      // Should flush both updates now.
+>>>>>>> remotes/upstream/main
       expect(asyncValueRef.current.textContent).toBe('hello');
       expect(syncValueRef.current.textContent).toBe('hello');
     });
 
+<<<<<<< HEAD
     it('top-level updates are concurrent', () => {
       const root = ReactDOMClient.createRoot(container);
       root.render(<div>Hi</div>);
@@ -219,6 +274,24 @@ describe('ReactDOMFiberAsync', () => {
     });
 
     it('deep updates (setState) are concurrent', () => {
+=======
+    it('top-level updates are concurrent', async () => {
+      const root = ReactDOMClient.createRoot(container);
+      await act(() => {
+        root.render(<div>Hi</div>);
+        expect(container.textContent).toEqual('');
+      });
+      expect(container.textContent).toEqual('Hi');
+
+      await act(() => {
+        root.render(<div>Bye</div>);
+        expect(container.textContent).toEqual('Hi');
+      });
+      expect(container.textContent).toEqual('Bye');
+    });
+
+    it('deep updates (setState) are concurrent', async () => {
+>>>>>>> remotes/upstream/main
       let instance;
       class Component extends React.Component {
         state = {step: 0};
@@ -229,6 +302,7 @@ describe('ReactDOMFiberAsync', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       root.render(<Component />);
       expect(container.textContent).toEqual('');
       Scheduler.unstable_flushAll();
@@ -242,6 +316,23 @@ describe('ReactDOMFiberAsync', () => {
 
     it('flushSync flushes updates before end of the tick', () => {
       const ops = [];
+=======
+
+      await act(() => {
+        root.render(<Component />);
+        expect(container.textContent).toEqual('');
+      });
+      expect(container.textContent).toEqual('0');
+
+      await act(() => {
+        instance.setState({step: 1});
+        expect(container.textContent).toEqual('0');
+      });
+      expect(container.textContent).toEqual('1');
+    });
+
+    it('flushSync flushes updates before end of the tick', async () => {
+>>>>>>> remotes/upstream/main
       let instance;
 
       class Component extends React.Component {
@@ -250,7 +341,11 @@ describe('ReactDOMFiberAsync', () => {
           this.setState(state => ({text: state.text + val}));
         }
         componentDidUpdate() {
+<<<<<<< HEAD
           ops.push(this.state.text);
+=======
+          Scheduler.log(this.state.text);
+>>>>>>> remotes/upstream/main
         }
         render() {
           instance = this;
@@ -259,12 +354,20 @@ describe('ReactDOMFiberAsync', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       root.render(<Component />);
       Scheduler.unstable_flushAll();
 
       // Updates are async by default
       instance.push('A');
       expect(ops).toEqual([]);
+=======
+      await act(() => root.render(<Component />));
+
+      // Updates are async by default
+      instance.push('A');
+      assertLog([]);
+>>>>>>> remotes/upstream/main
       expect(container.textContent).toEqual('');
 
       ReactDOM.flushSync(() => {
@@ -272,6 +375,7 @@ describe('ReactDOMFiberAsync', () => {
         instance.push('C');
         // Not flushed yet
         expect(container.textContent).toEqual('');
+<<<<<<< HEAD
         expect(ops).toEqual([]);
       });
       // Only the active updates have flushed
@@ -381,6 +485,30 @@ describe('ReactDOMFiberAsync', () => {
       });
       expect(container.textContent).toEqual('1');
       expect(returnValue).toBe(undefined);
+=======
+        assertLog([]);
+      });
+      // Only the active updates have flushed
+      if (gate(flags => flags.enableUnifiedSyncLane)) {
+        expect(container.textContent).toEqual('ABC');
+        assertLog(['ABC']);
+      } else {
+        expect(container.textContent).toEqual('BC');
+        assertLog(['BC']);
+      }
+
+      await act(() => {
+        instance.push('D');
+        if (gate(flags => flags.enableUnifiedSyncLane)) {
+          expect(container.textContent).toEqual('ABC');
+        } else {
+          expect(container.textContent).toEqual('BC');
+        }
+        assertLog([]);
+      });
+      assertLog(['ABCD']);
+      expect(container.textContent).toEqual('ABCD');
+>>>>>>> remotes/upstream/main
     });
 
     it('ignores discrete events on a pending removed element', async () => {
@@ -404,7 +532,11 @@ describe('ReactDOMFiberAsync', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         root.render(<Form />);
       });
 
@@ -455,7 +587,11 @@ describe('ReactDOMFiberAsync', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         root.render(<Form />);
       });
 
@@ -465,7 +601,11 @@ describe('ReactDOMFiberAsync', () => {
       // Dispatch a click event on the Disable-button.
       const firstEvent = document.createEvent('Event');
       firstEvent.initEvent('click', true, true);
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         disableButton.dispatchEvent(firstEvent);
       });
 
@@ -479,7 +619,11 @@ describe('ReactDOMFiberAsync', () => {
       const secondEvent = document.createEvent('Event');
       secondEvent.initEvent('click', true, true);
       // This should force the pending update to flush which disables the submit button before the event is invoked.
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         submitButton.dispatchEvent(secondEvent);
       });
 
@@ -514,7 +658,11 @@ describe('ReactDOMFiberAsync', () => {
       }
 
       const root = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         root.render(<Form />);
       });
 
@@ -524,7 +672,11 @@ describe('ReactDOMFiberAsync', () => {
       // Dispatch a click event on the Enable-button.
       const firstEvent = document.createEvent('Event');
       firstEvent.initEvent('click', true, true);
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         enableButton.dispatchEvent(firstEvent);
       });
 
@@ -538,7 +690,11 @@ describe('ReactDOMFiberAsync', () => {
       const secondEvent = document.createEvent('Event');
       secondEvent.initEvent('click', true, true);
       // This should force the pending update to flush which enables the submit button before the event is invoked.
+<<<<<<< HEAD
       await act(async () => {
+=======
+      await act(() => {
+>>>>>>> remotes/upstream/main
         submitButton.dispatchEvent(secondEvent);
       });
 
@@ -547,7 +703,11 @@ describe('ReactDOMFiberAsync', () => {
     });
   });
 
+<<<<<<< HEAD
   it('regression test: does not drop passive effects across roots (#17066)', () => {
+=======
+  it('regression test: does not drop passive effects across roots (#17066)', async () => {
+>>>>>>> remotes/upstream/main
     const {useState, useEffect} = React;
 
     function App({label}) {
@@ -566,22 +726,38 @@ describe('ReactDOMFiberAsync', () => {
     const containerB = document.createElement('div');
     const containerC = document.createElement('div');
 
+<<<<<<< HEAD
     ReactDOM.render(<App label="A" />, containerA);
     ReactDOM.render(<App label="B" />, containerB);
     ReactDOM.render(<App label="C" />, containerC);
 
     Scheduler.unstable_flushAll();
+=======
+    await act(() => {
+      ReactDOM.render(<App label="A" />, containerA);
+      ReactDOM.render(<App label="B" />, containerB);
+      ReactDOM.render(<App label="C" />, containerC);
+    });
+>>>>>>> remotes/upstream/main
 
     expect(containerA.textContent).toEqual('Finished');
     expect(containerB.textContent).toEqual('Finished');
     expect(containerC.textContent).toEqual('Finished');
   });
 
+<<<<<<< HEAD
   it('updates flush without yielding in the next event', () => {
     const root = ReactDOMClient.createRoot(container);
 
     function Text(props) {
       Scheduler.unstable_yieldValue(props.text);
+=======
+  it('updates flush without yielding in the next event', async () => {
+    const root = ReactDOMClient.createRoot(container);
+
+    function Text(props) {
+      Scheduler.log(props.text);
+>>>>>>> remotes/upstream/main
       return props.text;
     }
 
@@ -597,11 +773,19 @@ describe('ReactDOMFiberAsync', () => {
     expect(container.textContent).toEqual('');
 
     // Everything should render immediately in the next event
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield(['A', 'B', 'C']);
     expect(container.textContent).toEqual('ABC');
   });
 
   it('unmounted roots should never clear newer root content from a container', () => {
+=======
+    await waitForAll(['A', 'B', 'C']);
+    expect(container.textContent).toEqual('ABC');
+  });
+
+  it('unmounted roots should never clear newer root content from a container', async () => {
+>>>>>>> remotes/upstream/main
     const ref = React.createRef();
 
     function OldApp() {
@@ -624,7 +808,11 @@ describe('ReactDOMFiberAsync', () => {
     }
 
     const oldRoot = ReactDOMClient.createRoot(container);
+<<<<<<< HEAD
     act(() => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       oldRoot.render(<OldApp />);
     });
 
@@ -643,4 +831,184 @@ describe('ReactDOMFiberAsync', () => {
 
     expect(container.textContent).toBe('new');
   });
+<<<<<<< HEAD
+=======
+
+  it('should synchronously render the transition lane scheduled in a popState', async () => {
+    function App() {
+      const [syncState, setSyncState] = React.useState(false);
+      const [hasNavigated, setHasNavigated] = React.useState(false);
+      function onPopstate() {
+        Scheduler.log(`popState`);
+        React.startTransition(() => {
+          setHasNavigated(true);
+        });
+        setSyncState(true);
+      }
+      React.useEffect(() => {
+        window.addEventListener('popstate', onPopstate);
+        return () => {
+          window.removeEventListener('popstate', onPopstate);
+        };
+      }, []);
+      Scheduler.log(`render:${hasNavigated}/${syncState}`);
+      return null;
+    }
+    const root = ReactDOMClient.createRoot(container);
+    await act(async () => {
+      root.render(<App />);
+    });
+    assertLog(['render:false/false']);
+
+    await act(async () => {
+      const popStateEvent = new Event('popstate');
+      // Jest is not emulating window.event correctly in the microtask
+      window.event = popStateEvent;
+      window.dispatchEvent(popStateEvent);
+      queueMicrotask(() => {
+        window.event = undefined;
+      });
+    });
+
+    assertLog(['popState', 'render:true/true']);
+    await act(() => {
+      root.unmount();
+    });
+  });
+
+  it('Should not flush transition lanes if there is no transition scheduled in popState', async () => {
+    let setHasNavigated;
+    function App() {
+      const [syncState, setSyncState] = React.useState(false);
+      const [hasNavigated, _setHasNavigated] = React.useState(false);
+      setHasNavigated = _setHasNavigated;
+      function onPopstate() {
+        setSyncState(true);
+      }
+
+      React.useEffect(() => {
+        window.addEventListener('popstate', onPopstate);
+        return () => {
+          window.removeEventListener('popstate', onPopstate);
+        };
+      }, []);
+
+      Scheduler.log(`render:${hasNavigated}/${syncState}`);
+      return null;
+    }
+    const root = ReactDOMClient.createRoot(container);
+    await act(async () => {
+      root.render(<App />);
+    });
+    assertLog(['render:false/false']);
+
+    React.startTransition(() => {
+      setHasNavigated(true);
+    });
+    await act(async () => {
+      const popStateEvent = new Event('popstate');
+      // Jest is not emulating window.event correctly in the microtask
+      window.event = popStateEvent;
+      window.dispatchEvent(popStateEvent);
+      queueMicrotask(() => {
+        window.event = undefined;
+      });
+    });
+    assertLog(['render:false/true', 'render:true/true']);
+    await act(() => {
+      root.unmount();
+    });
+  });
+
+  it('transition lane in popState should be allowed to suspend', async () => {
+    let resolvePromise;
+    const promise = new Promise(res => {
+      resolvePromise = res;
+    });
+
+    function Text({text}) {
+      Scheduler.log(text);
+      return text;
+    }
+
+    function App() {
+      const [pathname, setPathname] = React.useState('/path/a');
+
+      if (pathname !== '/path/a') {
+        try {
+          React.use(promise);
+        } catch (e) {
+          Scheduler.log(`Suspend! [${pathname}]`);
+          throw e;
+        }
+      }
+
+      React.useEffect(() => {
+        function onPopstate() {
+          React.startTransition(() => {
+            setPathname('/path/b');
+          });
+        }
+        window.addEventListener('popstate', onPopstate);
+        return () => window.removeEventListener('popstate', onPopstate);
+      }, []);
+
+      return (
+        <>
+          <Text text="Before" />
+          <div>
+            <Text text={pathname} />
+          </div>
+          <Text text="After" />
+        </>
+      );
+    }
+
+    const root = ReactDOMClient.createRoot(container);
+    await act(async () => {
+      root.render(<App />);
+    });
+    assertLog(['Before', '/path/a', 'After']);
+
+    const div = container.getElementsByTagName('div')[0];
+    expect(div.textContent).toBe('/path/a');
+
+    // Simulate a popstate event
+    await act(async () => {
+      const popStateEvent = new Event('popstate');
+
+      // Simulate a popstate event
+      window.event = popStateEvent;
+      window.dispatchEvent(popStateEvent);
+      await waitForMicrotasks();
+      window.event = undefined;
+
+      // The transition lane should have been attempted synchronously (in
+      // a microtask)
+      assertLog(['Suspend! [/path/b]']);
+      // Because it suspended, it remains on the current path
+      expect(div.textContent).toBe('/path/a');
+    });
+    assertLog(['Suspend! [/path/b]']);
+
+    await act(async () => {
+      resolvePromise();
+
+      // Since the transition previously suspended, there's no need for this
+      // transition to be rendered synchronously on susbequent attempts; if we
+      // fail to commit synchronously the first time, the scroll restoration
+      // state won't be restored anyway.
+      //
+      // Yield in between each child to prove that it's concurrent.
+      await waitForMicrotasks();
+      assertLog([]);
+
+      await waitFor(['Before']);
+      await waitFor(['/path/b']);
+      await waitFor(['After']);
+    });
+    assertLog([]);
+    expect(div.textContent).toBe('/path/b');
+  });
+>>>>>>> remotes/upstream/main
 });

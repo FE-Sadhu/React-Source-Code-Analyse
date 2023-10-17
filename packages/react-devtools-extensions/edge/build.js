@@ -15,15 +15,7 @@ const main = async () => {
 
   const cwd = join(__dirname, 'build');
   if (crx) {
-    const crxPath = join(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      'node_modules',
-      '.bin',
-      'crx'
-    );
+    const crxPath = join(__dirname, '..', 'node_modules', '.bin', 'crx');
 
     execSync(`${crxPath} pack ./unpacked -o ReactDevTools.crx`, {
       cwd,

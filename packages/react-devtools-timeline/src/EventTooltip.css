@@ -75,7 +75,10 @@
   margin-right: 0.25rem;
 }
 
+<<<<<<< HEAD
 .InfoText,
+=======
+>>>>>>> remotes/upstream/main
 .WarningText {
   color: var(--color-warning-text-color);
 }

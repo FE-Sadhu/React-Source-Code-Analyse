@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,9 +15,17 @@ import * as React from 'react';
 import {createContext, Component, useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 
+<<<<<<< HEAD
 function someNamedFunction() {}
 
 function formatContextForDisplay(name, value) {
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+function someNamedFunction() {}
+
+function formatContextForDisplay(name: string, value: any | string) {
+>>>>>>> remotes/upstream/main
   return (
     <li>
       {name}: <pre>{JSON.stringify(value, null, 2)}</pre>
@@ -34,7 +46,21 @@ const contextData = {
 };
 
 class LegacyContextProvider extends Component<any> {
+<<<<<<< HEAD
   static childContextTypes = {
+=======
+  static childContextTypes: {
+    array: any,
+    bool: any,
+    func: any,
+    null: any,
+    number: any,
+    object: any,
+    string: any,
+    symbol: any,
+    undefined: any,
+  } = {
+>>>>>>> remotes/upstream/main
     array: PropTypes.array,
     bool: PropTypes.bool,
     func: PropTypes.func,
@@ -46,17 +72,49 @@ class LegacyContextProvider extends Component<any> {
     undefined: PropTypes.any,
   };
 
+<<<<<<< HEAD
   getChildContext() {
     return contextData;
   }
 
   render() {
+=======
+  getChildContext(): {
+    array: Array<string>,
+    bool: boolean,
+    func: () => void,
+    null: null,
+    number: number,
+    object: {outer: {inner: {...}}},
+    string: string,
+    symbol: symbol,
+    undefined: void,
+  } {
+    return contextData;
+  }
+
+  render(): any {
+>>>>>>> remotes/upstream/main
     return this.props.children;
   }
 }
 
 class LegacyContextConsumer extends Component<any> {
+<<<<<<< HEAD
   static contextTypes = {
+=======
+  static contextTypes: {
+    array: any,
+    bool: any,
+    func: any,
+    null: any,
+    number: any,
+    object: any,
+    string: any,
+    symbol: any,
+    undefined: any,
+  } = {
+>>>>>>> remotes/upstream/main
     array: PropTypes.array,
     bool: PropTypes.bool,
     func: PropTypes.func,
@@ -68,26 +126,46 @@ class LegacyContextConsumer extends Component<any> {
     undefined: PropTypes.any,
   };
 
+<<<<<<< HEAD
   render() {
+=======
+  render(): any {
+>>>>>>> remotes/upstream/main
     return formatContextForDisplay('LegacyContextConsumer', this.context);
   }
 }
 
 class LegacyContextProviderWithUpdates extends Component<any> {
+<<<<<<< HEAD
   constructor(props) {
+=======
+  constructor(props: any) {
+>>>>>>> remotes/upstream/main
     super(props);
     this.state = {type: 'desktop'};
   }
 
+<<<<<<< HEAD
   getChildContext() {
     return {type: this.state.type};
   }
 
+=======
+  getChildContext(): {type: any} {
+    return {type: this.state.type};
+  }
+
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   handleChange = event => {
     this.setState({type: event.target.value});
   };
 
+<<<<<<< HEAD
   render() {
+=======
+  render(): any {
+>>>>>>> remotes/upstream/main
     return (
       <>
         <LegacyFunctionalContextConsumer />
@@ -103,7 +181,12 @@ LegacyContextProviderWithUpdates.childContextTypes = {
   type: PropTypes.string,
 };
 
+<<<<<<< HEAD
 function LegacyFunctionalContextConsumer(props, context) {
+=======
+// $FlowFixMe[missing-local-annot]
+function LegacyFunctionalContextConsumer(props: any, context) {
+>>>>>>> remotes/upstream/main
   return formatContextForDisplay('LegacyFunctionContextConsumer', context.type);
 }
 LegacyFunctionalContextConsumer.contextTypes = {
@@ -130,9 +213,15 @@ const UndefinedContext = createContext(undefined);
 UndefinedContext.displayName = 'UndefinedContext';
 
 class ModernContextType extends Component<any> {
+<<<<<<< HEAD
   static contextType = ModernContext;
 
   render() {
+=======
+  static contextType: ReactContext<void> = ModernContext;
+
+  render(): any {
+>>>>>>> remotes/upstream/main
     return formatContextForDisplay('ModernContextType', this.context);
   }
 }
@@ -171,7 +260,13 @@ function FunctionalContextConsumerWithContextUpdates() {
   const {string2, setString2} = useContext(StringContextWithUpdates2);
   const [state, setState] = useState('state');
 
+<<<<<<< HEAD
   const handleChange = e => setString(e.target.value);
+=======
+  // $FlowFixMe[missing-local-annot]
+  const handleChange = e => setString(e.target.value);
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const handleChange2 = e => setString2(e.target.value);
 
   return (
@@ -198,7 +293,11 @@ function FunctionalContextConsumerWithContextUpdates() {
 }
 
 class ModernClassContextProviderWithUpdates extends Component<any> {
+<<<<<<< HEAD
   constructor(props) {
+=======
+  constructor(props: any) {
+>>>>>>> remotes/upstream/main
     super(props);
     this.setString = string => {
       this.setState({string});
@@ -210,7 +309,11 @@ class ModernClassContextProviderWithUpdates extends Component<any> {
     };
   }
 
+<<<<<<< HEAD
   render() {
+=======
+  render(): any {
+>>>>>>> remotes/upstream/main
     return (
       <StringContextWithUpdates.Provider value={this.state}>
         <ModernClassContextConsumerWithUpdates />
@@ -220,10 +323,17 @@ class ModernClassContextProviderWithUpdates extends Component<any> {
 }
 
 class ModernClassContextConsumerWithUpdates extends Component<any> {
+<<<<<<< HEAD
   render() {
     return (
       <StringContextWithUpdates.Consumer>
         {({string, setString}) => (
+=======
+  render(): any {
+    return (
+      <StringContextWithUpdates.Consumer>
+        {({string, setString}: {string: string, setString: string => void}) => (
+>>>>>>> remotes/upstream/main
           <>
             {formatContextForDisplay(
               'ModernClassContextConsumerWithUpdates',
@@ -248,7 +358,13 @@ export default function Contexts(): React.Node {
         <LegacyContextProviderWithUpdates />
         <ModernContext.Provider value={contextData}>
           <ModernContext.Consumer>
+<<<<<<< HEAD
             {value => formatContextForDisplay('ModernContext.Consumer', value)}
+=======
+            {(value: $FlowFixMe) =>
+              formatContextForDisplay('ModernContext.Consumer', value)
+            }
+>>>>>>> remotes/upstream/main
           </ModernContext.Consumer>
           <ModernContextType />
         </ModernContext.Provider>
@@ -256,6 +372,7 @@ export default function Contexts(): React.Node {
         <FunctionalContextProviderWithContextUpdates />
         <ModernClassContextProviderWithUpdates />
         <ArrayContext.Consumer>
+<<<<<<< HEAD
           {value => formatContextForDisplay('ArrayContext.Consumer', value)}
         </ArrayContext.Consumer>
         <BoolContext.Consumer>
@@ -278,6 +395,46 @@ export default function Contexts(): React.Node {
         </NullContext.Consumer>
         <UndefinedContext.Consumer>
           {value => formatContextForDisplay('UndefinedContext.Consumer', value)}
+=======
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('ArrayContext.Consumer', value)
+          }
+        </ArrayContext.Consumer>
+        <BoolContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('BoolContext.Consumer', value)
+          }
+        </BoolContext.Consumer>
+        <FuncContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('FuncContext.Consumer', value)
+          }
+        </FuncContext.Consumer>
+        <NumberContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('NumberContext.Consumer', value)
+          }
+        </NumberContext.Consumer>
+        <StringContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('StringContext.Consumer', value)
+          }
+        </StringContext.Consumer>
+        <SymbolContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('SymbolContext.Consumer', value)
+          }
+        </SymbolContext.Consumer>
+        <NullContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('NullContext.Consumer', value)
+          }
+        </NullContext.Consumer>
+        <UndefinedContext.Consumer>
+          {(value: $FlowFixMe) =>
+            formatContextForDisplay('UndefinedContext.Consumer', value)
+          }
+>>>>>>> remotes/upstream/main
         </UndefinedContext.Consumer>
       </ul>
     </div>

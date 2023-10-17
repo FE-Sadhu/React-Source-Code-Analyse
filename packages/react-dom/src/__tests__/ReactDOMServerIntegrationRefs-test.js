@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,7 +22,11 @@ let ReactTestUtils;
 
 function initModules() {
   // Reset warning cache.
+<<<<<<< HEAD
   jest.resetModuleRegistry();
+=======
+  jest.resetModules();
+>>>>>>> remotes/upstream/main
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMServer = require('react-dom/server');
@@ -44,7 +52,11 @@ describe('ReactDOMServerIntegration', () => {
     resetModules();
   });
 
+<<<<<<< HEAD
   describe('refs', function() {
+=======
+  describe('refs', function () {
+>>>>>>> remotes/upstream/main
     it('should not run ref code on server', async () => {
       let refCount = 0;
       class RefsComponent extends React.Component {
@@ -91,11 +103,27 @@ describe('ReactDOMServerIntegration', () => {
       root.innerHTML = markup;
       let component = null;
       resetModules();
+<<<<<<< HEAD
       await asyncReactDOMRender(
         <RefsComponent ref={e => (component = e)} />,
         root,
         true,
       );
+=======
+      await expect(async () => {
+        await asyncReactDOMRender(
+          <RefsComponent ref={e => (component = e)} />,
+          root,
+          true,
+        );
+      }).toErrorDev([
+        'Warning: Component "RefsComponent" contains the string ref "myDiv". ' +
+          'Support for string refs will be removed in a future major release. ' +
+          'We recommend using useRef() or createRef() instead. ' +
+          'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+          '    in RefsComponent (at **)',
+      ]);
+>>>>>>> remotes/upstream/main
       expect(component.refs.myDiv).toBe(root.firstChild);
     });
   });

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,13 +23,21 @@ const EventInterface = {
   type: null,
   target: null,
   // currentTarget is set when dispatching; no use in copying it here
+<<<<<<< HEAD
   currentTarget: function() {
+=======
+  currentTarget: function () {
+>>>>>>> remotes/upstream/main
     return null;
   },
   eventPhase: null,
   bubbles: null,
   cancelable: null,
+<<<<<<< HEAD
   timeStamp: function(event) {
+=======
+  timeStamp: function (event) {
+>>>>>>> remotes/upstream/main
     return event.timeStamp || Date.now();
   },
   defaultPrevented: null,
@@ -113,7 +125,11 @@ function SyntheticEvent(
 }
 
 assign(SyntheticEvent.prototype, {
+<<<<<<< HEAD
   preventDefault: function() {
+=======
+  preventDefault: function () {
+>>>>>>> remotes/upstream/main
     this.defaultPrevented = true;
     const event = this.nativeEvent;
     if (!event) {
@@ -128,7 +144,11 @@ assign(SyntheticEvent.prototype, {
     this.isDefaultPrevented = functionThatReturnsTrue;
   },
 
+<<<<<<< HEAD
   stopPropagation: function() {
+=======
+  stopPropagation: function () {
+>>>>>>> remotes/upstream/main
     const event = this.nativeEvent;
     if (!event) {
       return;
@@ -153,7 +173,11 @@ assign(SyntheticEvent.prototype, {
    * them back into the pool. This allows a way to hold onto a reference that
    * won't be added back into the pool.
    */
+<<<<<<< HEAD
   persist: function() {
+=======
+  persist: function () {
+>>>>>>> remotes/upstream/main
     this.isPersistent = functionThatReturnsTrue;
   },
 
@@ -167,7 +191,11 @@ assign(SyntheticEvent.prototype, {
   /**
    * `PooledClass` looks for `destructor` on each instance it releases.
    */
+<<<<<<< HEAD
   destructor: function() {
+=======
+  destructor: function () {
+>>>>>>> remotes/upstream/main
     const Interface = this.constructor.Interface;
     for (const propName in Interface) {
       if (__DEV__) {
@@ -228,10 +256,17 @@ SyntheticEvent.Interface = EventInterface;
 /**
  * Helper to reduce boilerplate when creating subclasses.
  */
+<<<<<<< HEAD
 SyntheticEvent.extend = function(Interface) {
   const Super = this;
 
   const E = function() {};
+=======
+SyntheticEvent.extend = function (Interface) {
+  const Super = this;
+
+  const E = function () {};
+>>>>>>> remotes/upstream/main
   E.prototype = Super.prototype;
   const prototype = new E();
 

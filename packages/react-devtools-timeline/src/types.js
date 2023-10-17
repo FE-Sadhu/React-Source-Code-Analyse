@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -13,7 +17,11 @@ import type {ScrollState} from './view-base/utils/scrollState';
 // eslint-disable-next-line no-unused-vars
 type Return_<R, F: (...args: Array<any>) => R> = R;
 /** Get return type of a function. */
+<<<<<<< HEAD
 export type Return<T> = Return_<*, T>;
+=======
+export type Return<T> = Return_<mixed, T>;
+>>>>>>> remotes/upstream/main
 
 // Project types
 

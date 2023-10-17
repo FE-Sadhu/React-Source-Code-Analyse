@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,6 +21,18 @@ function isEmptyLiteral(node) {
   );
 }
 
+<<<<<<< HEAD
+=======
+function isStringLiteral(node) {
+  return (
+    // TaggedTemplateExpressions can return non-strings
+    (node.type === 'TemplateLiteral' &&
+      node.parent.type !== 'TaggedTemplateExpression') ||
+    (node.type === 'Literal' && typeof node.value === 'string')
+  );
+}
+
+>>>>>>> remotes/upstream/main
 // Symbols and Temporal.* objects will throw when using `'' + value`, but that
 // pattern can be faster than `String(value)` because JS engines can optimize
 // `+` better in some cases. Therefore, in perf-sensitive production codepaths
@@ -120,9 +136,15 @@ function isSafeTypeofExpression(originalValueNode, node) {
   return false;
 }
 
+<<<<<<< HEAD
 /** 
   Returns true if the code is inside an `if` block that validates the value
   excludes symbols and objects. Examples: 
+=======
+/**
+  Returns true if the code is inside an `if` block that validates the value
+  excludes symbols and objects. Examples:
+>>>>>>> remotes/upstream/main
   * if (typeof value === 'string') { }
   * if (typeof value === 'string' || typeof value === 'number') { }
   * if (typeof value === 'string' || someOtherTest) { }
@@ -259,7 +281,28 @@ function hasCoercionCheck(node) {
   }
 }
 
+<<<<<<< HEAD
 function plusEmptyString(context, node) {
+=======
+function isOnlyAddingStrings(node) {
+  if (node.operator !== '+') {
+    return;
+  }
+  if (isStringLiteral(node.left) && isStringLiteral(node.right)) {
+    // It's always safe to add string literals
+    return true;
+  }
+  if (node.left.type === 'BinaryExpression' && isStringLiteral(node.right)) {
+    return isOnlyAddingStrings(node.left);
+  }
+}
+
+function checkBinaryExpression(context, node) {
+  if (isOnlyAddingStrings(node)) {
+    return;
+  }
+
+>>>>>>> remotes/upstream/main
   if (
     node.operator === '+' &&
     (isEmptyLiteral(node.left) || isEmptyLiteral(node.right))
@@ -337,7 +380,11 @@ module.exports = {
   },
   create(context) {
     return {
+<<<<<<< HEAD
       BinaryExpression: node => plusEmptyString(context, node),
+=======
+      BinaryExpression: node => checkBinaryExpression(context, node),
+>>>>>>> remotes/upstream/main
       CallExpression: node => coerceWithStringConstructor(context, node),
     };
   },

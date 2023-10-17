@@ -17,6 +17,15 @@ const packages = readdirSync(packagesRoot).filter(dir => {
   if (dir.includes('react-devtools')) {
     return false;
   }
+<<<<<<< HEAD
+=======
+  if (dir === 'internal-test-utils') {
+    // This is an internal package used only for testing. It's OK to read
+    // from source.
+    // TODO: Maybe let's have some convention for this?
+    return false;
+  }
+>>>>>>> remotes/upstream/main
   const packagePath = join(packagesRoot, dir, 'package.json');
   let stat;
   try {
@@ -63,7 +72,11 @@ module.exports = Object.assign({}, baseConfig, {
     '/__compiled__/',
     '/__untransformed__/',
   ],
+<<<<<<< HEAD
   testRegex: 'packages/react-devtools-shared/.+/__tests__/[^]+.test.js$',
+=======
+  testRegex: 'packages/react-devtools(-(.+))?/.+/__tests__/[^]+.test.js$',
+>>>>>>> remotes/upstream/main
   snapshotSerializers: [
     require.resolve(
       '../../packages/react-devtools-shared/src/__tests__/__serializers__/dehydratedValueSerializer.js'

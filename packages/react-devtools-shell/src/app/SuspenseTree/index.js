@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,7 +12,16 @@
  */
 
 import * as React from 'react';
+<<<<<<< HEAD
 import {Fragment, Suspense, SuspenseList, useState} from 'react';
+=======
+import {
+  Fragment,
+  Suspense,
+  unstable_SuspenseList as SuspenseList,
+  useState,
+} from 'react';
+>>>>>>> remotes/upstream/main
 
 function SuspenseTree(): React.Node {
   return (
@@ -29,6 +42,10 @@ function EmptySuspense() {
   return <Suspense />;
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function PrimaryFallbackTest({initialSuspend}) {
   const [suspend, setSuspend] = useState(initialSuspend);
   const fallbackStep = useTestSequence('fallback', Fallback1, Fallback2);
@@ -51,14 +68,24 @@ function PrimaryFallbackTest({initialSuspend}) {
   );
 }
 
+<<<<<<< HEAD
 function useTestSequence(label, T1, T2) {
   const [step, setStep] = useState(0);
   const next = (
+=======
+function useTestSequence(label: string, T1: any => any, T2: any => any) {
+  const [step, setStep] = useState(0);
+  const next: $FlowFixMe = (
+>>>>>>> remotes/upstream/main
     <button onClick={() => setStep(s => (s + 1) % allSteps.length)}>
       next {label} content
     </button>
   );
+<<<<<<< HEAD
   const allSteps = [
+=======
+  const allSteps: $FlowFixMe = [
+>>>>>>> remotes/upstream/main
     <Fragment>{next}</Fragment>,
     <Fragment>
       {next} <T1 prop={step}>mount</T1>

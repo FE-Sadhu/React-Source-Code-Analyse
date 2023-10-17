@@ -8,9 +8,12 @@
   justify-content: center;
 }
 
+<<<<<<< HEAD
 .Paragraph {
   text-align: center;
 }
+=======
+>>>>>>> remotes/upstream/main
 
 .ErrorMessage {
   margin: 0.5rem 0;
@@ -35,6 +38,7 @@
   font-size: var(--font-size-sans-large);
   margin-bottom: 0.5rem;
 }
+<<<<<<< HEAD
 
 .WelcomeInstructionsList {
 }
@@ -60,3 +64,5 @@
 .ImportButtonLabel {
   margin-left: 0.25rem;
 }
+=======
+>>>>>>> remotes/upstream/main

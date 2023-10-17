@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -38,6 +42,10 @@ export default function SidebarSelectedFiberInfo(_: Props): React.Node {
     rootID: ((rootID: any): number),
   });
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const handleKeyDown = event => {
     switch (event.key) {
       case 'ArrowUp':
@@ -67,6 +75,10 @@ export default function SidebarSelectedFiberInfo(_: Props): React.Node {
     const selectedElement = selectedListItemRef.current;
     if (
       selectedElement !== null &&
+<<<<<<< HEAD
+=======
+      // $FlowFixMe[method-unbinding]
+>>>>>>> remotes/upstream/main
       typeof selectedElement.scrollIntoView === 'function'
     ) {
       selectedElement.scrollIntoView({block: 'nearest', inline: 'nearest'});
@@ -106,7 +118,10 @@ export default function SidebarSelectedFiberInfo(_: Props): React.Node {
         </div>
 
         <Button
+<<<<<<< HEAD
           className={styles.IconButton}
+=======
+>>>>>>> remotes/upstream/main
           onClick={() => selectFiber(null, null)}
           title="Back to commit view">
           <ButtonIcon type="close" />

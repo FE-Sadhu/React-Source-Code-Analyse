@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -63,7 +67,15 @@ export function getChartData({
   let maxSelfDuration = 0;
 
   // Generate flame graph structure using tree base durations.
+<<<<<<< HEAD
   const walkTree = (id: number, rightOffset: number, currentDepth: number) => {
+=======
+  const walkTree = (
+    id: number,
+    rightOffset: number,
+    currentDepth: number,
+  ): ChartNode => {
+>>>>>>> remotes/upstream/main
     idToDepthMap.set(id, currentDepth);
 
     const node = nodes.get(id);
@@ -71,6 +83,7 @@ export function getChartData({
       throw Error(`Could not find node with id "${id}" in commit tree`);
     }
 
+<<<<<<< HEAD
     const {
       children,
       displayName,
@@ -78,6 +91,10 @@ export function getChartData({
       key,
       treeBaseDuration,
     } = node;
+=======
+    const {children, displayName, hocDisplayNames, key, treeBaseDuration} =
+      node;
+>>>>>>> remotes/upstream/main
 
     const actualDuration = fiberActualDurations.get(id) || 0;
     const selfDuration = fiberSelfDurations.get(id) || 0;
@@ -120,7 +137,15 @@ export function getChartData({
 
     for (let i = children.length - 1; i >= 0; i--) {
       const childID = children[i];
+<<<<<<< HEAD
       const childChartNode = walkTree(childID, rightOffset, currentDepth + 1);
+=======
+      const childChartNode: $FlowFixMe = walkTree(
+        childID,
+        rightOffset,
+        currentDepth + 1,
+      );
+>>>>>>> remotes/upstream/main
       rightOffset -= childChartNode.treeBaseDuration;
     }
 

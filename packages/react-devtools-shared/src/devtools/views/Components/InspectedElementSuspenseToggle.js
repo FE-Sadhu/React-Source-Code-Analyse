@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,10 +15,17 @@ import * as React from 'react';
 import {OptionsContext} from '../context';
 import EditableValue from './EditableValue';
 import Store from '../../store';
+<<<<<<< HEAD
 import {ElementTypeSuspense} from 'react-devtools-shared/src/types';
 import styles from './InspectedElementSharedStyles.css';
 
 import type {InspectedElement} from './types';
+=======
+import {ElementTypeSuspense} from 'react-devtools-shared/src/frontend/types';
+import styles from './InspectedElementSharedStyles.css';
+
+import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 
 type Props = {
@@ -39,7 +50,11 @@ export default function InspectedElementSuspenseToggle({
 
   const isSuspended = state !== null;
 
+<<<<<<< HEAD
   const toggleSuspense = (path, value) => {
+=======
+  const toggleSuspense = (path: any, value: boolean) => {
+>>>>>>> remotes/upstream/main
     const rendererID = store.getRendererIDForElement(id);
     if (rendererID !== null) {
       bridge.send('overrideSuspense', {

@@ -1,7 +1,11 @@
 {
   "private": true,
   "name": "react-devtools-timeline",
+<<<<<<< HEAD
   "version": "4.25.0",
+=======
+  "version": "4.28.4",
+>>>>>>> remotes/upstream/main
   "license": "MIT",
   "dependencies": {
     "@elg/speedscope": "1.9.0-a6f84db",
@@ -19,6 +23,7 @@
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "file-loader": "^6.0.0",
+<<<<<<< HEAD
     "html-webpack-plugin": "^4.3.0",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
@@ -27,5 +32,13 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "worker-loader": "^3.0.2"
+=======
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "vercel": "^20.1.0",
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1",
+    "webpack-dev-server": "^4.15.0"
+>>>>>>> remotes/upstream/main
   }
 }

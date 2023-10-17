@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,6 +26,7 @@ import styles from './InspectedElementHooksTree.css';
 import useContextMenu from '../../ContextMenu/useContextMenu';
 import {meta} from '../../../hydration';
 import {getHookSourceLocationKey} from 'react-devtools-shared/src/hookNamesCache';
+<<<<<<< HEAD
 import {
   enableNamedHooksFeature,
   enableProfilerChangedHookIndices,
@@ -34,6 +39,16 @@ import type {HooksNode, HooksTree} from 'react-debug-tools/src/ReactDebugHooks';
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 import type {HookNames} from 'react-devtools-shared/src/types';
 import type {Element} from 'react-devtools-shared/src/devtools/views/Components/types';
+=======
+import HookNamesModuleLoaderContext from 'react-devtools-shared/src/devtools/views/Components/HookNamesModuleLoaderContext';
+import isArray from 'react-devtools-shared/src/isArray';
+
+import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
+import type {HooksNode, HooksTree} from 'react-debug-tools/src/ReactDebugHooks';
+import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
+import type {HookNames} from 'react-devtools-shared/src/frontend/types';
+import type {Element} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {ToggleParseHookNames} from './InspectedElementContext';
 
 type HooksTreeViewProps = {
@@ -59,9 +74,14 @@ export function InspectedElementHooksTree({
 
   // Changing parseHookNames is done in a transition, because it suspends.
   // This value is done outside of the transition, so the UI toggle feels responsive.
+<<<<<<< HEAD
   const [parseHookNamesOptimistic, setParseHookNamesOptimistic] = useState(
     parseHookNames,
   );
+=======
+  const [parseHookNamesOptimistic, setParseHookNamesOptimistic] =
+    useState(parseHookNames);
+>>>>>>> remotes/upstream/main
   const handleChange = () => {
     setParseHookNamesOptimistic(!parseHookNames);
     toggleParseHookNames();
@@ -91,8 +111,12 @@ export function InspectedElementHooksTree({
         data-testname="InspectedElementHooksTree">
         <div className={styles.HeaderRow}>
           <div className={styles.Header}>hooks</div>
+<<<<<<< HEAD
           {enableNamedHooksFeature &&
             typeof hookNamesModuleLoader === 'function' &&
+=======
+          {typeof hookNamesModuleLoader === 'function' &&
+>>>>>>> remotes/upstream/main
             (!parseHookNames || hookParsingFailed) && (
               <Toggle
                 className={hookParsingFailed ? styles.ToggleError : null}
@@ -138,7 +162,10 @@ export function InnerHooksTreeView({
   inspectedElement,
   path,
 }: InnerHooksTreeViewProps): React.Node {
+<<<<<<< HEAD
   // $FlowFixMe "Missing type annotation for U" whatever that means
+=======
+>>>>>>> remotes/upstream/main
   return hooks.map((hook, index) => (
     <HookView
       key={index}
@@ -169,11 +196,16 @@ function HookView({
   inspectedElement,
   path,
 }: HookViewProps) {
+<<<<<<< HEAD
   const {
     canEditHooks,
     canEditHooksAndDeletePaths,
     canEditHooksAndRenamePaths,
   } = inspectedElement;
+=======
+  const {canEditHooks, canEditHooksAndDeletePaths, canEditHooksAndRenamePaths} =
+    inspectedElement;
+>>>>>>> remotes/upstream/main
   const {id: hookID, isStateEditable, subHooks, value} = hook;
 
   const isReadOnly = hookID == null || !isStateEditable;
@@ -224,11 +256,16 @@ function HookView({
 
   // Certain hooks are not editable at all (as identified by react-debug-tools).
   // Primitive hook names (e.g. the "State" name for useState) are also never editable.
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const canRenamePathsAtDepth = depth => isStateEditable && depth > 1;
 
   const isCustomHook = subHooks.length > 0;
 
   let name = hook.name;
+<<<<<<< HEAD
   if (enableProfilerChangedHookIndices) {
     if (hookID !== null) {
       name = (
@@ -238,6 +275,15 @@ function HookView({
         </>
       );
     }
+=======
+  if (hookID !== null) {
+    name = (
+      <>
+        <span className={styles.PrimitiveHookNumber}>{hookID + 1}</span>
+        {name}
+      </>
+    );
+>>>>>>> remotes/upstream/main
   }
 
   const type = typeof value;
@@ -356,7 +402,10 @@ function HookView({
               className={name !== '' ? styles.Name : styles.NameAnonymous}>
               {hookDisplayName || 'Anonymous'}
             </span>{' '}
+<<<<<<< HEAD
             {/* $FlowFixMe */}
+=======
+>>>>>>> remotes/upstream/main
             <span className={styles.Value} onClick={toggleIsOpen}>
               {displayValue}
             </span>
@@ -417,5 +466,11 @@ function HookView({
   }
 }
 
+<<<<<<< HEAD
 // $FlowFixMe
 export default React.memo(InspectedElementHooksTree);
+=======
+export default (React.memo(
+  InspectedElementHooksTree,
+): React.ComponentType<HookViewProps>);
+>>>>>>> remotes/upstream/main

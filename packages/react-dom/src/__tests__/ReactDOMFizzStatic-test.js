@@ -1,10 +1,18 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+<<<<<<< HEAD
+=======
+ * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
+>>>>>>> remotes/upstream/main
  */
 
 'use strict';
@@ -83,6 +91,13 @@ describe('ReactDOMFizzStatic', () => {
       if (node.nodeName === 'SCRIPT') {
         const script = document.createElement('script');
         script.textContent = node.textContent;
+<<<<<<< HEAD
+=======
+        for (let i = 0; i < node.attributes.length; i++) {
+          const attribute = node.attributes[i];
+          script.setAttribute(attribute.name, attribute.value);
+        }
+>>>>>>> remotes/upstream/main
         fakeBody.removeChild(node);
         container.appendChild(script);
       } else {
@@ -97,7 +112,11 @@ describe('ReactDOMFizzStatic', () => {
     while (node) {
       if (node.nodeType === 1) {
         if (
+<<<<<<< HEAD
           node.tagName !== 'SCRIPT' &&
+=======
+          (node.tagName !== 'SCRIPT' || node.hasAttribute('type')) &&
+>>>>>>> remotes/upstream/main
           node.tagName !== 'TEMPLATE' &&
           node.tagName !== 'template' &&
           !node.hasAttribute('hidden') &&
@@ -217,12 +236,21 @@ describe('ReactDOMFizzStatic', () => {
       );
     }
 
+<<<<<<< HEAD
     const promise = ReactDOMFizzStatic.prerenderToNodeStreams(<App />);
+=======
+    const promise = ReactDOMFizzStatic.prerenderToNodeStream(<App />);
+>>>>>>> remotes/upstream/main
 
     resolveText('Hello');
 
     const result = await promise;
 
+<<<<<<< HEAD
+=======
+    expect(result.postponed).toBe(null);
+
+>>>>>>> remotes/upstream/main
     await act(async () => {
       result.prelude.pipe(writable);
     });
@@ -234,4 +262,28 @@ describe('ReactDOMFizzStatic', () => {
 
     expect(getVisibleChildren(container)).toEqual(<div>Hello</div>);
   });
+<<<<<<< HEAD
+=======
+
+  // @gate experimental
+  it('should support importMap option', async () => {
+    const importMap = {
+      foo: 'path/to/foo.js',
+    };
+    const result = await ReactDOMFizzStatic.prerenderToNodeStream(
+      <html>
+        <body>hello world</body>
+      </html>,
+      {importMap},
+    );
+
+    await act(async () => {
+      result.prelude.pipe(writable);
+    });
+    expect(getVisibleChildren(container)).toEqual([
+      <script type="importmap">{JSON.stringify(importMap)}</script>,
+      'hello world',
+    ]);
+  });
+>>>>>>> remotes/upstream/main
 });

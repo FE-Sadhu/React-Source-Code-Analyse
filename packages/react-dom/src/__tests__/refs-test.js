@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +15,7 @@
 
 let React = require('react');
 let ReactDOM = require('react-dom');
+<<<<<<< HEAD
 let ReactTestUtils = require('react-dom/test-utils');
 
 /**
@@ -91,6 +96,14 @@ const expectClickLogsLengthToBe = function(instance, length) {
   expect(Object.keys(instance.refs.myCounter.refs).length).toBe(length);
 };
 
+=======
+let ReactFeatureFlags = require('shared/ReactFeatureFlags');
+let ReactTestUtils = require('react-dom/test-utils');
+
+// This is testing if string refs are deleted from `instance.refs`
+// Once support for string refs is removed, this test can be removed.
+// Detaching is already tested in refs-detruction-test.js
+>>>>>>> remotes/upstream/main
 describe('reactiverefs', () => {
   let container;
 
@@ -98,6 +111,10 @@ describe('reactiverefs', () => {
     jest.resetModules();
     React = require('react');
     ReactDOM = require('react-dom');
+<<<<<<< HEAD
+=======
+    ReactFeatureFlags = require('shared/ReactFeatureFlags');
+>>>>>>> remotes/upstream/main
     ReactTestUtils = require('react-dom/test-utils');
   });
 
@@ -109,12 +126,121 @@ describe('reactiverefs', () => {
   });
 
   /**
+<<<<<<< HEAD
    * Render a TestRefsComponent and ensure that the main refs are wired up.
    */
   const renderTestRefsComponent = function() {
     container = document.createElement('div');
     document.body.appendChild(container);
     const testRefsComponent = ReactDOM.render(<TestRefsComponent />, container);
+=======
+   * Counts clicks and has a renders an item for each click. Each item rendered
+   * has a ref of the form "clickLogN".
+   */
+  class ClickCounter extends React.Component {
+    state = {count: this.props.initialCount};
+
+    triggerReset = () => {
+      this.setState({count: this.props.initialCount});
+    };
+
+    handleClick = () => {
+      this.setState({count: this.state.count + 1});
+    };
+
+    render() {
+      const children = [];
+      let i;
+      for (i = 0; i < this.state.count; i++) {
+        children.push(
+          <div
+            className="clickLogDiv"
+            key={'clickLog' + i}
+            ref={'clickLog' + i}
+          />,
+        );
+      }
+      return (
+        <span className="clickIncrementer" onClick={this.handleClick}>
+          {children}
+        </span>
+      );
+    }
+  }
+
+  const expectClickLogsLengthToBe = function (instance, length) {
+    const clickLogs = ReactTestUtils.scryRenderedDOMComponentsWithClass(
+      instance,
+      'clickLogDiv',
+    );
+    expect(clickLogs.length).toBe(length);
+    expect(Object.keys(instance.refs.myCounter.refs).length).toBe(length);
+  };
+
+  /**
+   * Render a TestRefsComponent and ensure that the main refs are wired up.
+   */
+  const renderTestRefsComponent = function () {
+    /**
+     * Only purpose is to test that refs are tracked even when applied to a
+     * component that is injected down several layers. Ref systems are difficult to
+     * build in such a way that ownership is maintained in an airtight manner.
+     */
+    class GeneralContainerComponent extends React.Component {
+      render() {
+        return <div>{this.props.children}</div>;
+      }
+    }
+
+    /**
+     * Notice how refs ownership is maintained even when injecting a component
+     * into a different parent.
+     */
+    class TestRefsComponent extends React.Component {
+      doReset = () => {
+        this.refs.myCounter.triggerReset();
+      };
+
+      render() {
+        return (
+          <div>
+            <div ref="resetDiv" onClick={this.doReset}>
+              Reset Me By Clicking This.
+            </div>
+            <GeneralContainerComponent ref="myContainer">
+              <ClickCounter ref="myCounter" initialCount={1} />
+            </GeneralContainerComponent>
+          </div>
+        );
+      }
+    }
+
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    let testRefsComponent;
+    expect(() => {
+      testRefsComponent = ReactDOM.render(<TestRefsComponent />, container);
+    }).toErrorDev([
+      'Warning: Component "div" contains the string ref "resetDiv". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in div (at **)\n' +
+        '    in TestRefsComponent (at **)',
+      'Warning: Component "span" contains the string ref "clickLog0". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in span (at **)\n' +
+        '    in ClickCounter (at **)\n' +
+        '    in div (at **)\n' +
+        '    in GeneralContainerComponent (at **)\n' +
+        '    in div (at **)\n' +
+        '    in TestRefsComponent (at **)',
+    ]);
+
+>>>>>>> remotes/upstream/main
     expect(testRefsComponent instanceof TestRefsComponent).toBe(true);
 
     const generalContainer = testRefsComponent.refs.myContainer;
@@ -156,13 +282,23 @@ describe('reactiverefs', () => {
   });
 });
 
+<<<<<<< HEAD
 if (!require('shared/ReactFeatureFlags').disableModulePatternComponents) {
+=======
+if (!ReactFeatureFlags.disableModulePatternComponents) {
+>>>>>>> remotes/upstream/main
   describe('factory components', () => {
     it('Should correctly get the ref', () => {
       function Comp() {
         return {
+<<<<<<< HEAD
           render() {
             return <div ref="elemRef" />;
+=======
+          elemRef: React.createRef(),
+          render() {
+            return <div ref={this.elemRef} />;
+>>>>>>> remotes/upstream/main
           },
         };
       }
@@ -177,7 +313,11 @@ if (!require('shared/ReactFeatureFlags').disableModulePatternComponents) {
           '`Comp.prototype = React.Component.prototype`. ' +
           "Don't use an arrow function since it cannot be called with `new` by React.",
       );
+<<<<<<< HEAD
       expect(inst.refs.elemRef.tagName).toBe('DIV');
+=======
+      expect(inst.elemRef.current.tagName).toBe('DIV');
+>>>>>>> remotes/upstream/main
     });
   });
 }
@@ -191,10 +331,21 @@ describe('ref swapping', () => {
     jest.resetModules();
     React = require('react');
     ReactDOM = require('react-dom');
+<<<<<<< HEAD
+=======
+    ReactFeatureFlags = require('shared/ReactFeatureFlags');
+>>>>>>> remotes/upstream/main
     ReactTestUtils = require('react-dom/test-utils');
 
     RefHopsAround = class extends React.Component {
       state = {count: 0};
+<<<<<<< HEAD
+=======
+      hopRef = React.createRef();
+      divOneRef = React.createRef();
+      divTwoRef = React.createRef();
+      divThreeRef = React.createRef();
+>>>>>>> remotes/upstream/main
 
       moveRef = () => {
         this.setState({count: this.state.count + 1});
@@ -212,6 +363,7 @@ describe('ref swapping', () => {
           <div>
             <div
               className="first"
+<<<<<<< HEAD
               ref={count % 3 === 0 ? 'hopRef' : 'divOneRef'}
             />
             <div
@@ -221,6 +373,17 @@ describe('ref swapping', () => {
             <div
               className="third"
               ref={count % 3 === 2 ? 'hopRef' : 'divThreeRef'}
+=======
+              ref={count % 3 === 0 ? this.hopRef : this.divOneRef}
+            />
+            <div
+              className="second"
+              ref={count % 3 === 1 ? this.hopRef : this.divTwoRef}
+            />
+            <div
+              className="third"
+              ref={count % 3 === 2 ? this.hopRef : this.divThreeRef}
+>>>>>>> remotes/upstream/main
             />
           </div>
         );
@@ -244,6 +407,7 @@ describe('ref swapping', () => {
       'third',
     );
 
+<<<<<<< HEAD
     expect(refHopsAround.refs.hopRef).toEqual(firstDiv);
     expect(refHopsAround.refs.divTwoRef).toEqual(secondDiv);
     expect(refHopsAround.refs.divThreeRef).toEqual(thirdDiv);
@@ -257,15 +421,36 @@ describe('ref swapping', () => {
     expect(refHopsAround.refs.divOneRef).toEqual(firstDiv);
     expect(refHopsAround.refs.divTwoRef).toEqual(secondDiv);
     expect(refHopsAround.refs.hopRef).toEqual(thirdDiv);
+=======
+    expect(refHopsAround.hopRef.current).toEqual(firstDiv);
+    expect(refHopsAround.divTwoRef.current).toEqual(secondDiv);
+    expect(refHopsAround.divThreeRef.current).toEqual(thirdDiv);
+
+    refHopsAround.moveRef();
+    expect(refHopsAround.divOneRef.current).toEqual(firstDiv);
+    expect(refHopsAround.hopRef.current).toEqual(secondDiv);
+    expect(refHopsAround.divThreeRef.current).toEqual(thirdDiv);
+
+    refHopsAround.moveRef();
+    expect(refHopsAround.divOneRef.current).toEqual(firstDiv);
+    expect(refHopsAround.divTwoRef.current).toEqual(secondDiv);
+    expect(refHopsAround.hopRef.current).toEqual(thirdDiv);
+>>>>>>> remotes/upstream/main
 
     /**
      * Make sure that after the third, we're back to where we started and the
      * refs are completely restored.
      */
     refHopsAround.moveRef();
+<<<<<<< HEAD
     expect(refHopsAround.refs.hopRef).toEqual(firstDiv);
     expect(refHopsAround.refs.divTwoRef).toEqual(secondDiv);
     expect(refHopsAround.refs.divThreeRef).toEqual(thirdDiv);
+=======
+    expect(refHopsAround.hopRef.current).toEqual(firstDiv);
+    expect(refHopsAround.divTwoRef.current).toEqual(secondDiv);
+    expect(refHopsAround.divThreeRef.current).toEqual(thirdDiv);
+>>>>>>> remotes/upstream/main
   });
 
   it('always has a value for this.refs', () => {
@@ -309,7 +494,20 @@ describe('ref swapping', () => {
         return <div ref={1} />;
       }
     }
+<<<<<<< HEAD
     const a = ReactTestUtils.renderIntoDocument(<A />);
+=======
+    let a;
+    expect(() => {
+      a = ReactTestUtils.renderIntoDocument(<A />);
+    }).toErrorDev([
+      'Warning: Component "A" contains the string ref "1". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in A (at **)',
+    ]);
+>>>>>>> remotes/upstream/main
     expect(a.refs[1].nodeName).toBe('DIV');
   });
 
@@ -351,6 +549,7 @@ describe('ref swapping', () => {
       'Expected ref to be a function, a string, an object returned by React.createRef(), or null.',
     );
   });
+<<<<<<< HEAD
 
   it('should warn about callback refs returning a function', () => {
     const container = document.createElement('div');
@@ -380,6 +579,8 @@ describe('ref swapping', () => {
       withoutStack: true,
     });
   });
+=======
+>>>>>>> remotes/upstream/main
 });
 
 describe('root level refs', () => {
@@ -464,7 +665,11 @@ describe('root level refs', () => {
   });
 });
 
+<<<<<<< HEAD
 describe('creating element with ref in constructor', () => {
+=======
+describe('creating element with string ref in constructor', () => {
+>>>>>>> remotes/upstream/main
   class RefTest extends React.Component {
     constructor(props) {
       super(props);
@@ -479,7 +684,11 @@ describe('creating element with ref in constructor', () => {
   it('throws an error', () => {
     ReactTestUtils = require('react-dom/test-utils');
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<RefTest />);
     }).toThrowError(
       'Element ref was specified as a string (p) but no owner was set. This could happen for one of' +
@@ -521,16 +730,183 @@ describe('strings refs across renderers', () => {
 
     const div1 = document.createElement('div');
     const div2 = document.createElement('div');
+<<<<<<< HEAD
     const inst = ReactDOM.render(<Parent />, div1);
+=======
+
+    let inst;
+    expect(() => {
+      inst = ReactDOM.render(<Parent />, div1);
+    }).toErrorDev([
+      'Warning: Component "Indirection" contains the string ref "child1". ' +
+        'Support for string refs will be removed in a future major release. ' +
+        'We recommend using useRef() or createRef() instead. ' +
+        'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref\n' +
+        '    in Indirection (at **)\n' +
+        '    in Parent (at **)',
+    ]);
+
+>>>>>>> remotes/upstream/main
     // Only the first ref has rendered yet.
     expect(inst.refs.child1.tagName).toBe('DIV');
     expect(inst.refs.child1).toBe(div1.firstChild);
 
+<<<<<<< HEAD
     // Now both refs should be rendered.
     ReactDOM.render(<Parent />, div1);
+=======
+    expect(() => {
+      // Now both refs should be rendered.
+      ReactDOM.render(<Parent />, div1);
+    }).toErrorDev(
+      [
+        'Warning: Component "Root" contains the string ref "child2". ' +
+          'Support for string refs will be removed in a future major release. ' +
+          'We recommend using useRef() or createRef() instead. ' +
+          'Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref',
+      ],
+      {withoutStack: true},
+    );
+>>>>>>> remotes/upstream/main
     expect(inst.refs.child1.tagName).toBe('DIV');
     expect(inst.refs.child1).toBe(div1.firstChild);
     expect(inst.refs.child2.tagName).toBe('DIV');
     expect(inst.refs.child2).toBe(div2.firstChild);
   });
 });
+<<<<<<< HEAD
+=======
+
+describe('refs return clean up function', () => {
+  it('calls clean up function if it exists', () => {
+    const container = document.createElement('div');
+    let cleanUp = jest.fn();
+    let setup = jest.fn();
+
+    ReactDOM.render(
+      <div
+        ref={_ref => {
+          setup(_ref);
+          return cleanUp;
+        }}
+      />,
+      container,
+    );
+
+    ReactDOM.render(
+      <div
+        ref={_ref => {
+          setup(_ref);
+        }}
+      />,
+      container,
+    );
+
+    expect(setup).toHaveBeenCalledTimes(2);
+    expect(cleanUp).toHaveBeenCalledTimes(1);
+    expect(cleanUp.mock.calls[0][0]).toBe(undefined);
+
+    ReactDOM.render(<div ref={_ref => {}} />, container);
+
+    expect(cleanUp).toHaveBeenCalledTimes(1);
+    expect(setup).toHaveBeenCalledTimes(3);
+    expect(setup.mock.calls[2][0]).toBe(null);
+
+    cleanUp = jest.fn();
+    setup = jest.fn();
+
+    ReactDOM.render(
+      <div
+        ref={_ref => {
+          setup(_ref);
+          return cleanUp;
+        }}
+      />,
+      container,
+    );
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(cleanUp).toHaveBeenCalledTimes(0);
+
+    ReactDOM.render(
+      <div
+        ref={_ref => {
+          setup(_ref);
+          return cleanUp;
+        }}
+      />,
+      container,
+    );
+
+    expect(setup).toHaveBeenCalledTimes(2);
+    expect(cleanUp).toHaveBeenCalledTimes(1);
+  });
+
+  it('handles ref functions with stable identity', () => {
+    const container = document.createElement('div');
+    const cleanUp = jest.fn();
+    const setup = jest.fn();
+
+    function _onRefChange(_ref) {
+      setup(_ref);
+      return cleanUp;
+    }
+
+    ReactDOM.render(<div ref={_onRefChange} />, container);
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(cleanUp).toHaveBeenCalledTimes(0);
+
+    ReactDOM.render(
+      <div className="niceClassName" ref={_onRefChange} />,
+      container,
+    );
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(cleanUp).toHaveBeenCalledTimes(0);
+
+    ReactDOM.render(<div />, container);
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(cleanUp).toHaveBeenCalledTimes(1);
+  });
+
+  it('warns if clean up function is returned when called with null', () => {
+    const container = document.createElement('div');
+    const cleanUp = jest.fn();
+    const setup = jest.fn();
+    let returnCleanUp = false;
+
+    ReactDOM.render(
+      <div
+        ref={_ref => {
+          setup(_ref);
+          if (returnCleanUp) {
+            return cleanUp;
+          }
+        }}
+      />,
+      container,
+    );
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(cleanUp).toHaveBeenCalledTimes(0);
+
+    returnCleanUp = true;
+
+    expect(() => {
+      ReactDOM.render(
+        <div
+          ref={_ref => {
+            setup(_ref);
+            if (returnCleanUp) {
+              return cleanUp;
+            }
+          }}
+        />,
+        container,
+      );
+    }).toErrorDev('Unexpected return value from a callback ref in div');
+  });
+});
+>>>>>>> remotes/upstream/main

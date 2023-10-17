@@ -51,15 +51,25 @@ const HostConfig = {
 * **[Building a simple custom renderer to DOM](https://medium.com/@agent_hunt/hello-world-custom-react-renderer-9a95b7cd04bc)**
 * **[Building a simple custom renderer to native](https://medium.com/@agent_hunt/introduction-to-react-native-renderers-aka-react-native-is-the-java-and-react-native-renderers-are-828a0022f433)**
 
+<<<<<<< HEAD
 The full list of supported methods [can be found here](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberHostConfig.custom.js). For their signatures, we recommend looking at specific examples below.
+=======
+The full list of supported methods [can be found here](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberConfig.custom.js). For their signatures, we recommend looking at specific examples below.
+>>>>>>> remotes/upstream/main
 
 The React repository includes several renderers. Each of them has its own host config.
 
 The examples in the React repository are declared a bit differently than a third-party renderer would be. In particular, the `HostConfig` object mentioned above is never explicitly declared, and instead is a *module* in our code. However, its exports correspond directly to properties on a `HostConfig` object you'd need to declare in your code:
 
+<<<<<<< HEAD
 * [React ART](https://github.com/facebook/react/blob/main/packages/react-art/src/ReactART.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-art/src/ReactARTHostConfig.js)
 * [React DOM](https://github.com/facebook/react/blob/main/packages/react-dom/src/client/ReactDOM.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-dom/src/client/ReactDOMHostConfig.js)
 * [React Native](https://github.com/facebook/react/blob/main/packages/react-native-renderer/src/ReactNativeRenderer.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-native-renderer/src/ReactNativeHostConfig.js)
+=======
+* [React ART](https://github.com/facebook/react/blob/main/packages/react-art/src/ReactART.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-art/src/ReactFiberConfigART.js)
+* [React DOM](https://github.com/facebook/react/blob/main/packages/react-dom/src/client/ReactDOM.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-dom-bindings/src/client/ReactFiberConfigDOM.js)
+* [React Native](https://github.com/facebook/react/blob/main/packages/react-native-renderer/src/ReactNativeRenderer.js) and its [host config](https://github.com/facebook/react/blob/main/packages/react-native-renderer/src/ReactFiberConfigNative.js)
+>>>>>>> remotes/upstream/main
 
 If these links break please file an issue and we’ll fix them. They intentionally link to the latest versions since the API is still evolving. If you have more questions please file an issue and we’ll try to help!
 
@@ -81,7 +91,11 @@ const HostConfig = {
 }
 ```
 
+<<<<<<< HEAD
 If your target platform has immutable trees, you'll want the **persistent mode** instead. In that mode, existing nodes are never mutated, and instead every change clones the parent tree and then replaces the whole parent tree at the root. This is the node used by the new React Native renderer, codenamed "Fabric".
+=======
+If your target platform has immutable trees, you'll want the **persistent mode** instead. In that mode, existing nodes are never mutated, and instead every change clones the parent tree and then replaces the whole parent tree at the root. This is the mode used by the new React Native renderer, codenamed "Fabric".
+>>>>>>> remotes/upstream/main
 
 ```js
 const HostConfig = {
@@ -129,6 +143,7 @@ There is a second purpose to this method. It lets you specify whether there is s
 
 If you don't want to do anything here, you should return `false`.
 
+<<<<<<< HEAD
 #### `prepareUpdate(instance, type, oldProps, newProps, rootContainer, hostContext)`
 
 React calls this method so that you can compare the previous and the next props, and decide whether you need to update the underlying instance or not. If you don't need to update it, return `null`. If you need to update it, you can return an arbitrary object representing the changes that need to happen. Then in `commitUpdate` you would need to apply those changes to the instance.
@@ -137,6 +152,8 @@ This method happens **in the render phase**. It should only *calculate* the upda
 
 See the meaning of `rootContainer` and `hostContext` in the `createInstance` documentation.
 
+=======
+>>>>>>> remotes/upstream/main
 #### `shouldSetTextContent(type, props)`
 
 Some target platforms support setting an instance's text content without manually creating a text node. For example, in the DOM, you can set `node.textContent` instead of creating a text node and appending it.
@@ -240,7 +257,11 @@ The constant you return depends on which event, if any, is being handled right n
 
 * **Other events / No active event:** In all other cases, return `DefaultEventPriority`. This tells React that this event is considered background work, and interactive events will be prioritized over it.
 
+<<<<<<< HEAD
 You can consult the `getCurrentEventPriority()` implementation in `ReactDOMHostConfig.js` for a reference implementation.
+=======
+You can consult the `getCurrentEventPriority()` implementation in `ReactFiberConfigDOM.js` for a reference implementation.
+>>>>>>> remotes/upstream/main
 
 ### Mutation Methods
 
@@ -300,9 +321,15 @@ The `internalHandle` data structure is meant to be opaque. If you bend the rules
 
 If you never return `true` from `finalizeInitialChildren`, you can leave it empty.
 
+<<<<<<< HEAD
 #### `commitUpdate(instance, updatePayload, type, prevProps, nextProps, internalHandle)`
 
 This method should mutate the `instance` according to the set of changes in `updatePayload`. Here, `updatePayload` is the object that you've returned from `prepareUpdate` and has an arbitrary structure that makes sense for your renderer. For example, the DOM renderer returns an update payload like `[prop1, value1, prop2, value2, ...]` from `prepareUpdate`, and that structure gets passed into `commitUpdate`. Ideally, all the diffing and calculation should happen inside `prepareUpdate` so that `commitUpdate` can be fast and straightforward.
+=======
+#### `commitUpdate(instance, type, prevProps, nextProps, internalHandle)`
+
+This method should mutate the `instance` to match `nextProps`.
+>>>>>>> remotes/upstream/main
 
 The `internalHandle` data structure is meant to be opaque. If you bend the rules and rely on its internal fields, be aware that it may change significantly between versions. You're taking on additional maintenance risk by reading from it, and giving up all guarantees if you write something to it.
 
@@ -328,10 +355,18 @@ This method should mutate the `container` root node and remove all children from
 
 ### Persistence Methods
 
+<<<<<<< HEAD
 If you use the persistent mode instead of the mutation mode, you would still need the "Core Methods". However, instead of the Mutation Methods above you will implement a different set of methods that performs cloning nodes and replacing them at the root level. You can find a list of them in the "Persistence" section [listed in this file](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberHostConfig.custom.js). File an issue if you need help.
+=======
+If you use the persistent mode instead of the mutation mode, you would still need the "Core Methods". However, instead of the Mutation Methods above you will implement a different set of methods that performs cloning nodes and replacing them at the root level. You can find a list of them in the "Persistence" section [listed in this file](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberConfig.custom.js). File an issue if you need help.
+>>>>>>> remotes/upstream/main
 
 ### Hydration Methods
 
 You can optionally implement hydration to "attach" to the existing tree during the initial render instead of creating it from scratch. For example, the DOM renderer uses this to attach to an HTML markup.
 
+<<<<<<< HEAD
 To support hydration, you need to declare `supportsHydration: true` and then implement the methods in the "Hydration" section [listed in this file](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberHostConfig.custom.js). File an issue if you need help.
+=======
+To support hydration, you need to declare `supportsHydration: true` and then implement the methods in the "Hydration" section [listed in this file](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/forks/ReactFiberConfig.custom.js). File an issue if you need help.
+>>>>>>> remotes/upstream/main

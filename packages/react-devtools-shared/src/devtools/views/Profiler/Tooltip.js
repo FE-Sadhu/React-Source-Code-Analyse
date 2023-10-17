@@ -17,7 +17,11 @@ export default function Tooltip({
   const tooltipRef = useRef(null);
 
   // update the position of the tooltip based on current mouse position
+<<<<<<< HEAD
   const updateTooltipPosition = (event: SyntheticMouseEvent<*>) => {
+=======
+  const updateTooltipPosition = (event: SyntheticMouseEvent<EventTarget>) => {
+>>>>>>> remotes/upstream/main
     const element = tooltipRef.current;
     if (element != null) {
       // first find the mouse position
@@ -30,7 +34,11 @@ export default function Tooltip({
     }
   };
 
+<<<<<<< HEAD
   const onMouseMove = (event: SyntheticMouseEvent<*>) => {
+=======
+  const onMouseMove = (event: SyntheticMouseEvent<EventTarget>) => {
+>>>>>>> remotes/upstream/main
     updateTooltipPosition(event);
   };
 
@@ -55,10 +63,25 @@ export default function Tooltip({
 const TOOLTIP_OFFSET = 5;
 
 // Method used to find the position of the tooltip based on current mouse position
+<<<<<<< HEAD
 function getTooltipPosition(element, mousePosition) {
   const {height, mouseX, mouseY, width} = mousePosition;
   let top = 0;
   let left = 0;
+=======
+function getTooltipPosition(
+  element: empty,
+  mousePosition: {
+    height: number,
+    mouseX: number,
+    mouseY: number,
+    width: number,
+  },
+) {
+  const {height, mouseX, mouseY, width} = mousePosition;
+  let top: number | string = 0;
+  let left: number | string = 0;
+>>>>>>> remotes/upstream/main
 
   if (mouseY + TOOLTIP_OFFSET + element.offsetHeight >= height) {
     if (mouseY - TOOLTIP_OFFSET - element.offsetHeight > 0) {
@@ -85,8 +108,13 @@ function getTooltipPosition(element, mousePosition) {
 
 // method used to find the current mouse position inside the container
 function getMousePosition(
+<<<<<<< HEAD
   relativeContainer,
   mouseEvent: SyntheticMouseEvent<*>,
+=======
+  relativeContainer: null,
+  mouseEvent: SyntheticMouseEvent<EventTarget>,
+>>>>>>> remotes/upstream/main
 ) {
   if (relativeContainer !== null) {
     // Position within the nearest position:relative container.

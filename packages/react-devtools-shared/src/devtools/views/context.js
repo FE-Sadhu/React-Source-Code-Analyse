@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,18 +11,32 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+>>>>>>> remotes/upstream/main
 import {createContext} from 'react';
 import Store from '../store';
 
 import type {ViewAttributeSource} from 'react-devtools-shared/src/devtools/views/DevTools';
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 
+<<<<<<< HEAD
 export const BridgeContext = createContext<FrontendBridge>(
   ((null: any): FrontendBridge),
 );
 BridgeContext.displayName = 'BridgeContext';
 
 export const StoreContext = createContext<Store>(((null: any): Store));
+=======
+export const BridgeContext: ReactContext<FrontendBridge> =
+  createContext<FrontendBridge>(((null: any): FrontendBridge));
+BridgeContext.displayName = 'BridgeContext';
+
+export const StoreContext: ReactContext<Store> = createContext<Store>(
+  ((null: any): Store),
+);
+>>>>>>> remotes/upstream/main
 StoreContext.displayName = 'StoreContext';
 
 export type ContextMenuContextType = {
@@ -26,10 +44,18 @@ export type ContextMenuContextType = {
   viewAttributeSourceFunction: ViewAttributeSource | null,
 };
 
+<<<<<<< HEAD
 export const ContextMenuContext = createContext<ContextMenuContextType>({
   isEnabledForInspectedElement: false,
   viewAttributeSourceFunction: null,
 });
+=======
+export const ContextMenuContext: ReactContext<ContextMenuContextType> =
+  createContext<ContextMenuContextType>({
+    isEnabledForInspectedElement: false,
+    viewAttributeSourceFunction: null,
+  });
+>>>>>>> remotes/upstream/main
 ContextMenuContext.displayName = 'ContextMenuContext';
 
 export type OptionsContextType = {
@@ -41,6 +67,7 @@ export type OptionsContextType = {
   hideViewSourceAction: boolean,
 };
 
+<<<<<<< HEAD
 export const OptionsContext = createContext<OptionsContextType>({
   readOnly: false,
   hideSettings: false,
@@ -49,3 +76,14 @@ export const OptionsContext = createContext<OptionsContextType>({
   hideLogAction: false,
   hideViewSourceAction: false,
 });
+=======
+export const OptionsContext: ReactContext<OptionsContextType> =
+  createContext<OptionsContextType>({
+    readOnly: false,
+    hideSettings: false,
+    hideToggleErrorAction: false,
+    hideToggleSuspenseAction: false,
+    hideLogAction: false,
+    hideViewSourceAction: false,
+  });
+>>>>>>> remotes/upstream/main

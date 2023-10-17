@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,8 +11,15 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {ElementType} from 'react-devtools-shared/src/types';
 import type {SerializedElement} from '../Components/types';
+=======
+import type {
+  ElementType,
+  SerializedElement,
+} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {
   TimelineData,
   TimelineDataExport,

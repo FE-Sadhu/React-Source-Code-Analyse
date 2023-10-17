@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -21,13 +25,21 @@ module.exports = function autoImporter(babel) {
   }
 
   return {
+<<<<<<< HEAD
     pre: function() {
+=======
+    pre: function () {
+>>>>>>> remotes/upstream/main
       // map from module to generated identifier
       this.id = null;
     },
 
     visitor: {
+<<<<<<< HEAD
       CallExpression: function(path, file) {
+=======
+      CallExpression: function (path, file) {
+>>>>>>> remotes/upstream/main
         if (/shared(\/|\\)assign/.test(file.filename)) {
           // Don't replace Object.assign if we're transforming shared/assign
           return;
@@ -39,7 +51,11 @@ module.exports = function autoImporter(babel) {
         }
       },
 
+<<<<<<< HEAD
       MemberExpression: function(path, file) {
+=======
+      MemberExpression: function (path, file) {
+>>>>>>> remotes/upstream/main
         if (/shared(\/|\\)assign/.test(file.filename)) {
           // Don't replace Object.assign if we're transforming shared/assign
           return;

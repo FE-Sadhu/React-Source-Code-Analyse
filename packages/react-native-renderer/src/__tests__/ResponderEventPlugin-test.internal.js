@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,7 +22,11 @@ let EventBatching;
 let EventPluginUtils;
 let ResponderEventPlugin;
 
+<<<<<<< HEAD
 const touch = function(nodeHandle, i) {
+=======
+const touch = function (nodeHandle, i) {
+>>>>>>> remotes/upstream/main
   return {target: nodeHandle, identifier: i};
 };
 
@@ -37,7 +45,11 @@ function injectComponentTree(ComponentTree) {
  * @return {TouchEvent} Model of a touch event that is compliant with responder
  * system plugin.
  */
+<<<<<<< HEAD
 const touchEvent = function(nodeHandle, touches, changedTouches) {
+=======
+const touchEvent = function (nodeHandle, touches, changedTouches) {
+>>>>>>> remotes/upstream/main
   return {
     target: nodeHandle,
     changedTouches: changedTouches,
@@ -45,7 +57,11 @@ const touchEvent = function(nodeHandle, touches, changedTouches) {
   };
 };
 
+<<<<<<< HEAD
 const subsequence = function(arr, indices) {
+=======
+const subsequence = function (arr, indices) {
+>>>>>>> remotes/upstream/main
   const ret = [];
   for (let i = 0; i < indices.length; i++) {
     const index = indices[i];
@@ -54,7 +70,11 @@ const subsequence = function(arr, indices) {
   return ret;
 };
 
+<<<<<<< HEAD
 const antiSubsequence = function(arr, indices) {
+=======
+const antiSubsequence = function (arr, indices) {
+>>>>>>> remotes/upstream/main
   const ret = [];
   for (let i = 0; i < arr.length; i++) {
     if (indices.indexOf(i) === -1) {
@@ -68,7 +88,11 @@ const antiSubsequence = function(arr, indices) {
  * Helper for creating touch test config data.
  * @param allTouchHandles
  */
+<<<<<<< HEAD
 const _touchConfig = function(
+=======
+const _touchConfig = function (
+>>>>>>> remotes/upstream/main
   topType,
   targetNodeHandle,
   allTouchHandles,
@@ -117,7 +141,11 @@ const _touchConfig = function(
  * @return {object} Config data used by test cases for extracting responder
  * events.
  */
+<<<<<<< HEAD
 const startConfig = function(nodeHandle, allTouchHandles, changedIndices) {
+=======
+const startConfig = function (nodeHandle, allTouchHandles, changedIndices) {
+>>>>>>> remotes/upstream/main
   return _touchConfig(
     'topTouchStart',
     nodeHandle,
@@ -130,7 +158,11 @@ const startConfig = function(nodeHandle, allTouchHandles, changedIndices) {
 /**
  * @see `startConfig`
  */
+<<<<<<< HEAD
 const moveConfig = function(nodeHandle, allTouchHandles, changedIndices) {
+=======
+const moveConfig = function (nodeHandle, allTouchHandles, changedIndices) {
+>>>>>>> remotes/upstream/main
   return _touchConfig(
     'topTouchMove',
     nodeHandle,
@@ -143,7 +175,11 @@ const moveConfig = function(nodeHandle, allTouchHandles, changedIndices) {
 /**
  * @see `startConfig`
  */
+<<<<<<< HEAD
 const endConfig = function(nodeHandle, allTouchHandles, changedIndices) {
+=======
+const endConfig = function (nodeHandle, allTouchHandles, changedIndices) {
+>>>>>>> remotes/upstream/main
   return _touchConfig(
     'topTouchEnd',
     nodeHandle,
@@ -181,7 +217,11 @@ const endConfig = function(nodeHandle, allTouchHandles, changedIndices) {
  *
  */
 const NA = -1;
+<<<<<<< HEAD
 const oneEventLoopTestConfig = function(readableIDToID) {
+=======
+const oneEventLoopTestConfig = function (readableIDToID) {
+>>>>>>> remotes/upstream/main
   const ret = {
     // Negotiation
     scrollShouldSetResponder: {bubbled: {}, captured: {}},
@@ -228,9 +268,15 @@ const oneEventLoopTestConfig = function(readableIDToID) {
  * @param {object} eventTestConfig
  * @param {object} readableIDToID
  */
+<<<<<<< HEAD
 const registerTestHandlers = function(eventTestConfig, readableIDToID) {
   const runs = {dispatchCount: 0};
   const neverFire = function(readableID, registrationName) {
+=======
+const registerTestHandlers = function (eventTestConfig, readableIDToID) {
+  const runs = {dispatchCount: 0};
+  const neverFire = function (readableID, registrationName) {
+>>>>>>> remotes/upstream/main
     runs.dispatchCount++;
     expect('').toBe(
       'Event type: ' +
@@ -243,7 +289,14 @@ const registerTestHandlers = function(eventTestConfig, readableIDToID) {
     );
   };
 
+<<<<<<< HEAD
   const registerOneEventType = function(registrationName, eventTypeTestConfig) {
+=======
+  const registerOneEventType = function (
+    registrationName,
+    eventTypeTestConfig,
+  ) {
+>>>>>>> remotes/upstream/main
     for (const readableID in eventTypeTestConfig) {
       const nodeConfig = eventTypeTestConfig[readableID];
       const id = readableIDToID[readableID];
@@ -252,7 +305,11 @@ const registerTestHandlers = function(eventTestConfig, readableIDToID) {
           ? neverFire.bind(null, readableID, registrationName)
           : // We partially apply readableID and nodeConfig, as they change in the
             // parent closure across iterations.
+<<<<<<< HEAD
             function(rID, config, e) {
+=======
+            function (rID, config, e) {
+>>>>>>> remotes/upstream/main
               expect(
                 rID +
                   '->' +
@@ -292,9 +349,15 @@ const registerTestHandlers = function(eventTestConfig, readableIDToID) {
   return runs;
 };
 
+<<<<<<< HEAD
 const run = function(config, hierarchyConfig, nativeEventConfig) {
   let max = NA;
   const searchForMax = function(nodeConfig) {
+=======
+const run = function (config, hierarchyConfig, nativeEventConfig) {
+  let max = NA;
+  const searchForMax = function (nodeConfig) {
+>>>>>>> remotes/upstream/main
     for (const readableID in nodeConfig) {
       const order = nodeConfig[readableID].order;
       max = order > max ? order : max;
@@ -408,8 +471,13 @@ describe('ResponderEventPlugin', () => {
 
     EventBatching = require('react-native-renderer/src/legacy-events/EventBatching');
     EventPluginUtils = require('react-native-renderer/src/legacy-events/EventPluginUtils');
+<<<<<<< HEAD
     ResponderEventPlugin = require('react-native-renderer/src/legacy-events/ResponderEventPlugin')
       .default;
+=======
+    ResponderEventPlugin =
+      require('react-native-renderer/src/legacy-events/ResponderEventPlugin').default;
+>>>>>>> remotes/upstream/main
 
     deleteAllListeners(GRANDPARENT_INST);
     deleteAllListeners(PARENT_INST);
@@ -1379,6 +1447,7 @@ describe('ResponderEventPlugin', () => {
     // ResponderEventPlugin uses `getLowestCommonAncestor`
     const React = require('react');
     const ReactTestUtils = require('react-dom/test-utils');
+<<<<<<< HEAD
     const getLowestCommonAncestor = require('react-native-renderer/src/legacy-events/ResponderEventPlugin')
       .getLowestCommonAncestor;
     // This works by accident and will likely break in the future.
@@ -1390,12 +1459,30 @@ describe('ResponderEventPlugin', () => {
           <div ref="DIV" id={this.props.id + '__DIV'}>
             <div ref="DIV_1" id={this.props.id + '__DIV_1'} />
             <div ref="DIV_2" id={this.props.id + '__DIV_2'} />
+=======
+    const getLowestCommonAncestor =
+      require('react-native-renderer/src/legacy-events/ResponderEventPlugin').getLowestCommonAncestor;
+    // This works by accident and will likely break in the future.
+    const ReactDOMComponentTree = require('react-dom-bindings/src/client/ReactDOMComponentTree');
+
+    class ChildComponent extends React.Component {
+      divRef = React.createRef();
+      div1Ref = React.createRef();
+      div2Ref = React.createRef();
+
+      render() {
+        return (
+          <div ref={this.divRef} id={this.props.id + '__DIV'}>
+            <div ref={this.div1Ref} id={this.props.id + '__DIV_1'} />
+            <div ref={this.div2Ref} id={this.props.id + '__DIV_2'} />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
     }
 
     class ParentComponent extends React.Component {
+<<<<<<< HEAD
       render() {
         return (
           <div ref="P" id="P">
@@ -1404,6 +1491,22 @@ describe('ResponderEventPlugin', () => {
               <ChildComponent ref="P_P1_C2" id="P_P1_C2" />
             </div>
             <div ref="P_OneOff" id="P_OneOff" />
+=======
+      pRef = React.createRef();
+      p_P1Ref = React.createRef();
+      p_P1_C1Ref = React.createRef();
+      p_P1_C2Ref = React.createRef();
+      p_OneOffRef = React.createRef();
+
+      render() {
+        return (
+          <div ref={this.pRef} id="P">
+            <div ref={this.p_P1Ref} id="P_P1">
+              <ChildComponent ref={this.p_P1_C1Ref} id="P_P1_C1" />
+              <ChildComponent ref={this.p_P1_C2Ref} id="P_P1_C2" />
+            </div>
+            <div ref={this.p_OneOffRef} id="P_OneOff" />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
@@ -1414,6 +1517,7 @@ describe('ResponderEventPlugin', () => {
     const ancestors = [
       // Common ancestor with self is self.
       {
+<<<<<<< HEAD
         one: parent.refs.P_P1_C1.refs.DIV_1,
         two: parent.refs.P_P1_C1.refs.DIV_1,
         com: parent.refs.P_P1_C1.refs.DIV_1,
@@ -1449,6 +1553,47 @@ describe('ResponderEventPlugin', () => {
         one: parent.refs.P_P1_C1.refs.DIV_1,
         two: parent.refs.P_OneOff,
         com: parent.refs.P,
+=======
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_P1_C1Ref.current.div1Ref.current,
+        com: parent.p_P1_C1Ref.current.div1Ref.current,
+      },
+      // Common ancestor with self is self - even if topmost DOM.
+      {
+        one: parent.pRef.current,
+        two: parent.pRef.current,
+        com: parent.pRef.current,
+      },
+      // Siblings
+      {
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_P1_C1Ref.current.div2Ref.current,
+        com: parent.p_P1_C1Ref.current.divRef.current,
+      },
+      // Common ancestor with parent is the parent.
+      {
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_P1_C1Ref.current.divRef.current,
+        com: parent.p_P1_C1Ref.current.divRef.current,
+      },
+      // Common ancestor with grandparent is the grandparent.
+      {
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_P1Ref.current,
+        com: parent.p_P1Ref.current,
+      },
+      // Grandparent across subcomponent boundaries.
+      {
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_P1_C2Ref.current.div1Ref.current,
+        com: parent.p_P1Ref.current,
+      },
+      // Something deep with something one-off.
+      {
+        one: parent.p_P1_C1Ref.current.div1Ref.current,
+        two: parent.p_OneOffRef.current,
+        com: parent.pRef.current,
+>>>>>>> remotes/upstream/main
       },
     ];
     let i;

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -67,17 +71,29 @@ describe('ReactIdentity', () => {
 
   function renderAComponentWithKeyIntoContainer(key, container) {
     class Wrapper extends React.Component {
+<<<<<<< HEAD
       render() {
         return (
           <div>
             <span ref="span" key={key} />
+=======
+      spanRef = React.createRef();
+      render() {
+        return (
+          <div>
+            <span ref={this.spanRef} key={key} />
+>>>>>>> remotes/upstream/main
           </div>
         );
       }
     }
 
     const instance = ReactDOM.render(<Wrapper />, container);
+<<<<<<< HEAD
     const span = instance.refs.span;
+=======
+    const span = instance.spanRef.current;
+>>>>>>> remotes/upstream/main
     expect(span).not.toBe(null);
   }
 
@@ -140,7 +156,11 @@ describe('ReactIdentity', () => {
       }
     }
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<TestContainer />);
     }).not.toThrow();
   });
@@ -175,7 +195,11 @@ describe('ReactIdentity', () => {
       }
     }
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<TestContainer />);
     }).not.toThrow();
   });
@@ -203,7 +227,11 @@ describe('ReactIdentity', () => {
       }
     }
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(<TestContainer />);
     }).not.toThrow();
   });
@@ -258,7 +286,11 @@ describe('ReactIdentity', () => {
       </div>
     );
 
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.renderIntoDocument(component);
     }).not.toThrow();
   });
@@ -287,7 +319,11 @@ describe('ReactIdentity', () => {
       expect(test).toThrowError(new TypeError('prod message')),
     ).toErrorDev(
       'The provided key is an unsupported type TemporalLike.' +
+<<<<<<< HEAD
         ' This value must be coerced to a string before before using it here.',
+=======
+        ' This value must be coerced to a string before using it here.',
+>>>>>>> remotes/upstream/main
       {withoutStack: true},
     );
   });

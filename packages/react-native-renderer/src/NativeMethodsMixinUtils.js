@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,7 +19,11 @@ export function mountSafeCallback_NOT_REALLY_SAFE(
   context: any,
   callback: ?Function,
 ): any {
+<<<<<<< HEAD
   return function() {
+=======
+  return function () {
+>>>>>>> remotes/upstream/main
     if (!callback) {
       return undefined;
     }
@@ -45,6 +53,7 @@ export function mountSafeCallback_NOT_REALLY_SAFE(
   };
 }
 
+<<<<<<< HEAD
 export function throwOnStylesProp(component: any, props: any) {
   if (props.styles !== undefined) {
     const owner = component._owner || null;
@@ -65,6 +74,8 @@ export function throwOnStylesProp(component: any, props: any) {
   }
 }
 
+=======
+>>>>>>> remotes/upstream/main
 export function warnForStyleProps(props: any, validAttributes: any) {
   if (__DEV__) {
     for (const key in validAttributes.style) {

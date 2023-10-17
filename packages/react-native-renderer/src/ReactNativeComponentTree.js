@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -24,9 +28,16 @@ function getInstanceFromTag(tag) {
 function getTagFromInstance(inst) {
   let nativeInstance = inst.stateNode;
   let tag = nativeInstance._nativeTag;
+<<<<<<< HEAD
   if (tag === undefined) {
     nativeInstance = nativeInstance.canonical;
     tag = nativeInstance._nativeTag;
+=======
+  if (tag === undefined && nativeInstance.canonical != null) {
+    // For compatibility with Fabric
+    tag = nativeInstance.canonical.nativeTag;
+    nativeInstance = nativeInstance.canonical.publicInstance;
+>>>>>>> remotes/upstream/main
   }
 
   if (!tag) {

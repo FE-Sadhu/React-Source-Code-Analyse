@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,7 +9,7 @@
 
 import JSON5 from 'json5';
 
-import type {Element} from './views/Components/types';
+import type {Element} from 'react-devtools-shared/src/frontend/types';
 import type {StateContext} from './views/Components/TreeContext';
 import type Store from './store';
 
@@ -40,8 +40,9 @@ export function printElement(
     suffix = ` (${element.isCollapsed ? 1 : element.weight})`;
   }
 
-  return `${'  '.repeat(element.depth + 1)}${prefix} <${element.displayName ||
-    'null'}${key}>${hocs}${suffix}`;
+  return `${'  '.repeat(element.depth + 1)}${prefix} <${
+    element.displayName || 'null'
+  }${key}>${hocs}${suffix}`;
 }
 
 export function printOwnersList(
@@ -70,10 +71,8 @@ export function printStore(
   }
 
   function printErrorsAndWarnings(element: Element): string {
-    const {
-      errorCount,
-      warningCount,
-    } = store.getErrorAndWarningCountForElementID(element.id);
+    const {errorCount, warningCount} =
+      store.getErrorAndWarningCountForElementID(element.id);
     if (errorCount === 0 && warningCount === 0) {
       return '';
     }
@@ -149,20 +148,20 @@ export function printStore(
 // We use JSON.parse to parse string values
 // e.g. 'foo' is not valid JSON but it is a valid string
 // so this method replaces e.g. 'foo' with "foo"
-export function sanitizeForParse(value: any) {
+export function sanitizeForParse(value: any): any | string {
   if (typeof value === 'string') {
     if (
       value.length >= 2 &&
       value.charAt(0) === "'" &&
       value.charAt(value.length - 1) === "'"
     ) {
-      return '"' + value.substr(1, value.length - 2) + '"';
+      return '"' + value.slice(1, value.length - 1) + '"';
     }
   }
   return value;
 }
 
-export function smartParse(value: any) {
+export function smartParse(value: any): any | void | number {
   switch (value) {
     case 'Infinity':
       return Infinity;
@@ -198,7 +197,7 @@ const STACK_SOURCE_LOCATION = /([^\s]+) \((.+):(.+):(.+)\)/;
 export function stackToComponentSources(
   stack: string,
 ): Array<[string, ?Stack]> {
-  const out = [];
+  const out: Array<[string, ?Stack]> = [];
   stack
     .split(STACK_DELIMETER)
     .slice(1)

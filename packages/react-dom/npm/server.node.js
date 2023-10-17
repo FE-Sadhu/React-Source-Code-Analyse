@@ -15,3 +15,9 @@ exports.renderToStaticMarkup = l.renderToStaticMarkup;
 exports.renderToNodeStream = l.renderToNodeStream;
 exports.renderToStaticNodeStream = l.renderToStaticNodeStream;
 exports.renderToPipeableStream = s.renderToPipeableStream;
+<<<<<<< HEAD
+=======
+if (s.resumeToPipeableStream) {
+  exports.resumeToPipeableStream = s.resumeToPipeableStream;
+}
+>>>>>>> remotes/upstream/main

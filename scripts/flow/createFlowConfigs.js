@@ -1,16 +1,27 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @flow
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+>>>>>>> remotes/upstream/main
  */
 
 'use strict';
 
 const chalk = require('chalk');
 const fs = require('fs');
+<<<<<<< HEAD
+=======
+const path = require('path');
+>>>>>>> remotes/upstream/main
 const mkdirp = require('mkdirp');
 const inlinedHostConfigs = require('../shared/inlinedHostConfigs');
 
@@ -18,11 +29,63 @@ const configTemplate = fs
   .readFileSync(__dirname + '/config/flowconfig')
   .toString();
 
+<<<<<<< HEAD
 function writeConfig(renderer, rendererInfo, isServerSupported) {
   const folder = __dirname + '/' + renderer;
   mkdirp.sync(folder);
 
   const serverRenderer = isServerSupported ? renderer : 'custom';
+=======
+// stores all forks discovered during config generation
+const allForks = new Set();
+// maps forked file to the base path containing it and it's forks (it's parent)
+const forkedFiles = new Map();
+
+function findForks(file) {
+  const basePath = path.join(file, '..');
+  const forksPath = path.join(basePath, 'forks');
+  const forks = fs.readdirSync(path.join('packages', forksPath));
+  forks.forEach(f => allForks.add('forks/' + f));
+  forkedFiles.set(file, basePath);
+  return basePath;
+}
+
+function addFork(forks, renderer, file) {
+  let basePath = forkedFiles.get(file);
+  if (!basePath) {
+    basePath = findForks(file);
+  }
+
+  const baseFilename = file.slice(basePath.length + 1);
+
+  const parts = renderer.split('-');
+  while (parts.length) {
+    const candidate = `forks/${baseFilename}.${parts.join('-')}.js`;
+    if (allForks.has(candidate)) {
+      forks.set(candidate, `${baseFilename}$$`);
+      return;
+    }
+    parts.pop();
+  }
+  throw new Error(`Cannot find fork for ${file} for renderer ${renderer}`);
+}
+
+function writeConfig(
+  renderer,
+  rendererInfo,
+  isServerSupported,
+  isFlightSupported,
+) {
+  const folder = __dirname + '/' + renderer;
+  mkdirp.sync(folder);
+
+  isFlightSupported =
+    isFlightSupported === true ||
+    (isServerSupported && isFlightSupported !== false);
+
+  const serverRenderer = isServerSupported ? renderer : 'custom';
+  const flightRenderer = isFlightSupported ? renderer : 'custom';
+>>>>>>> remotes/upstream/main
 
   const ignoredPaths = [];
 
@@ -36,6 +99,7 @@ function writeConfig(renderer, rendererInfo, isServerSupported) {
       }
       ignoredPaths.push(`.*/packages/${otherPath}`);
     });
+<<<<<<< HEAD
 
     if (otherRenderer.shortName !== serverRenderer) {
       ignoredPaths.push(
@@ -56,6 +120,41 @@ module.name_mapper='ReactFlightClientHostConfig$$' -> 'forks/ReactFlightClientHo
 module.name_mapper='react-devtools-feature-flags' -> 'react-devtools-shared/src/config/DevToolsFeatureFlags.default'
     `.trim(),
     )
+=======
+  });
+
+  const forks = new Map();
+  addFork(forks, renderer, 'react-reconciler/src/ReactFiberConfig');
+  addFork(forks, serverRenderer, 'react-server/src/ReactServerStreamConfig');
+  addFork(forks, serverRenderer, 'react-server/src/ReactFizzConfig');
+  addFork(forks, flightRenderer, 'react-server/src/ReactFlightServerConfig');
+  addFork(forks, flightRenderer, 'react-client/src/ReactFlightClientConfig');
+  forks.set(
+    'react-devtools-shared/src/config/DevToolsFeatureFlags.default',
+    'react-devtools-feature-flags',
+  );
+
+  allForks.forEach(fork => {
+    if (!forks.has(fork)) {
+      ignoredPaths.push(`.*/packages/.*/${fork}`);
+    }
+  });
+
+  let moduleMappings = '';
+  forks.forEach((source, target) => {
+    moduleMappings += `module.name_mapper='${source.slice(
+      source.lastIndexOf('/') + 1,
+    )}' -> '${target}'\n`;
+  });
+
+  const config = configTemplate
+    .replace(
+      '%CI_MAX_WORKERS%\n',
+      // On CI, we seem to need to limit workers.
+      process.env.CI ? 'server.max_workers=4\n' : '',
+    )
+    .replace('%REACT_RENDERER_FLOW_OPTIONS%', moduleMappings.trim())
+>>>>>>> remotes/upstream/main
     .replace('%REACT_RENDERER_FLOW_IGNORES%', ignoredPaths.join('\n'));
 
   const disclaimer = `
@@ -93,6 +192,10 @@ inlinedHostConfigs.forEach(rendererInfo => {
       rendererInfo.shortName,
       rendererInfo,
       rendererInfo.isServerSupported,
+<<<<<<< HEAD
+=======
+      rendererInfo.isFlightSupported,
+>>>>>>> remotes/upstream/main
     );
   }
 });

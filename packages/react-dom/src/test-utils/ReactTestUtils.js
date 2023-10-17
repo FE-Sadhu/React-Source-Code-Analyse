@@ -1,8 +1,17 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+>>>>>>> remotes/upstream/main
  */
 
 import * as React from 'react';
@@ -13,14 +22,27 @@ import {
   ClassComponent,
   FunctionComponent,
   HostComponent,
+<<<<<<< HEAD
   HostText,
 } from 'react-reconciler/src/ReactWorkTags';
 import {SyntheticEvent} from '../events/SyntheticEvent';
 import {ELEMENT_NODE} from '../shared/HTMLNodeType';
+=======
+  HostHoistable,
+  HostSingleton,
+  HostText,
+} from 'react-reconciler/src/ReactWorkTags';
+import {SyntheticEvent} from 'react-dom-bindings/src/events/SyntheticEvent';
+import {ELEMENT_NODE} from 'react-dom-bindings/src/client/HTMLNodeType';
+>>>>>>> remotes/upstream/main
 import {
   rethrowCaughtError,
   invokeGuardedCallbackAndCatchFirstError,
 } from 'shared/ReactErrorUtils';
+<<<<<<< HEAD
+=======
+import {enableFloat, enableHostSingletons} from 'shared/ReactFeatureFlags';
+>>>>>>> remotes/upstream/main
 import assign from 'shared/assign';
 import isArray from 'shared/isArray';
 
@@ -59,7 +81,13 @@ function findAllInRenderedFiberTreeInternal(fiber, test) {
       node.tag === HostComponent ||
       node.tag === HostText ||
       node.tag === ClassComponent ||
+<<<<<<< HEAD
       node.tag === FunctionComponent
+=======
+      node.tag === FunctionComponent ||
+      (enableFloat ? node.tag === HostHoistable : false) ||
+      (enableHostSingletons ? node.tag === HostSingleton : false)
+>>>>>>> remotes/upstream/main
     ) {
       const publicInst = node.stateNode;
       if (test(publicInst)) {
@@ -185,7 +213,11 @@ function findAllInRenderedTree(inst, test) {
  */
 function scryRenderedDOMComponentsWithClass(root, classNames) {
   validateClassInstance(root, 'scryRenderedDOMComponentsWithClass');
+<<<<<<< HEAD
   return findAllInRenderedTree(root, function(inst) {
+=======
+  return findAllInRenderedTree(root, function (inst) {
+>>>>>>> remotes/upstream/main
     if (isDOMComponent(inst)) {
       let className = inst.className;
       if (typeof className !== 'string') {
@@ -204,7 +236,11 @@ function scryRenderedDOMComponentsWithClass(root, classNames) {
 
         classNames = classNames.split(/\s+/);
       }
+<<<<<<< HEAD
       return classNames.every(function(name) {
+=======
+      return classNames.every(function (name) {
+>>>>>>> remotes/upstream/main
         return classList.indexOf(name) !== -1;
       });
     }
@@ -240,7 +276,11 @@ function findRenderedDOMComponentWithClass(root, className) {
  */
 function scryRenderedDOMComponentsWithTag(root, tagName) {
   validateClassInstance(root, 'scryRenderedDOMComponentsWithTag');
+<<<<<<< HEAD
   return findAllInRenderedTree(root, function(inst) {
+=======
+  return findAllInRenderedTree(root, function (inst) {
+>>>>>>> remotes/upstream/main
     return (
       isDOMComponent(inst) &&
       inst.tagName.toUpperCase() === tagName.toUpperCase()
@@ -275,7 +315,11 @@ function findRenderedDOMComponentWithTag(root, tagName) {
  */
 function scryRenderedComponentsWithType(root, componentType) {
   validateClassInstance(root, 'scryRenderedComponentsWithType');
+<<<<<<< HEAD
   return findAllInRenderedTree(root, function(inst) {
+=======
+  return findAllInRenderedTree(root, function (inst) {
+>>>>>>> remotes/upstream/main
     return isCompositeComponentWithType(inst, componentType);
   });
 }
@@ -328,7 +372,11 @@ function mockComponent(module, mockTagName) {
 
   mockTagName = mockTagName || module.mockTagName || 'div';
 
+<<<<<<< HEAD
   module.prototype.render.mockImplementation(function() {
+=======
+  module.prototype.render.mockImplementation(function () {
+>>>>>>> remotes/upstream/main
     return React.createElement(mockTagName, null, this.props.children);
   });
 
@@ -385,7 +433,11 @@ function executeDispatchesInOrder(event) {
  * @param {?object} event Synthetic event to be dispatched.
  * @private
  */
+<<<<<<< HEAD
 const executeDispatchesAndRelease = function(event: ReactSyntheticEvent) {
+=======
+function executeDispatchesAndRelease(event /* ReactSyntheticEvent */) {
+>>>>>>> remotes/upstream/main
   if (event) {
     executeDispatchesInOrder(event);
 
@@ -393,7 +445,11 @@ const executeDispatchesAndRelease = function(event: ReactSyntheticEvent) {
       event.constructor.release(event);
     }
   }
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> remotes/upstream/main
 
 function isInteractive(tag) {
   return (
@@ -412,7 +468,15 @@ function getParent(inst) {
     // events to their parent. We could also go through parentNode on the
     // host node but that wouldn't work for React Native and doesn't let us
     // do the portal feature.
+<<<<<<< HEAD
   } while (inst && inst.tag !== HostComponent);
+=======
+  } while (
+    inst &&
+    inst.tag !== HostComponent &&
+    (!enableHostSingletons ? true : inst.tag !== HostSingleton)
+  );
+>>>>>>> remotes/upstream/main
   if (inst) {
     return inst;
   }
@@ -461,7 +525,11 @@ function shouldPreventMouseEvent(name, type, props) {
  * @param {string} registrationName Name of listener (e.g. `onClick`).
  * @return {?function} The stored callback.
  */
+<<<<<<< HEAD
 function getListener(inst: Fiber, registrationName: string) {
+=======
+function getListener(inst /* Fiber */, registrationName: string) {
+>>>>>>> remotes/upstream/main
   // TODO: shouldPreventMouseEvent is DOM-specific and definitely should not
   // live here; needs to be moved to a better place soon
   const stateNode = inst.stateNode;
@@ -564,7 +632,11 @@ const directDispatchEventTypes = new Set([
  * - ... (All keys from event plugin `eventTypes` objects)
  */
 function makeSimulator(eventType) {
+<<<<<<< HEAD
   return function(domNode, eventData) {
+=======
+  return function (domNode, eventData) {
+>>>>>>> remotes/upstream/main
     if (React.isValidElement(domNode)) {
       throw new Error(
         'TestUtils.Simulate expected a DOM node as the first argument but received ' +
@@ -605,7 +677,11 @@ function makeSimulator(eventType) {
       accumulateTwoPhaseDispatchesSingle(event);
     }
 
+<<<<<<< HEAD
     ReactDOM.unstable_batchedUpdates(function() {
+=======
+    ReactDOM.unstable_batchedUpdates(function () {
+>>>>>>> remotes/upstream/main
       // Normally extractEvent enqueues a state restore, but we'll just always
       // do that since we're by-passing it here.
       enqueueStateRestore(domNode);

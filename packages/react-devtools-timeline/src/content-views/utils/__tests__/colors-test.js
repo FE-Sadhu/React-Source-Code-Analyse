@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -41,7 +45,11 @@ describe(ColorGenerator, () => {
   describe(ColorGenerator.prototype.colorForID, () => {
     it('should generate a color for an ID', () => {
       expect(new ColorGenerator().colorForID('123')).toMatchInlineSnapshot(`
+<<<<<<< HEAD
         Object {
+=======
+        {
+>>>>>>> remotes/upstream/main
           "a": 1,
           "h": 190,
           "l": 80,

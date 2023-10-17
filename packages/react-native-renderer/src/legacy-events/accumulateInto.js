@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -40,17 +44,31 @@ function accumulateInto<T>(
   // certain that x is an Array (x could be a string with concat method).
   if (isArray(current)) {
     if (isArray(next)) {
+<<<<<<< HEAD
       // $FlowFixMe `isArray` does not ensure array is mutable
       current.push.apply(current, next);
       return current;
     }
     // $FlowFixMe `isArray` does not ensure array is mutable
+=======
+      // $FlowFixMe[prop-missing] `isArray` does not ensure array is mutable
+      // $FlowFixMe[method-unbinding]
+      current.push.apply(current, next);
+      return current;
+    }
+    // $FlowFixMe[prop-missing] `isArray` does not ensure array is mutable
+>>>>>>> remotes/upstream/main
     current.push(next);
     return current;
   }
 
   if (isArray(next)) {
     // A bit too dangerous to mutate `next`.
+<<<<<<< HEAD
+=======
+    /* $FlowFixMe[incompatible-return] unsound if `next` is `T` and `T` an array,
+     * `isArray` might refine to the array element type of `T` */
+>>>>>>> remotes/upstream/main
     return [current].concat(next);
   }
 

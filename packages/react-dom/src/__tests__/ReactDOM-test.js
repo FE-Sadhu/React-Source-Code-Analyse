@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -23,7 +27,11 @@ describe('ReactDOM', () => {
     ReactTestUtils = require('react-dom/test-utils');
   });
 
+<<<<<<< HEAD
   it('should bubble onSubmit', function() {
+=======
+  it('should bubble onSubmit', function () {
+>>>>>>> remotes/upstream/main
     const container = document.createElement('div');
 
     let count = 0;
@@ -266,7 +274,11 @@ describe('ReactDOM', () => {
       const div = container.firstChild;
       ['appendChild', 'insertBefore'].forEach(name => {
         const mutator = div[name];
+<<<<<<< HEAD
         div[name] = function() {
+=======
+        div[name] = function () {
+>>>>>>> remotes/upstream/main
           if (input) {
             input.blur();
             expect(document.activeElement.tagName).toBe('BODY');
@@ -298,7 +310,11 @@ describe('ReactDOM', () => {
       // This test needs to determine that focus is called after mount.
       // Can't check document.activeElement because PhantomJS is too permissive;
       // It doesn't require element to be in the DOM to be focused.
+<<<<<<< HEAD
       HTMLElement.prototype.focus = function() {
+=======
+      HTMLElement.prototype.focus = function () {
+>>>>>>> remotes/upstream/main
         focusedElement = this;
         inputFocusedAfterMount = !!this.parentNode;
       };
@@ -369,9 +385,15 @@ describe('ReactDOM', () => {
   it('should not crash with devtools installed', () => {
     try {
       global.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+<<<<<<< HEAD
         inject: function() {},
         onCommitFiberRoot: function() {},
         onCommitFiberUnmount: function() {},
+=======
+        inject: function () {},
+        onCommitFiberRoot: function () {},
+        onCommitFiberUnmount: function () {},
+>>>>>>> remotes/upstream/main
         supportsFiber: true,
       };
       jest.resetModules();

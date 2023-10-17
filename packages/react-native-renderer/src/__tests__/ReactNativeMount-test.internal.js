@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,12 +38,22 @@ describe('ReactNative', () => {
     StrictMode = React.StrictMode;
     ReactNative = require('react-native-renderer');
     ReactNativePrivateInterface = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface');
+<<<<<<< HEAD
     UIManager = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
       .UIManager;
     createReactNativeComponentClass = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
       .ReactNativeViewConfigRegistry.register;
     TextInputState = require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
       .TextInputState;
+=======
+    UIManager =
+      require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface').UIManager;
+    createReactNativeComponentClass =
+      require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface')
+        .ReactNativeViewConfigRegistry.register;
+    TextInputState =
+      require('react-native/Libraries/ReactPrivate/ReactNativePrivateInterface').TextInputState;
+>>>>>>> remotes/upstream/main
   });
 
   it('should be able to create and render a native component', () => {
@@ -123,9 +137,17 @@ describe('ReactNative', () => {
     expect(UIManager.dispatchViewManagerCommand).not.toBeCalled();
     ReactNative.dispatchCommand(viewRef, 'updateCommand', [10, 20]);
     expect(UIManager.dispatchViewManagerCommand).toHaveBeenCalledTimes(1);
+<<<<<<< HEAD
     expect(
       UIManager.dispatchViewManagerCommand,
     ).toHaveBeenCalledWith(expect.any(Number), 'updateCommand', [10, 20]);
+=======
+    expect(UIManager.dispatchViewManagerCommand).toHaveBeenCalledWith(
+      expect.any(Number),
+      'updateCommand',
+      [10, 20],
+    );
+>>>>>>> remotes/upstream/main
   });
 
   it('should warn and no-op if calling dispatchCommand on non native refs', () => {
@@ -388,7 +410,11 @@ describe('ReactNative', () => {
     const c = ReactNative.render(
       <View foo="foo" ref={v => (a = v)} />,
       11,
+<<<<<<< HEAD
       function() {
+=======
+      function () {
+>>>>>>> remotes/upstream/main
         b = this;
       },
     );

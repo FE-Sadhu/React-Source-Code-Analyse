@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -25,7 +29,11 @@ type Props = {
   ...
 };
 
+<<<<<<< HEAD
 function CommitFlamegraphListItem({data, index, style}: Props) {
+=======
+function CommitFlamegraphListItem({data, index, style}: Props): React.Node {
+>>>>>>> remotes/upstream/main
   const {
     chartData,
     onElementMouseEnter,
@@ -41,7 +49,11 @@ function CommitFlamegraphListItem({data, index, style}: Props) {
   const {lineHeight} = useContext(SettingsContext);
 
   const handleClick = useCallback(
+<<<<<<< HEAD
     (event: SyntheticMouseEvent<*>, id: number, name: string) => {
+=======
+    (event: SyntheticMouseEvent<EventTarget>, id: number, name: string) => {
+>>>>>>> remotes/upstream/main
       event.stopPropagation();
       selectFiber(id, name);
     },
@@ -131,4 +143,11 @@ function CommitFlamegraphListItem({data, index, style}: Props) {
   );
 }
 
+<<<<<<< HEAD
 export default memo<Props>(CommitFlamegraphListItem, areEqual);
+=======
+export default (memo(
+  CommitFlamegraphListItem,
+  areEqual,
+): React.ComponentType<Props>);
+>>>>>>> remotes/upstream/main

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 (function() {
+=======
+(function () {
+>>>>>>> remotes/upstream/main
   'use strict';
 
   const e = React.createElement;

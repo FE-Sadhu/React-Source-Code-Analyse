@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,12 +18,22 @@ const ReactFeatureFlags = require('shared/ReactFeatureFlags');
 ReactFeatureFlags.replayFailedUnitOfWorkWithInvokeGuardedCallback = false;
 const React = require('react');
 const ReactTestRenderer = require('react-test-renderer');
+<<<<<<< HEAD
 const prettyFormat = require('pretty-format');
+=======
+const {format: prettyFormat} = require('pretty-format');
+>>>>>>> remotes/upstream/main
 
 // Isolate noop renderer
 jest.resetModules();
 const ReactNoop = require('react-noop-renderer');
+<<<<<<< HEAD
 const Scheduler = require('scheduler');
+=======
+
+const InternalTestUtils = require('internal-test-utils');
+const waitForAll = InternalTestUtils.waitForAll;
+>>>>>>> remotes/upstream/main
 
 // Kind of hacky, but we nullify all the instances to test the tree structure
 // with jasmine's deep equality function, and test the instances separate. We
@@ -271,6 +285,7 @@ describe('ReactTestRenderer', () => {
       return <div>Hello, world</div>;
     }
     class Foo extends React.Component {
+<<<<<<< HEAD
       render() {
         return <Bar ref="foo" />;
       }
@@ -278,6 +293,17 @@ describe('ReactTestRenderer', () => {
     class Baz extends React.Component {
       render() {
         return <div ref="baz" />;
+=======
+      fooRef = React.createRef();
+      render() {
+        return <Bar ref={this.fooRef} />;
+      }
+    }
+    class Baz extends React.Component {
+      bazRef = React.createRef();
+      render() {
+        return <div ref={this.bazRef} />;
+>>>>>>> remotes/upstream/main
       }
     }
     ReactTestRenderer.create(<Baz />);
@@ -298,11 +324,20 @@ describe('ReactTestRenderer', () => {
     const mockAnchorInstance = {hover: () => {}};
     const log = [];
     class Foo extends React.Component {
+<<<<<<< HEAD
       componentDidMount() {
         log.push(this.refs.bar);
       }
       render() {
         return <a ref="bar">Hello, world</a>;
+=======
+      barRef = React.createRef();
+      componentDidMount() {
+        log.push(this.barRef.current);
+      }
+      render() {
+        return <a ref={this.barRef}>Hello, world</a>;
+>>>>>>> remotes/upstream/main
       }
     }
     function createNodeMock(element) {
@@ -355,7 +390,11 @@ describe('ReactTestRenderer', () => {
   it('supports unmounting when using refs', () => {
     class Foo extends React.Component {
       render() {
+<<<<<<< HEAD
         return <div ref="foo" />;
+=======
+        return <div ref={React.createRef()} />;
+>>>>>>> remotes/upstream/main
       }
     }
     const inst = ReactTestRenderer.create(<Foo />, {
@@ -394,7 +433,15 @@ describe('ReactTestRenderer', () => {
     };
     class Foo extends React.Component {
       render() {
+<<<<<<< HEAD
         return this.props.useDiv ? <div ref="foo" /> : <span ref="foo" />;
+=======
+        return this.props.useDiv ? (
+          <div ref={React.createRef()} />
+        ) : (
+          <span ref={React.createRef()} />
+        );
+>>>>>>> remotes/upstream/main
       }
     }
     const inst = ReactTestRenderer.create(<Foo useDiv={true} />, {
@@ -1008,7 +1055,11 @@ describe('ReactTestRenderer', () => {
     );
   });
 
+<<<<<<< HEAD
   it('can concurrently render context with a "primary" renderer', () => {
+=======
+  it('can concurrently render context with a "primary" renderer', async () => {
+>>>>>>> remotes/upstream/main
     const Context = React.createContext(null);
     const Indirection = React.Fragment;
     const App = () => (
@@ -1019,7 +1070,11 @@ describe('ReactTestRenderer', () => {
       </Context.Provider>
     );
     ReactNoop.render(<App />);
+<<<<<<< HEAD
     expect(Scheduler).toFlushWithoutYielding();
+=======
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
     ReactTestRenderer.create(<App />);
   });
 

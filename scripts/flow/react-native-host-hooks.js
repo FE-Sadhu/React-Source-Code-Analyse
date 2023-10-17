@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,6 +20,10 @@ type __MeasureInWindowOnSuccessCallback = any;
 type __MeasureLayoutOnSuccessCallback = any;
 type __ReactNativeBaseComponentViewConfig = any;
 type __ViewConfigGetter = any;
+<<<<<<< HEAD
+=======
+type __ViewConfig = any;
+>>>>>>> remotes/upstream/main
 
 // libdefs cannot actually import. This is supposed to be the type imported
 // from 'react-native-renderer/src/legacy-events/TopLevelEventTypes';
@@ -133,7 +141,10 @@ declare module 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface'
   declare export var ReactNativeViewConfigRegistry: {
     customBubblingEventTypes: Object,
     customDirectEventTypes: Object,
+<<<<<<< HEAD
     eventTypes: Object,
+=======
+>>>>>>> remotes/upstream/main
 
     register: (name: string, callback: __ViewConfigGetter) => string,
     get: (name: string) => __ReactNativeBaseComponentViewConfig,
@@ -143,7 +154,26 @@ declare module 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface'
     emit: (channel: string, event: RawEventEmitterEvent) => string,
     ...
   };
+<<<<<<< HEAD
   declare export var CustomEvent: CustomEvent;
+=======
+  declare export opaque type PublicInstance;
+  declare export opaque type PublicTextInstance;
+  declare export function getNodeFromPublicInstance(
+    publicInstance: PublicInstance,
+  ): Object;
+  declare export function getNativeTagFromPublicInstance(
+    publicInstance: PublicInstance,
+  ): number;
+  declare export function createPublicInstance(
+    tag: number,
+    viewConfig: __ViewConfig,
+    internalInstanceHandle: mixed,
+  ): PublicInstance;
+  declare export function createPublicTextInstance(
+    internalInstanceHandle: mixed,
+  ): PublicTextInstance;
+>>>>>>> remotes/upstream/main
 }
 
 declare module 'react-native/Libraries/ReactPrivate/ReactNativePrivateInitializeCore' {
@@ -160,12 +190,28 @@ declare var nativeFabricUIManager: {
     eventTarget: Object,
   ) => Object,
   cloneNode: (node: Object) => Object,
+<<<<<<< HEAD
   cloneNodeWithNewChildren: (node: Object) => Object,
   cloneNodeWithNewProps: (node: Object, newProps: ?Object) => Object,
   cloneNodeWithNewChildrenAndProps: (node: Object, newProps: ?Object) => Object,
   appendChild: (node: Object, childNode: Object) => void,
 
   createChildSet: (rootTag: number) => Object,
+=======
+  cloneNodeWithNewChildren: (
+    node: Object,
+    children?: $ReadOnlyArray<Object>,
+  ) => Object,
+  cloneNodeWithNewProps: (node: Object, newProps: ?Object) => Object,
+  cloneNodeWithNewChildrenAndProps: (
+    node: Object,
+    newPropsOrChildren: ?Object | $ReadOnlyArray<Object>,
+    newProps?: ?Object,
+  ) => Object,
+  appendChild: (node: Object, childNode: Object) => void,
+
+  createChildSet: () => Object,
+>>>>>>> remotes/upstream/main
   appendChildToSet: (childSet: Object, childNode: Object) => void,
   completeRoot: (rootTag: number, childSet: Object) => void,
   registerEventHandler: (
@@ -175,6 +221,7 @@ declare var nativeFabricUIManager: {
       payload: Object,
     ) => void,
   ) => void,
+<<<<<<< HEAD
 
   dispatchCommand: (node: Object, command: string, args: Array<any>) => void,
   sendAccessibilityEvent: (node: Object, eventTypeName: string) => void,
@@ -192,12 +239,43 @@ declare var nativeFabricUIManager: {
   ) => void,
   findNodeAtPoint: (
     node: Node,
+=======
+  setNativeProps: (node: Object, nativeProps: Object) => Object,
+  dispatchCommand: (node: Object, command: string, args: Array<any>) => void,
+  sendAccessibilityEvent: (node: Object, eventTypeName: string) => void,
+
+  measure: (node: Object, callback: __MeasureOnSuccessCallback) => void,
+  measureInWindow: (
+    node: Object,
+    callback: __MeasureInWindowOnSuccessCallback,
+  ) => void,
+  measureLayout: (
+    node: Object,
+    relativeNode: Object,
+    onFail: () => void,
+    onSuccess: __MeasureLayoutOnSuccessCallback,
+  ) => void,
+  getBoundingClientRect: (
+    node: Object,
+  ) => [
+    /* x:*/ number,
+    /* y:*/ number,
+    /* width:*/ number,
+    /* height:*/ number,
+  ],
+  findNodeAtPoint: (
+    node: Object,
+>>>>>>> remotes/upstream/main
     locationX: number,
     locationY: number,
     callback: (Object) => void,
   ) => void,
   setIsJSResponder: (
+<<<<<<< HEAD
     node: Node,
+=======
+    node: Object,
+>>>>>>> remotes/upstream/main
     isJsResponder: boolean,
     blockNativeResponder: boolean,
   ) => void,
@@ -206,6 +284,7 @@ declare var nativeFabricUIManager: {
   unstable_getCurrentEventPriority: () => number,
   ...
 };
+<<<<<<< HEAD
 
 declare module 'View' {
   declare module.exports: typeof React$Component;
@@ -236,3 +315,5 @@ declare module 'RTManager' {
 declare module '../shims/ReactFeatureFlags' {
   declare export var debugRenderPhaseSideEffects: boolean;
 }
+=======
+>>>>>>> remotes/upstream/main

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -45,7 +49,11 @@ export default function List(props: Props): React.Node {
   }, [newItemText, items, uid]);
 
   const handleKeyPress = useCallback(
+<<<<<<< HEAD
     event => {
+=======
+    (event: $FlowFixMe) => {
+>>>>>>> remotes/upstream/main
       if (event.key === 'Enter') {
         handleClick();
       }
@@ -54,19 +62,32 @@ export default function List(props: Props): React.Node {
   );
 
   const handleChange = useCallback(
+<<<<<<< HEAD
     event => {
+=======
+    (event: $FlowFixMe) => {
+>>>>>>> remotes/upstream/main
       setNewItemText(event.currentTarget.value);
     },
     [setNewItemText],
   );
 
   const removeItem = useCallback(
+<<<<<<< HEAD
     itemToRemove => setItems(items.filter(item => item !== itemToRemove)),
+=======
+    (itemToRemove: $FlowFixMe) =>
+      setItems(items.filter(item => item !== itemToRemove)),
+>>>>>>> remotes/upstream/main
     [items],
   );
 
   const toggleItem = useCallback(
+<<<<<<< HEAD
     itemToToggle => {
+=======
+    (itemToToggle: $FlowFixMe) => {
+>>>>>>> remotes/upstream/main
       // Dont use indexOf()
       // because editing props in DevTools creates a new Object.
       const index = items.findIndex(item => item.id === itemToToggle.id);

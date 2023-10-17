@@ -22,10 +22,13 @@
   text-overflow: ellipsis;
 }
 
+<<<<<<< HEAD
 .Label {
   font-weight: bold;
 }
 
+=======
+>>>>>>> remotes/upstream/main
 .CurrentCommit {
   margin: 0.25rem 0;
   display: block;

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,6 +18,7 @@ let ReactDOM;
 let ReactTestUtils;
 
 let idCallOrder;
+<<<<<<< HEAD
 const recordID = function(id) {
   idCallOrder.push(id);
 };
@@ -22,6 +27,16 @@ const recordIDAndStopPropagation = function(id, event) {
   event.stopPropagation();
 };
 const recordIDAndReturnFalse = function(id, event) {
+=======
+const recordID = function (id) {
+  idCallOrder.push(id);
+};
+const recordIDAndStopPropagation = function (id, event) {
+  recordID(id);
+  event.stopPropagation();
+};
+const recordIDAndReturnFalse = function (id, event) {
+>>>>>>> remotes/upstream/main
   recordID(id);
   return false;
 };
@@ -82,7 +97,11 @@ describe('ReactBrowserEventEmitter', () => {
 
     renderTree();
 
+<<<<<<< HEAD
     putListener = function(node, eventName, listener) {
+=======
+    putListener = function (node, eventName, listener) {
+>>>>>>> remotes/upstream/main
       switch (node) {
         case CHILD:
           CHILD_PROPS[eventName] = listener;
@@ -100,7 +119,11 @@ describe('ReactBrowserEventEmitter', () => {
       // Rerender with new event listeners
       renderTree();
     };
+<<<<<<< HEAD
     deleteAllListeners = function(node) {
+=======
+    deleteAllListeners = function (node) {
+>>>>>>> remotes/upstream/main
       switch (node) {
         case CHILD:
           CHILD_PROPS = {};
@@ -159,12 +182,20 @@ describe('ReactBrowserEventEmitter', () => {
 
   it('should continue bubbling if an error is thrown', () => {
     putListener(CHILD, ON_CLICK_KEY, recordID.bind(null, CHILD));
+<<<<<<< HEAD
     putListener(PARENT, ON_CLICK_KEY, function() {
+=======
+    putListener(PARENT, ON_CLICK_KEY, function () {
+>>>>>>> remotes/upstream/main
       recordID(PARENT);
       throw new Error('Handler interrupted');
     });
     putListener(GRANDPARENT, ON_CLICK_KEY, recordID.bind(null, GRANDPARENT));
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       ReactTestUtils.Simulate.click(CHILD);
     }).toThrow();
     expect(idCallOrder.length).toBe(3);
@@ -174,6 +205,7 @@ describe('ReactBrowserEventEmitter', () => {
   });
 
   it('should set currentTarget', () => {
+<<<<<<< HEAD
     putListener(CHILD, ON_CLICK_KEY, function(event) {
       recordID(CHILD);
       expect(event.currentTarget).toBe(CHILD);
@@ -183,6 +215,17 @@ describe('ReactBrowserEventEmitter', () => {
       expect(event.currentTarget).toBe(PARENT);
     });
     putListener(GRANDPARENT, ON_CLICK_KEY, function(event) {
+=======
+    putListener(CHILD, ON_CLICK_KEY, function (event) {
+      recordID(CHILD);
+      expect(event.currentTarget).toBe(CHILD);
+    });
+    putListener(PARENT, ON_CLICK_KEY, function (event) {
+      recordID(PARENT);
+      expect(event.currentTarget).toBe(PARENT);
+    });
+    putListener(GRANDPARENT, ON_CLICK_KEY, function (event) {
+>>>>>>> remotes/upstream/main
       recordID(GRANDPARENT);
       expect(event.currentTarget).toBe(GRANDPARENT);
     });
@@ -210,7 +253,11 @@ describe('ReactBrowserEventEmitter', () => {
   it('should support overriding .isPropagationStopped()', () => {
     // Ew. See D4504876.
     putListener(CHILD, ON_CLICK_KEY, recordID.bind(null, CHILD));
+<<<<<<< HEAD
     putListener(PARENT, ON_CLICK_KEY, function(e) {
+=======
+    putListener(PARENT, ON_CLICK_KEY, function (e) {
+>>>>>>> remotes/upstream/main
       recordID(PARENT, e);
       // This stops React bubbling but avoids touching the native event
       e.isPropagationStopped = () => true;
@@ -257,7 +304,11 @@ describe('ReactBrowserEventEmitter', () => {
 
   it('should invoke handlers that were removed while bubbling', () => {
     const handleParentClick = jest.fn();
+<<<<<<< HEAD
     const handleChildClick = function(event) {
+=======
+    const handleChildClick = function (event) {
+>>>>>>> remotes/upstream/main
       deleteAllListeners(PARENT);
     };
     putListener(CHILD, ON_CLICK_KEY, handleChildClick);
@@ -268,7 +319,11 @@ describe('ReactBrowserEventEmitter', () => {
 
   it('should not invoke newly inserted handlers while bubbling', () => {
     const handleParentClick = jest.fn();
+<<<<<<< HEAD
     const handleChildClick = function(event) {
+=======
+    const handleChildClick = function (event) {
+>>>>>>> remotes/upstream/main
       putListener(PARENT, ON_CLICK_KEY, handleParentClick);
     };
     putListener(CHILD, ON_CLICK_KEY, handleChildClick);

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -42,7 +46,11 @@ export function disableLogs(): void {
         value: disabledLog,
         writable: true,
       };
+<<<<<<< HEAD
       // $FlowFixMe Flow thinks console is immutable.
+=======
+      // $FlowFixMe[cannot-write] Flow thinks console is immutable.
+>>>>>>> remotes/upstream/main
       Object.defineProperties(console, {
         info: props,
         log: props,
@@ -68,7 +76,11 @@ export function reenableLogs(): void {
         enumerable: true,
         writable: true,
       };
+<<<<<<< HEAD
       // $FlowFixMe Flow thinks console is immutable.
+=======
+      // $FlowFixMe[cannot-write] Flow thinks console is immutable.
+>>>>>>> remotes/upstream/main
       Object.defineProperties(console, {
         log: {...props, value: prevLog},
         info: {...props, value: prevInfo},

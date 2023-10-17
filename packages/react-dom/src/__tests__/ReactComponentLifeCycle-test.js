@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,7 +18,11 @@ let ReactDOM;
 let ReactTestUtils;
 let PropTypes;
 
+<<<<<<< HEAD
 const clone = function(o) {
+=======
+const clone = function (o) {
+>>>>>>> remotes/upstream/main
   return JSON.parse(JSON.stringify(o));
 };
 
@@ -176,7 +184,11 @@ describe('ReactComponentLifeCycle', () => {
     }
 
     let instance = <StatefulComponent />;
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       instance = ReactTestUtils.renderIntoDocument(instance);
     }).toThrow();
   });
@@ -193,7 +205,11 @@ describe('ReactComponentLifeCycle', () => {
     }
 
     let instance = <StatefulComponent />;
+<<<<<<< HEAD
     expect(function() {
+=======
+    expect(function () {
+>>>>>>> remotes/upstream/main
       instance = ReactTestUtils.renderIntoDocument(instance);
     }).not.toThrow();
   });
@@ -349,9 +365,14 @@ describe('ReactComponentLifeCycle', () => {
           hasWillUnmountCompleted: false,
         };
         this._testJournal.returnedFromGetInitialState = clone(initState);
+<<<<<<< HEAD
         this._testJournal.lifeCycleAtStartOfGetInitialState = getLifeCycleState(
           this,
         );
+=======
+        this._testJournal.lifeCycleAtStartOfGetInitialState =
+          getLifeCycleState(this);
+>>>>>>> remotes/upstream/main
         this.state = initState;
       }
 
@@ -378,14 +399,23 @@ describe('ReactComponentLifeCycle', () => {
         }
         // you would *NEVER* do anything like this in real code!
         this.state.hasRenderCompleted = true;
+<<<<<<< HEAD
         return <div ref="theDiv">I am the inner DIV</div>;
+=======
+        return <div ref={React.createRef()}>I am the inner DIV</div>;
+>>>>>>> remotes/upstream/main
       }
 
       componentWillUnmount() {
         this._testJournal.stateAtStartOfWillUnmount = clone(this.state);
+<<<<<<< HEAD
         this._testJournal.lifeCycleAtStartOfWillUnmount = getLifeCycleState(
           this,
         );
+=======
+        this._testJournal.lifeCycleAtStartOfWillUnmount =
+          getLifeCycleState(this);
+>>>>>>> remotes/upstream/main
         this.state.hasWillUnmountCompleted = true;
       }
     }
@@ -477,7 +507,13 @@ describe('ReactComponentLifeCycle', () => {
     class Component extends React.Component {
       render() {
         return (
+<<<<<<< HEAD
           <Tooltip ref="tooltip" tooltip={<div>{this.props.tooltipText}</div>}>
+=======
+          <Tooltip
+            ref={React.createRef()}
+            tooltip={<div>{this.props.tooltipText}</div>}>
+>>>>>>> remotes/upstream/main
             {this.props.text}
           </Tooltip>
         );
@@ -522,8 +558,13 @@ describe('ReactComponentLifeCycle', () => {
 
   it('should call nested legacy lifecycle methods in the right order', () => {
     let log;
+<<<<<<< HEAD
     const logger = function(msg) {
       return function() {
+=======
+    const logger = function (msg) {
+      return function () {
+>>>>>>> remotes/upstream/main
         // return true for shouldComponentUpdate
         log.push(msg);
         return true;
@@ -597,8 +638,13 @@ describe('ReactComponentLifeCycle', () => {
 
   it('should call nested new lifecycle methods in the right order', () => {
     let log;
+<<<<<<< HEAD
     const logger = function(msg) {
       return function() {
+=======
+    const logger = function (msg) {
+      return function () {
+>>>>>>> remotes/upstream/main
         // return true for shouldComponentUpdate
         log.push(msg);
         return true;
@@ -984,7 +1030,11 @@ describe('ReactComponentLifeCycle', () => {
   });
 
   if (!require('shared/ReactFeatureFlags').disableModulePatternComponents) {
+<<<<<<< HEAD
     it('calls effects on module-pattern component', function() {
+=======
+    it('calls effects on module-pattern component', function () {
+>>>>>>> remotes/upstream/main
       const log = [];
 
       function Parent() {
@@ -1369,7 +1419,11 @@ describe('ReactComponentLifeCycle', () => {
     ReactDOM.render(<MyComponent />, div);
   });
 
+<<<<<<< HEAD
   it('warns about deprecated unsafe lifecycles', function() {
+=======
+  it('warns about deprecated unsafe lifecycles', function () {
+>>>>>>> remotes/upstream/main
     class MyComponent extends React.Component {
       componentWillMount() {}
       componentWillReceiveProps() {}

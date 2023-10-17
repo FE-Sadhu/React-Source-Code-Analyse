@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,9 +23,16 @@ import {
 } from 'react-server/src/ReactFizzServer';
 
 import {
+<<<<<<< HEAD
   createResponseState,
   createRootFormatContext,
 } from './ReactDOMServerLegacyFormatConfig';
+=======
+  createResumableState,
+  createRenderState,
+  createRootFormatContext,
+} from 'react-dom-bindings/src/server/ReactFizzConfigDOMLegacy';
+>>>>>>> remotes/upstream/main
 
 type ServerOptions = {
   identifierPrefix?: string,
@@ -41,12 +52,20 @@ function renderToStringImpl(
   let fatalError = null;
   let result = '';
   const destination = {
+<<<<<<< HEAD
+=======
+    // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
     push(chunk) {
       if (chunk !== null) {
         result += chunk;
       }
       return true;
     },
+<<<<<<< HEAD
+=======
+    // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
     destroy(error) {
       didFatal = true;
       fatalError = error;
@@ -57,12 +76,23 @@ function renderToStringImpl(
   function onShellReady() {
     readyToStream = true;
   }
+<<<<<<< HEAD
   const request = createRequest(
     children,
     createResponseState(
       generateStaticMarkup,
       options ? options.identifierPrefix : undefined,
     ),
+=======
+  const resumableState = createResumableState(
+    options ? options.identifierPrefix : undefined,
+    undefined,
+  );
+  const request = createRequest(
+    children,
+    resumableState,
+    createRenderState(resumableState, generateStaticMarkup),
+>>>>>>> remotes/upstream/main
     createRootFormatContext(),
     Infinity,
     onError,
@@ -70,6 +100,10 @@ function renderToStringImpl(
     onShellReady,
     undefined,
     undefined,
+<<<<<<< HEAD
+=======
+    undefined,
+>>>>>>> remotes/upstream/main
   );
   startWork(request);
   // If anything suspended and is still pending, we'll abort it before writing.

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -76,7 +80,11 @@ describe('SchedulerDOMSetImmediate', () => {
     };
 
     // Unused: we expect setImmediate to be preferred.
+<<<<<<< HEAD
     global.MessageChannel = function() {
+=======
+    global.MessageChannel = function () {
+>>>>>>> remotes/upstream/main
       return {
         port1: {},
         port2: {
@@ -88,7 +96,11 @@ describe('SchedulerDOMSetImmediate', () => {
     };
 
     let pendingSetImmediateCallback = null;
+<<<<<<< HEAD
     global.setImmediate = function(cb) {
+=======
+    global.setImmediate = function (cb) {
+>>>>>>> remotes/upstream/main
       if (pendingSetImmediateCallback) {
         throw Error('Message event already scheduled');
       }

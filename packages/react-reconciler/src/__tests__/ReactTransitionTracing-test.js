@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,6 +16,11 @@ let React;
 let ReactNoop;
 let Scheduler;
 let act;
+<<<<<<< HEAD
+=======
+let waitForAll;
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 let getCacheForType;
 let useState;
@@ -41,7 +50,15 @@ describe('ReactInteractionTracing', () => {
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
 
+<<<<<<< HEAD
     act = require('jest-react').act;
+=======
+    act = require('internal-test-utils').act;
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    assertLog = InternalTestUtils.assertLog;
+>>>>>>> remotes/upstream/main
 
     useState = React.useState;
     startTransition = React.startTransition;
@@ -106,16 +123,27 @@ describe('ReactInteractionTracing', () => {
     if (record !== undefined) {
       switch (record.status) {
         case 'pending':
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(`Suspend [${text}]`);
           throw record.value;
         case 'rejected':
           Scheduler.unstable_yieldValue(`Error [${text}]`);
+=======
+          Scheduler.log(`Suspend [${text}]`);
+          throw record.value;
+        case 'rejected':
+          Scheduler.log(`Error [${text}]`);
+>>>>>>> remotes/upstream/main
           throw record.value;
         case 'resolved':
           return record.value;
       }
     } else {
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`Suspend [${text}]`);
+=======
+      Scheduler.log(`Suspend [${text}]`);
+>>>>>>> remotes/upstream/main
 
       const thenable = {
         pings: [],
@@ -140,12 +168,20 @@ describe('ReactInteractionTracing', () => {
 
   function AsyncText({text}) {
     const fullText = readText(text);
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(fullText);
+=======
+    Scheduler.log(fullText);
+>>>>>>> remotes/upstream/main
     return fullText;
   }
 
   function Text({text}) {
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(text);
+=======
+    Scheduler.log(text);
+>>>>>>> remotes/upstream/main
     return text;
   }
 
@@ -177,6 +213,7 @@ describe('ReactInteractionTracing', () => {
   it(' should not call callbacks when transition is not defined', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -184,11 +221,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -200,12 +248,20 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -233,7 +289,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       await act(async () => {
         startTransition(() => root.render(<App navigate={true} />));
@@ -242,12 +302,20 @@ describe('ReactInteractionTracing', () => {
         await advanceTimers(1000);
 
         // Doesn't call transition or marker code
+<<<<<<< HEAD
         expect(Scheduler).toFlushAndYield(['Page Two']);
+=======
+        await waitForAll(['Page Two']);
+>>>>>>> remotes/upstream/main
 
         startTransition(() => root.render(<App navigate={false} />), {
           name: 'transition',
         });
+<<<<<<< HEAD
         expect(Scheduler).toFlushAndYield([
+=======
+        await waitForAll([
+>>>>>>> remotes/upstream/main
           'Page One',
           'onTransitionStart(transition, 2000)',
           'onTransitionComplete(transition, 2000, 2000)',
@@ -260,6 +328,7 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace basic interaction', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -267,11 +336,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -299,7 +379,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       await act(async () => {
         startTransition(() => navigateToPageTwo(), {name: 'page transition'});
@@ -307,7 +391,11 @@ describe('ReactInteractionTracing', () => {
         ReactNoop.expire(1000);
         await advanceTimers(1000);
 
+<<<<<<< HEAD
         expect(Scheduler).toFlushAndYield([
+=======
+        await waitForAll([
+>>>>>>> remotes/upstream/main
           'Page Two',
           'onTransitionStart(page transition, 1000)',
           'onTransitionComplete(page transition, 1000, 2000)',
@@ -320,12 +408,19 @@ describe('ReactInteractionTracing', () => {
   it('multiple updates in transition callback should only result in one transitionStart/transitionComplete call', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionComplete: (name, startTime, endTime) => {
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -358,7 +453,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One: hide']);
+=======
+      await waitForAll(['Page One: hide']);
+>>>>>>> remotes/upstream/main
 
       await act(async () => {
         startTransition(
@@ -372,7 +471,11 @@ describe('ReactInteractionTracing', () => {
         ReactNoop.expire(1000);
         await advanceTimers(1000);
 
+<<<<<<< HEAD
         expect(Scheduler).toFlushAndYield([
+=======
+        await waitForAll([
+>>>>>>> remotes/upstream/main
           'Page Two: show',
           'onTransitionStart(page transition, 1000)',
           'onTransitionComplete(page transition, 1000, 2000)',
@@ -385,6 +488,7 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace interactions for async roots', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -392,11 +496,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -431,7 +546,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -440,7 +559,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'onTransitionStart(page transition, 1000)',
@@ -451,7 +574,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
       await resolveText('Page Two');
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'onTransitionProgress(page transition, 1000, 3000, [])',
         'onTransitionComplete(page transition, 1000, 3000)',
@@ -463,6 +590,7 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace multiple separate root interactions', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -470,11 +598,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -526,13 +665,21 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
       startTransition(() => navigateToPageTwo(), {name: 'page transition'});
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'onTransitionStart(page transition, 1000)',
@@ -542,14 +689,22 @@ describe('ReactInteractionTracing', () => {
       await resolveText('Page Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'onTransitionProgress(page transition, 1000, 2000, [])',
         'onTransitionComplete(page transition, 1000, 2000)',
       ]);
 
       startTransition(() => showTextFn(), {name: 'text transition'});
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Show Text]',
         'Show Text Loading...',
         'Page Two',
@@ -560,7 +715,11 @@ describe('ReactInteractionTracing', () => {
       await resolveText('Show Text');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text',
         'onTransitionProgress(text transition, 2000, 3000, [])',
         'onTransitionComplete(text transition, 2000, 3000)',
@@ -572,6 +731,7 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace multiple intertwined root interactions', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -579,11 +739,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -633,7 +804,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -641,7 +816,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'onTransitionStart(page transition, 1000)',
@@ -652,7 +831,11 @@ describe('ReactInteractionTracing', () => {
     await act(async () => {
       startTransition(() => showTextFn(), {name: 'show text'});
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Show Text]',
         'Show Text Loading...',
         'Suspend [Page Two]',
@@ -667,7 +850,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'onTransitionProgress(page transition, 1000, 3000, [])',
         'onTransitionComplete(page transition, 1000, 3000)',
@@ -677,7 +864,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text',
         'onTransitionProgress(show text, 2000, 4000, [])',
         'onTransitionComplete(show text, 2000, 4000)',
@@ -689,6 +880,7 @@ describe('ReactInteractionTracing', () => {
   it('trace interaction with nested and sibling suspense boundaries', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -696,11 +888,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -750,7 +953,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -758,12 +965,17 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Page Two]',
         'Suspend [Show Text One]',
         'Show Text One Loading...',
         'Suspend [Show Text Two]',
         'Show Text Two Loading...',
+=======
+      await waitForAll([
+        'Suspend [Page Two]',
+>>>>>>> remotes/upstream/main
         'Loading...',
         'onTransitionStart(page transition, 1000)',
         'onTransitionProgress(page transition, 1000, 2000, [suspense page])',
@@ -773,7 +985,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'Suspend [Show Text One]',
         'Show Text One Loading...',
@@ -786,7 +1002,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text One',
         'onTransitionProgress(page transition, 1000, 4000, [show text two])',
       ]);
@@ -795,7 +1015,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text Two',
         'onTransitionProgress(page transition, 1000, 5000, [])',
         'onTransitionComplete(page transition, 1000, 5000)',
@@ -807,6 +1031,7 @@ describe('ReactInteractionTracing', () => {
   it('trace interactions with the same child suspense boundaries', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -814,11 +1039,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -881,7 +1117,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -890,12 +1130,17 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Page Two]',
         'Suspend [Show Text One]',
         'Show Text One Loading...',
         'Suspend [Show Text]',
         'Show Text Loading...',
+=======
+      await waitForAll([
+        'Suspend [Page Two]',
+>>>>>>> remotes/upstream/main
         'Loading...',
         'onTransitionStart(navigate, 1000)',
         'onTransitionStart(show text one, 1000)',
@@ -906,7 +1151,11 @@ describe('ReactInteractionTracing', () => {
       resolveText('Page Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'Suspend [Show Text One]',
         'Show Text One Loading...',
@@ -920,7 +1169,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'Suspend [Show Text One]',
         'Show Text One Loading...',
@@ -938,7 +1191,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text',
         'onTransitionProgress(navigate, 1000, 5000, [show text one])',
         'onTransitionProgress(show text one, 1000, 5000, [show text one])',
@@ -948,7 +1205,11 @@ describe('ReactInteractionTracing', () => {
       resolveText('Show Text Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text Two',
         'onTransitionProgress(show text two, 3000, 6000, [])',
         'onTransitionComplete(show text two, 3000, 6000)',
@@ -959,7 +1220,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Show Text One',
         'onTransitionProgress(navigate, 1000, 7000, [])',
         'onTransitionProgress(show text one, 1000, 7000, [])',
@@ -973,6 +1238,7 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace basic interaction with tracing markers', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -980,11 +1246,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -996,12 +1273,20 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1037,7 +1322,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       await act(async () => {
         startTransition(() => navigateToPageTwo(), {name: 'page transition'});
@@ -1045,7 +1334,11 @@ describe('ReactInteractionTracing', () => {
         ReactNoop.expire(1000);
         await advanceTimers(1000);
 
+<<<<<<< HEAD
         expect(Scheduler).toFlushAndYield([
+=======
+        await waitForAll([
+>>>>>>> remotes/upstream/main
           'Page Two',
           'onTransitionStart(page transition, 1000)',
           'onMarkerComplete(page transition, marker two, 1000, 2000)',
@@ -1059,12 +1352,19 @@ describe('ReactInteractionTracing', () => {
   it('should correctly trace interactions for tracing markers', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionComplete: (name, startTime, endTime) => {
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1076,12 +1376,20 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1124,7 +1432,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -1133,10 +1445,15 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Page Two]',
         'Suspend [Marker Text]',
         'Loading...',
+=======
+      await waitForAll([
+        'Suspend [Page Two]',
+>>>>>>> remotes/upstream/main
         'Loading...',
         'onTransitionStart(page transition, 1000)',
       ]);
@@ -1145,7 +1462,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
       await resolveText('Page Two');
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'Suspend [Marker Text]',
         'Loading...',
@@ -1157,7 +1478,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
       await resolveText('Marker Text');
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Marker Text',
         'onMarkerProgress(page transition, async marker, 1000, 4000, [])',
         'onMarkerComplete(page transition, async marker, 1000, 4000)',
@@ -1170,12 +1495,19 @@ describe('ReactInteractionTracing', () => {
   it('trace interaction with multiple tracing markers', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionComplete: (name, startTime, endTime) => {
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1187,12 +1519,20 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1244,7 +1584,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
     });
 
     await act(async () => {
@@ -1253,12 +1597,17 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Outer Text]',
         'Suspend [Inner Text One]',
         'Inner One...',
         'Suspend [Inner Text Two]',
         'Inner Two...',
+=======
+      await waitForAll([
+        'Suspend [Outer Text]',
+>>>>>>> remotes/upstream/main
         'Outer...',
         'onTransitionStart(page transition, 1000)',
         'onMarkerProgress(page transition, outer marker, 1000, 2000, [outer])',
@@ -1267,12 +1616,20 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
       await resolveText('Inner Text Two');
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([]);
+=======
+      await waitForAll([]);
+>>>>>>> remotes/upstream/main
 
       ReactNoop.expire(1000);
       await advanceTimers(1000);
       await resolveText('Outer Text');
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Outer Text',
         'Suspend [Inner Text One]',
         'Inner One...',
@@ -1284,7 +1641,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
       await resolveText('Inner Text One');
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Inner Text One',
         'onMarkerProgress(page transition, outer marker, 1000, 5000, [])',
         'onMarkerComplete(page transition, marker one, 1000, 5000)',
@@ -1298,6 +1659,7 @@ describe('ReactInteractionTracing', () => {
   it.skip('warn and calls marker incomplete if name changes before transition completes', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1305,11 +1667,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1321,7 +1694,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -1331,14 +1708,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1367,7 +1752,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={false} markerName="marker one" />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       startTransition(
         () => root.render(<App navigate={true} markerName="marker one" />),
@@ -1378,7 +1767,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'onTransitionStart(transition one, 1000)',
@@ -1389,18 +1782,32 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={true} markerName="marker two" />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(() =>
         expect(Scheduler).toFlushAndYield([
           'Suspend [Page Two]',
           'Loading...',
           'onMarkerIncomplete(transition one, marker one, 1000, [{endTime: 3000, name: marker one, newName: marker two, type: marker}])',
         ]),
+=======
+      await expect(
+        async () =>
+          await waitForAll([
+            'Suspend [Page Two]',
+            'Loading...',
+            'onMarkerIncomplete(transition one, marker one, 1000, [{endTime: 3000, name: marker one, newName: marker two, type: marker}])',
+          ]),
+>>>>>>> remotes/upstream/main
       ).toErrorDev('');
 
       resolveText('Page Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'onMarkerProgress(transition one, marker one, 1000, 4000, [])',
         'onTransitionProgress(transition one, 1000, 4000, [])',
@@ -1413,6 +1820,7 @@ describe('ReactInteractionTracing', () => {
   it('marker incomplete for tree with parent and sibling tracing markers', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1420,11 +1828,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1436,7 +1855,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -1446,14 +1869,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1501,7 +1932,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={false} showMarker={true} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       startTransition(
         () => root.render(<App navigate={true} showMarker={true} />),
@@ -1511,7 +1946,11 @@ describe('ReactInteractionTracing', () => {
       );
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'Suspend [Sibling Text]',
@@ -1526,7 +1965,11 @@ describe('ReactInteractionTracing', () => {
 
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'Suspend [Sibling Text]',
@@ -1539,7 +1982,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={true} showMarker={true} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading...',
         'Suspend [Sibling Text]',
@@ -1550,12 +1997,20 @@ describe('ReactInteractionTracing', () => {
     resolveText('Page Two');
     ReactNoop.expire(1000);
     await advanceTimers(1000);
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield(['Page Two']);
+=======
+    await waitForAll(['Page Two']);
+>>>>>>> remotes/upstream/main
 
     resolveText('Sibling Text');
     ReactNoop.expire(1000);
     await advanceTimers(1000);
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield([
+=======
+    await waitForAll([
+>>>>>>> remotes/upstream/main
       'Sibling Text',
       'onMarkerProgress(transition one, parent, 1000, 6000, [])',
       'onMarkerProgress(transition one, sibling, 1000, 6000, [])',
@@ -1569,6 +2024,7 @@ describe('ReactInteractionTracing', () => {
   it('marker gets deleted', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1576,11 +2032,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1592,7 +2059,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -1602,14 +2073,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1652,7 +2131,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={false} deleteOne={false} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       startTransition(
         () => root.render(<App navigate={true} deleteOne={false} />),
@@ -1662,7 +2145,11 @@ describe('ReactInteractionTracing', () => {
       );
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page One]',
         'Loading One...',
         'Suspend [Page Two]',
@@ -1677,7 +2164,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={true} deleteOne={true} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading Two...',
         'onMarkerProgress(transition, parent, 1000, 3000, [suspense two])',
@@ -1688,7 +2179,11 @@ describe('ReactInteractionTracing', () => {
       await resolveText('Page Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         // Marker progress will still get called after incomplete but not marker complete
         'onMarkerProgress(transition, parent, 1000, 4000, [])',
@@ -1704,6 +2199,7 @@ describe('ReactInteractionTracing', () => {
   it('Suspense boundary added by the transition is deleted', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1711,11 +2207,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1727,7 +2234,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -1737,14 +2248,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1793,7 +2312,11 @@ describe('ReactInteractionTracing', () => {
 
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Page One']);
+=======
+      await waitForAll(['Page One']);
+>>>>>>> remotes/upstream/main
 
       startTransition(
         () => root.render(<App navigate={true} deleteOne={false} />),
@@ -1803,10 +2326,15 @@ describe('ReactInteractionTracing', () => {
       );
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Page One]',
         'Suspend [Child]',
         'Loading Child...',
+=======
+      await waitForAll([
+        'Suspend [Page One]',
+>>>>>>> remotes/upstream/main
         'Loading One...',
         'Suspend [Page Two]',
         'Loading Two...',
@@ -1820,7 +2348,11 @@ describe('ReactInteractionTracing', () => {
       await resolveText('Page One');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page One',
         'Suspend [Child]',
         'Loading Child...',
@@ -1833,7 +2365,11 @@ describe('ReactInteractionTracing', () => {
       root.render(<App navigate={true} deleteOne={true} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Page Two]',
         'Loading Two...',
         // "suspense one" has unsuspended so shouldn't be included
@@ -1848,7 +2384,11 @@ describe('ReactInteractionTracing', () => {
       await resolveText('Page Two');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Page Two',
         'onMarkerProgress(transition, parent, 1000, 5000, [])',
         'onMarkerProgress(transition, two, 1000, 5000, [])',
@@ -1862,6 +2402,7 @@ describe('ReactInteractionTracing', () => {
   it('Suspense boundary not added by the transition is deleted ', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1869,11 +2410,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1885,7 +2437,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -1895,14 +2451,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -1933,7 +2497,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Suspend [Child]',
         'onTransitionStart(transition, 0)',
         'onMarkerProgress(transition, parent, 0, 1000, [child])',
@@ -1945,23 +2513,35 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
       // This appended child isn't part of the transition so we
       // don't call any callback
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
         'Suspend [Appended child]',
         'Suspend [Child]',
       ]);
+=======
+      await waitForAll(['Suspend [Appended child]', 'Suspend [Child]']);
+>>>>>>> remotes/upstream/main
 
       // This deleted child isn't part of the transition so we
       // don't call any callbacks
       root.render(<App show={false} />);
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield(['Suspend [Child]']);
+=======
+      await waitForAll(['Suspend [Child]']);
+>>>>>>> remotes/upstream/main
 
       await resolveText('Child');
       ReactNoop.expire(1000);
       await advanceTimers(1000);
 
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'Child',
         'onMarkerProgress(transition, parent, 0, 4000, [])',
         'onMarkerComplete(transition, parent, 0, 4000)',
@@ -1975,6 +2555,7 @@ describe('ReactInteractionTracing', () => {
   it('marker incomplete gets called properly if child suspense marker is not part of it', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -1982,11 +2563,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -1998,7 +2590,11 @@ describe('ReactInteractionTracing', () => {
         pending,
       ) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerProgress(${transitioName}, ${markerName}, ${startTime}, ${currentTime}, [${suspenseNames}])`,
         );
       },
@@ -2008,14 +2604,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -2056,7 +2660,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Child]',
       'onTransitionStart(transition one, 0)',
       'onMarkerProgress(transition one, parent, 0, 1000, [child])',
@@ -2075,7 +2683,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Appended child]',
       'Suspend [Child]',
       'onTransitionStart(transition two, 1000)',
@@ -2089,7 +2701,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Child]',
       'onMarkerProgress(transition two, appended child, 1000, 3000, [])',
       'onMarkerIncomplete(transition two, appended child, 1000, [{endTime: 3000, name: appended child, type: suspense}])',
@@ -2101,7 +2717,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Child',
       'onMarkerProgress(transition one, parent, 0, 4000, [])',
       'onMarkerComplete(transition one, parent, 0, 4000)',
@@ -2114,12 +2734,19 @@ describe('ReactInteractionTracing', () => {
   it('warns when marker name changes', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionComplete: (name, startTime, endTime) => {
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -2129,14 +2756,22 @@ describe('ReactInteractionTracing', () => {
         startTime,
         deletions,
       ) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerIncomplete(${transitionName}, ${markerName}, ${startTime}, [${stringifyDeletions(
             deletions,
           )}])`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -2161,7 +2796,11 @@ describe('ReactInteractionTracing', () => {
       );
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'one',
         'onTransitionStart(transition one, 0)',
         'onMarkerComplete(transition one, one, 0, 1000)',
@@ -2175,10 +2814,17 @@ describe('ReactInteractionTracing', () => {
       );
       ReactNoop.expire(1000);
       await advanceTimers(1000);
+<<<<<<< HEAD
       expect(() => {
         // onMarkerComplete shouldn't be called for transitions with
         // new keys
         expect(Scheduler).toFlushAndYield([
+=======
+      await expect(async () => {
+        // onMarkerComplete shouldn't be called for transitions with
+        // new keys
+        await waitForAll([
+>>>>>>> remotes/upstream/main
           'two',
           'onTransitionStart(transition two, 1000)',
           'onTransitionComplete(transition two, 1000, 2000)',
@@ -2195,7 +2841,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       await advanceTimers(1000);
       // This should not warn and onMarkerComplete should be called
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'three',
         'onTransitionStart(transition three, 2000)',
         'onMarkerComplete(transition three, three, 2000, 3000)',
@@ -2208,17 +2858,28 @@ describe('ReactInteractionTracing', () => {
   it('offscreen trees should not stop transition from completing', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionComplete: (name, startTime, endTime) => {
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
       onMarkerComplete: (transitioName, markerName, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onMarkerComplete(${transitioName}, ${markerName}, ${startTime}, ${endTime})`,
         );
       },
@@ -2247,7 +2908,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       advanceTimers(1000);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Text]',
       'Loading...',
       'Suspend [Hidden Text]',
@@ -2260,7 +2925,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       advanceTimers(1000);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Text',
       'onMarkerComplete(transition, marker, 0, 2000)',
       'onTransitionComplete(transition, 0, 2000)',
@@ -2271,13 +2940,18 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       advanceTimers(1000);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Hidden Text']);
+=======
+    assertLog(['Hidden Text']);
+>>>>>>> remotes/upstream/main
   });
 
   // @gate enableTransitionTracing
   it('discrete events', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -2285,11 +2959,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -2317,7 +3002,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Page Two]',
       'Loading...',
       'onTransitionStart(page transition, 0)',
@@ -2329,7 +3018,11 @@ describe('ReactInteractionTracing', () => {
       await advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Page Two',
       'onTransitionProgress(page transition, 0, 2000, [])',
       'onTransitionComplete(page transition, 0, 2000)',
@@ -2340,6 +3033,7 @@ describe('ReactInteractionTracing', () => {
   it('multiple commits happen before a paint', async () => {
     const transitionCallbacks = {
       onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
           `onTransitionStart(${name}, ${startTime})`,
         );
@@ -2347,11 +3041,22 @@ describe('ReactInteractionTracing', () => {
       onTransitionProgress: (name, startTime, endTime, pending) => {
         const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(`onTransitionStart(${name}, ${startTime})`);
+      },
+      onTransitionProgress: (name, startTime, endTime, pending) => {
+        const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}])`,
         );
       },
       onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
         Scheduler.unstable_yieldValue(
+=======
+        Scheduler.log(
+>>>>>>> remotes/upstream/main
           `onTransitionComplete(${name}, ${startTime}, ${endTime})`,
         );
       },
@@ -2387,7 +3092,11 @@ describe('ReactInteractionTracing', () => {
       advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Text]',
       'Loading...',
       'Suspend [Text Two]',
@@ -2404,7 +3113,11 @@ describe('ReactInteractionTracing', () => {
       ReactNoop.expire(1000);
       advanceTimers(1000);
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Text Two',
       'onTransitionProgress(transition, 0, 2000, [])',
       'onTransitionComplete(transition, 0, 2000)',
@@ -2416,18 +3129,30 @@ describe('ReactInteractionTracing', () => {
     const getTransitionCallbacks = transitionName => {
       return {
         onTransitionStart: (name, startTime) => {
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(
+=======
+          Scheduler.log(
+>>>>>>> remotes/upstream/main
             `onTransitionStart(${name}, ${startTime}) /${transitionName}/`,
           );
         },
         onTransitionProgress: (name, startTime, endTime, pending) => {
           const suspenseNames = pending.map(p => p.name || '<null>').join(', ');
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(
+=======
+          Scheduler.log(
+>>>>>>> remotes/upstream/main
             `onTransitionProgress(${name}, ${startTime}, ${endTime}, [${suspenseNames}]) /${transitionName}/`,
           );
         },
         onTransitionComplete: (name, startTime, endTime) => {
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue(
+=======
+          Scheduler.log(
+>>>>>>> remotes/upstream/main
             `onTransitionComplete(${name}, ${startTime}, ${endTime}) /${transitionName}/`,
           );
         },
@@ -2465,7 +3190,11 @@ describe('ReactInteractionTracing', () => {
       advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Suspend [Text one]',
       'Loading one...',
       'Suspend [Text two]',
@@ -2482,7 +3211,11 @@ describe('ReactInteractionTracing', () => {
       advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Text one',
       'onTransitionProgress(transition one, 0, 2000, []) /root one/',
       'onTransitionComplete(transition one, 0, 2000) /root one/',
@@ -2494,7 +3227,11 @@ describe('ReactInteractionTracing', () => {
       advanceTimers(1000);
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded([
+=======
+    assertLog([
+>>>>>>> remotes/upstream/main
       'Text two',
       'onTransitionProgress(transition two, 0, 3000, []) /root two/',
       'onTransitionComplete(transition two, 0, 3000) /root two/',

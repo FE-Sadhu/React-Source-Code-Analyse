@@ -1,22 +1,38 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+<<<<<<< HEAD
+=======
+ * @jest-environment ./scripts/jest/ReactDOMServerIntegrationEnvironment
+>>>>>>> remotes/upstream/main
  */
 
 'use strict';
 
+<<<<<<< HEAD
 global.TextEncoder = require('util').TextEncoder;
 
+=======
+>>>>>>> remotes/upstream/main
 let React;
 let ReactDOM;
 let ReactDOMClient;
 let ReactDOMServer;
 let ReactDOMServerBrowser;
+<<<<<<< HEAD
 let Scheduler;
+=======
+let waitForAll;
+let act;
+>>>>>>> remotes/upstream/main
 
 // These tests rely both on ReactDOMServer and ReactDOM.
 // If a test only needs ReactDOMServer, put it in ReactServerRendering-test instead.
@@ -28,7 +44,14 @@ describe('ReactDOMServerHydration', () => {
     ReactDOMClient = require('react-dom/client');
     ReactDOMServer = require('react-dom/server');
     ReactDOMServerBrowser = require('react-dom/server.browser');
+<<<<<<< HEAD
     Scheduler = require('scheduler');
+=======
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitForAll = InternalTestUtils.waitForAll;
+    act = InternalTestUtils.act;
+>>>>>>> remotes/upstream/main
   });
 
   it('should have the correct mounting behavior (new hydrate API)', () => {
@@ -36,6 +59,11 @@ describe('ReactDOMServerHydration', () => {
     let numClicks = 0;
 
     class TestComponent extends React.Component {
+<<<<<<< HEAD
+=======
+      spanRef = React.createRef();
+
+>>>>>>> remotes/upstream/main
       componentDidMount() {
         mountCount++;
       }
@@ -46,7 +74,11 @@ describe('ReactDOMServerHydration', () => {
 
       render() {
         return (
+<<<<<<< HEAD
           <span ref="span" onClick={this.click}>
+=======
+          <span ref={this.spanRef} onClick={this.click}>
+>>>>>>> remotes/upstream/main
             Name: {this.props.name}
           </span>
         );
@@ -89,7 +121,11 @@ describe('ReactDOMServerHydration', () => {
 
       // Ensure the events system works after mount into server markup
       expect(numClicks).toEqual(0);
+<<<<<<< HEAD
       instance.refs.span.click();
+=======
+      instance.spanRef.current.click();
+>>>>>>> remotes/upstream/main
       expect(numClicks).toEqual(1);
 
       ReactDOM.unmountComponentAtNode(element);
@@ -107,7 +143,11 @@ describe('ReactDOMServerHydration', () => {
 
       // Ensure the events system works after markup mismatch.
       expect(numClicks).toEqual(1);
+<<<<<<< HEAD
       instance.refs.span.click();
+=======
+      instance.spanRef.current.click();
+>>>>>>> remotes/upstream/main
       expect(numClicks).toEqual(2);
     } finally {
       document.body.removeChild(element);
@@ -190,6 +230,10 @@ describe('ReactDOMServerHydration', () => {
     );
   });
 
+<<<<<<< HEAD
+=======
+  // @gate !disableIEWorkarounds || !__DEV__
+>>>>>>> remotes/upstream/main
   it('should not warn when the style property differs on whitespace or order in IE', () => {
     document.documentMode = 11;
     jest.resetModules();
@@ -398,6 +442,7 @@ describe('ReactDOMServerHydration', () => {
     ReactDOM.hydrate(<HelloWorld />, element);
     expect(element.textContent).toBe('Hello loading');
 
+<<<<<<< HEAD
     jest.runAllTimers();
     await Promise.resolve();
     Scheduler.unstable_flushAll();
@@ -417,6 +462,24 @@ describe('ReactDOMServerHydration', () => {
     // warnings.
     root.render(<div />);
     Scheduler.unstable_flushAll();
+=======
+    // Resolve Lazy component
+    await act(() => jest.runAllTimers());
+    expect(element.textContent).toBe('Hello world');
+  });
+
+  it('does not re-enter hydration after committing the first one', async () => {
+    const finalHTML = ReactDOMServer.renderToString(<div />);
+    const container = document.createElement('div');
+    container.innerHTML = finalHTML;
+    const root = await act(() =>
+      ReactDOMClient.hydrateRoot(container, <div />),
+    );
+    await act(() => root.render(null));
+    // This should not reenter hydration state and therefore not trigger hydration
+    // warnings.
+    await act(() => root.render(<div />));
+>>>>>>> remotes/upstream/main
   });
 
   it('Suspense + hydration in legacy mode', () => {
@@ -579,18 +642,32 @@ describe('ReactDOMServerHydration', () => {
 
     // Install setters to activate `in` check
     Object.defineProperty(customElement, 'str', {
+<<<<<<< HEAD
       set: function(x) {
         this._str = x;
       },
       get: function() {
+=======
+      set: function (x) {
+        this._str = x;
+      },
+      get: function () {
+>>>>>>> remotes/upstream/main
         return this._str;
       },
     });
     Object.defineProperty(customElement, 'obj', {
+<<<<<<< HEAD
       set: function(x) {
         this._obj = x;
       },
       get: function() {
+=======
+      set: function (x) {
+        this._obj = x;
+      },
+      get: function () {
+>>>>>>> remotes/upstream/main
         return this._obj;
       },
     });
@@ -603,7 +680,11 @@ describe('ReactDOMServerHydration', () => {
     expect(customElement.obj).toBe(undefined);
   });
 
+<<<<<<< HEAD
   it('refers users to apis that support Suspense when something suspends', () => {
+=======
+  it('refers users to apis that support Suspense when something suspends', async () => {
+>>>>>>> remotes/upstream/main
     const theInfinitePromise = new Promise(() => {});
     function InfiniteSuspend() {
       throw theInfinitePromise;
@@ -630,7 +711,11 @@ describe('ReactDOMServerHydration', () => {
       },
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield([]);
+=======
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
     expect(errors.length).toBe(1);
     if (__DEV__) {
       expect(errors[0]).toBe(
@@ -648,7 +733,11 @@ describe('ReactDOMServerHydration', () => {
     }
   });
 
+<<<<<<< HEAD
   it('refers users to apis that support Suspense when something suspends (browser)', () => {
+=======
+  it('refers users to apis that support Suspense when something suspends (browser)', async () => {
+>>>>>>> remotes/upstream/main
     const theInfinitePromise = new Promise(() => {});
     function InfiniteSuspend() {
       throw theInfinitePromise;
@@ -675,7 +764,11 @@ describe('ReactDOMServerHydration', () => {
       },
     });
 
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield([]);
+=======
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
     expect(errors.length).toBe(1);
     if (__DEV__) {
       expect(errors[0]).toBe(
@@ -692,4 +785,63 @@ describe('ReactDOMServerHydration', () => {
       );
     }
   });
+<<<<<<< HEAD
+=======
+
+  // @gate enableFormActions
+  it('allows rendering extra hidden inputs in a form', async () => {
+    const element = document.createElement('div');
+    element.innerHTML =
+      '<form>' +
+      '<input type="hidden" /><input type="hidden" name="a" value="A" />' +
+      '<input type="hidden" /><input type="submit" name="b" value="B" />' +
+      '<input type="hidden" /><button name="c" value="C"></button>' +
+      '<input type="hidden" />' +
+      '</form>';
+    const form = element.firstChild;
+    const ref = React.createRef();
+    const a = React.createRef();
+    const b = React.createRef();
+    const c = React.createRef();
+    await act(async () => {
+      ReactDOMClient.hydrateRoot(
+        element,
+        <form ref={ref}>
+          <input type="hidden" name="a" value="A" ref={a} />
+          <input type="submit" name="b" value="B" ref={b} />
+          <button name="c" value="C" ref={c} />
+        </form>,
+      );
+    });
+
+    // The content should not have been client rendered.
+    expect(ref.current).toBe(form);
+
+    expect(a.current.name).toBe('a');
+    expect(a.current.value).toBe('A');
+    expect(b.current.name).toBe('b');
+    expect(b.current.value).toBe('B');
+    expect(c.current.name).toBe('c');
+    expect(c.current.value).toBe('C');
+  });
+
+  // @gate enableFormActions
+  it('allows rendering extra hidden inputs immediately before a text instance', async () => {
+    const element = document.createElement('div');
+    element.innerHTML =
+      '<button><input name="a" value="A" type="hidden" />Click <!-- -->me</button>';
+    const button = element.firstChild;
+    const ref = React.createRef();
+    const extraText = 'me';
+
+    await act(() => {
+      ReactDOMClient.hydrateRoot(
+        element,
+        <button ref={ref}>Click {extraText}</button>,
+      );
+    });
+
+    expect(ref.current).toBe(button);
+  });
+>>>>>>> remotes/upstream/main
 });

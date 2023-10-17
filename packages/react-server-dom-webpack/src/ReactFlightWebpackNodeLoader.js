@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,7 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import * as acorn from 'acorn';
+=======
+import * as acorn from 'acorn-loose';
+>>>>>>> remotes/upstream/main
 
 type ResolveContext = {
   conditions: Array<string>,
@@ -41,6 +49,21 @@ type TransformSourceFunction = (
   TransformSourceFunction,
 ) => Promise<{source: Source}>;
 
+<<<<<<< HEAD
+=======
+type LoadContext = {
+  conditions: Array<string>,
+  format: string | null | void,
+  importAssertions: Object,
+};
+
+type LoadFunction = (
+  string,
+  LoadContext,
+  LoadFunction,
+) => Promise<{format: string, shortCircuit?: boolean, source: Source}>;
+
+>>>>>>> remotes/upstream/main
 type Source = string | ArrayBuffer | Uint8Array;
 
 let warnedAboutConditionsFlag = false;
@@ -70,6 +93,7 @@ export async function resolve(
       );
     }
   }
+<<<<<<< HEAD
   const resolved = await defaultResolve(specifier, context, defaultResolve);
   if (resolved.url.endsWith('.server.js')) {
     const parentURL = context.parentURL;
@@ -88,6 +112,9 @@ export async function resolve(
     }
   }
   return resolved;
+=======
+  return await defaultResolve(specifier, context, defaultResolve);
+>>>>>>> remotes/upstream/main
 }
 
 export async function getSource(
@@ -100,7 +127,112 @@ export async function getSource(
   return defaultGetSource(url, context, defaultGetSource);
 }
 
+<<<<<<< HEAD
 function addExportNames(names, node) {
+=======
+function addLocalExportedNames(names: Map<string, string>, node: any) {
+  switch (node.type) {
+    case 'Identifier':
+      names.set(node.name, node.name);
+      return;
+    case 'ObjectPattern':
+      for (let i = 0; i < node.properties.length; i++)
+        addLocalExportedNames(names, node.properties[i]);
+      return;
+    case 'ArrayPattern':
+      for (let i = 0; i < node.elements.length; i++) {
+        const element = node.elements[i];
+        if (element) addLocalExportedNames(names, element);
+      }
+      return;
+    case 'Property':
+      addLocalExportedNames(names, node.value);
+      return;
+    case 'AssignmentPattern':
+      addLocalExportedNames(names, node.left);
+      return;
+    case 'RestElement':
+      addLocalExportedNames(names, node.argument);
+      return;
+    case 'ParenthesizedExpression':
+      addLocalExportedNames(names, node.expression);
+      return;
+  }
+}
+
+function transformServerModule(
+  source: string,
+  body: any,
+  url: string,
+  loader: LoadFunction,
+): string {
+  // If the same local name is exported more than once, we only need one of the names.
+  const localNames: Map<string, string> = new Map();
+  const localTypes: Map<string, string> = new Map();
+
+  for (let i = 0; i < body.length; i++) {
+    const node = body[i];
+    switch (node.type) {
+      case 'ExportAllDeclaration':
+        // If export * is used, the other file needs to explicitly opt into "use server" too.
+        break;
+      case 'ExportDefaultDeclaration':
+        if (node.declaration.type === 'Identifier') {
+          localNames.set(node.declaration.name, 'default');
+        } else if (node.declaration.type === 'FunctionDeclaration') {
+          if (node.declaration.id) {
+            localNames.set(node.declaration.id.name, 'default');
+            localTypes.set(node.declaration.id.name, 'function');
+          } else {
+            // TODO: This needs to be rewritten inline because it doesn't have a local name.
+          }
+        }
+        continue;
+      case 'ExportNamedDeclaration':
+        if (node.declaration) {
+          if (node.declaration.type === 'VariableDeclaration') {
+            const declarations = node.declaration.declarations;
+            for (let j = 0; j < declarations.length; j++) {
+              addLocalExportedNames(localNames, declarations[j].id);
+            }
+          } else {
+            const name = node.declaration.id.name;
+            localNames.set(name, name);
+            if (node.declaration.type === 'FunctionDeclaration') {
+              localTypes.set(name, 'function');
+            }
+          }
+        }
+        if (node.specifiers) {
+          const specifiers = node.specifiers;
+          for (let j = 0; j < specifiers.length; j++) {
+            const specifier = specifiers[j];
+            localNames.set(specifier.local.name, specifier.exported.name);
+          }
+        }
+        continue;
+    }
+  }
+  if (localNames.size === 0) {
+    return source;
+  }
+  let newSrc = source + '\n\n;';
+  newSrc +=
+    'import {registerServerReference} from "react-server-dom-webpack/server";\n';
+  localNames.forEach(function (exported, local) {
+    if (localTypes.get(local) !== 'function') {
+      // We first check if the export is a function and if so annotate it.
+      newSrc += 'if (typeof ' + local + ' === "function") ';
+    }
+    newSrc += 'registerServerReference(' + local + ',';
+    newSrc += JSON.stringify(url) + ',';
+    newSrc += JSON.stringify(exported) + ');\n';
+  });
+  return newSrc;
+}
+
+function addExportNames(names: Array<string>, node: any) {
+>>>>>>> remotes/upstream/main
   switch (node.type) {
     case 'Identifier':
       names.push(node.name);
@@ -148,6 +280,7 @@ function resolveClientImport(
   return stashedResolve(specifier, {conditions, parentURL}, stashedResolve);
 }
 
+<<<<<<< HEAD
 async function loadClientImport(
   url: string,
   defaultTransformSource: TransformSourceFunction,
@@ -180,6 +313,14 @@ async function parseExportNamesInto(
     ecmaVersion: '2019',
     sourceType: 'module',
   });
+=======
+async function parseExportNamesInto(
+  body: any,
+  names: Array<string>,
+  parentURL: string,
+  loader: LoadFunction,
+): Promise<void> {
+>>>>>>> remotes/upstream/main
   for (let i = 0; i < body.length; i++) {
     const node = body[i];
     switch (node.type) {
@@ -189,11 +330,34 @@ async function parseExportNamesInto(
           continue;
         } else {
           const {url} = await resolveClientImport(node.source.value, parentURL);
+<<<<<<< HEAD
           const {source} = await loadClientImport(url, defaultTransformSource);
           if (typeof source !== 'string') {
             throw new Error('Expected the transformed source to be a string.');
           }
           parseExportNamesInto(source, names, url, defaultTransformSource);
+=======
+          const {source} = await loader(
+            url,
+            {format: 'module', conditions: [], importAssertions: {}},
+            loader,
+          );
+          if (typeof source !== 'string') {
+            throw new Error('Expected the transformed source to be a string.');
+          }
+          let childBody;
+          try {
+            childBody = acorn.parse(source, {
+              ecmaVersion: '2024',
+              sourceType: 'module',
+            }).body;
+          } catch (x) {
+            // eslint-disable-next-line react-internal/no-production-logging
+            console.error('Error parsing %s %s', url, x.message);
+            continue;
+          }
+          await parseExportNamesInto(childBody, names, url, loader);
+>>>>>>> remotes/upstream/main
           continue;
         }
       case 'ExportDefaultDeclaration':
@@ -221,6 +385,138 @@ async function parseExportNamesInto(
   }
 }
 
+<<<<<<< HEAD
+=======
+async function transformClientModule(
+  body: any,
+  url: string,
+  loader: LoadFunction,
+): Promise<string> {
+  const names: Array<string> = [];
+
+  await parseExportNamesInto(body, names, url, loader);
+
+  if (names.length === 0) {
+    return '';
+  }
+
+  let newSrc =
+    'import {registerClientReference} from "react-server-dom-webpack/server";\n';
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i];
+    if (name === 'default') {
+      newSrc += 'export default ';
+      newSrc += 'registerClientReference(function() {';
+      newSrc +=
+        'throw new Error(' +
+        JSON.stringify(
+          `Attempted to call the default export of ${url} from the server` +
+            `but it's on the client. It's not possible to invoke a client function from ` +
+            `the server, it can only be rendered as a Component or passed to props of a` +
+            `Client Component.`,
+        ) +
+        ');';
+    } else {
+      newSrc += 'export const ' + name + ' = ';
+      newSrc += 'registerClientReference(function() {';
+      newSrc +=
+        'throw new Error(' +
+        JSON.stringify(
+          `Attempted to call ${name}() from the server but ${name} is on the client. ` +
+            `It's not possible to invoke a client function from the server, it can ` +
+            `only be rendered as a Component or passed to props of a Client Component.`,
+        ) +
+        ');';
+    }
+    newSrc += '},';
+    newSrc += JSON.stringify(url) + ',';
+    newSrc += JSON.stringify(name) + ');\n';
+  }
+  return newSrc;
+}
+
+async function loadClientImport(
+  url: string,
+  defaultTransformSource: TransformSourceFunction,
+): Promise<{format: string, shortCircuit?: boolean, source: Source}> {
+  if (stashedGetSource === null) {
+    throw new Error(
+      'Expected getSource to have been called before transformSource',
+    );
+  }
+  // TODO: Validate that this is another module by calling getFormat.
+  const {source} = await stashedGetSource(
+    url,
+    {format: 'module'},
+    stashedGetSource,
+  );
+  const result = await defaultTransformSource(
+    source,
+    {format: 'module', url},
+    defaultTransformSource,
+  );
+  return {format: 'module', source: result.source};
+}
+
+async function transformModuleIfNeeded(
+  source: string,
+  url: string,
+  loader: LoadFunction,
+): Promise<string> {
+  // Do a quick check for the exact string. If it doesn't exist, don't
+  // bother parsing.
+  if (
+    source.indexOf('use client') === -1 &&
+    source.indexOf('use server') === -1
+  ) {
+    return source;
+  }
+
+  let body;
+  try {
+    body = acorn.parse(source, {
+      ecmaVersion: '2024',
+      sourceType: 'module',
+    }).body;
+  } catch (x) {
+    // eslint-disable-next-line react-internal/no-production-logging
+    console.error('Error parsing %s %s', url, x.message);
+    return source;
+  }
+
+  let useClient = false;
+  let useServer = false;
+  for (let i = 0; i < body.length; i++) {
+    const node = body[i];
+    if (node.type !== 'ExpressionStatement' || !node.directive) {
+      break;
+    }
+    if (node.directive === 'use client') {
+      useClient = true;
+    }
+    if (node.directive === 'use server') {
+      useServer = true;
+    }
+  }
+
+  if (!useClient && !useServer) {
+    return source;
+  }
+
+  if (useClient && useServer) {
+    throw new Error(
+      'Cannot have both "use client" and "use server" directives in the same file.',
+    );
+  }
+
+  if (useClient) {
+    return transformClientModule(body, url, loader);
+  }
+
+  return transformServerModule(source, body, url, loader);
+}
+
+>>>>>>> remotes/upstream/main
 export async function transformSource(
   source: Source,
   context: TransformSourceContext,
@@ -231,11 +527,16 @@ export async function transformSource(
     context,
     defaultTransformSource,
   );
+<<<<<<< HEAD
   if (context.format === 'module' && context.url.endsWith('.client.js')) {
+=======
+  if (context.format === 'module') {
+>>>>>>> remotes/upstream/main
     const transformedSource = transformed.source;
     if (typeof transformedSource !== 'string') {
       throw new Error('Expected source to have been transformed to a string.');
     }
+<<<<<<< HEAD
 
     const names = [];
     await parseExportNamesInto(
@@ -261,7 +562,39 @@ export async function transformSource(
       newSrc += '};\n';
     }
 
+=======
+    const newSrc = await transformModuleIfNeeded(
+      transformedSource,
+      context.url,
+      (url: string, ctx: LoadContext, defaultLoad: LoadFunction) => {
+        return loadClientImport(url, defaultTransformSource);
+      },
+    );
+>>>>>>> remotes/upstream/main
     return {source: newSrc};
   }
   return transformed;
 }
+<<<<<<< HEAD
+=======
+
+export async function load(
+  url: string,
+  context: LoadContext,
+  defaultLoad: LoadFunction,
+): Promise<{format: string, shortCircuit?: boolean, source: Source}> {
+  const result = await defaultLoad(url, context, defaultLoad);
+  if (result.format === 'module') {
+    if (typeof result.source !== 'string') {
+      throw new Error('Expected source to have been loaded into a string.');
+    }
+    const newSrc = await transformModuleIfNeeded(
+      result.source,
+      url,
+      defaultLoad,
+    );
+    return {format: 'module', source: newSrc};
+  }
+  return result;
+}
+>>>>>>> remotes/upstream/main

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -67,7 +71,11 @@ async function runFlow(renderer, args) {
     spawn(cmd, args, {
       // Allow colors to pass through:
       stdio: 'inherit',
+<<<<<<< HEAD
     }).on('close', function(code) {
+=======
+    }).on('close', function (code) {
+>>>>>>> remotes/upstream/main
       if (code !== 0) {
         console.error(
           'Flow failed for the ' + chalk.red(renderer) + ' renderer',

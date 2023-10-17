@@ -1,14 +1,27 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+<<<<<<< HEAD
+=======
+ * @flow
+>>>>>>> remotes/upstream/main
  */
 
 /* eslint-disable no-var */
 /* eslint-disable react-internal/prod-error-codes */
 
+<<<<<<< HEAD
+=======
+import type {PriorityLevel} from '../SchedulerPriorities';
+
+>>>>>>> remotes/upstream/main
 import {
   enableSchedulerDebugging,
   enableProfiling,
@@ -36,6 +49,21 @@ import {
   startLoggingProfilingEvents,
 } from '../SchedulerProfiling';
 
+<<<<<<< HEAD
+=======
+type Callback = boolean => ?Callback;
+
+type Task = {
+  id: number,
+  callback: Callback | null,
+  priorityLevel: PriorityLevel,
+  startTime: number,
+  expirationTime: number,
+  sortIndex: number,
+  isQueued?: boolean,
+};
+
+>>>>>>> remotes/upstream/main
 // Max 31 bit integer. The max integer size in V8 for 32-bit systems.
 // Math.pow(2, 30) - 1
 // 0b111111111111111111111111111111
@@ -51,8 +79,13 @@ var LOW_PRIORITY_TIMEOUT = 10000;
 var IDLE_PRIORITY_TIMEOUT = maxSigned31BitInt;
 
 // Tasks are stored on a min heap
+<<<<<<< HEAD
 var taskQueue = [];
 var timerQueue = [];
+=======
+var taskQueue: Array<Task> = [];
+var timerQueue: Array<Task> = [];
+>>>>>>> remotes/upstream/main
 
 // Incrementing id counter. Used to maintain insertion order.
 var taskIdCounter = 1;
@@ -70,7 +103,16 @@ var isHostCallbackScheduled = false;
 var isHostTimeoutScheduled = false;
 
 let currentMockTime: number = 0;
+<<<<<<< HEAD
 let scheduledCallback: ((boolean, number) => void) | null = null;
+=======
+let scheduledCallback:
+  | null
+  | ((
+      hasTimeRemaining: boolean,
+      initialTime: DOMHighResTimeStamp | number,
+    ) => boolean) = null;
+>>>>>>> remotes/upstream/main
 let scheduledTimeout: (number => void) | null = null;
 let timeoutTime: number = -1;
 let yieldedValues: Array<mixed> | null = null;
@@ -82,11 +124,19 @@ let shouldYieldForPaint: boolean = false;
 
 var disableYieldValue = false;
 
+<<<<<<< HEAD
 function setDisableYieldValue(newValue) {
   disableYieldValue = newValue;
 }
 
 function advanceTimers(currentTime) {
+=======
+function setDisableYieldValue(newValue: boolean) {
+  disableYieldValue = newValue;
+}
+
+function advanceTimers(currentTime: number) {
+>>>>>>> remotes/upstream/main
   // Check for tasks that are no longer delayed and add them to the queue.
   let timer = peek(timerQueue);
   while (timer !== null) {
@@ -110,7 +160,11 @@ function advanceTimers(currentTime) {
   }
 }
 
+<<<<<<< HEAD
 function handleTimeout(currentTime) {
+=======
+function handleTimeout(currentTime: number) {
+>>>>>>> remotes/upstream/main
   isHostTimeoutScheduled = false;
   advanceTimers(currentTime);
 
@@ -127,7 +181,11 @@ function handleTimeout(currentTime) {
   }
 }
 
+<<<<<<< HEAD
 function flushWork(hasTimeRemaining, initialTime) {
+=======
+function flushWork(hasTimeRemaining: boolean, initialTime: number) {
+>>>>>>> remotes/upstream/main
   if (enableProfiling) {
     markSchedulerUnsuspended(initialTime);
   }
@@ -149,7 +207,13 @@ function flushWork(hasTimeRemaining, initialTime) {
       } catch (error) {
         if (currentTask !== null) {
           const currentTime = getCurrentTime();
+<<<<<<< HEAD
           markTaskErrored(currentTask, currentTime);
+=======
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
+          markTaskErrored(currentTask, currentTime);
+          // $FlowFixMe[incompatible-use] found when upgrading Flow
+>>>>>>> remotes/upstream/main
           currentTask.isQueued = false;
         }
         throw error;
@@ -169,7 +233,11 @@ function flushWork(hasTimeRemaining, initialTime) {
   }
 }
 
+<<<<<<< HEAD
 function workLoop(hasTimeRemaining, initialTime) {
+=======
+function workLoop(hasTimeRemaining: boolean, initialTime: number): boolean {
+>>>>>>> remotes/upstream/main
   let currentTime = initialTime;
   advanceTimers(currentTime);
   currentTask = peek(taskQueue);
@@ -184,12 +252,26 @@ function workLoop(hasTimeRemaining, initialTime) {
       // This currentTask hasn't expired, and we've reached the deadline.
       break;
     }
+<<<<<<< HEAD
     const callback = currentTask.callback;
     if (typeof callback === 'function') {
       currentTask.callback = null;
       currentPriorityLevel = currentTask.priorityLevel;
       const didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
       if (enableProfiling) {
+=======
+    // $FlowFixMe[incompatible-use] found when upgrading Flow
+    const callback = currentTask.callback;
+    if (typeof callback === 'function') {
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
+      currentTask.callback = null;
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
+      currentPriorityLevel = currentTask.priorityLevel;
+      // $FlowFixMe[incompatible-use] found when upgrading Flow
+      const didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
+      if (enableProfiling) {
+        // $FlowFixMe[incompatible-call] found when upgrading Flow
+>>>>>>> remotes/upstream/main
         markTaskRun(currentTask, currentTime);
       }
       const continuationCallback = callback(didUserCallbackTimeout);
@@ -197,8 +279,15 @@ function workLoop(hasTimeRemaining, initialTime) {
       if (typeof continuationCallback === 'function') {
         // If a continuation is returned, immediately yield to the main thread
         // regardless of how much time is left in the current time slice.
+<<<<<<< HEAD
         currentTask.callback = continuationCallback;
         if (enableProfiling) {
+=======
+        // $FlowFixMe[incompatible-use] found when upgrading Flow
+        currentTask.callback = continuationCallback;
+        if (enableProfiling) {
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
+>>>>>>> remotes/upstream/main
           markTaskYield(currentTask, currentTime);
         }
         advanceTimers(currentTime);
@@ -213,7 +302,13 @@ function workLoop(hasTimeRemaining, initialTime) {
         }
       } else {
         if (enableProfiling) {
+<<<<<<< HEAD
           markTaskCompleted(currentTask, currentTime);
+=======
+          // $FlowFixMe[incompatible-call] found when upgrading Flow
+          markTaskCompleted(currentTask, currentTime);
+          // $FlowFixMe[incompatible-use] found when upgrading Flow
+>>>>>>> remotes/upstream/main
           currentTask.isQueued = false;
         }
         if (currentTask === peek(taskQueue)) {
@@ -238,7 +333,14 @@ function workLoop(hasTimeRemaining, initialTime) {
   }
 }
 
+<<<<<<< HEAD
 function unstable_runWithPriority(priorityLevel, eventHandler) {
+=======
+function unstable_runWithPriority<T>(
+  priorityLevel: PriorityLevel,
+  eventHandler: () => T,
+): T {
+>>>>>>> remotes/upstream/main
   switch (priorityLevel) {
     case ImmediatePriority:
     case UserBlockingPriority:
@@ -260,7 +362,11 @@ function unstable_runWithPriority(priorityLevel, eventHandler) {
   }
 }
 
+<<<<<<< HEAD
 function unstable_next(eventHandler) {
+=======
+function unstable_next<T>(eventHandler: () => T): T {
+>>>>>>> remotes/upstream/main
   var priorityLevel;
   switch (currentPriorityLevel) {
     case ImmediatePriority:
@@ -285,9 +391,17 @@ function unstable_next(eventHandler) {
   }
 }
 
+<<<<<<< HEAD
 function unstable_wrapCallback(callback) {
   var parentPriorityLevel = currentPriorityLevel;
   return function() {
+=======
+function unstable_wrapCallback<T: (...Array<mixed>) => mixed>(callback: T): T {
+  var parentPriorityLevel = currentPriorityLevel;
+  // $FlowFixMe[incompatible-return]
+  // $FlowFixMe[missing-this-annot]
+  return function () {
+>>>>>>> remotes/upstream/main
     // This is a fork of runWithPriority, inlined for performance.
     var previousPriorityLevel = currentPriorityLevel;
     currentPriorityLevel = parentPriorityLevel;
@@ -300,7 +414,15 @@ function unstable_wrapCallback(callback) {
   };
 }
 
+<<<<<<< HEAD
 function unstable_scheduleCallback(priorityLevel, callback, options) {
+=======
+function unstable_scheduleCallback(
+  priorityLevel: PriorityLevel,
+  callback: Callback,
+  options?: {delay: number},
+): Task {
+>>>>>>> remotes/upstream/main
   var currentTime = getCurrentTime();
 
   var startTime;
@@ -337,7 +459,11 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
 
   var expirationTime = startTime + timeout;
 
+<<<<<<< HEAD
   var newTask = {
+=======
+  var newTask: Task = {
+>>>>>>> remotes/upstream/main
     id: taskIdCounter++,
     callback,
     priorityLevel,
@@ -394,11 +520,19 @@ function unstable_continueExecution() {
   }
 }
 
+<<<<<<< HEAD
 function unstable_getFirstCallbackNode() {
   return peek(taskQueue);
 }
 
 function unstable_cancelCallback(task) {
+=======
+function unstable_getFirstCallbackNode(): Task | null {
+  return peek(taskQueue);
+}
+
+function unstable_cancelCallback(task: Task) {
+>>>>>>> remotes/upstream/main
   if (enableProfiling) {
     if (task.isQueued) {
       const currentTime = getCurrentTime();
@@ -413,11 +547,19 @@ function unstable_cancelCallback(task) {
   task.callback = null;
 }
 
+<<<<<<< HEAD
 function unstable_getCurrentPriorityLevel() {
   return currentPriorityLevel;
 }
 
 function requestHostCallback(callback: boolean => void) {
+=======
+function unstable_getCurrentPriorityLevel(): PriorityLevel {
+  return currentPriorityLevel;
+}
+
+function requestHostCallback(callback: (boolean, number) => boolean) {
+>>>>>>> remotes/upstream/main
   scheduledCallback = callback;
 }
 
@@ -494,7 +636,11 @@ function unstable_flushNumberOfYields(count: number): void {
   }
 }
 
+<<<<<<< HEAD
 function unstable_flushUntilNextPaint(): void {
+=======
+function unstable_flushUntilNextPaint(): false {
+>>>>>>> remotes/upstream/main
   if (isFlushing) {
     throw new Error('Already flushing work.');
   }
@@ -566,7 +712,11 @@ function unstable_flushAllWithoutAsserting(): boolean {
   }
 }
 
+<<<<<<< HEAD
 function unstable_clearYields(): Array<mixed> {
+=======
+function unstable_clearLog(): Array<mixed> {
+>>>>>>> remotes/upstream/main
   if (yieldedValues === null) {
     return [];
   }
@@ -592,7 +742,11 @@ function unstable_flushAll(): void {
   }
 }
 
+<<<<<<< HEAD
 function unstable_yieldValue(value: mixed): void {
+=======
+function log(value: mixed): void {
+>>>>>>> remotes/upstream/main
   // eslint-disable-next-line react-internal/no-production-logging
   if (console.log.name === 'disabledLog' || disableYieldValue) {
     // If console.log has been patched, we assume we're in render
@@ -647,17 +801,32 @@ export {
   unstable_flushAllWithoutAsserting,
   unstable_flushNumberOfYields,
   unstable_flushExpired,
+<<<<<<< HEAD
   unstable_clearYields,
   unstable_flushUntilNextPaint,
   unstable_hasPendingWork,
   unstable_flushAll,
   unstable_yieldValue,
+=======
+  unstable_clearLog,
+  unstable_flushUntilNextPaint,
+  unstable_hasPendingWork,
+  unstable_flushAll,
+  log,
+>>>>>>> remotes/upstream/main
   unstable_advanceTime,
   reset,
   setDisableYieldValue as unstable_setDisableYieldValue,
 };
 
+<<<<<<< HEAD
 export const unstable_Profiling = enableProfiling
+=======
+export const unstable_Profiling: {
+  startLoggingProfilingEvents(): void,
+  stopLoggingProfilingEvents(): ArrayBuffer | null,
+} | null = enableProfiling
+>>>>>>> remotes/upstream/main
   ? {
       startLoggingProfilingEvents,
       stopLoggingProfilingEvents,

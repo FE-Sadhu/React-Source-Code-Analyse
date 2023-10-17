@@ -33,7 +33,11 @@ ignoreErrors([
 ignoreWarnings(['Warning: componentWillReceiveProps has been renamed']);
 ignoreLogs([]);
 
+<<<<<<< HEAD
 const unmountFunctions = [];
+=======
+const unmountFunctions: Array<() => void | boolean> = [];
+>>>>>>> remotes/upstream/main
 
 function createContainer() {
   const container = document.createElement('div');
@@ -43,7 +47,11 @@ function createContainer() {
   return container;
 }
 
+<<<<<<< HEAD
 function mountApp(App) {
+=======
+function mountApp(App: () => React$Node) {
+>>>>>>> remotes/upstream/main
   const container = createContainer();
 
   const root = createRoot(container);
@@ -52,6 +60,10 @@ function mountApp(App) {
   unmountFunctions.push(() => root.unmount());
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function mountStrictApp(App) {
   function StrictRoot() {
     return createElement(App);
@@ -65,7 +77,11 @@ function mountStrictApp(App) {
   unmountFunctions.push(() => root.unmount());
 }
 
+<<<<<<< HEAD
 function mountLegacyApp(App) {
+=======
+function mountLegacyApp(App: () => React$Node) {
+>>>>>>> remotes/upstream/main
   function LegacyRender() {
     return createElement(App);
   }

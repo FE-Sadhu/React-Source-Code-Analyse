@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,7 +22,11 @@ let ReactTestUtils;
 
 function initModules() {
   // Reset warning cache.
+<<<<<<< HEAD
   jest.resetModuleRegistry();
+=======
+  jest.resetModules();
+>>>>>>> remotes/upstream/main
   React = require('react');
   ReactDOM = require('react-dom');
   ReactDOMServer = require('react-dom/server');
@@ -32,12 +40,17 @@ function initModules() {
   };
 }
 
+<<<<<<< HEAD
 const {
   resetModules,
   itClientRenders,
   renderIntoDom,
   serverRender,
 } = ReactDOMServerIntegrationUtils(initModules);
+=======
+const {resetModules, itClientRenders, renderIntoDom, serverRender} =
+  ReactDOMServerIntegrationUtils(initModules);
+>>>>>>> remotes/upstream/main
 
 describe('ReactDOMServerIntegrationUserInteraction', () => {
   let ControlledInput, ControlledTextArea, ControlledCheckbox, ControlledSelect;
@@ -138,7 +151,11 @@ describe('ReactDOMServerIntegrationUserInteraction', () => {
     };
   });
 
+<<<<<<< HEAD
   describe('user interaction with controlled inputs', function() {
+=======
+  describe('user interaction with controlled inputs', function () {
+>>>>>>> remotes/upstream/main
     itClientRenders('a controlled text input', async render => {
       const setUntrackedValue = Object.getOwnPropertyDescriptor(
         HTMLInputElement.prototype,
@@ -248,7 +265,11 @@ describe('ReactDOMServerIntegrationUserInteraction', () => {
     });
   });
 
+<<<<<<< HEAD
   describe('user interaction with inputs before client render', function() {
+=======
+  describe('user interaction with inputs before client render', function () {
+>>>>>>> remotes/upstream/main
     // renders the element and changes the value **before** the client
     // code has a chance to render; this simulates what happens when a
     // user starts to interact with a server-rendered form before

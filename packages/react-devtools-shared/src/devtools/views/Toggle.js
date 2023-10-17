@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -42,10 +46,17 @@ export default function Toggle({
     defaultClassName = styles.ToggleOff;
   }
 
+<<<<<<< HEAD
   const handleClick = useCallback(() => onChange(!isChecked), [
     isChecked,
     onChange,
   ]);
+=======
+  const handleClick = useCallback(
+    () => onChange(!isChecked),
+    [isChecked, onChange],
+  );
+>>>>>>> remotes/upstream/main
 
   let toggle = (
     <button

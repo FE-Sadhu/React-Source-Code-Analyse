@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext, RefObject} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -25,7 +34,10 @@ import type {
   ViewState,
   ReactEventInfo,
 } from './types';
+<<<<<<< HEAD
 import type {RefObject} from 'shared/ReactTypes';
+=======
+>>>>>>> remotes/upstream/main
 
 export type Context = {
   file: File | null,
@@ -38,14 +50,24 @@ export type Context = {
   selectedEvent: ReactEventInfo,
 };
 
+<<<<<<< HEAD
 const TimelineContext = createContext<Context>(((null: any): Context));
+=======
+const TimelineContext: ReactContext<Context> = createContext<Context>(
+  ((null: any): Context),
+);
+>>>>>>> remotes/upstream/main
 TimelineContext.displayName = 'TimelineContext';
 
 type Props = {
   children: React$Node,
 };
 
+<<<<<<< HEAD
 function TimelineContextController({children}: Props) {
+=======
+function TimelineContextController({children}: Props): React.Node {
+>>>>>>> remotes/upstream/main
   const searchInputContainerRef = useRef(null);
   const [file, setFile] = useState<string | null>(null);
 
@@ -79,8 +101,15 @@ function TimelineContextController({children}: Props) {
 
   // Recreate view state any time new profiling data is imported.
   const viewState = useMemo<ViewState>(() => {
+<<<<<<< HEAD
     const horizontalScrollStateChangeCallbacks: Set<HorizontalScrollStateChangeCallback> = new Set();
     const searchRegExpStateChangeCallbacks: Set<SearchRegExpStateChangeCallback> = new Set();
+=======
+    const horizontalScrollStateChangeCallbacks: Set<HorizontalScrollStateChangeCallback> =
+      new Set();
+    const searchRegExpStateChangeCallbacks: Set<SearchRegExpStateChangeCallback> =
+      new Set();
+>>>>>>> remotes/upstream/main
 
     const horizontalScrollState = {
       offset: 0,

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,7 +19,11 @@ import EditableValue from './EditableValue';
 import {parseHookPathForEdit} from './utils';
 import styles from './NewKeyValue.css';
 
+<<<<<<< HEAD
 import type {InspectedElement} from './types';
+=======
+import type {InspectedElement} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 import type {FrontendBridge} from 'react-devtools-shared/src/bridge';
 
 type Props = {
@@ -42,11 +50,23 @@ export default function NewKeyValue({
   const [newPropKey, setNewPropKey] = useState<number>(0);
   const [newPropName, setNewPropName] = useState<string>('');
 
+<<<<<<< HEAD
   const overrideNewEntryName = (oldPath, newPath) => {
     setNewPropName(newPath[newPath.length - 1]);
   };
 
   const overrideNewEntryValue = (newPath, value) => {
+=======
+  // $FlowFixMe[missing-local-annot]
+  const overrideNewEntryName = (oldPath: any, newPath) => {
+    setNewPropName(newPath[newPath.length - 1]);
+  };
+
+  const overrideNewEntryValue = (
+    newPath: Array<string | number>,
+    value: any,
+  ) => {
+>>>>>>> remotes/upstream/main
     if (!newPropName) {
       return;
     }
@@ -57,7 +77,11 @@ export default function NewKeyValue({
     const {id} = inspectedElement;
     const rendererID = store.getRendererIDForElement(id);
     if (rendererID !== null) {
+<<<<<<< HEAD
       let basePath = newPath;
+=======
+      let basePath: Array<string | number> = newPath;
+>>>>>>> remotes/upstream/main
       if (hookID != null) {
         basePath = parseHookPathForEdit(basePath);
       }

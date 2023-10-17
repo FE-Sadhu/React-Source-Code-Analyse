@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {ReactContext} from 'shared/ReactTypes';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {
   createContext,
@@ -16,8 +25,11 @@ import {
   useMemo,
 } from 'react';
 import {
+<<<<<<< HEAD
   COMFORTABLE_LINE_HEIGHT,
   COMPACT_LINE_HEIGHT,
+=======
+>>>>>>> remotes/upstream/main
   LOCAL_STORAGE_BROWSER_THEME,
   LOCAL_STORAGE_PARSE_HOOK_NAMES_KEY,
   LOCAL_STORAGE_SHOULD_BREAK_ON_CONSOLE_ERRORS,
@@ -26,11 +38,22 @@ import {
   LOCAL_STORAGE_SHOW_INLINE_WARNINGS_AND_ERRORS_KEY,
   LOCAL_STORAGE_HIDE_CONSOLE_LOGS_IN_STRICT_MODE,
 } from 'react-devtools-shared/src/constants';
+<<<<<<< HEAD
+=======
+import {
+  COMFORTABLE_LINE_HEIGHT,
+  COMPACT_LINE_HEIGHT,
+} from 'react-devtools-shared/src/devtools/constants';
+>>>>>>> remotes/upstream/main
 import {useLocalStorage} from '../hooks';
 import {BridgeContext} from '../context';
 import {logEvent} from 'react-devtools-shared/src/Logger';
 
+<<<<<<< HEAD
 import type {BrowserTheme} from '../DevTools';
+=======
+import type {BrowserTheme} from 'react-devtools-shared/src/frontend/types';
+>>>>>>> remotes/upstream/main
 
 export type DisplayDensity = 'comfortable' | 'compact';
 export type Theme = 'auto' | 'light' | 'dark';
@@ -67,7 +90,13 @@ type Context = {
   setTraceUpdatesEnabled: (value: boolean) => void,
 };
 
+<<<<<<< HEAD
 const SettingsContext = createContext<Context>(((null: any): Context));
+=======
+const SettingsContext: ReactContext<Context> = createContext<Context>(
+  ((null: any): Context),
+);
+>>>>>>> remotes/upstream/main
 SettingsContext.displayName = 'SettingsContext';
 
 function useLocalStorageWithLog<T>(
@@ -100,6 +129,7 @@ function SettingsContextController({
   children,
   componentsPortalContainer,
   profilerPortalContainer,
+<<<<<<< HEAD
 }: Props) {
   const bridge = useContext(BridgeContext);
 
@@ -110,10 +140,21 @@ function SettingsContextController({
     'React::DevTools::displayDensity',
     'compact',
   );
+=======
+}: Props): React.Node {
+  const bridge = useContext(BridgeContext);
+
+  const [displayDensity, setDisplayDensity] =
+    useLocalStorageWithLog<DisplayDensity>(
+      'React::DevTools::displayDensity',
+      'compact',
+    );
+>>>>>>> remotes/upstream/main
   const [theme, setTheme] = useLocalStorageWithLog<Theme>(
     LOCAL_STORAGE_BROWSER_THEME,
     'auto',
   );
+<<<<<<< HEAD
   const [
     appendComponentStack,
     setAppendComponentStack,
@@ -128,10 +169,23 @@ function SettingsContextController({
     LOCAL_STORAGE_SHOULD_BREAK_ON_CONSOLE_ERRORS,
     false,
   );
+=======
+  const [appendComponentStack, setAppendComponentStack] =
+    useLocalStorageWithLog<boolean>(
+      LOCAL_STORAGE_SHOULD_APPEND_COMPONENT_STACK_KEY,
+      true,
+    );
+  const [breakOnConsoleErrors, setBreakOnConsoleErrors] =
+    useLocalStorageWithLog<boolean>(
+      LOCAL_STORAGE_SHOULD_BREAK_ON_CONSOLE_ERRORS,
+      false,
+    );
+>>>>>>> remotes/upstream/main
   const [parseHookNames, setParseHookNames] = useLocalStorageWithLog<boolean>(
     LOCAL_STORAGE_PARSE_HOOK_NAMES_KEY,
     false,
   );
+<<<<<<< HEAD
   const [
     hideConsoleLogsInStrictMode,
     setHideConsoleLogsInStrictMode,
@@ -153,6 +207,23 @@ function SettingsContextController({
     LOCAL_STORAGE_TRACE_UPDATES_ENABLED_KEY,
     false,
   );
+=======
+  const [hideConsoleLogsInStrictMode, setHideConsoleLogsInStrictMode] =
+    useLocalStorageWithLog<boolean>(
+      LOCAL_STORAGE_HIDE_CONSOLE_LOGS_IN_STRICT_MODE,
+      false,
+    );
+  const [showInlineWarningsAndErrors, setShowInlineWarningsAndErrors] =
+    useLocalStorageWithLog<boolean>(
+      LOCAL_STORAGE_SHOW_INLINE_WARNINGS_AND_ERRORS_KEY,
+      true,
+    );
+  const [traceUpdatesEnabled, setTraceUpdatesEnabled] =
+    useLocalStorageWithLog<boolean>(
+      LOCAL_STORAGE_TRACE_UPDATES_ENABLED_KEY,
+      false,
+    );
+>>>>>>> remotes/upstream/main
 
   const documentElements = useMemo<DocumentElements>(() => {
     const array: Array<HTMLElement> = [
@@ -298,7 +369,11 @@ export function updateThemeVariables(
   // but it makes a significant UI improvement in dark mode.
   // https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color
   documentElements.forEach(documentElement => {
+<<<<<<< HEAD
     // $FlowFixMe scrollbarColor is missing in CSSStyleDeclaration
+=======
+    // $FlowFixMe[prop-missing] scrollbarColor is missing in CSSStyleDeclaration
+>>>>>>> remotes/upstream/main
     documentElement.style.scrollbarColor = `var(${`--${theme}-color-scroll-thumb`}) var(${`--${theme}-color-scroll-track`})`;
   });
 }

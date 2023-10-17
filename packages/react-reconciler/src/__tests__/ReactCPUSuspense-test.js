@@ -10,6 +10,12 @@ let readText;
 let resolveText;
 // let rejectText;
 
+<<<<<<< HEAD
+=======
+let assertLog;
+let waitForPaint;
+
+>>>>>>> remotes/upstream/main
 describe('ReactSuspenseWithNoopRenderer', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -17,10 +23,21 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     React = require('react');
     ReactNoop = require('react-noop-renderer');
     Scheduler = require('scheduler');
+<<<<<<< HEAD
     act = require('jest-react').act;
     Suspense = React.Suspense;
     useState = React.useState;
 
+=======
+    act = require('internal-test-utils').act;
+    Suspense = React.Suspense;
+    useState = React.useState;
+
+    const InternalTestUtils = require('internal-test-utils');
+    assertLog = InternalTestUtils.assertLog;
+    waitForPaint = InternalTestUtils.waitForPaint;
+
+>>>>>>> remotes/upstream/main
     textCache = new Map();
 
     readText = text => {
@@ -70,7 +87,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     //   const record = textCache.get(text);
     //   if (record !== undefined) {
     //     if (record.status === 'pending') {
+<<<<<<< HEAD
     //       Scheduler.unstable_yieldValue(`Promise rejected [${text}]`);
+=======
+    //       Scheduler.log(`Promise rejected [${text}]`);
+>>>>>>> remotes/upstream/main
     //       record.ping();
     //       record.status = 'rejected';
     //       clearTimeout(record.promise._timer);
@@ -88,7 +109,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
   });
 
   function Text(props) {
+<<<<<<< HEAD
     Scheduler.unstable_yieldValue(props.text);
+=======
+    Scheduler.log(props.text);
+>>>>>>> remotes/upstream/main
     return props.text;
   }
 
@@ -96,6 +121,7 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     const text = props.text;
     try {
       readText(text);
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(text);
       return text;
     } catch (promise) {
@@ -103,6 +129,15 @@ describe('ReactSuspenseWithNoopRenderer', () => {
         Scheduler.unstable_yieldValue(`Suspend! [${text}]`);
       } else {
         Scheduler.unstable_yieldValue(`Error! [${text}]`);
+=======
+      Scheduler.log(text);
+      return text;
+    } catch (promise) {
+      if (typeof promise.then === 'function') {
+        Scheduler.log(`Suspend! [${text}]`);
+      } else {
+        Scheduler.log(`Error! [${text}]`);
+>>>>>>> remotes/upstream/main
       }
       throw promise;
     }
@@ -128,7 +163,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     const root = ReactNoop.createRoot();
     await act(async () => {
       root.render(<App />);
+<<<<<<< HEAD
       expect(Scheduler).toFlushUntilNextPaint(['Outer', 'Loading...']);
+=======
+      await waitForPaint(['Outer', 'Loading...']);
+>>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           Outer
@@ -137,7 +176,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
       );
     });
     // Inner contents finish in separate commit from outer
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Inner']);
+=======
+    assertLog(['Inner']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Outer
@@ -169,11 +212,19 @@ describe('ReactSuspenseWithNoopRenderer', () => {
 
     // Initial mount
     const root = ReactNoop.createRoot();
+<<<<<<< HEAD
     await act(async () => {
       root.render(<App />);
     });
     // Inner contents finish in separate commit from outer
     expect(Scheduler).toHaveYielded(['Outer', 'Loading...', 'Inner [0]']);
+=======
+    await act(() => {
+      root.render(<App />);
+    });
+    // Inner contents finish in separate commit from outer
+    assertLog(['Outer', 'Loading...', 'Inner [0]']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Outer
@@ -182,11 +233,19 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     );
 
     // Update
+<<<<<<< HEAD
     await act(async () => {
       setCount(1);
     });
     // Entire update finishes in a single commit
     expect(Scheduler).toHaveYielded(['Outer', 'Inner [1]']);
+=======
+    await act(() => {
+      setCount(1);
+    });
+    // Entire update finishes in a single commit
+    assertLog(['Outer', 'Inner [1]']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Outer
@@ -215,7 +274,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     const root = ReactNoop.createRoot();
     await act(async () => {
       root.render(<App />);
+<<<<<<< HEAD
       expect(Scheduler).toFlushUntilNextPaint(['Outer', 'Loading...']);
+=======
+      await waitForPaint(['Outer', 'Loading...']);
+>>>>>>> remotes/upstream/main
       expect(root).toMatchRenderedOutput(
         <>
           Outer
@@ -224,7 +287,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
       );
     });
     // Inner contents suspended, so we continue showing a fallback.
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Suspend! [Inner]']);
+=======
+    assertLog(['Suspend! [Inner]']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Outer
@@ -236,7 +303,11 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     await act(async () => {
       await resolveText('Inner');
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['Inner']);
+=======
+    assertLog(['Inner']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         Outer
@@ -270,6 +341,7 @@ describe('ReactSuspenseWithNoopRenderer', () => {
     }
 
     const root = ReactNoop.createRoot();
+<<<<<<< HEAD
     await act(async () => {
       root.render(<App />);
     });
@@ -281,6 +353,13 @@ describe('ReactSuspenseWithNoopRenderer', () => {
       'Loading C...',
       'C',
     ]);
+=======
+    await act(() => {
+      root.render(<App />);
+    });
+    // Each level commits separately
+    assertLog(['A', 'Loading B...', 'B', 'Loading C...', 'C']);
+>>>>>>> remotes/upstream/main
     expect(root).toMatchRenderedOutput(
       <>
         A

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
+=======
+import type {Element} from 'react-devtools-shared/src/frontend/types';
+
+>>>>>>> remotes/upstream/main
 import * as React from 'react';
 import {useContext, useMemo} from 'react';
 import {TreeStateContext} from './TreeContext';
@@ -53,7 +62,11 @@ export default function SelectedTreeHighlight(_: {}): React.Node {
         }
 
         let stopIndex = null;
+<<<<<<< HEAD
         let current = element;
+=======
+        let current: null | Element = element;
+>>>>>>> remotes/upstream/main
         while (current !== null) {
           if (current.isCollapsed || current.children.length === 0) {
             // We've found the last/deepest descendant.

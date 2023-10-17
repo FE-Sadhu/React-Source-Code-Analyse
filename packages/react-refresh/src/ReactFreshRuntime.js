@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,7 +11,11 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {Instance} from 'react-reconciler/src/ReactFiberHostConfig';
+=======
+import type {Instance} from 'react-reconciler/src/ReactFiberConfig';
+>>>>>>> remotes/upstream/main
 import type {FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
 import type {
   Family,
@@ -47,6 +55,7 @@ const PossiblyWeakMap = typeof WeakMap === 'function' ? WeakMap : Map;
 // We never remove these associations.
 // It's OK to reference families, but use WeakMap/Set for types.
 const allFamiliesByID: Map<string, Family> = new Map();
+<<<<<<< HEAD
 const allFamiliesByType: // $FlowFixMe
 WeakMap<any, Family> | Map<any, Family> = new PossiblyWeakMap();
 const allSignaturesByType: // $FlowFixMe
@@ -56,6 +65,16 @@ WeakMap<any, Signature> | Map<any, Signature> = new PossiblyWeakMap();
 // $FlowFixMe
 const updatedFamiliesByType: // $FlowFixMe
 WeakMap<any, Family> | Map<any, Family> = new PossiblyWeakMap();
+=======
+const allFamiliesByType: WeakMap<any, Family> | Map<any, Family> =
+  new PossiblyWeakMap();
+const allSignaturesByType: WeakMap<any, Signature> | Map<any, Signature> =
+  new PossiblyWeakMap();
+// This WeakMap is read by React, so we only put families
+// that have actually been edited here. This keeps checks fast.
+const updatedFamiliesByType: WeakMap<any, Family> | Map<any, Family> =
+  new PossiblyWeakMap();
+>>>>>>> remotes/upstream/main
 
 // This is cleared on every performReactRefresh() call.
 // It is an array of [Family, NextType] tuples.
@@ -74,8 +93,12 @@ const failedRoots: Set<FiberRoot> = new Set();
 // In environments that support WeakMap, we also remember the last element for every root.
 // It needs to be weak because we do this even for roots that failed to mount.
 // If there is no WeakMap, we won't attempt to do retrying.
+<<<<<<< HEAD
 // $FlowFixMe
 const rootElements: WeakMap<any, ReactNodeList> | null = // $FlowFixMe
+=======
+const rootElements: WeakMap<any, ReactNodeList> | null =
+>>>>>>> remotes/upstream/main
   typeof WeakMap === 'function' ? new WeakMap() : null;
 
 let isPerformingRefresh = false;
@@ -123,7 +146,11 @@ function computeFullKey(signature: Signature): string {
   return fullKey;
 }
 
+<<<<<<< HEAD
 function haveEqualSignatures(prevType, nextType) {
+=======
+function haveEqualSignatures(prevType: any, nextType: any) {
+>>>>>>> remotes/upstream/main
   const prevSignature = allSignaturesByType.get(prevType);
   const nextSignature = allSignaturesByType.get(nextType);
 
@@ -143,11 +170,19 @@ function haveEqualSignatures(prevType, nextType) {
   return true;
 }
 
+<<<<<<< HEAD
 function isReactClass(type) {
   return type.prototype && type.prototype.isReactComponent;
 }
 
 function canPreserveStateBetween(prevType, nextType) {
+=======
+function isReactClass(type: any) {
+  return type.prototype && type.prototype.isReactComponent;
+}
+
+function canPreserveStateBetween(prevType: any, nextType: any) {
+>>>>>>> remotes/upstream/main
   if (isReactClass(prevType) || isReactClass(nextType)) {
     return false;
   }
@@ -157,21 +192,33 @@ function canPreserveStateBetween(prevType, nextType) {
   return false;
 }
 
+<<<<<<< HEAD
 function resolveFamily(type) {
+=======
+function resolveFamily(type: any) {
+>>>>>>> remotes/upstream/main
   // Only check updated types to keep lookups fast.
   return updatedFamiliesByType.get(type);
 }
 
 // If we didn't care about IE11, we could use new Map/Set(iterable).
 function cloneMap<K, V>(map: Map<K, V>): Map<K, V> {
+<<<<<<< HEAD
   const clone = new Map();
+=======
+  const clone = new Map<K, V>();
+>>>>>>> remotes/upstream/main
   map.forEach((value, key) => {
     clone.set(key, value);
   });
   return clone;
 }
 function cloneSet<T>(set: Set<T>): Set<T> {
+<<<<<<< HEAD
   const clone = new Set();
+=======
+  const clone = new Set<T>();
+>>>>>>> remotes/upstream/main
   set.forEach(value => {
     clone.add(value);
   });
@@ -179,7 +226,11 @@ function cloneSet<T>(set: Set<T>): Set<T> {
 }
 
 // This is a safety mechanism to protect against rogue getters and Proxies.
+<<<<<<< HEAD
 function getProperty(object, property) {
+=======
+function getProperty(object: any, property: string) {
+>>>>>>> remotes/upstream/main
   try {
     return object[property];
   } catch (err) {
@@ -203,8 +254,13 @@ export function performReactRefresh(): RefreshUpdate | null {
 
   isPerformingRefresh = true;
   try {
+<<<<<<< HEAD
     const staleFamilies = new Set();
     const updatedFamilies = new Set();
+=======
+    const staleFamilies = new Set<Family>();
+    const updatedFamilies = new Set<Family>();
+>>>>>>> remotes/upstream/main
 
     const updates = pendingUpdates;
     pendingUpdates = [];
@@ -420,7 +476,11 @@ export function findAffectedHostInstances(
   families: Array<Family>,
 ): Set<Instance> {
   if (__DEV__) {
+<<<<<<< HEAD
     const affectedInstances = new Set();
+=======
+    const affectedInstances = new Set<Instance>();
+>>>>>>> remotes/upstream/main
     mountedRoots.forEach(root => {
       const helpers = helpersByRoot.get(root);
       if (helpers === undefined) {
@@ -460,6 +520,7 @@ export function injectIntoGlobalHook(globalObject: any): void {
       globalObject.__REACT_DEVTOOLS_GLOBAL_HOOK__ = hook = {
         renderers: new Map(),
         supportsFiber: true,
+<<<<<<< HEAD
         inject(injected) {
           return nextID++;
         },
@@ -469,11 +530,24 @@ export function injectIntoGlobalHook(globalObject: any): void {
           children: ReactNodeList,
         ) {},
         onCommitFiberRoot(
+=======
+        inject: injected => nextID++,
+        onScheduleFiberRoot: (
+          id: number,
+          root: FiberRoot,
+          children: ReactNodeList,
+        ) => {},
+        onCommitFiberRoot: (
+>>>>>>> remotes/upstream/main
           id: number,
           root: FiberRoot,
           maybePriorityLevel: mixed,
           didError: boolean,
+<<<<<<< HEAD
         ) {},
+=======
+        ) => {},
+>>>>>>> remotes/upstream/main
         onCommitFiberUnmount() {},
       };
     }
@@ -491,7 +565,11 @@ export function injectIntoGlobalHook(globalObject: any): void {
 
     // Here, we just want to get a reference to scheduleRefresh.
     const oldInject = hook.inject;
+<<<<<<< HEAD
     hook.inject = function(injected) {
+=======
+    hook.inject = function (this: mixed, injected) {
+>>>>>>> remotes/upstream/main
       const id = oldInject.apply(this, arguments);
       if (
         typeof injected.scheduleRefresh === 'function' &&
@@ -519,7 +597,12 @@ export function injectIntoGlobalHook(globalObject: any): void {
     // We also want to track currently mounted roots.
     const oldOnCommitFiberRoot = hook.onCommitFiberRoot;
     const oldOnScheduleFiberRoot = hook.onScheduleFiberRoot || (() => {});
+<<<<<<< HEAD
     hook.onScheduleFiberRoot = function(
+=======
+    hook.onScheduleFiberRoot = function (
+      this: mixed,
+>>>>>>> remotes/upstream/main
       id: number,
       root: FiberRoot,
       children: ReactNodeList,
@@ -534,7 +617,12 @@ export function injectIntoGlobalHook(globalObject: any): void {
       }
       return oldOnScheduleFiberRoot.apply(this, arguments);
     };
+<<<<<<< HEAD
     hook.onCommitFiberRoot = function(
+=======
+    hook.onCommitFiberRoot = function (
+      this: mixed,
+>>>>>>> remotes/upstream/main
       id: number,
       root: FiberRoot,
       maybePriorityLevel: mixed,
@@ -637,12 +725,26 @@ export function _getMountedRootCount(): number {
 //   'useState{[foo, setFoo]}(0)',
 //   () => [useCustomHook], /* Lazy to avoid triggering inline requires */
 // );
+<<<<<<< HEAD
 export function createSignatureFunctionForTransform() {
   if (__DEV__) {
     let savedType;
     let hasCustomHooks;
     let didCollectHooks = false;
     return function<T>(
+=======
+export function createSignatureFunctionForTransform(): <T>(
+  type: T,
+  key: string,
+  forceReset?: boolean,
+  getCustomHooks?: () => Array<Function>,
+) => T | void {
+  if (__DEV__) {
+    let savedType: mixed;
+    let hasCustomHooks: boolean;
+    let didCollectHooks = false;
+    return function <T>(
+>>>>>>> remotes/upstream/main
       type: T,
       key: string,
       forceReset?: boolean,
@@ -654,7 +756,10 @@ export function createSignatureFunctionForTransform() {
         // in HOC chains like _s(hoc1(_s(hoc2(_s(actualFunction))))).
         if (!savedType) {
           // We're in the innermost call, so this is the actual type.
+<<<<<<< HEAD
           // $FlowFixMe[escaped-generic] discovered when updating Flow
+=======
+>>>>>>> remotes/upstream/main
           savedType = type;
           hasCustomHooks = typeof getCustomHooks === 'function';
         }

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -171,6 +175,10 @@ function Row({
   const [isAttributeValid, setIsAttributeValid] = useState(true);
   const [isValueValid, setIsValueValid] = useState(true);
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const validateAndSetLocalAttribute = newAttribute => {
     const isValid =
       newAttribute === '' ||
@@ -183,6 +191,10 @@ function Row({
     });
   };
 
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const validateAndSetLocalValue = newValue => {
     let isValid = false;
     try {
@@ -262,6 +274,10 @@ function Field({
   placeholder,
   value,
 }: FieldProps) {
+<<<<<<< HEAD
+=======
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const onKeyDown = event => {
     switch (event.key) {
       case 'Enter':
@@ -285,7 +301,11 @@ function Field({
     <AutoSizeInput
       className={`${className} ${styles.Input}`}
       onBlur={onSubmit}
+<<<<<<< HEAD
       onChange={event => onChange(event.target.value)}
+=======
+      onChange={(event: $FlowFixMe) => onChange(event.target.value)}
+>>>>>>> remotes/upstream/main
       onKeyDown={onKeyDown}
       placeholder={placeholder}
       value={value}

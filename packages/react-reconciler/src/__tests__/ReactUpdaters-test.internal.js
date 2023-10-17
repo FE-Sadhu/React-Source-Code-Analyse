@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,6 +23,12 @@ let allSchedulerTags;
 let allSchedulerTypes;
 let onCommitRootShouldYield;
 let act;
+<<<<<<< HEAD
+=======
+let waitFor;
+let waitForAll;
+let assertLog;
+>>>>>>> remotes/upstream/main
 
 describe('updaters', () => {
   beforeEach(() => {
@@ -38,7 +48,11 @@ describe('updaters', () => {
       isDevToolsPresent: true,
       onCommitRoot: jest.fn(fiberRoot => {
         if (onCommitRootShouldYield) {
+<<<<<<< HEAD
           Scheduler.unstable_yieldValue('onCommitRoot');
+=======
+          Scheduler.log('onCommitRoot');
+>>>>>>> remotes/upstream/main
         }
         const schedulerTags = [];
         const schedulerTypes = [];
@@ -81,11 +95,15 @@ describe('updaters', () => {
     };
 
     jest.mock(
+<<<<<<< HEAD
       'react-reconciler/src/ReactFiberDevToolsHook.old',
       () => mockDevToolsHook,
     );
     jest.mock(
       'react-reconciler/src/ReactFiberDevToolsHook.new',
+=======
+      'react-reconciler/src/ReactFiberDevToolsHook',
+>>>>>>> remotes/upstream/main
       () => mockDevToolsHook,
     );
 
@@ -94,7 +112,16 @@ describe('updaters', () => {
     ReactDOMClient = require('react-dom/client');
     Scheduler = require('scheduler');
 
+<<<<<<< HEAD
     act = require('jest-react').act;
+=======
+    act = require('internal-test-utils').act;
+
+    const InternalTestUtils = require('internal-test-utils');
+    waitFor = InternalTestUtils.waitFor;
+    waitForAll = InternalTestUtils.waitForAll;
+    assertLog = InternalTestUtils.assertLog;
+>>>>>>> remotes/upstream/main
   });
 
   it('should report the (host) root as the scheduler for root-level render', async () => {
@@ -104,12 +131,20 @@ describe('updaters', () => {
     const Child = () => null;
     const container = document.createElement('div');
 
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<Parent />, container);
     });
     expect(allSchedulerTags).toEqual([[HostRoot]]);
 
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<Parent />, container);
     });
     expect(allSchedulerTags).toEqual([[HostRoot], [HostRoot]]);
@@ -137,19 +172,31 @@ describe('updaters', () => {
     };
     const Child = () => null;
 
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<Parent />, document.createElement('div'));
     });
     expect(scheduleForA).not.toBeNull();
     expect(scheduleForB).not.toBeNull();
     expect(allSchedulerTypes).toEqual([[null]]);
 
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       scheduleForA();
     });
     expect(allSchedulerTypes).toEqual([[null], [SchedulingComponentA]]);
 
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       scheduleForB();
     });
     expect(allSchedulerTypes).toEqual([
@@ -170,13 +217,21 @@ describe('updaters', () => {
     }
     const Child = () => null;
     let instance;
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       ReactDOM.render(<Parent />, document.createElement('div'));
     });
     expect(allSchedulerTypes).toEqual([[null]]);
 
     expect(instance).not.toBeNull();
+<<<<<<< HEAD
     await act(async () => {
+=======
+    await act(() => {
+>>>>>>> remotes/upstream/main
       instance.setState({});
     });
     expect(allSchedulerTypes).toEqual([[null], [SchedulingComponent]]);
@@ -195,7 +250,11 @@ describe('updaters', () => {
     };
     const CascadingChild = ({cascade}) => {
       const [count, setCount] = React.useState(0);
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`CascadingChild ${count}`);
+=======
+      Scheduler.log(`CascadingChild ${count}`);
+>>>>>>> remotes/upstream/main
       React.useLayoutEffect(() => {
         if (cascade === 'active') {
           setCount(prevCount => prevCount + 1);
@@ -214,10 +273,14 @@ describe('updaters', () => {
     const root = ReactDOMClient.createRoot(document.createElement('div'));
     await act(async () => {
       root.render(<Parent />);
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYieldThrough([
         'CascadingChild 0',
         'onCommitRoot',
       ]);
+=======
+      await waitFor(['CascadingChild 0', 'onCommitRoot']);
+>>>>>>> remotes/upstream/main
     });
     expect(triggerActiveCascade).not.toBeNull();
     expect(triggerPassiveCascade).not.toBeNull();
@@ -225,7 +288,11 @@ describe('updaters', () => {
 
     await act(async () => {
       triggerActiveCascade();
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYieldThrough([
+=======
+      await waitFor([
+>>>>>>> remotes/upstream/main
         'CascadingChild 0',
         'onCommitRoot',
         'CascadingChild 1',
@@ -240,7 +307,11 @@ describe('updaters', () => {
 
     await act(async () => {
       triggerPassiveCascade();
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYieldThrough([
+=======
+      await waitFor([
+>>>>>>> remotes/upstream/main
         'CascadingChild 1',
         'onCommitRoot',
         'CascadingChild 2',
@@ -256,10 +327,17 @@ describe('updaters', () => {
     ]);
 
     // Verify no outstanding flushes
+<<<<<<< HEAD
     Scheduler.unstable_flushAll();
   });
 
   it('should cover suspense pings', async done => {
+=======
+    await waitForAll([]);
+  });
+
+  it('should cover suspense pings', async () => {
+>>>>>>> remotes/upstream/main
     let data = null;
     let resolver = null;
     let promise = null;
@@ -293,17 +371,30 @@ describe('updaters', () => {
       }
     };
 
+<<<<<<< HEAD
     await act(async () => {
       ReactDOM.render(<Parent />, document.createElement('div'));
       expect(Scheduler).toHaveYielded(['onCommitRoot']);
+=======
+    await act(() => {
+      ReactDOM.render(<Parent />, document.createElement('div'));
+      assertLog(['onCommitRoot']);
+>>>>>>> remotes/upstream/main
     });
     expect(setShouldSuspend).not.toBeNull();
     expect(allSchedulerTypes).toEqual([[null]]);
 
+<<<<<<< HEAD
     await act(async () => {
       setShouldSuspend(true);
     });
     expect(Scheduler).toHaveYielded(['onCommitRoot']);
+=======
+    await act(() => {
+      setShouldSuspend(true);
+    });
+    assertLog(['onCommitRoot']);
+>>>>>>> remotes/upstream/main
     expect(allSchedulerTypes).toEqual([[null], [Suspender]]);
 
     expect(resolver).not.toBeNull();
@@ -311,6 +402,7 @@ describe('updaters', () => {
       resolver('abc');
       return promise;
     });
+<<<<<<< HEAD
     expect(Scheduler).toHaveYielded(['onCommitRoot']);
     expect(allSchedulerTypes).toEqual([[null], [Suspender], [Suspender]]);
 
@@ -318,6 +410,13 @@ describe('updaters', () => {
     Scheduler.unstable_flushAll();
 
     done();
+=======
+    assertLog(['onCommitRoot']);
+    expect(allSchedulerTypes).toEqual([[null], [Suspender], [Suspender]]);
+
+    // Verify no outstanding flushes
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
   });
 
   it('should cover error handling', async () => {
@@ -349,7 +448,11 @@ describe('updaters', () => {
       }
     }
     const Yield = ({value}) => {
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(value);
+=======
+      Scheduler.log(value);
+>>>>>>> remotes/upstream/main
       return null;
     };
     const BrokenRender = () => {
@@ -357,15 +460,23 @@ describe('updaters', () => {
     };
 
     const root = ReactDOMClient.createRoot(document.createElement('div'));
+<<<<<<< HEAD
     await act(async () => {
       root.render(<Parent shouldError={false} />);
     });
     expect(Scheduler).toHaveYielded(['initial', 'onCommitRoot']);
+=======
+    await act(() => {
+      root.render(<Parent shouldError={false} />);
+    });
+    assertLog(['initial', 'onCommitRoot']);
+>>>>>>> remotes/upstream/main
     expect(triggerError).not.toBeNull();
 
     allSchedulerTypes.splice(0);
     onCommitRootShouldYield = true;
 
+<<<<<<< HEAD
     await act(async () => {
       triggerError();
     });
@@ -374,6 +485,16 @@ describe('updaters', () => {
 
     // Verify no outstanding flushes
     Scheduler.unstable_flushAll();
+=======
+    await act(() => {
+      triggerError();
+    });
+    assertLog(['onCommitRoot', 'error', 'onCommitRoot']);
+    expect(allSchedulerTypes).toEqual([[Parent], [ErrorBoundary]]);
+
+    // Verify no outstanding flushes
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
   });
 
   it('should distinguish between updaters in the case of interleaved work', async () => {
@@ -388,7 +509,11 @@ describe('updaters', () => {
     const SyncPriorityUpdater = () => {
       const [count, setCount] = React.useState(0);
       triggerSyncPriorityUpdate = () => setCount(prevCount => prevCount + 1);
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`SyncPriorityUpdater ${count}`);
+=======
+      Scheduler.log(`SyncPriorityUpdater ${count}`);
+>>>>>>> remotes/upstream/main
       return <Yield value={`HighPriority ${count}`} />;
     };
     const LowPriorityUpdater = () => {
@@ -398,11 +523,19 @@ describe('updaters', () => {
           setCount(prevCount => prevCount + 1);
         });
       };
+<<<<<<< HEAD
       Scheduler.unstable_yieldValue(`LowPriorityUpdater ${count}`);
       return <Yield value={`LowPriority ${count}`} />;
     };
     const Yield = ({value}) => {
       Scheduler.unstable_yieldValue(`Yield ${value}`);
+=======
+      Scheduler.log(`LowPriorityUpdater ${count}`);
+      return <Yield value={`LowPriority ${count}`} />;
+    };
+    const Yield = ({value}) => {
+      Scheduler.log(`Yield ${value}`);
+>>>>>>> remotes/upstream/main
       return null;
     };
 
@@ -415,7 +548,11 @@ describe('updaters', () => {
     );
 
     // Render everything initially.
+<<<<<<< HEAD
     expect(Scheduler).toFlushAndYield([
+=======
+    await waitForAll([
+>>>>>>> remotes/upstream/main
       'SyncPriorityUpdater 0',
       'Yield HighPriority 0',
       'LowPriorityUpdater 0',
@@ -427,14 +564,24 @@ describe('updaters', () => {
     expect(allSchedulerTags).toEqual([[HostRoot]]);
 
     // Render a partial update, but don't finish.
+<<<<<<< HEAD
     act(() => {
       triggerLowPriorityUpdate();
       expect(Scheduler).toFlushAndYieldThrough(['LowPriorityUpdater 1']);
+=======
+    await act(async () => {
+      triggerLowPriorityUpdate();
+      await waitFor(['LowPriorityUpdater 1']);
+>>>>>>> remotes/upstream/main
       expect(allSchedulerTags).toEqual([[HostRoot]]);
 
       // Interrupt with higher priority work.
       ReactDOM.flushSync(triggerSyncPriorityUpdate);
+<<<<<<< HEAD
       expect(Scheduler).toHaveYielded([
+=======
+      assertLog([
+>>>>>>> remotes/upstream/main
         'SyncPriorityUpdater 1',
         'Yield HighPriority 1',
         'onCommitRoot',
@@ -443,7 +590,11 @@ describe('updaters', () => {
 
       // Finish the initial partial update
       triggerLowPriorityUpdate();
+<<<<<<< HEAD
       expect(Scheduler).toFlushAndYield([
+=======
+      await waitForAll([
+>>>>>>> remotes/upstream/main
         'LowPriorityUpdater 2',
         'Yield LowPriority 2',
         'onCommitRoot',
@@ -461,6 +612,10 @@ describe('updaters', () => {
     ]);
 
     // Verify no outstanding flushes
+<<<<<<< HEAD
     Scheduler.unstable_flushAll();
+=======
+    await waitForAll([]);
+>>>>>>> remotes/upstream/main
   });
 });

@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -242,6 +246,10 @@ function IndexedSourceMapConsumer(sourceMapJSON: IndexSourceMap) {
 
     if (section.sourceMapConsumer === null) {
       // Lazily parse the section only when it's needed.
+<<<<<<< HEAD
+=======
+      // $FlowFixMe[invalid-constructor] Flow no longer supports calling new on functions
+>>>>>>> remotes/upstream/main
       section.sourceMapConsumer = new SourceMapConsumer(section.map);
     }
 

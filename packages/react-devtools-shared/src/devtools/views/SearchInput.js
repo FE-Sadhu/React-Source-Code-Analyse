@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -40,9 +44,17 @@ export default function SearchInput({
 
   const resetSearch = () => search('');
 
+<<<<<<< HEAD
   const handleChange = ({currentTarget}) => {
     search(currentTarget.value);
   };
+=======
+  // $FlowFixMe[missing-local-annot]
+  const handleChange = ({currentTarget}) => {
+    search(currentTarget.value);
+  };
+  // $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
   const handleKeyPress = ({key, shiftKey}) => {
     if (key === 'Enter') {
       if (shiftKey) {
@@ -102,7 +114,10 @@ export default function SearchInput({
           <div className={styles.LeftVRule} />
           <Button
             data-testname={testName ? `${testName}-PreviousButton` : undefined}
+<<<<<<< HEAD
             className={styles.IconButton}
+=======
+>>>>>>> remotes/upstream/main
             disabled={!searchText}
             onClick={goToPreviousResult}
             title={
@@ -115,7 +130,10 @@ export default function SearchInput({
           </Button>
           <Button
             data-testname={testName ? `${testName}-NextButton` : undefined}
+<<<<<<< HEAD
             className={styles.IconButton}
+=======
+>>>>>>> remotes/upstream/main
             disabled={!searchText}
             onClick={goToNextResult}
             title={
@@ -127,7 +145,10 @@ export default function SearchInput({
           </Button>
           <Button
             data-testname={testName ? `${testName}-ResetButton` : undefined}
+<<<<<<< HEAD
             className={styles.IconButton}
+=======
+>>>>>>> remotes/upstream/main
             disabled={!searchText}
             onClick={resetSearch}
             title="Reset search">

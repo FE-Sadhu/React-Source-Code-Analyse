@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +15,7 @@ import * as React from 'react';
 import {Fragment} from 'react';
 
 class ErrorBoundary extends React.Component {
+<<<<<<< HEAD
   state = {hasError: false};
 
   static getDerivedStateFromError(error) {
@@ -18,6 +23,15 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
+=======
+  state: {hasError: boolean} = {hasError: false};
+
+  static getDerivedStateFromError(error: any): {hasError: boolean} {
+    return {hasError: true};
+  }
+
+  render(): any {
+>>>>>>> remotes/upstream/main
     const {hasError} = this.state;
     if (hasError) {
       return (
@@ -49,6 +63,10 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function Component({label}) {
   return <div>{label}</div>;
 }

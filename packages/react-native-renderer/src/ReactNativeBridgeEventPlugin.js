@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,14 +11,24 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {AnyNativeEvent} from './legacy-events/PluginModuleType';
 import type {TopLevelType} from './legacy-events/TopLevelEventTypes';
 import SyntheticEvent from './legacy-events/SyntheticEvent';
 import type {PropagationPhases} from './legacy-events/PropagationPhases';
+=======
+import type {
+  AnyNativeEvent,
+  EventTypes,
+} from './legacy-events/PluginModuleType';
+import type {TopLevelType} from './legacy-events/TopLevelEventTypes';
+import SyntheticEvent from './legacy-events/SyntheticEvent';
+>>>>>>> remotes/upstream/main
 
 // Module provided by RN:
 import {ReactNativeViewConfigRegistry} from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
 import accumulateInto from './legacy-events/accumulateInto';
+<<<<<<< HEAD
 import getListeners from './ReactNativeGetListeners';
 import forEachAccumulated from './legacy-events/forEachAccumulated';
 import {HostComponent} from 'react-reconciler/src/ReactWorkTags';
@@ -24,10 +38,19 @@ const {
   customBubblingEventTypes,
   customDirectEventTypes,
 } = ReactNativeViewConfigRegistry;
+=======
+import getListener from './ReactNativeGetListener';
+import forEachAccumulated from './legacy-events/forEachAccumulated';
+import {HostComponent} from 'react-reconciler/src/ReactWorkTags';
+
+const {customBubblingEventTypes, customDirectEventTypes} =
+  ReactNativeViewConfigRegistry;
+>>>>>>> remotes/upstream/main
 
 // Start of inline: the below functions were inlined from
 // EventPropagator.js, as they deviated from ReactDOM's newer
 // implementations.
+<<<<<<< HEAD
 function listenersAtPhase(inst, event, propagationPhase: PropagationPhases) {
   const registrationName =
     event.dispatchConfig.phasedRegistrationNames[propagationPhase];
@@ -61,16 +84,40 @@ function accumulateListenersAndInstances(inst, event, listeners) {
   }
 }
 
+=======
+// $FlowFixMe[missing-local-annot]
+function listenerAtPhase(inst, event, propagationPhase: PropagationPhases) {
+  const registrationName =
+    event.dispatchConfig.phasedRegistrationNames[propagationPhase];
+  return getListener(inst, registrationName);
+}
+
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function accumulateDirectionalDispatches(inst, phase, event) {
   if (__DEV__) {
     if (!inst) {
       console.error('Dispatching inst must not be null');
     }
   }
+<<<<<<< HEAD
   const listeners = listenersAtPhase(inst, event, phase);
   accumulateListenersAndInstances(inst, event, listeners);
 }
 
+=======
+  const listener = listenerAtPhase(inst, event, phase);
+  if (listener) {
+    event._dispatchListeners = accumulateInto(
+      event._dispatchListeners,
+      listener,
+    );
+    event._dispatchInstances = accumulateInto(event._dispatchInstances, inst);
+  }
+}
+
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function getParent(inst) {
   do {
     inst = inst.return;
@@ -114,6 +161,10 @@ export function traverseTwoPhase(
   }
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function accumulateTwoPhaseDispatchesSingle(event) {
   if (event && event.dispatchConfig.phasedRegistrationNames) {
     traverseTwoPhase(
@@ -125,10 +176,18 @@ function accumulateTwoPhaseDispatchesSingle(event) {
   }
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function accumulateTwoPhaseDispatches(events) {
   forEachAccumulated(events, accumulateTwoPhaseDispatchesSingle);
 }
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function accumulateCapturePhaseDispatches(event) {
   if (event && event.dispatchConfig.phasedRegistrationNames) {
     traverseTwoPhase(
@@ -152,8 +211,19 @@ function accumulateDispatches(
 ): void {
   if (inst && event && event.dispatchConfig.registrationName) {
     const registrationName = event.dispatchConfig.registrationName;
+<<<<<<< HEAD
     const listeners = getListeners(inst, registrationName, 'bubbled', false);
     accumulateListenersAndInstances(inst, event, listeners);
+=======
+    const listener = getListener(inst, registrationName);
+    if (listener) {
+      event._dispatchListeners = accumulateInto(
+        event._dispatchListeners,
+        listener,
+      );
+      event._dispatchInstances = accumulateInto(event._dispatchInstances, inst);
+    }
+>>>>>>> remotes/upstream/main
   }
 }
 
@@ -173,11 +243,20 @@ function accumulateDirectDispatches(events: ?(Array<Object> | Object)) {
 }
 
 // End of inline
+<<<<<<< HEAD
 
 const ReactNativeBridgeEventPlugin = {
   eventTypes: {},
 
   extractEvents: function(
+=======
+type PropagationPhases = 'bubbled' | 'captured';
+
+const ReactNativeBridgeEventPlugin = {
+  eventTypes: ({}: EventTypes),
+
+  extractEvents: function (
+>>>>>>> remotes/upstream/main
     topLevelType: TopLevelType,
     targetInst: null | Object,
     nativeEvent: AnyNativeEvent,
@@ -192,7 +271,11 @@ const ReactNativeBridgeEventPlugin = {
 
     if (!bubbleDispatchConfig && !directDispatchConfig) {
       throw new Error(
+<<<<<<< HEAD
         // $FlowFixMe - Flow doesn't like this string coercion because DOMTopLevelEventType is opaque
+=======
+        // $FlowFixMe[incompatible-type] - Flow doesn't like this string coercion because DOMTopLevelEventType is opaque
+>>>>>>> remotes/upstream/main
         `Unsupported top level event type "${topLevelType}" dispatched`,
       );
     }

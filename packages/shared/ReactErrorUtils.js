@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -72,6 +76,10 @@ export function invokeGuardedCallbackAndCatchFirstError<
   F,
   Context,
 >(
+<<<<<<< HEAD
+=======
+  this: mixed,
+>>>>>>> remotes/upstream/main
   name: string | null,
   func: (a: A, b: B, c: C, d: D, e: E, f: F) => void,
   context: Context,
@@ -109,7 +117,11 @@ export function hasCaughtError(): boolean {
   return hasError;
 }
 
+<<<<<<< HEAD
 export function clearCaughtError() {
+=======
+export function clearCaughtError(): mixed {
+>>>>>>> remotes/upstream/main
   if (hasError) {
     const error = caughtError;
     hasError = false;

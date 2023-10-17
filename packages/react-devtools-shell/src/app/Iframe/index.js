@@ -19,12 +19,20 @@ export default function Iframe(): React.Node {
 
 const iframeStyle = {border: '2px solid #eee', height: 80};
 
+<<<<<<< HEAD
+=======
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function Frame(props) {
   const [element, setElement] = React.useState(null);
 
   const ref = React.useRef();
 
+<<<<<<< HEAD
   React.useLayoutEffect(function() {
+=======
+  React.useLayoutEffect(function () {
+>>>>>>> remotes/upstream/main
     const iframe = ref.current;
 
     if (iframe) {

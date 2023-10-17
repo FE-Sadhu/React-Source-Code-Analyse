@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -48,7 +52,11 @@ export type AttributeConfiguration = $ReadOnly<{
   [propName: string]: AnyAttributeType,
   style: $ReadOnly<{
     [propName: string]: AnyAttributeType,
+<<<<<<< HEAD
     ...,
+=======
+    ...
+>>>>>>> remotes/upstream/main
   }>,
   ...
 }>;
@@ -57,7 +65,11 @@ export type PartialAttributeConfiguration = $ReadOnly<{
   [propName: string]: AnyAttributeType,
   style?: $ReadOnly<{
     [propName: string]: AnyAttributeType,
+<<<<<<< HEAD
     ...,
+=======
+    ...
+>>>>>>> remotes/upstream/main
   }>,
   ...
 }>;
@@ -76,13 +88,21 @@ export type ViewConfig = $ReadOnly<{
         skipBubbling?: ?boolean,
       }>,
     }>,
+<<<<<<< HEAD
     ...,
+=======
+    ...
+>>>>>>> remotes/upstream/main
   }>,
   directEventTypes?: $ReadOnly<{
     [eventName: string]: $ReadOnly<{
       registrationName: string,
     }>,
+<<<<<<< HEAD
     ...,
+=======
+    ...
+>>>>>>> remotes/upstream/main
   }>,
   uiViewClassName: string,
   validAttributes: AttributeConfiguration,
@@ -95,7 +115,27 @@ export type PartialViewConfig = $ReadOnly<{
   validAttributes?: PartialAttributeConfiguration,
 }>;
 
+<<<<<<< HEAD
 export type NativeMethods = $ReadOnly<{
+=======
+/**
+ * Current usages should migrate to this definition
+ */
+export interface INativeMethods {
+  blur(): void;
+  focus(): void;
+  measure(callback: MeasureOnSuccessCallback): void;
+  measureInWindow(callback: MeasureInWindowOnSuccessCallback): void;
+  measureLayout(
+    relativeToNativeNode: number | ElementRef<HostComponent<mixed>>,
+    onSuccess: MeasureLayoutOnSuccessCallback,
+    onFail?: () => void,
+  ): void;
+  setNativeProps(nativeProps: {...}): void;
+}
+
+export type NativeMethods = $ReadOnly<{|
+>>>>>>> remotes/upstream/main
   blur(): void,
   focus(): void,
   measure(callback: MeasureOnSuccessCallback): void,
@@ -106,7 +146,15 @@ export type NativeMethods = $ReadOnly<{
     onFail?: () => void,
   ): void,
   setNativeProps(nativeProps: {...}): void,
+<<<<<<< HEAD
 }>;
+=======
+|}>;
+
+// This validates that INativeMethods and NativeMethods stay in sync using Flow!
+declare var ensureNativeMethodsAreSynced: NativeMethods;
+(ensureNativeMethodsAreSynced: INativeMethods);
+>>>>>>> remotes/upstream/main
 
 export type HostComponent<T> = AbstractComponent<T, $ReadOnly<NativeMethods>>;
 
@@ -119,7 +167,11 @@ type SecretInternalsType = {
 
 type InspectorDataProps = $ReadOnly<{
   [propName: string]: string,
+<<<<<<< HEAD
   ...,
+=======
+  ...
+>>>>>>> remotes/upstream/main
 }>;
 
 type InspectorDataSource = $ReadOnly<{
@@ -138,6 +190,10 @@ type InspectorDataGetter = (
 }>;
 
 export type InspectorData = $ReadOnly<{
+<<<<<<< HEAD
+=======
+  closestInstance?: mixed,
+>>>>>>> remotes/upstream/main
   hierarchy: Array<{
     name: ?string,
     getInspectorData: InspectorDataGetter,
@@ -150,7 +206,10 @@ export type InspectorData = $ReadOnly<{
 export type TouchedViewDataAtPoint = $ReadOnly<{
   pointerY: number,
   touchedViewTag?: number,
+<<<<<<< HEAD
   closestInstance?: mixed,
+=======
+>>>>>>> remotes/upstream/main
   frame: $ReadOnly<{
     top: number,
     left: number,
@@ -192,6 +251,14 @@ export type ReactNativeType = {
   ...
 };
 
+<<<<<<< HEAD
+=======
+export opaque type Node = mixed;
+export opaque type InternalInstanceHandle = mixed;
+type PublicInstance = mixed;
+type PublicTextInstance = mixed;
+
+>>>>>>> remotes/upstream/main
 export type ReactFabricType = {
   findHostInstance_DEPRECATED<TElementType: ElementType>(
     componentOrHandle: ?(ElementRef<TElementType> | number),
@@ -215,6 +282,7 @@ export type ReactFabricType = {
     concurrentRoot: ?boolean,
   ): ?ElementRef<ElementType>,
   unmountComponentAtNode(containerTag: number): void,
+<<<<<<< HEAD
   ...
 };
 
@@ -227,6 +295,14 @@ export type ReactNativeEventTarget = {
     _internalInstanceHandle: {...},
     ...
   },
+=======
+  getNodeFromInternalInstanceHandle(
+    internalInstanceHandle: InternalInstanceHandle,
+  ): ?Node,
+  getPublicInstanceFromInternalInstanceHandle(
+    internalInstanceHandle: InternalInstanceHandle,
+  ): PublicInstance | PublicTextInstance,
+>>>>>>> remotes/upstream/main
   ...
 };
 

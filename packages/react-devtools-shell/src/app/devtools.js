@@ -11,7 +11,11 @@ import {initDevTools} from 'react-devtools-shared/src/devtools';
 
 // This is a pretty gross hack to make the runtime loaded named-hooks-code work.
 // TODO (Webpack 5) Hoepfully we can remove this once we upgrade to Webpack 5.
+<<<<<<< HEAD
 // $FlowFixMe
+=======
+// $FlowFixMe[cannot-resolve-name]
+>>>>>>> remotes/upstream/main
 __webpack_public_path__ = '/dist/'; // eslint-disable-line no-undef
 
 const iframe = ((document.getElementById('target'): any): HTMLIFrameElement);
@@ -38,7 +42,11 @@ let isTestAppMounted = true;
 const mountButton = ((document.getElementById(
   'mountButton',
 ): any): HTMLButtonElement);
+<<<<<<< HEAD
 mountButton.addEventListener('click', function() {
+=======
+mountButton.addEventListener('click', function () {
+>>>>>>> remotes/upstream/main
   if (isTestAppMounted) {
     if (typeof window.unmountTestApp === 'function') {
       window.unmountTestApp();
@@ -81,7 +89,11 @@ inject('dist/app-index.js', () => {
   });
 });
 
+<<<<<<< HEAD
 function inject(sourcePath, callback) {
+=======
+function inject(sourcePath: string, callback: () => void) {
+>>>>>>> remotes/upstream/main
   const script = contentDocument.createElement('script');
   script.onload = callback;
   script.src = sourcePath;

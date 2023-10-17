@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,15 +11,24 @@
  * @flow
  */
 
+<<<<<<< HEAD
 import type {HostComponent} from './ReactNativeTypes';
 import type {ReactNodeList} from 'shared/ReactTypes';
 import type {ElementRef, Element, ElementType} from 'react';
+=======
+import type {ReactPortal, ReactNodeList} from 'shared/ReactTypes';
+import type {ElementRef, Element, ElementType} from 'react';
+import type {FiberRoot} from 'react-reconciler/src/ReactInternalTypes';
+>>>>>>> remotes/upstream/main
 
 import './ReactNativeInjection';
 
 import {
+<<<<<<< HEAD
   findHostInstance,
   findHostInstanceWithWarning,
+=======
+>>>>>>> remotes/upstream/main
   batchedUpdates as batchedUpdatesImpl,
   discreteUpdates,
   createContainer,
@@ -32,16 +45,21 @@ import {
 } from './legacy-events/ReactGenericBatching';
 import ReactVersion from 'shared/ReactVersion';
 // Modules provided by RN:
+<<<<<<< HEAD
 import {
   UIManager,
   legacySendAccessibilityEvent,
 } from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
 import {getInspectorDataForInstance} from './ReactNativeFiberInspector';
+=======
+import {UIManager} from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
+>>>>>>> remotes/upstream/main
 
 import {getClosestInstanceFromNode} from './ReactNativeComponentTree';
 import {
   getInspectorDataForViewTag,
   getInspectorDataForViewAtPoint,
+<<<<<<< HEAD
 } from './ReactNativeFiberInspector';
 import {LegacyRoot} from 'react-reconciler/src/ReactRootTags';
 import ReactSharedInternals from 'shared/ReactSharedInternals';
@@ -193,6 +211,19 @@ function sendAccessibilityEvent(handle: any, eventType: string) {
   }
 }
 
+=======
+  getInspectorDataForInstance,
+} from './ReactNativeFiberInspector';
+import {LegacyRoot} from 'react-reconciler/src/ReactRootTags';
+import {
+  findHostInstance_DEPRECATED,
+  findNodeHandle,
+  dispatchCommand,
+  sendAccessibilityEvent,
+} from './ReactNativePublicCompat';
+
+// $FlowFixMe[missing-local-annot]
+>>>>>>> remotes/upstream/main
 function onRecoverableError(error) {
   // TODO: Expose onRecoverableError option to userspace
   // eslint-disable-next-line react-internal/no-production-logging, react-internal/warning-args
@@ -223,7 +254,10 @@ function render(
   }
   updateContainer(element, root, null, callback);
 
+<<<<<<< HEAD
   // $FlowFixMe Flow has hardcoded values for React DOM that don't work with RN
+=======
+>>>>>>> remotes/upstream/main
   return getPublicRootInstance(root);
 }
 
@@ -248,7 +282,11 @@ function createPortal(
   children: ReactNodeList,
   containerTag: number,
   key: ?string = null,
+<<<<<<< HEAD
 ) {
+=======
+): ReactPortal {
+>>>>>>> remotes/upstream/main
   return createPortalImpl(children, containerTag, null, key);
 }
 
@@ -262,7 +300,11 @@ function computeComponentStackForErrorReporting(reactTag: number): string {
   return getStackByFiberInDevAndProd(fiber);
 }
 
+<<<<<<< HEAD
 const roots = new Map();
+=======
+const roots = new Map<number, FiberRoot>();
+>>>>>>> remotes/upstream/main
 
 const Internals = {
   computeComponentStackForErrorReporting,
@@ -292,6 +334,10 @@ injectIntoDevTools({
   version: ReactVersion,
   rendererPackageName: 'react-native-renderer',
   rendererConfig: {
+<<<<<<< HEAD
+=======
+    getInspectorDataForInstance,
+>>>>>>> remotes/upstream/main
     getInspectorDataForViewTag: getInspectorDataForViewTag,
     getInspectorDataForViewAtPoint: getInspectorDataForViewAtPoint.bind(
       null,

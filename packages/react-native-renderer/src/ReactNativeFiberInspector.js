@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,15 +21,26 @@ import {
 import getComponentNameFromType from 'shared/getComponentNameFromType';
 import {HostComponent} from 'react-reconciler/src/ReactWorkTags';
 // Module provided by RN:
+<<<<<<< HEAD
 import {UIManager} from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
 import {enableGetInspectorDataForInstanceInProduction} from 'shared/ReactFeatureFlags';
 import {getClosestInstanceFromNode} from './ReactNativeComponentTree';
+=======
+import {
+  UIManager,
+  getNodeFromPublicInstance,
+} from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
+import {enableGetInspectorDataForInstanceInProduction} from 'shared/ReactFeatureFlags';
+import {getClosestInstanceFromNode} from './ReactNativeComponentTree';
+import {getNodeFromInternalInstanceHandle} from './ReactNativePublicCompat';
+>>>>>>> remotes/upstream/main
 
 const emptyObject = {};
 if (__DEV__) {
   Object.freeze(emptyObject);
 }
 
+<<<<<<< HEAD
 let createHierarchy;
 let getHostNode;
 let getHostProps;
@@ -65,6 +80,41 @@ if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
   };
 
   getHostNode = function(fiber: Fiber | null, findNodeHandle) {
+=======
+// $FlowFixMe[missing-local-annot]
+function createHierarchy(fiberHierarchy) {
+  return fiberHierarchy.map(fiber => ({
+    name: getComponentNameFromType(fiber.type),
+    getInspectorData: findNodeHandle => {
+      return {
+        props: getHostProps(fiber),
+        source: fiber._debugSource,
+        measure: callback => {
+          // If this is Fabric, we'll find a shadow node and use that to measure.
+          const hostFiber = findCurrentHostFiber(fiber);
+          const node =
+            hostFiber != null &&
+            hostFiber.stateNode !== null &&
+            hostFiber.stateNode.node;
+
+          if (node) {
+            nativeFabricUIManager.measure(node, callback);
+          } else {
+            return UIManager.measure(
+              getHostNode(fiber, findNodeHandle),
+              callback,
+            );
+          }
+        },
+      };
+    },
+  }));
+}
+
+// $FlowFixMe[missing-local-annot]
+function getHostNode(fiber: Fiber | null, findNodeHandle) {
+  if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
+>>>>>>> remotes/upstream/main
     let hostNode;
     // look for children first for the hostNode
     // as composite fibers do not have a hostNode
@@ -78,6 +128,7 @@ if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
       fiber = fiber.child;
     }
     return null;
+<<<<<<< HEAD
   };
 
   getHostProps = function(fiber) {
@@ -91,6 +142,24 @@ if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
   getInspectorDataForInstance = function(
     closestInstance: Fiber | null,
   ): InspectorData {
+=======
+  }
+}
+
+// $FlowFixMe[missing-local-annot]
+function getHostProps(fiber) {
+  const host = findCurrentHostFiber(fiber);
+  if (host) {
+    return host.memoizedProps || emptyObject;
+  }
+  return emptyObject;
+}
+
+function getInspectorDataForInstance(
+  closestInstance: Fiber | null,
+): InspectorData {
+  if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
+>>>>>>> remotes/upstream/main
     // Handle case where user clicks outside of ReactNative
     if (!closestInstance) {
       return {
@@ -110,11 +179,16 @@ if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
     const selectedIndex = fiberHierarchy.indexOf(instance);
 
     return {
+<<<<<<< HEAD
+=======
+      closestInstance: instance,
+>>>>>>> remotes/upstream/main
       hierarchy,
       props,
       selectedIndex,
       source,
     };
+<<<<<<< HEAD
   };
 
   getOwnerHierarchy = function(instance: any) {
@@ -135,10 +209,44 @@ if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
   };
 
   traverseOwnerTreeUp = function(hierarchy, instance: any) {
+=======
+  }
+
+  throw new Error(
+    'getInspectorDataForInstance() is not available in production',
+  );
+}
+
+function getOwnerHierarchy(instance: any) {
+  const hierarchy: Array<$FlowFixMe> = [];
+  traverseOwnerTreeUp(hierarchy, instance);
+  return hierarchy;
+}
+
+// $FlowFixMe[missing-local-annot]
+function lastNonHostInstance(hierarchy) {
+  for (let i = hierarchy.length - 1; i > 1; i--) {
+    const instance = hierarchy[i];
+
+    if (instance.tag !== HostComponent) {
+      return instance;
+    }
+  }
+  return hierarchy[0];
+}
+
+// $FlowFixMe[missing-local-annot]
+function traverseOwnerTreeUp(
+  hierarchy: Array<$FlowFixMe>,
+  instance: any,
+): void {
+  if (__DEV__ || enableGetInspectorDataForInstanceInProduction) {
+>>>>>>> remotes/upstream/main
     if (instance) {
       hierarchy.unshift(instance);
       traverseOwnerTreeUp(hierarchy, instance._debugOwner);
     }
+<<<<<<< HEAD
   };
 }
 
@@ -192,11 +300,52 @@ if (__DEV__) {
         locationY,
         internalInstanceHandle => {
           if (internalInstanceHandle == null) {
+=======
+  }
+}
+
+function getInspectorDataForViewTag(viewTag: number): InspectorData {
+  if (__DEV__) {
+    const closestInstance = getClosestInstanceFromNode(viewTag);
+
+    return getInspectorDataForInstance(closestInstance);
+  } else {
+    throw new Error(
+      'getInspectorDataForViewTag() is not available in production',
+    );
+  }
+}
+
+function getInspectorDataForViewAtPoint(
+  findNodeHandle: (componentOrHandle: any) => ?number,
+  inspectedView: Object,
+  locationX: number,
+  locationY: number,
+  callback: (viewData: TouchedViewDataAtPoint) => mixed,
+): void {
+  if (__DEV__) {
+    let closestInstance = null;
+
+    const fabricNode = getNodeFromPublicInstance(inspectedView);
+    if (fabricNode) {
+      // For Fabric we can look up the instance handle directly and measure it.
+      nativeFabricUIManager.findNodeAtPoint(
+        fabricNode,
+        locationX,
+        locationY,
+        internalInstanceHandle => {
+          const node =
+            internalInstanceHandle != null
+              ? getNodeFromInternalInstanceHandle(internalInstanceHandle)
+              : null;
+          if (internalInstanceHandle == null || node == null) {
+>>>>>>> remotes/upstream/main
             callback({
               pointerY: locationY,
               frame: {left: 0, top: 0, width: 0, height: 0},
               ...getInspectorDataForInstance(closestInstance),
             });
+<<<<<<< HEAD
           }
 
           closestInstance =
@@ -212,12 +361,32 @@ if (__DEV__) {
               const inspectorData = getInspectorDataForInstance(
                 closestInstance,
               );
+=======
+            return;
+          }
+
+          closestInstance =
+            internalInstanceHandle.stateNode.canonical.internalInstanceHandle;
+
+          // Note: this is deprecated and we want to remove it ASAP. Keeping it here for React DevTools compatibility for now.
+          const nativeViewTag =
+            internalInstanceHandle.stateNode.canonical.nativeTag;
+
+          nativeFabricUIManager.measure(
+            node,
+            (x, y, width, height, pageX, pageY) => {
+              const inspectorData =
+                getInspectorDataForInstance(closestInstance);
+>>>>>>> remotes/upstream/main
               callback({
                 ...inspectorData,
                 pointerY: locationY,
                 frame: {left: pageX, top: pageY, width, height},
                 touchedViewTag: nativeViewTag,
+<<<<<<< HEAD
                 closestInstance,
+=======
+>>>>>>> remotes/upstream/main
               });
             },
           );
@@ -247,6 +416,7 @@ if (__DEV__) {
 
       return;
     }
+<<<<<<< HEAD
   };
 } else {
   getInspectorDataForViewTag = () => {
@@ -266,6 +436,13 @@ if (__DEV__) {
       'getInspectorDataForViewAtPoint() is not available in production.',
     );
   };
+=======
+  } else {
+    throw new Error(
+      'getInspectorDataForViewAtPoint() is not available in production.',
+    );
+  }
+>>>>>>> remotes/upstream/main
 }
 
 export {

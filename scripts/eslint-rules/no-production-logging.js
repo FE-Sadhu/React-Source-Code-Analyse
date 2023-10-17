@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Copyright (c) Facebook, Inc. and its affiliates.
+=======
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+>>>>>>> remotes/upstream/main
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -14,7 +18,11 @@ module.exports = {
     fixable: 'code',
     schema: [],
   },
+<<<<<<< HEAD
   create: function(context) {
+=======
+  create: function (context) {
+>>>>>>> remotes/upstream/main
     function isInDEVBlock(node) {
       let done = false;
       while (!done) {
@@ -43,7 +51,11 @@ module.exports = {
         data: {
           identifier: node.property.name,
         },
+<<<<<<< HEAD
         fix: function(fixer) {
+=======
+        fix: function (fixer) {
+>>>>>>> remotes/upstream/main
           return [
             fixer.insertTextBefore(node.parent, `if (__DEV__) {`),
             fixer.insertTextAfter(node.parent, '}'),
@@ -60,7 +72,11 @@ module.exports = {
     }
 
     return {
+<<<<<<< HEAD
       MemberExpression: function(node) {
+=======
+      MemberExpression: function (node) {
+>>>>>>> remotes/upstream/main
         if (
           node.object.type === 'Identifier' &&
           node.object.name === 'console' &&
