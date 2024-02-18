@@ -252,6 +252,7 @@ function workLoop(initialTime: number) {
           currentTask.isQueued = false;
         }
         if (currentTask === peek(taskQueue)) {
+          // 当没有更高任务打断、continuationCallback 为 null 时，视为任务执行完毕，剔除该 Task
           pop(taskQueue);
         }
         advanceTimers(currentTime);
