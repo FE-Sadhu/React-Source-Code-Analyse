@@ -77,6 +77,8 @@ export function finishQueueingConcurrentUpdates(): void {
     }
 
     if (lane !== NoLane) {
+      // 1. 给当前 fiber.lane merge 了当前 lane
+      // 2. 给每个 parentFiber 的 childLane merge 了当前 lane
       markUpdateLaneFromFiberToRoot(fiber, update, lane);
     }
   }
