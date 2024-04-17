@@ -3875,6 +3875,7 @@ function beginWork(
     const newProps = workInProgress.pendingProps;
 
     if (
+      // 检查 props 和 context 是否发生改变
       oldProps !== newProps ||
       hasLegacyContextChanged() ||
       // Force a re-render if the implementation changed due to hot reload:
@@ -3886,6 +3887,7 @@ function beginWork(
     } else {
       // Neither props nor legacy context changes. Check if there's a pending
       // update or context change.
+      // props 或者 context 都未改变的时候，检查是否有 pending 中的 update
       const hasScheduledUpdateOrContext = checkScheduledUpdateOrContext(
         current,
         renderLanes,
@@ -3944,7 +3946,7 @@ function beginWork(
   // move this assignment out of the common path and into each branch.
   workInProgress.lanes = NoLanes;
 
-  // 根据 tag 不同，创建不同的子 Fiber 节点 
+  // 根据 tag 不同，创建不同的子 Fiber 节点
   switch (workInProgress.tag) {
     case IndeterminateComponent: {
       return mountIndeterminateComponent(

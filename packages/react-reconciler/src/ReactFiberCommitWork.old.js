@@ -323,6 +323,7 @@ export function commitBeforeMutationEffects(
   root: FiberRoot,
   firstChild: Fiber,
 ): boolean {
+  // 处理focus状态
   focusedInstanceHandle = prepareForCommit(root.containerInfo);
 
   nextEffect = firstChild;
@@ -739,6 +740,7 @@ function commitHookLayoutEffects(finishedWork: Fiber, hookFlags: HookFlags) {
     recordLayoutEffectDuration(finishedWork);
   } else {
     try {
+      // useLayoutEffect 的执行回调
       commitHookEffectListMount(hookFlags, finishedWork);
     } catch (error) {
       captureCommitPhaseError(finishedWork, finishedWork.return, error);
@@ -2386,11 +2388,13 @@ function commitMutationEffectsOnFiber(
 
       if (flags & Update) {
         try {
+          // 处理 useInsertionEffect effect hook 的销毁函数
           commitHookEffectListUnmount(
             HookInsertion | HookHasEffect,
             finishedWork,
             finishedWork.return,
           );
+          // 处理 useInsertionEffect effect hook 的执行函数
           commitHookEffectListMount(
             HookInsertion | HookHasEffect,
             finishedWork,
@@ -3691,8 +3695,8 @@ function commitAtomicPassiveEffects(
   }
 }
 
+setCurrentDebugFiberInDEV(finishedWork);
 export function commitPassiveUnmountEffects(finishedWork: Fiber): void {
-  setCurrentDebugFiberInDEV(finishedWork);
   commitPassiveUnmountOnFiber(finishedWork);
   resetCurrentDebugFiberInDEV();
 }

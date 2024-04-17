@@ -409,19 +409,22 @@ export function markStarvedLanesAsExpired(
   // TODO: Write a test for this
   let lanes = pendingLanes & ~RetryLanes;
   while (lanes > 0) {
+    // 选出最低优先级的待处理 lane
     const index = pickArbitraryLaneIndex(lanes);
     const lane = 1 << index;
 
+    // 选出该 lane 对应的过期时间，一开始是 NoTimestamp
     const expirationTime = expirationTimes[index];
     if (expirationTime === NoTimestamp) {
       // Found a pending lane with no expiration time. If it's not suspended, or
       // if it's pinged, assume it's CPU-bound. Compute a new expiration time
       // using the current time.
       if (
-        (lane & suspendedLanes) === NoLanes ||
+        (lane & suspendedLanes) === NoLanes || // 该 lane 不是 suspend 的 lane
         (lane & pingedLanes) !== NoLanes
       ) {
         // Assumes timestamps are monotonically increasing.
+        // 根据优先级计算一个过期时间
         expirationTimes[index] = computeExpirationTime(lane, currentTime);
       }
     } else if (expirationTime <= currentTime) {

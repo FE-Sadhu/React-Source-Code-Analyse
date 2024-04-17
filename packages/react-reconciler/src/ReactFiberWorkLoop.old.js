@@ -297,6 +297,7 @@ let workInProgressRoot: FiberRoot | null = null;
 // The fiber we're working on
 let workInProgress: Fiber | null = null;
 // The lanes we're rendering
+// prepareFreshStack 里赋值
 let workInProgressRootRenderLanes: Lanes = NoLanes;
 
 // When this is true, the work-in-progress fiber just suspended (or errored) and
@@ -842,17 +843,19 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
 
   // Check if any lanes are being starved by other work. If so, mark them as
   // expired so we know to work on those next.
+  // 为待处理的每个 Lane 计算过期时间，如果已有过期时间则判断有没有过期
+  // 如果已过期就记录在 root.expiredLanes 里
   markStarvedLanesAsExpired(root, currentTime);
 
   // Determine the next lanes to work on, and their priority.
-  // 确定要处理的下一个赛道以及其优先级
+  // 确定要处理的 nextLanes
   // mount 时是 defaultLane
   const nextLanes = getNextLanes(
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
   );
-  
-  // 此时 work list 里已经没有任务了
+
+  // 没有待处理的 Lanes
   if (nextLanes === NoLanes) {
     // Special case: There's nothing to work on.
     if (existingCallbackNode !== null) {
@@ -864,7 +867,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   }
 
   // We use the highest priority lane to represent the priority of the callback.
-  // 此时 tasklist 里的最高优先级
+  // 只有当 nextLanes 是 TransitionLanes 或 RetryLanes 或包含纠缠 Lanes 时才会再次挑选出不一样的 Lane
   const newCallbackPriority = getHighestPriorityLane(nextLanes);
 
   // Check if there's an existing task. We may be able to reuse it.
@@ -1034,15 +1037,15 @@ function performConcurrentWorkOnRoot(root, didTimeout) {
   // we can remove this, since we track expiration ourselves.
   // 有些情况下我们禁用时间分片： 1. CPU 占用太长时间，导致 task 过期（饥饿） 2. 默认同步更新模式
   const shouldTimeSlice =
-    !includesBlockingLane(root, lanes) &&
-    !includesExpiredLane(root, lanes) &&
+    !includesBlockingLane(root, lanes) && // 某些优先级需要同步处理
+    !includesExpiredLane(root, lanes) && // 当待处理的优先级是过期优先级时
     // didTimeout 是为了解决饥饿问题
-    // 比如一个低优先级的 work 不断被打断，到快到过期时间的时候，这个字段为 true
+    // 比如一个低优先级的 work 不断被打断，到过期时间的时候，这个字段为 true
     (disableSchedulerTimeoutInWorkLoop || !didTimeout);
   let exitStatus = shouldTimeSlice
     ? renderRootConcurrent(root, lanes)
     : renderRootSync(root, lanes);
-  // root 更新的 render 阶段是否处理完了。 
+  // root 更新的 render 阶段是否处理完了。
   // 如果未处理完 exitStatus === RootInProgress
   // 如果处理完了或报异常了 exitStatus !== RootInProgress
   if (exitStatus !== RootInProgress) {
@@ -2336,6 +2339,7 @@ function commitRootImpl(
     // no more pending effects.
     // TODO: Might be better if `flushPassiveEffects` did not automatically
     // flush synchronous work at the end, to avoid factoring hazards like this.
+    // 处理 useEffect 的回调
     flushPassiveEffects();
   } while (rootWithPendingPassiveEffects !== null);
   flushRenderPhaseStrictModeWarningsInDEV();
@@ -2422,6 +2426,7 @@ function commitRootImpl(
   // TODO: Delete all other places that schedule the passive effect callback
   // They're redundant.
   if (
+    // 处理 useEffect
     (finishedWork.subtreeFlags & PassiveMask) !== NoFlags ||
     (finishedWork.flags & PassiveMask) !== NoFlags
   ) {
@@ -2509,6 +2514,7 @@ function commitRootImpl(
     // the mutation phase, so that the previous tree is still current during
     // componentWillUnmount, but before the layout phase, so that the finished
     // work is current during componentDidMount/Update.
+    // 交换指针
     root.current = finishedWork;
 
     // The next phase is the layout phase, where we call effects that read

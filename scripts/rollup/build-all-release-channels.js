@@ -8,6 +8,8 @@ const fse = require('fs-extra');
 const {spawnSync} = require('child_process');
 const path = require('path');
 const tmp = require('tmp');
+const os = require('os')
+const isWin = os.type() === 'Windows_NT';
 
 const {
   ReactVersion,
@@ -74,22 +76,27 @@ if (process.env.CIRCLE_NODE_TOTAL) {
   buildForChannel('stable', '', '');
   const stableDir = tmp.dirSync().name;
   crossDeviceRenameSync('./build', stableDir);
+  console.log('检测 1 ')
   processStable(stableDir);
+  console.log('检测 2 ')
   buildForChannel('experimental', '', '');
   const experimentalDir = tmp.dirSync().name;
+  console.log('检测 3 ')
   crossDeviceRenameSync('./build', experimentalDir);
+  console.log('检测 4 ')
   processExperimental(experimentalDir);
-
+  console.log('检测 5 ')
   // Then merge the experimental folder into the stable one. processExperimental
   // will have already removed conflicting files.
   //
   // In CI, merging is handled automatically by CircleCI's workspace feature.
   mergeDirsSync(experimentalDir + '/', stableDir + '/');
-
+  console.log('检测 6 ')
   // Now restore the combined directory back to its original name
   crossDeviceRenameSync(stableDir, './build');
+  console.log('检测 7 ')
 }
-
+console.log('检测 8 ')
 function buildForChannel(channel, nodeTotal, nodeIndex) {
   const {status} = spawnSync(
     'node',
@@ -104,7 +111,7 @@ function buildForChannel(channel, nodeTotal, nodeIndex) {
       },
     }
   );
-
+  console.log('检测 buildForChannel cp  ', status)
   if (status !== 0) {
     // Error of spawned process is already piped to this stderr
     process.exit(status);
@@ -112,14 +119,19 @@ function buildForChannel(channel, nodeTotal, nodeIndex) {
 }
 
 function processStable(buildDir) {
+  console.log('检测 processStable buildDir ', buildDir)
+  console.log('检测 processStable buildDir existsSync ', fs.existsSync(buildDir + '/node_modules'))
+  console.log('检测 processStable isWin ', isWin)
   if (fs.existsSync(buildDir + '/node_modules')) {
     // Identical to `oss-stable` but with real, semver versions. This is what
     // will get published to @latest.
-    spawnSync('cp', [
-      '-r',
-      buildDir + '/node_modules',
-      buildDir + '/oss-stable-semver',
+    const result = spawnSync(isWin ? 'XCOPY' : 'cp', [
+      isWin ? '/i' : '-r',
+      path.join(buildDir, 'node_modules'),
+      path.join(buildDir, 'oss-stable-semver'),
     ]);
+
+    console.log('检测 spawnSync cp ', result)
 
     const defaultVersionIfNotFound = '0.0.0' + '-' + sha + '-' + dateString;
     const versionsMap = new Map();
@@ -131,36 +143,42 @@ function processStable(buildDir) {
         defaultVersionIfNotFound
       );
     }
+    console.log('检测 spawnSync cp 2')
     updatePackageVersions(
       buildDir + '/node_modules',
       versionsMap,
       defaultVersionIfNotFound,
       true
     );
+    console.log('检测 spawnSync cp 3')
     fs.renameSync(buildDir + '/node_modules', buildDir + '/oss-stable');
+    console.log('检测 spawnSync cp 4')
     updatePlaceholderReactVersionInCompiledArtifacts(
       buildDir + '/oss-stable',
       ReactVersion + '-' + canaryChannelLabel + '-' + sha + '-' + dateString
     );
-
+    console.log('检测 spawnSync cp 5')
     // Now do the semver ones
     const semverVersionsMap = new Map();
     for (const moduleName in stablePackages) {
       const version = stablePackages[moduleName];
       semverVersionsMap.set(moduleName, version);
     }
+    console.log('检测 spawnSync cp 6')
     updatePackageVersions(
       buildDir + '/oss-stable-semver',
       semverVersionsMap,
       defaultVersionIfNotFound,
       false
     );
+    console.log('检测 spawnSync cp 7')
     updatePlaceholderReactVersionInCompiledArtifacts(
       buildDir + '/oss-stable-semver',
       ReactVersion
     );
+    console.log('检测 spawnSync cp 8')
   }
-
+  console.log('检测 processStable /facebook-www ', fs.existsSync(buildDir + '/node_modules'))
   if (fs.existsSync(buildDir + '/facebook-www')) {
     const hash = crypto.createHash('sha1');
     for (const fileName of fs.readdirSync(buildDir + '/facebook-www').sort()) {
@@ -293,7 +311,9 @@ function updatePackageVersions(
   defaultVersionIfNotFound,
   pinToExactVersion
 ) {
+  console.log('检测 updatePackageVersions 1 ', modulesDir, versionsMap)
   for (const moduleName of fs.readdirSync(modulesDir)) {
+    console.log('检测 updatePackageVersions 2 ', modulesDir)
     let version = versionsMap.get(moduleName);
     if (version === undefined) {
       // TODO: If the module is not in the version map, we should exclude it
