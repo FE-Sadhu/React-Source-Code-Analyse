@@ -51,6 +51,8 @@ export const PROFILER_SYMBOL_STRING = 'Symbol(react.profiler)';
 export const PROVIDER_NUMBER = 0xeacd;
 export const PROVIDER_SYMBOL_STRING = 'Symbol(react.provider)';
 
+export const CONSUMER_SYMBOL_STRING = 'Symbol(react.consumer)';
+
 export const SCOPE_NUMBER = 0xead7;
 export const SCOPE_SYMBOL_STRING = 'Symbol(react.scope)';
 
@@ -65,3 +67,7 @@ export const SUSPENSE_LIST_SYMBOL_STRING = 'Symbol(react.suspense_list)';
 
 export const SERVER_CONTEXT_DEFAULT_VALUE_NOT_LOADED_SYMBOL_STRING =
   'Symbol(react.server_context.defaultValue)';
+
+export const REACT_MEMO_CACHE_SENTINEL: symbol = Symbol.for(
+  'react.memo_cache_sentinel',
+);
