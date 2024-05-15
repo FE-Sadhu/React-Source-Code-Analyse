@@ -199,7 +199,7 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
 
   // Do not work on any idle work until all the non-idle work has finished,
   // even if the work is suspended.
-  // 要处理的赛道（lanes）
+  // 先处理完非闲置 Lanes 再处理闲置 Lanes
   const nonIdlePendingLanes = pendingLanes & NonIdleLanes;
   if (nonIdlePendingLanes !== NoLanes) {
     // 除了 suspended 的要处理的赛道
@@ -234,29 +234,31 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
   // If we're already in the middle of a render, switching lanes will interrupt
   // it and we'll lose our progress. We should only do this if the new lanes are
   // higher priority.
-  // 被更高优先级打断时执行这段
   if (
-    wipLanes !== NoLanes &&
-    wipLanes !== nextLanes &&
+    wipLanes !== NoLanes && // 有正在处理的 Lanes
+    wipLanes !== nextLanes && // 正在处理的 Lanes 与待处理的 Lanes 不同
     // If we already suspended with a delay, then interrupting is fine. Don't
     // bother waiting until the root is complete.
-    (wipLanes & suspendedLanes) === NoLanes
+    (wipLanes & suspendedLanes) === NoLanes // 正在处理的 Lanes 是非 suspend Lanes
   ) {
     const nextLane = getHighestPriorityLane(nextLanes);
     const wipLane = getHighestPriorityLane(wipLanes);
     if (
       // Tests whether the next lane is equal or lower priority than the wip
       // one. This works because the bits decrease in priority as you go left.
-      nextLane >= wipLane ||
+      nextLane >= wipLane || // 待处理 Lanes 优先级等于或低于正在处理的 Lanes 优先级
       // Default priority updates should not interrupt transition updates. The
       // only difference between default updates and transition updates is that
       // default updates do not support refresh transitions.
       (nextLane === DefaultLane && (wipLane & TransitionLanes) !== NoLanes)
     ) {
       // Keep working on the existing in-progress tree. Do not interrupt.
+      // 不打断正在处理的 Lanes 的执行
       return wipLanes;
     }
   }
+
+  // 返回新的 Lanes (更高优先级)
 
   if (
     allowConcurrentByDefault &&
@@ -298,10 +300,13 @@ export function getNextLanes(root: FiberRoot, wipLanes: Lanes): Lanes {
   if (entangledLanes !== NoLanes) {
     const entanglements = root.entanglements;
     let lanes = nextLanes & entangledLanes;
+    // entangledLanes 如果有纠缠的 Lanes，则一起放在本次要处理的 Lanes 里
     while (lanes > 0) {
+      // 挑选出最低优先级 Lane
       const index = pickArbitraryLaneIndex(lanes);
       const lane = 1 << index;
 
+      // 带上要处理的纠缠 Lanes
       nextLanes |= entanglements[index];
 
       lanes &= ~lane;
@@ -414,19 +419,23 @@ export function markStarvedLanesAsExpired(
   // TODO: Write a test for this
   let lanes = pendingLanes & ~RetryLanes;
   while (lanes > 0) {
+    // 选出最低优先级的待处理 lane
     const index = pickArbitraryLaneIndex(lanes);
     const lane = 1 << index;
 
+    // 选出该 lane 对应的过期时间，一开始是 NoTimestamp
     const expirationTime = expirationTimes[index];
     if (expirationTime === NoTimestamp) {
       // Found a pending lane with no expiration time. If it's not suspended, or
       // if it's pinged, assume it's CPU-bound. Compute a new expiration time
       // using the current time.
       if (
+
         (lane & suspendedLanes) === NoLanes ||
         (lane & pingedLanes) !== NoLanes
       ) {
         // Assumes timestamps are monotonically increasing.
+        // 根据优先级计算一个过期时间
         expirationTimes[index] = computeExpirationTime(lane, currentTime);
       }
     } else if (expirationTime <= currentTime) {
@@ -527,7 +536,8 @@ export function claimNextRetryLane(): Lane {
   }
   return lane;
 }
-
+0b001010
+0b110101
 export function getHighestPriorityLane(lanes: Lanes): Lane {
   return lanes & -lanes;
 }

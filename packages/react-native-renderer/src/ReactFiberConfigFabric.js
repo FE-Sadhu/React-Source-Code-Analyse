@@ -15,6 +15,7 @@ import type {
 import {create, diff} from './ReactNativeAttributePayload';
 import {dispatchEvent} from './ReactFabricEventEmitter';
 import {
+  NoEventPriority,
   DefaultEventPriority,
   DiscreteEventPriority,
   type EventPriority,
@@ -47,10 +48,7 @@ const {
   unstable_getCurrentEventPriority: fabricGetCurrentEventPriority,
 } = nativeFabricUIManager;
 
-import {
-  useMicrotasksForSchedulingInFabric,
-  passChildrenWhenCloningPersistedNodes,
-} from 'shared/ReactFeatureFlags';
+import {passChildrenWhenCloningPersistedNodes} from 'shared/ReactFeatureFlags';
 
 const {get: getViewConfigForType} = ReactNativeViewConfigRegistry;
 
@@ -278,13 +276,21 @@ function getPublicTextInstance(
 export function getPublicInstanceFromInternalInstanceHandle(
   internalInstanceHandle: InternalInstanceHandle,
 ): null | PublicInstance | PublicTextInstance {
+  const instance = internalInstanceHandle.stateNode;
+
+  // React resets all the fields in the fiber when the component is unmounted
+  // to prevent memory leaks.
+  if (instance == null) {
+    return null;
+  }
+
   if (internalInstanceHandle.tag === HostText) {
-    const textInstance: TextInstance = internalInstanceHandle.stateNode;
+    const textInstance: TextInstance = instance;
     return getPublicTextInstance(textInstance, internalInstanceHandle);
   }
 
-  const instance: Instance = internalInstanceHandle.stateNode;
-  return getPublicInstance(instance);
+  const elementInstance: Instance = internalInstanceHandle.stateNode;
+  return getPublicInstance(elementInstance);
 }
 
 export function prepareForCommit(containerInfo: Container): null | Object {
@@ -306,7 +312,20 @@ export function shouldSetTextContent(type: string, props: Props): boolean {
   return false;
 }
 
-export function getCurrentEventPriority(): EventPriority {
+let currentUpdatePriority: EventPriority = NoEventPriority;
+export function setCurrentUpdatePriority(newPriority: EventPriority): void {
+  currentUpdatePriority = newPriority;
+}
+
+export function getCurrentUpdatePriority(): EventPriority {
+  return currentUpdatePriority;
+}
+
+export function resolveUpdatePriority(): EventPriority {
+  if (currentUpdatePriority !== NoEventPriority) {
+    return currentUpdatePriority;
+  }
+
   const currentEventPriority = fabricGetCurrentEventPriority
     ? fabricGetCurrentEventPriority()
     : null;
@@ -496,9 +515,16 @@ export function waitForCommitToBeReady(): null {
 
 export const NotPendingTransition: TransitionStatus = null;
 
+export type FormInstance = Instance;
+export function resetFormInstance(form: Instance): void {}
+
 // -------------------
 //     Microtasks
 // -------------------
-export const supportsMicrotasks = useMicrotasksForSchedulingInFabric;
+
+export const supportsMicrotasks: boolean =
+  typeof RN$enableMicrotasksInReact !== 'undefined' &&
+  !!RN$enableMicrotasksInReact;
+
 export const scheduleMicrotask: any =
   typeof queueMicrotask === 'function' ? queueMicrotask : scheduleTimeout;

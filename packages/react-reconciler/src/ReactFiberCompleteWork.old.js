@@ -1007,8 +1007,8 @@ function completeWork(
           }
         } else {
           // beginWork 处理 HostRoot 时存的 rootContainerInstance
-          const rootContainerInstance = getRootHostContainer();
           // 根据 type 创建 Dom 实例
+          const rootContainerInstance = getRootHostContainer();
           const instance = createInstance(
             type,
             newProps,
