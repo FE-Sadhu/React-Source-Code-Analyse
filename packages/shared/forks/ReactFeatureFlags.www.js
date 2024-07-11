@@ -15,25 +15,28 @@ import typeof * as DynamicFeatureFlags from './ReactFeatureFlags.www-dynamic';
 const dynamicFeatureFlags: DynamicFeatureFlags = require('ReactFeatureFlags');
 
 export const {
-  enableTrustedTypesIntegration,
+  alwaysThrottleRetries,
+  disableDefaultPropsExceptForClasses,
+  disableSchedulerTimeoutInWorkLoop,
+  enableAddPropertiesFastPath,
   enableDebugTracing,
+  enableDeferRootSchedulingToMicrotask,
+  enableDO_NOT_USE_disableStrictPassiveEffect,
+  enableFastJSX,
+  enableInfiniteRenderLoopDetection,
   enableLazyContextPropagation,
-  enableUnifiedSyncLane,
+  enableNoCloningMemoCache,
+  enableObjectFiber,
+  enableRenderableContext,
   enableRetryLaneExpiration,
   enableTransitionTracing,
-  enableDeferRootSchedulingToMicrotask,
-  alwaysThrottleRetries,
-  enableDO_NOT_USE_disableStrictPassiveEffect,
-  disableSchedulerTimeoutInWorkLoop,
+  enableTrustedTypesIntegration,
   enableUseDeferredValueInitialArg,
+  favorSafetyOverHydrationPerf,
+  renameElementSymbol,
   retryLaneExpirationMs,
   syncLaneExpirationMs,
   transitionLaneExpirationMs,
-  enableInfiniteRenderLoopDetection,
-  enableRenderableContext,
-  enableRefAsProp,
-  favorSafetyOverHydrationPerf,
-  disableDefaultPropsExceptForClasses,
 } = dynamicFeatureFlags;
 
 // On WWW, __EXPERIMENTAL__ is used for a new modern build.
@@ -66,10 +69,10 @@ export const enableGetInspectorDataForInstanceInProduction = false;
 
 export const enableCache = true;
 export const enableLegacyCache = true;
-export const enableFetchInstrumentation = false;
 
-export const enableBinaryFlight = false;
-export const enableFlightReadableStream = false;
+export const enableBinaryFlight = true;
+export const enableFlightReadableStream = true;
+export const enableAsyncIterableChildren = false;
 
 export const enableTaint = false;
 
@@ -89,6 +92,8 @@ export const enableLegacyHidden = true;
 
 export const enableComponentStackLocations = true;
 
+export const enableRefAsProp = true;
+
 export const disableTextareaChildren = __EXPERIMENTAL__;
 
 export const allowConcurrentByDefault = true;
@@ -104,7 +109,6 @@ export const passChildrenWhenCloningPersistedNodes = false;
 export const enableAsyncDebugInfo = false;
 export const disableClientCache = true;
 
-export const enableServerComponentKeys = true;
 export const enableServerComponentLogs = true;
 
 export const enableReactTestRendererWarning = false;
@@ -114,9 +118,11 @@ export const useModernStrictMode = true;
 // because JSX is an extremely hot path.
 export const disableStringRefs = false;
 
-export const disableLegacyMode = __EXPERIMENTAL__;
+export const disableLegacyMode: boolean =
+  __EXPERIMENTAL__ || dynamicFeatureFlags.disableLegacyMode;
 
-export const disableDOMTestUtils = false;
+export const enableOwnerStacks = false;
+export const enableShallowPropDiffing = false;
 
 // Flow magic to verify the exports of this file match the original version.
 ((((null: any): ExportsType): FeatureFlagsType): ExportsType);

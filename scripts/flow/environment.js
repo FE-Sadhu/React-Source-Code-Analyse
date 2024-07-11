@@ -10,7 +10,6 @@
 /* eslint-disable */
 
 declare const __PROFILE__: boolean;
-declare const __UMD__: boolean;
 declare const __EXPERIMENTAL__: boolean;
 declare const __VARIANT__: boolean;
 
@@ -28,6 +27,10 @@ declare const FinalizationRegistry: any;
 
 declare module 'create-react-class' {
   declare const exports: React$CreateClass;
+}
+
+declare interface ConsoleTask {
+  run<T>(f: () => T): T;
 }
 
 // Flow hides the props of React$Element, this overrides it to unhide

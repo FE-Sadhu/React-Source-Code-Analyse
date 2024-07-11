@@ -7,23 +7,7 @@
  * @flow
  */
 
-export {
-  createPortal,
-  flushSync,
-  unstable_batchedUpdates,
-  useFormStatus,
-  useFormState,
-  prefetchDNS,
-  preconnect,
-  preload,
-  preloadModule,
-  preinit,
-  preinitModule,
-  version,
-  __DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
-} from './index.experimental.js';
-
-export {createRoot, hydrateRoot} from './client.js';
+export * from './client.js';
 
 export {
   createComponentSelector,

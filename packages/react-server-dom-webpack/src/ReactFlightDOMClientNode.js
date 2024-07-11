@@ -9,7 +9,10 @@
 
 import type {Thenable, ReactCustomFormAction} from 'shared/ReactTypes.js';
 
-import type {Response} from 'react-client/src/ReactFlightClient';
+import type {
+  Response,
+  FindSourceMapURLCallback,
+} from 'react-client/src/ReactFlightClient';
 
 import type {
   SSRModuleMap,
@@ -27,6 +30,7 @@ import {
   createResponse,
   getRoot,
   reportGlobalError,
+  processStringChunk,
   processBinaryChunk,
   close,
 } from 'react-client/src/ReactFlightClient';
@@ -56,6 +60,8 @@ type EncodeFormActionCallback = <A>(
 export type Options = {
   nonce?: string,
   encodeFormAction?: EncodeFormActionCallback,
+  findSourceMapURL?: FindSourceMapURLCallback,
+  replayConsoleLogs?: boolean,
 };
 
 function createFromNodeStream<T>(
@@ -70,9 +76,17 @@ function createFromNodeStream<T>(
     options ? options.encodeFormAction : undefined,
     options && typeof options.nonce === 'string' ? options.nonce : undefined,
     undefined, // TODO: If encodeReply is supported, this should support temporaryReferences
+    __DEV__ && options && options.findSourceMapURL
+      ? options.findSourceMapURL
+      : undefined,
+    __DEV__ && options ? options.replayConsoleLogs === true : false, // defaults to false
   );
   stream.on('data', chunk => {
-    processBinaryChunk(response, chunk);
+    if (typeof chunk === 'string') {
+      processStringChunk(response, chunk);
+    } else {
+      processBinaryChunk(response, chunk);
+    }
   });
   stream.on('error', error => {
     reportGlobalError(response, error);

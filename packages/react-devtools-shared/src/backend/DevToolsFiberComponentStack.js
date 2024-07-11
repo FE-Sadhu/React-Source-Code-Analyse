@@ -28,6 +28,8 @@ export function describeFiber(
   currentDispatcherRef: CurrentDispatcherRef,
 ): string {
   const {
+    HostHoistable,
+    HostSingleton,
     HostComponent,
     LazyComponent,
     SuspenseComponent,
@@ -40,9 +42,12 @@ export function describeFiber(
   } = workTagMap;
 
   switch (workInProgress.tag) {
+    case HostHoistable:
+    case HostSingleton:
     case HostComponent:
       return describeBuiltInComponentFrame(workInProgress.type);
     case LazyComponent:
+      // TODO: When we support Thenables as component types we should rename this.
       return describeBuiltInComponentFrame('Lazy');
     case SuspenseComponent:
       return describeBuiltInComponentFrame('Suspense');
@@ -97,4 +102,11 @@ export function getStackByFiberInDevAndProd(
   } catch (x) {
     return '\nError generating stack: ' + x.message + '\n' + x.stack;
   }
+}
+
+export function supportsNativeConsoleTasks(fiber: Fiber): boolean {
+  // If this Fiber supports native console.createTask then we are already running
+  // inside a native async stack trace if it's active - meaning the DevTools is open.
+  // Ideally we'd detect if this task was created while the DevTools was open or not.
+  return !!fiber._debugTask;
 }

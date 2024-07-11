@@ -348,7 +348,6 @@ export function commitMount(
 
 export function commitUpdate(
   instance: Instance,
-  updatePayloadTODO: Object,
   type: string,
   oldProps: Props,
   newProps: Props,
@@ -536,7 +535,7 @@ export function maySuspendCommit(type: Type, props: Props): boolean {
 }
 
 export function preloadInstance(type: Type, props: Props): boolean {
-  // Return true to indicate it's already loaded
+  // Return false to indicate it's already loaded
   return true;
 }
 

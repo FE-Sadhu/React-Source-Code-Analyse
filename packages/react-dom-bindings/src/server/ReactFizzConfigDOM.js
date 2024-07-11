@@ -108,6 +108,8 @@ export type HeadersDescriptor = {
 // E.g. this can be used to distinguish legacy renderers from this modern one.
 export const isPrimaryRenderer = true;
 
+export const supportsClientAPIs = true;
+
 export type StreamingFormat = 0 | 1;
 const ScriptStreamingFormat: StreamingFormat = 0;
 const DataStreamingFormat: StreamingFormat = 1;
@@ -294,8 +296,8 @@ const scriptCrossOrigin = stringToPrecomputedChunk('" crossorigin="');
 const endAsyncScript = stringToPrecomputedChunk('" async=""></script>');
 
 /**
- * This escaping function is designed to work with bootstrapScriptContent and importMap only.
- * because we know we are escaping the entire script. We can avoid for instance
+ * This escaping function is designed to work with with inline scripts where the entire
+ * contents are escaped. Because we know we are escaping the entire script we can avoid for instance
  * escaping html comment string sequences that are valid javascript as well because
  * if there are no sebsequent <script sequences the html parser will never enter
  * script data double escaped state (see: https://www.w3.org/TR/html53/syntax.html#script-data-double-escaped-state)
@@ -303,7 +305,7 @@ const endAsyncScript = stringToPrecomputedChunk('" async=""></script>');
  * While untrusted script content should be made safe before using this api it will
  * ensure that the script cannot be early terminated or never terminated state
  */
-function escapeBootstrapAndImportMapScriptContent(scriptText: string) {
+function escapeEntireInlineScriptContent(scriptText: string) {
   if (__DEV__) {
     checkHtmlStringCoercion(scriptText);
   }
@@ -372,9 +374,7 @@ export function createRenderState(
   if (bootstrapScriptContent !== undefined) {
     bootstrapChunks.push(
       inlineScriptWithNonce,
-      stringToChunk(
-        escapeBootstrapAndImportMapScriptContent(bootstrapScriptContent),
-      ),
+      stringToChunk(escapeEntireInlineScriptContent(bootstrapScriptContent)),
       endInlineScript,
     );
   }
@@ -411,9 +411,7 @@ export function createRenderState(
     const map = importMap;
     importMapChunks.push(importMapScriptStart);
     importMapChunks.push(
-      stringToChunk(
-        escapeBootstrapAndImportMapScriptContent(JSON.stringify(map)),
-      ),
+      stringToChunk(escapeEntireInlineScriptContent(JSON.stringify(map))),
     );
     importMapChunks.push(importMapScriptEnd);
   }
@@ -1023,12 +1021,7 @@ function pushAdditionalFormField(
 ): void {
   const target: Array<Chunk | PrecomputedChunk> = this;
   target.push(startHiddenInputChunk);
-  if (typeof value !== 'string') {
-    throw new Error(
-      'File/Blob fields are not yet supported in progressive forms. ' +
-        'It probably means you are closing over binary data or FormData in a Server Action.',
-    );
-  }
+  validateAdditionalFormField(value, key);
   pushStringAttribute(target, 'name', key);
   pushStringAttribute(target, 'value', value);
   target.push(endOfStartTagSelfClosing);
@@ -1044,6 +1037,23 @@ function pushAdditionalFormFields(
   }
 }
 
+function validateAdditionalFormField(value: string | File, key: string): void {
+  if (typeof value !== 'string') {
+    throw new Error(
+      'File/Blob fields are not yet supported in progressive forms. ' +
+        'Will fallback to client hydration.',
+    );
+  }
+}
+
+function validateAdditionalFormFields(formData: void | null | FormData) {
+  if (formData != null) {
+    // $FlowFixMe[prop-missing]: FormData has forEach.
+    formData.forEach(validateAdditionalFormField);
+  }
+  return formData;
+}
+
 function getCustomFormFields(
   resumableState: ResumableState,
   formAction: any,
@@ -1052,7 +1062,11 @@ function getCustomFormFields(
   if (typeof customAction === 'function') {
     const prefix = makeFormFieldPrefix(resumableState);
     try {
-      return formAction.$$FORM_ACTION(prefix);
+      const customFields = formAction.$$FORM_ACTION(prefix);
+      if (customFields) {
+        validateAdditionalFormFields(customFields.data);
+      }
+      return customFields;
     } catch (x) {
       if (typeof x === 'object' && x !== null && typeof x.then === 'function') {
         // Rethrow suspense.
@@ -1452,7 +1466,7 @@ function pushAttribute(
         // shouldRemoveAttribute
         switch (typeof value) {
           case 'function':
-          case 'symbol': // eslint-disable-line
+          case 'symbol':
             return;
           case 'boolean': {
             const prefix = attributeName.toLowerCase().slice(0, 5);
@@ -1571,6 +1585,73 @@ function pushStartAnchor(
             pushAttribute(target, propKey, propValue);
           }
           break;
+        default:
+          pushAttribute(target, propKey, propValue);
+          break;
+      }
+    }
+  }
+
+  target.push(endOfStartTag);
+  pushInnerHTML(target, innerHTML, children);
+  if (typeof children === 'string') {
+    // Special case children as a string to avoid the unnecessary comment.
+    // TODO: Remove this special case after the general optimization is in place.
+    target.push(stringToChunk(encodeHTMLTextNode(children)));
+    return null;
+  }
+  return children;
+}
+
+function pushStartObject(
+  target: Array<Chunk | PrecomputedChunk>,
+  props: Object,
+): ReactNodeList {
+  target.push(startChunkForTag('object'));
+
+  let children = null;
+  let innerHTML = null;
+  for (const propKey in props) {
+    if (hasOwnProperty.call(props, propKey)) {
+      const propValue = props[propKey];
+      if (propValue == null) {
+        continue;
+      }
+      switch (propKey) {
+        case 'children':
+          children = propValue;
+          break;
+        case 'dangerouslySetInnerHTML':
+          innerHTML = propValue;
+          break;
+        case 'data': {
+          if (__DEV__) {
+            checkAttributeStringCoercion(propValue, 'data');
+          }
+          const sanitizedValue = sanitizeURL('' + propValue);
+          if (enableFilterEmptyStringAttributesDOM) {
+            if (sanitizedValue === '') {
+              if (__DEV__) {
+                console.error(
+                  'An empty string ("") was passed to the %s attribute. ' +
+                    'To fix this, either do not render the element at all ' +
+                    'or pass null to %s instead of an empty string.',
+                  propKey,
+                  propKey,
+                );
+              }
+              break;
+            }
+          }
+          target.push(
+            attributeSeparator,
+            stringToChunk('data'),
+            attributeAssign,
+            stringToChunk(escapeTextForBrowser(sanitizedValue)),
+            attributeEnd,
+          );
+          break;
+        }
         default:
           pushAttribute(target, propKey, propValue);
           break;
@@ -2669,6 +2750,26 @@ function pushStyle(
   }
 }
 
+/**
+ * This escaping function is designed to work with style tag textContent only.
+ *
+ * While untrusted style content should be made safe before using this api it will
+ * ensure that the style cannot be early terminated or never terminated state
+ */
+function escapeStyleTextContent(styleText: string) {
+  if (__DEV__) {
+    checkHtmlStringCoercion(styleText);
+  }
+  return ('' + styleText).replace(styleRegex, styleReplacer);
+}
+const styleRegex = /(<\/|<)(s)(tyle)/gi;
+const styleReplacer = (
+  match: string,
+  prefix: string,
+  s: string,
+  suffix: string,
+) => `${prefix}${s === 's' ? '\\73 ' : '\\53 '}${suffix}`;
+
 function pushStyleImpl(
   target: Array<Chunk | PrecomputedChunk>,
   props: Object,
@@ -2709,8 +2810,7 @@ function pushStyleImpl(
     child !== null &&
     child !== undefined
   ) {
-    // eslint-disable-next-line react-internal/safe-string-coercion
-    target.push(stringToChunk(escapeTextForBrowser('' + child)));
+    target.push(stringToChunk(escapeStyleTextContent(child)));
   }
   pushInnerHTML(target, innerHTML, children);
   target.push(endChunkForTag('style'));
@@ -2751,8 +2851,7 @@ function pushStyleContents(
     child !== null &&
     child !== undefined
   ) {
-    // eslint-disable-next-line react-internal/safe-string-coercion
-    target.push(stringToChunk(escapeTextForBrowser('' + child)));
+    target.push(stringToChunk(escapeStyleTextContent(child)));
   }
   pushInnerHTML(target, innerHTML, children);
   return;
@@ -3246,7 +3345,7 @@ function pushScriptImpl(
 
   pushInnerHTML(target, innerHTML, children);
   if (typeof children === 'string') {
-    target.push(stringToChunk(encodeHTMLTextNode(children)));
+    target.push(stringToChunk(escapeEntireInlineScriptContent(children)));
   }
   target.push(endChunkForTag('script'));
   return null;
@@ -3537,6 +3636,8 @@ export function pushStartInstance(
       return pushStartForm(target, props, resumableState, renderState);
     case 'menuitem':
       return pushStartMenuItem(target, props);
+    case 'object':
+      return pushStartObject(target, props);
     case 'title':
       return pushTitle(
         target,
@@ -5972,6 +6073,7 @@ function getPreloadAsHeader(
   let value = `<${escapedHref}>; rel=preload; as="${escapedAs}"`;
   for (const paramName in params) {
     if (hasOwnProperty.call(params, paramName)) {
+      // $FlowFixMe[invalid-computed-prop]
       const paramValue = params[paramName];
       if (typeof paramValue === 'string') {
         value += `; ${paramName.toLowerCase()}="${escapeStringForLinkHeaderQuotedParamValueContext(

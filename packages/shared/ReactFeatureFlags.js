@@ -78,14 +78,19 @@ export const enableLegacyFBSupport = false;
 
 export const enableCache = true;
 export const enableLegacyCache = __EXPERIMENTAL__;
-export const enableFetchInstrumentation = true;
 
-export const enableBinaryFlight = __EXPERIMENTAL__;
-export const enableFlightReadableStream = __EXPERIMENTAL__;
+export const enableBinaryFlight = true;
+export const enableFlightReadableStream = true;
+export const enableAsyncIterableChildren = __EXPERIMENTAL__;
 
 export const enableTaint = __EXPERIMENTAL__;
 
 export const enablePostpone = __EXPERIMENTAL__;
+
+/**
+ * Switches Fiber creation to a simple object instead of a constructor.
+ */
+export const enableObjectFiber = false;
 
 export const enableTransitionTracing = false;
 
@@ -102,9 +107,11 @@ export const enableSuspenseAvoidThisFallbackFizz = false;
 
 export const enableCPUSuspense = __EXPERIMENTAL__;
 
-// Enables unstable_useMemoCache hook, intended as a compilation target for
+// Enables useMemoCache hook, intended as a compilation target for
 // auto-memoization.
-export const enableUseMemoCacheHook = __EXPERIMENTAL__;
+export const enableUseMemoCacheHook = true;
+// Test this at Meta before enabling.
+export const enableNoCloningMemoCache = false;
 
 export const enableUseEffectEventHook = __EXPERIMENTAL__;
 
@@ -118,6 +125,12 @@ export const alwaysThrottleRetries = true;
 export const passChildrenWhenCloningPersistedNodes = false;
 
 export const enableServerComponentLogs = __EXPERIMENTAL__;
+
+export const enableAddPropertiesFastPath = false;
+
+export const enableOwnerStacks = __EXPERIMENTAL__;
+
+export const enableShallowPropDiffing = false;
 
 /**
  * Enables an expiration time for retry lanes to avoid starvation.
@@ -138,6 +151,9 @@ export const transitionLaneExpirationMs = 5000;
 // different section of this file.
 
 // const __NEXT_MAJOR__ = __EXPERIMENTAL__;
+
+// Renames the internal symbol for elements since they have changed signature/constructor
+export const renameElementSymbol = true;
 
 // Removes legacy style context
 export const disableLegacyContext = true;
@@ -160,9 +176,6 @@ export const enableFilterEmptyStringAttributesDOM = true;
 // Disabled caching behavior of `react/cache` in client runtimes.
 export const disableClientCache = true;
 
-// Changes Server Components Reconciliation when they have keys
-export const enableServerComponentKeys = true;
-
 /**
  * Enables a new error detection for infinite render loops from updates caused
  * by setState or similar outside of the component owning the state.
@@ -176,6 +189,7 @@ export const enableInfiniteRenderLoopDetection = true;
 // during element creation.
 export const enableRefAsProp = true;
 export const disableStringRefs = true;
+export const enableFastJSX = true;
 
 // Warn on any usage of ReactTestRenderer
 export const enableReactTestRendererWarning = true;
@@ -184,8 +198,6 @@ export const enableReactTestRendererWarning = true;
 // This allows us to land breaking changes to remove legacy mode APIs in experimental builds
 // before removing them in stable in the next Major
 export const disableLegacyMode = true;
-
-export const disableDOMTestUtils = true;
 
 // Make <Context> equivalent to <Context.Provider> instead of <Context.Consumer>
 export const enableRenderableContext = true;
@@ -202,8 +214,6 @@ export const enableUseDeferredValueInitialArg = true;
 
 // Enables time slicing for updates that aren't wrapped in startTransition.
 export const forceConcurrentByDefaultForTesting = false;
-
-export const enableUnifiedSyncLane = true;
 
 // Adds an opt-in to time slicing for updates that aren't wrapped in startTransition.
 export const allowConcurrentByDefault = false;

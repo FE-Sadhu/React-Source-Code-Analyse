@@ -31,7 +31,6 @@
     "profiling.js",
     "profiling.react-server.js",
     "react-dom.react-server.js",
-    "server-rendering-stub.js",
     "server.browser.js",
     "server.bun.js",
     "server.edge.js",
@@ -47,8 +46,7 @@
     "unstable_testing.js",
     "unstable_testing.react-server.js",
     "unstable_server-external-runtime.js",
-    "cjs/",
-    "umd/"
+    "cjs/"
   ],
   "exports": {
     ".": {
@@ -65,9 +63,9 @@
       "bun": "./server.bun.js",
       "deno": "./server.browser.js",
       "worker": "./server.browser.js",
-      "browser": "./server.browser.js",
       "node": "./server.node.js",
       "edge-light": "./server.edge.js",
+      "browser": "./server.browser.js",
       "default": "./server.node.js"
     },
     "./server.browser": {
@@ -91,9 +89,9 @@
       "workerd": "./static.edge.js",
       "deno": "./static.browser.js",
       "worker": "./static.browser.js",
-      "browser": "./static.browser.js",
       "node": "./static.node.js",
       "edge-light": "./static.edge.js",
+      "browser": "./static.browser.js",
       "default": "./static.node.js"
     },
     "./static.browser": {
@@ -108,7 +106,6 @@
       "react-server": "./static.react-server.js",
       "default": "./static.node.js"
     },
-    "./server-rendering-stub": "./server-rendering-stub.js",
     "./profiling": {
       "react-server": "./profiling.react-server.js",
       "default": "./profiling.js"

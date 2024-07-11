@@ -228,7 +228,7 @@ export function assertConsoleLogsCleared() {
   }
 }
 
-function replaceComponentStack(str) {
+function normalizeCodeLocInfo(str) {
   if (typeof str !== 'string') {
     return str;
   }
@@ -239,8 +239,13 @@ function replaceComponentStack(str) {
   //  at Component (/path/filename.js:123:45)
   // React format:
   //    in Component (at filename.js:123)
-  return str.replace(/\n +(?:at|in) ([\S]+)[^\n]*.*/, function (m, name) {
-    return chalk.dim(' <component stack>');
+  return str.replace(/\n +(?:at|in) ([\S]+)[^\n]*/g, function (m, name) {
+    if (name.endsWith('.render')) {
+      // Class components will have the `render` method as part of their stack trace.
+      // We strip that out in our normalization to make it look more like component stacks.
+      name = name.slice(0, name.length - 7);
+    }
+    return '\n    in ' + name + ' (at **)';
   });
 }
 
@@ -382,11 +387,11 @@ export function createLogAssertion(
             );
           }
 
-          expectedMessage = replaceComponentStack(currentExpectedMessage);
+          expectedMessage = normalizeCodeLocInfo(currentExpectedMessage);
           expectedWithoutStack = expectedMessageOrArray[1].withoutStack;
         } else if (typeof expectedMessageOrArray === 'string') {
           // Should be in the form assert(['log']) or assert(['log'], {withoutStack: true})
-          expectedMessage = replaceComponentStack(expectedMessageOrArray[0]);
+          expectedMessage = normalizeCodeLocInfo(expectedMessageOrArray);
           if (consoleMethod === 'log') {
             expectedWithoutStack = true;
           } else {
@@ -410,7 +415,7 @@ export function createLogAssertion(
           );
         }
 
-        const normalizedMessage = replaceComponentStack(message);
+        const normalizedMessage = normalizeCodeLocInfo(message);
         receivedLogs.push(normalizedMessage);
 
         // Check the number of %s interpolations.
@@ -418,13 +423,18 @@ export function createLogAssertion(
         let argIndex = 0;
         // console.* could have been called with a non-string e.g. `console.error(new Error())`
         // eslint-disable-next-line react-internal/safe-string-coercion
-        String(format).replace(/%s/g, () => argIndex++);
+        String(format).replace(/%s|%c/g, () => argIndex++);
         if (argIndex !== args.length) {
-          logsMismatchingFormat.push({
-            format,
-            args,
-            expectedArgCount: argIndex,
-          });
+          if (format.includes('%c%s')) {
+            // We intentionally use mismatching formatting when printing badging because we don't know
+            // the best default to use for different types because the default varies by platform.
+          } else {
+            logsMismatchingFormat.push({
+              format,
+              args,
+              expectedArgCount: argIndex,
+            });
+          }
         }
 
         // Check for extra component stacks
@@ -464,7 +474,12 @@ export function createLogAssertion(
       function printDiff() {
         return `${diff(
           expectedMessages
-            .map(message => message.replace('\n', ' '))
+            .map(messageOrTuple => {
+              const message = Array.isArray(messageOrTuple)
+                ? messageOrTuple[0]
+                : messageOrTuple;
+              return message.replace('\n', ' ');
+            })
             .join('\n'),
           receivedLogs.map(message => message.replace('\n', ' ')).join('\n'),
           {

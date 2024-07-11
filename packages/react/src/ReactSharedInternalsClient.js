@@ -8,19 +8,16 @@
  */
 
 import type {Dispatcher} from 'react-reconciler/src/ReactInternalTypes';
-import type {CacheDispatcher} from 'react-reconciler/src/ReactInternalTypes';
+import type {AsyncDispatcher} from 'react-reconciler/src/ReactInternalTypes';
 import type {BatchConfigTransition} from 'react-reconciler/src/ReactFiberTracingMarkerComponent';
-import type {Fiber} from 'react-reconciler/src/ReactInternalTypes';
-
-import {disableStringRefs} from 'shared/ReactFeatureFlags';
 
 export type SharedStateClient = {
   H: null | Dispatcher, // ReactCurrentDispatcher for Hooks
-  C: null | CacheDispatcher, // ReactCurrentCache for Cache
+  A: null | AsyncDispatcher, // ReactCurrentCache for Cache
   T: null | BatchConfigTransition, // ReactCurrentBatchConfig for Transitions
+  S: null | ((BatchConfigTransition, mixed) => void), // onStartTransitionFinish
 
-  // DEV-only-ish
-  owner: null | Fiber, // ReactCurrentOwner is Fiber on the Client, null in Fizz. Flight uses SharedStateServer.
+  // DEV-only
 
   // ReactCurrentActQueue
   actQueue: null | Array<RendererTask>,
@@ -38,22 +35,17 @@ export type SharedStateClient = {
   thrownErrors: Array<mixed>,
 
   // ReactDebugCurrentFrame
-  setExtraStackFrame: (stack: null | string) => void,
-  getCurrentStack: null | (() => string),
-  getStackAddendum: () => string,
+  getCurrentStack: null | ((stack: null | Error) => string),
 };
 
 export type RendererTask = boolean => RendererTask | null;
 
 const ReactSharedInternals: SharedStateClient = ({
   H: null,
-  C: null,
+  A: null,
   T: null,
+  S: null,
 }: any);
-
-if (__DEV__ || !disableStringRefs) {
-  ReactSharedInternals.owner = null;
-}
 
 if (__DEV__) {
   ReactSharedInternals.actQueue = null;
@@ -61,30 +53,10 @@ if (__DEV__) {
   ReactSharedInternals.didScheduleLegacyUpdate = false;
   ReactSharedInternals.didUsePromise = false;
   ReactSharedInternals.thrownErrors = [];
-
-  let currentExtraStackFrame = (null: null | string);
-  ReactSharedInternals.setExtraStackFrame = function (stack: null | string) {
-    currentExtraStackFrame = stack;
-  };
   // Stack implementation injected by the current renderer.
-  ReactSharedInternals.getCurrentStack = (null: null | (() => string));
-
-  ReactSharedInternals.getStackAddendum = function (): string {
-    let stack = '';
-
-    // Add an extra top frame while an element is being validated
-    if (currentExtraStackFrame) {
-      stack += currentExtraStackFrame;
-    }
-
-    // Delegate to the injected renderer-specific implementation
-    const impl = ReactSharedInternals.getCurrentStack;
-    if (impl) {
-      stack += impl() || '';
-    }
-
-    return stack;
-  };
+  ReactSharedInternals.getCurrentStack = (null:
+    | null
+    | ((stack: null | Error) => string));
 }
 
 export default ReactSharedInternals;

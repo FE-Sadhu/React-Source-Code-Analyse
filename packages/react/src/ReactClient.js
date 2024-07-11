@@ -55,13 +55,13 @@ import {
   useId,
   useCacheRefresh,
   use,
-  useMemoCache,
   useOptimistic,
   useActionState,
 } from './ReactHooks';
 import ReactSharedInternals from './ReactSharedInternalsClient';
 import {startTransition} from './ReactStartTransition';
 import {act} from './ReactAct';
+import {captureOwnerStack} from './ReactOwnerStack';
 
 const Children = {
   map,
@@ -117,11 +117,11 @@ export {
   getCacheForType as unstable_getCacheForType,
   useCacheRefresh as unstable_useCacheRefresh,
   use,
-  useMemoCache as unstable_useMemoCache,
   // enableScopeAPI
   REACT_SCOPE_TYPE as unstable_Scope,
   // enableTransitionTracing
   REACT_TRACING_MARKER_TYPE as unstable_TracingMarker,
   useId,
-  act,
+  act, // DEV-only
+  captureOwnerStack, // DEV-only
 };

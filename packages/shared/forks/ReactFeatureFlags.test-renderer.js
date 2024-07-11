@@ -20,9 +20,9 @@ export const enableProfilerNestedUpdatePhase = __PROFILE__;
 export const enableUpdaterTracking = false;
 export const enableCache = true;
 export const enableLegacyCache = __EXPERIMENTAL__;
-export const enableFetchInstrumentation = true;
 export const enableBinaryFlight = true;
 export const enableFlightReadableStream = true;
+export const enableAsyncIterableChildren = false;
 export const enableTaint = true;
 export const enablePostpone = false;
 export const disableCommentsAsDOMContainers = true;
@@ -37,6 +37,7 @@ export const enableSuspenseAvoidThisFallback = false;
 export const enableSuspenseAvoidThisFallbackFizz = false;
 export const enableCPUSuspense = false;
 export const enableUseMemoCacheHook = true;
+export const enableNoCloningMemoCache = false;
 export const enableUseEffectEventHook = false;
 export const favorSafetyOverHydrationPerf = true;
 export const enableComponentStackLocations = true;
@@ -53,7 +54,6 @@ export const disableSchedulerTimeoutInWorkLoop = false;
 export const enableLazyContextPropagation = false;
 export const enableLegacyHidden = false;
 export const forceConcurrentByDefaultForTesting = false;
-export const enableUnifiedSyncLane = __EXPERIMENTAL__;
 export const allowConcurrentByDefault = false;
 
 export const consoleManagedByDevToolsDuringStrictMode = false;
@@ -73,9 +73,12 @@ export const passChildrenWhenCloningPersistedNodes = false;
 export const enableUseDeferredValueInitialArg = __EXPERIMENTAL__;
 export const disableClientCache = true;
 
-export const enableServerComponentKeys = true;
 export const enableServerComponentLogs = true;
 export const enableInfiniteRenderLoopDetection = false;
+export const enableAddPropertiesFastPath = false;
+
+export const renameElementSymbol = true;
+export const enableShallowPropDiffing = false;
 
 // TODO: This must be in sync with the main ReactFeatureFlags file because
 // the Test Renderer's value must be the same as the one used by the
@@ -86,12 +89,15 @@ export const enableInfiniteRenderLoopDetection = false;
 // const __NEXT_MAJOR__ = __EXPERIMENTAL__;
 export const enableRefAsProp = true;
 export const disableStringRefs = true;
+export const enableFastJSX = true;
 export const disableLegacyMode = true;
 export const disableLegacyContext = true;
-export const disableDOMTestUtils = true;
 export const enableRenderableContext = true;
 export const enableReactTestRendererWarning = true;
 export const disableDefaultPropsExceptForClasses = true;
+
+export const enableObjectFiber = false;
+export const enableOwnerStacks = false;
 
 // Flow magic to verify the exports of this file match the original version.
 ((((null: any): ExportsType): FeatureFlagsType): ExportsType);

@@ -36,7 +36,7 @@ const {
 } = require('../ReactInternalTestUtils');
 
 describe('ReactInternalTestUtils', () => {
-  test('waitFor', async () => {
+  it('waitFor', async () => {
     const Yield = ({id}) => {
       Scheduler.log(id);
       return id;
@@ -61,7 +61,7 @@ describe('ReactInternalTestUtils', () => {
     expect(root).toMatchRenderedOutput(<div>foobarbaz</div>);
   });
 
-  test('waitForAll', async () => {
+  it('waitForAll', async () => {
     const Yield = ({id}) => {
       Scheduler.log(id);
       return id;
@@ -82,7 +82,7 @@ describe('ReactInternalTestUtils', () => {
     expect(root).toMatchRenderedOutput(<div>foobarbaz</div>);
   });
 
-  test('waitForThrow', async () => {
+  it('waitForThrow', async () => {
     const Yield = ({id}) => {
       Scheduler.log(id);
       return id;
@@ -117,7 +117,7 @@ describe('ReactInternalTestUtils', () => {
     ]);
   });
 
-  test('waitForPaint', async () => {
+  it('waitForPaint', async () => {
     function App({prop}) {
       const deferred = useDeferredValue(prop);
       const text = `Urgent: ${prop}, Deferred: ${deferred}`;
@@ -143,9 +143,15 @@ describe('ReactInternalTestUtils', () => {
     expect(root).toMatchRenderedOutput('Urgent: B, Deferred: B');
   });
 
-  test('assertLog', async () => {
+  it('assertLog', async () => {
     const Yield = ({id}) => {
       Scheduler.log(id);
+      React.useEffect(() => {
+        Scheduler.log(`create effect ${id}`);
+        return () => {
+          Scheduler.log(`cleanup effect ${id}`);
+        };
+      });
       return id;
     };
 
@@ -161,9 +167,26 @@ describe('ReactInternalTestUtils', () => {
 
     const root = ReactNoop.createRoot();
     await act(() => {
-      root.render(<App />);
+      root.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
     });
-    assertLog(['A', 'B', 'C']);
+    assertLog([
+      'A',
+      'B',
+      'C',
+      'create effect A',
+      'create effect B',
+      'create effect C',
+    ]);
+
+    await act(() => {
+      root.render(null);
+    });
+
+    assertLog(['cleanup effect A', 'cleanup effect B', 'cleanup effect C']);
   });
 });
 
@@ -709,7 +732,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['foo', 'bar', 'baz']);
     });
 
-    test('should fail if waitForThrow is called before asserting', async () => {
+    it('should fail if waitForThrow is called before asserting', async () => {
       const Yield = ({id}) => {
         Scheduler.log(id);
         return id;
@@ -751,7 +774,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['A', 'B', 'A', 'B']);
     });
 
-    test('should fail if waitForPaint is called before asserting', async () => {
+    it('should fail if waitForPaint is called before asserting', async () => {
       function App({prop}) {
         const deferred = useDeferredValue(prop);
         const text = `Urgent: ${prop}, Deferred: ${deferred}`;
@@ -979,8 +1002,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1002,8 +1025,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1025,8 +1048,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)"
       `);
     });
 
@@ -1048,9 +1071,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1072,9 +1095,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Hi
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1096,9 +1119,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Hi
         - Wow
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1274,7 +1297,8 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleWarnDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           If this warning should include a component stack, remove {withoutStack: true} from this warning.
           If all warnings should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleWarnDev call."
@@ -1295,10 +1319,12 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleWarnDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           Unexpected component stack for:
-            "Bye <component stack>"
+            "Bye
+              in div (at **)"
 
           If this warning should include a component stack, remove {withoutStack: true} from this warning.
           If all warnings should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleWarnDev call."
@@ -1421,7 +1447,8 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleWarnDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           If this warning should include a component stack, remove {withoutStack: true} from this warning.
           If all warnings should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleWarnDev call."
@@ -1454,10 +1481,12 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleWarnDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           Unexpected component stack for:
-            "Bye <component stack>"
+            "Bye
+              in div (at **)"
 
           If this warning should include a component stack, remove {withoutStack: true} from this warning.
           If all warnings should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleWarnDev call."
@@ -1641,7 +1670,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['foo', 'bar', 'baz']);
     });
 
-    test('should fail if waitForThrow is called before asserting', async () => {
+    it('should fail if waitForThrow is called before asserting', async () => {
       const Yield = ({id}) => {
         Scheduler.log(id);
         return id;
@@ -1683,7 +1712,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['A', 'B', 'A', 'B']);
     });
 
-    test('should fail if waitForPaint is called before asserting', async () => {
+    it('should fail if waitForPaint is called before asserting', async () => {
       function App({prop}) {
         const deferred = useDeferredValue(prop);
         const text = `Urgent: ${prop}, Deferred: ${deferred}`;
@@ -1911,8 +1940,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1934,8 +1963,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -1957,8 +1986,8 @@ describe('ReactInternalTestUtils console assertions', () => {
         - Hi
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)"
       `);
     });
 
@@ -1980,9 +2009,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Wow
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -2004,9 +2033,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Hi
         - Bye
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
 
@@ -2028,9 +2057,9 @@ describe('ReactInternalTestUtils console assertions', () => {
 
         - Hi
         - Wow
-        + Hi  <component stack>
-        + Wow  <component stack>
-        + Bye  <component stack>"
+        + Hi      in div (at **)
+        + Wow      in div (at **)
+        + Bye      in div (at **)"
       `);
     });
     // @gate __DEV__
@@ -2129,6 +2158,28 @@ describe('ReactInternalTestUtils console assertions', () => {
       `);
     });
 
+    // @gate __DEV__
+    it('regression: checks entire string, not just the first letter', async () => {
+      const message = expectToThrowFailure(() => {
+        console.error('Message that happens to contain a "T"\n    in div');
+
+        assertConsoleErrorDev([
+          'This is a completely different message that happens to start with "T"',
+        ]);
+      });
+      expect(message).toMatchInlineSnapshot(`
+        "assertConsoleErrorDev(expected)
+
+        Unexpected error(s) recorded.
+
+        - Expected errors
+        + Received errors
+
+        - This is a completely different message that happens to start with "T"
+        + Message that happens to contain a "T"     in div (at **)"
+      `);
+    });
+
     describe('global withoutStack', () => {
       // @gate __DEV__
       it('passes if errors without stack explicitly opt out', () => {
@@ -2202,7 +2253,8 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleErrorDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           If this error should include a component stack, remove {withoutStack: true} from this error.
           If all errors should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleErrorDev call."
@@ -2223,10 +2275,12 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleErrorDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           Unexpected component stack for:
-            "Bye <component stack>"
+            "Bye
+              in div (at **)"
 
           If this error should include a component stack, remove {withoutStack: true} from this error.
           If all errors should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleErrorDev call."
@@ -2349,7 +2403,8 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleErrorDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           If this error should include a component stack, remove {withoutStack: true} from this error.
           If all errors should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleErrorDev call."
@@ -2382,13 +2437,41 @@ describe('ReactInternalTestUtils console assertions', () => {
           "assertConsoleErrorDev(expected)
 
           Unexpected component stack for:
-            "Hello <component stack>"
+            "Hello
+              in div (at **)"
 
           Unexpected component stack for:
-            "Bye <component stack>"
+            "Bye
+              in div (at **)"
 
           If this error should include a component stack, remove {withoutStack: true} from this error.
           If all errors should include the component stack, you may need to remove {withoutStack: true} from the assertConsoleErrorDev call."
+        `);
+      });
+
+      // @gate __DEV__
+      it('fails with a helpful error message if the expected error message mismatches', () => {
+        const message = expectToThrowFailure(() => {
+          console.error('Bye\n    in div');
+          assertConsoleErrorDev([
+            [
+              'Hello',
+              {
+                withoutStack: true,
+              },
+            ],
+          ]);
+        });
+        expect(message).toMatchInlineSnapshot(`
+          "assertConsoleErrorDev(expected)
+
+          Unexpected error(s) recorded.
+
+          - Expected errors
+          + Received errors
+
+          - Hello
+          + Bye     in div (at **)"
         `);
       });
     });
@@ -2569,7 +2652,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['foo', 'bar', 'baz']);
     });
 
-    test('should fail if waitForThrow is called before asserting', async () => {
+    it('should fail if waitForThrow is called before asserting', async () => {
       const Yield = ({id}) => {
         Scheduler.log(id);
         return id;
@@ -2611,7 +2694,7 @@ describe('ReactInternalTestUtils console assertions', () => {
       await waitForAll(['A', 'B', 'A', 'B']);
     });
 
-    test('should fail if waitForPaint is called before asserting', async () => {
+    it('should fail if waitForPaint is called before asserting', async () => {
       function App({prop}) {
         const deferred = useDeferredValue(prop);
         const text = `Urgent: ${prop}, Deferred: ${deferred}`;

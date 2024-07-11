@@ -107,7 +107,7 @@ export function trackUsedThenable<T>(
       }
 
       // Check one more time in case the thenable resolved synchronously
-      switch (thenable.status) {
+      switch ((thenable: Thenable<T>).status) {
         case 'fulfilled': {
           const fulfilledThenable: FulfilledThenable<T> = (thenable: any);
           return fulfilledThenable.value;
@@ -128,6 +128,19 @@ export function trackUsedThenable<T>(
       suspendedThenable = thenable;
       throw SuspenseException;
     }
+  }
+}
+
+export function readPreviousThenable<T>(
+  thenableState: ThenableState,
+  index: number,
+): void | T {
+  const previous = thenableState[index];
+  if (previous === undefined) {
+    return undefined;
+  } else {
+    // We assume this has been resolved already.
+    return (previous: any).value;
   }
 }
 

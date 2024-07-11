@@ -185,7 +185,6 @@ describe('InspectedElementContext', () => {
           anonymous_fn: instance.anonymousFunction,
           array_buffer: arrayBuffer,
           array_of_arrays: arrayOfArrays,
-          // eslint-disable-next-line no-undef
           big_int: BigInt(123),
           bound_fn: exampleFunction.bind(this),
           data_view: dataView,
@@ -290,9 +289,23 @@ describe('InspectedElementContext', () => {
             "preview_long": {boolean: true, number: 123, string: "abc"},
           },
         },
-        "react_element": Dehydrated {
-          "preview_short": <span />,
-          "preview_long": <span />,
+        "react_element": {
+          "$$typeof": Dehydrated {
+            "preview_short": Symbol(react.element),
+            "preview_long": Symbol(react.element),
+          },
+          "_owner": null,
+          "_store": Dehydrated {
+            "preview_short": {…},
+            "preview_long": {},
+          },
+          "key": null,
+          "props": Dehydrated {
+            "preview_short": {…},
+            "preview_long": {},
+          },
+          "ref": null,
+          "type": "span",
         },
         "regexp": Dehydrated {
           "preview_short": /abc/giu,
@@ -874,7 +887,7 @@ describe('InspectedElementContext', () => {
         xyz: 1,
       },
     });
-    const bigInt = BigInt(123); // eslint-disable-line no-undef
+    const bigInt = BigInt(123);
 
     act(() =>
       ReactDOM.render(

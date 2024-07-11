@@ -9,7 +9,6 @@
 
 export {
   __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,
-  act,
   Children,
   Component,
   Fragment,
@@ -34,7 +33,6 @@ export {
   unstable_getCacheForType,
   unstable_SuspenseList,
   unstable_useCacheRefresh,
-  unstable_useMemoCache,
   useId,
   useCallback,
   useContext,

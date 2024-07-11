@@ -7,6 +7,7 @@ let waitFor;
 let waitForAll;
 let waitForThrow;
 let assertLog;
+let assertConsoleErrorDev;
 let act;
 
 let fakeModuleCache;
@@ -34,6 +35,7 @@ describe('ReactLazy', () => {
     waitForAll = InternalTestUtils.waitForAll;
     waitForThrow = InternalTestUtils.waitForThrow;
     assertLog = InternalTestUtils.assertLog;
+    assertConsoleErrorDev = InternalTestUtils.assertConsoleErrorDev;
     act = InternalTestUtils.act;
 
     fakeModuleCache = new Map();
@@ -205,8 +207,6 @@ describe('ReactLazy', () => {
   });
 
   it('does not support arbitrary promises, only module objects', async () => {
-    spyOnDev(console, 'error').mockImplementation(() => {});
-
     const LazyText = lazy(async () => Text);
 
     const root = ReactTestRenderer.create(null, {
@@ -228,13 +228,11 @@ describe('ReactLazy', () => {
 
     expect(error.message).toMatch('Element type is invalid');
     assertLog(['Loading...']);
+    assertConsoleErrorDev([
+      'Expected the result of a dynamic import() call',
+      'Expected the result of a dynamic import() call',
+    ]);
     expect(root).not.toMatchRenderedOutput('Hi');
-    if (__DEV__) {
-      expect(console.error).toHaveBeenCalledTimes(2);
-      expect(console.error.mock.calls[0][0]).toContain(
-        'Expected the result of a dynamic import() call',
-      );
-    }
   });
 
   it('throws if promise rejects', async () => {
@@ -705,7 +703,7 @@ describe('ReactLazy', () => {
       await act(() => resolveFakeImport(T));
       assertLog(['Hi Bye']);
     }).toErrorDev(
-      'Warning: T: Support for defaultProps ' +
+      'T: Support for defaultProps ' +
         'will be removed from function components in a future major ' +
         'release. Use JavaScript default parameters instead.',
     );
@@ -997,7 +995,10 @@ describe('ReactLazy', () => {
     await expect(async () => {
       await act(() => resolveFakeImport(Foo));
       assertLog(['A', 'B']);
-    }).toErrorDev('    in Text (at **)\n' + '    in Foo (at **)');
+    }).toErrorDev(
+      (gate(flags => flags.enableOwnerStacks) ? '' : '    in Text (at **)\n') +
+        '    in Foo (at **)',
+    );
     expect(root).toMatchRenderedOutput(<div>AB</div>);
   });
 
